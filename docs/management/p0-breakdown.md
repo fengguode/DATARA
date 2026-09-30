@@ -8,7 +8,7 @@
 
 CUS records state customer outcomes. Feature records group proposed product capabilities under one or more CUS outcomes. SR records state verifiable obligations that derive from CUS and apply across relevant perspectives. Task records identify bounded work; STK leaves refine a task for planning, but inherit its parent task dependencies and WP prerequisites even when their own `dependencies` array is empty. Verification cases state planned checks. None is evidence until run on a fixed candidate.
 
-Feature, STK, and perspective-assessment arrays plus the `feature_ids` and `child_task_ids` links are additive planning extensions to registry schema 2.0. The existing checker validates only the legacy CUS/SR/TK/WP/TC core; these extension layers receive direct traceability and independent QM/Reviewer audit.
+Feature, STK, and perspective-assessment arrays, `.github` readback metadata, plus the `feature_ids` and `child_task_ids` links are additive planning extensions to registry schema 2.0. The existing checker validates only the legacy CUS/SR/TK/WP/TC core; these extension layers receive direct traceability and independent QM/Reviewer audit.
 
 Requirement status (`Draft derived requirement`, `Proposed`, `Planned`, `Blocked on decision`) describes planning state. It does not mean implemented, verified, accepted, or released. The GitHub Project is the authoritative shared status record; the JSON and these documents are synchronized mirrors, not a second backlog.
 
@@ -1312,6 +1312,6 @@ All cases below are Not run with empty evidence. The global candidate protocol i
 
 ## Authoritative status and P1 boundary
 
-The GitHub Project is the shared central backlog and status record. P0 CUS, Feature, SR, Task, and STK items are intended to be published with their content, priority, dependencies, owner role, and readiness before execution; issue/project-item links will be mirrored in the registry once the primary supplies their mappings. This local breakdown is a content/traceability mirror, not a competing status board.
+The GitHub Project is the shared central backlog and status record. P0 CUS, Feature, SR, Task, and STK items are intended to be published with their content, priority, dependencies, owner role, and readiness before execution; each issue/project-item link and read-back field snapshot is mirrored in the registry and mapping. This local breakdown is a content/traceability mirror, not a competing status board.
 
 CUS11–CUS13, SR22–SR26, and TK08 remain unchanged P1 records. P0 requirement planning completion, product implementation, verification, athlete acceptance, and release are separate milestones.

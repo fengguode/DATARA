@@ -12,6 +12,7 @@ This is the single management entry point for Datara. [Project control issue](ht
 - [P0 requirement breakdown](p0-breakdown.md)
 - [System requirements](system-requirements.md)
 - [Machine-readable registry](requirements-registry.json)
+- [GitHub requirement issue and Project mapping](github-requirements-map.json)
 - [Traceability](traceability.md)
 - [Verification and final validation plan](validation-plan.md)
 - [Decisions and change management](decision-register.md)

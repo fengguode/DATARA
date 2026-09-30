@@ -13,7 +13,18 @@
       "title": "[CUS][frontend]Upload supported activity files",
       "feature_ids": [
         "FEAT01"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/59",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9s_ME",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": null,
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "CUS02",
@@ -25,7 +36,18 @@
       "title": "[CUS][frontend]Return to uploads and training history",
       "feature_ids": [
         "FEAT02"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/60",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9s_Uk",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": null,
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "CUS03",
@@ -38,7 +60,18 @@
       "feature_ids": [
         "FEAT03",
         "FEAT21"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/61",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9s_Zg",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": null,
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "CUS04",
@@ -52,7 +85,18 @@
         "FEAT04",
         "FEAT30",
         "FEAT31"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/62",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9s_jE",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": null,
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "CUS05",
@@ -65,7 +109,18 @@
       "feature_ids": [
         "FEAT05",
         "FEAT31"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/63",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9s_pA",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": null,
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "CUS06",
@@ -81,7 +136,18 @@
         "FEAT33",
         "FEAT34",
         "FEAT35"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/64",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9s_x8",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": null,
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "CUS07",
@@ -96,7 +162,18 @@
         "FEAT40",
         "FEAT44",
         "FEAT46"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/65",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9s_7k",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": null,
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "CUS08",
@@ -111,7 +188,18 @@
         "FEAT08",
         "FEAT41",
         "FEAT46"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/66",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tAD0",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": null,
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "CUS09",
@@ -125,7 +213,18 @@
         "FEAT09",
         "FEAT42",
         "FEAT46"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/67",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tAJs",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": null,
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "CUS10",
@@ -141,7 +240,18 @@
         "FEAT43",
         "FEAT44",
         "FEAT46"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/68",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tARs",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": null,
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "CUS11",
@@ -194,7 +304,18 @@
       "perspective_tags": [
         "engineering",
         "architecture"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/69",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tBv4",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "None recorded; linked Feature scope applies",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "SR02",
@@ -219,7 +340,18 @@
         "engineering",
         "runtime",
         "architecture"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/70",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tB5k",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "None recorded; linked Feature scope applies",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "SR03",
@@ -244,7 +376,18 @@
         "engineering",
         "architecture",
         "domain_provenance"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/71",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tCBw",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "WP01 #1",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "SR04",
@@ -270,7 +413,18 @@
         "runtime",
         "architecture",
         "domain_provenance"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/72",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tCIQ",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "WP01 #1",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "SR05",
@@ -296,7 +450,18 @@
         "runtime",
         "architecture",
         "operations_backup_retention_recovery"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/73",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tCO0",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "WP01 #1",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "SR06",
@@ -320,7 +485,18 @@
       "perspective_tags": [
         "engineering",
         "runtime"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/74",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tCXA",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "WP01 #1",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "SR07",
@@ -346,7 +522,18 @@
         "architecture",
         "privacy_security",
         "domain_provenance"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/75",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tCeg",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "TK01 #268",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "SR08",
@@ -371,7 +558,18 @@
         "engineering",
         "architecture",
         "domain_provenance"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/76",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tClk",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "WP01 #1; WP02 #2",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "SR09",
@@ -396,7 +594,18 @@
         "engineering",
         "architecture",
         "privacy_security"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/77",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tCsI",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "WP01 #1; WP02 #2",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "SR10",
@@ -421,7 +630,18 @@
         "engineering",
         "architecture",
         "runtime"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/78",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tCyw",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "WP01 #1; WP02 #2",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "SR11",
@@ -446,7 +666,18 @@
         "engineering",
         "architecture",
         "privacy_security"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/79",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tC7E",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "WP01 #1; WP02 #2",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "SR12",
@@ -471,7 +702,18 @@
       "perspective_tags": [
         "engineering",
         "architecture"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/80",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tDDw",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "WP03 #3",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "SR13",
@@ -497,7 +739,18 @@
         "privacy_security",
         "architecture",
         "operations_backup_retention_recovery"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/81",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tDM0",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "WP03 #3",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "SR14",
@@ -525,7 +778,18 @@
         "engineering",
         "architecture",
         "domain_provenance"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/82",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tDVg",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "WP03 #3",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "SR15",
@@ -554,7 +818,18 @@
         "engineering",
         "architecture",
         "domain_provenance"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/83",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tDdI",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "WP03 #3",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "SR16",
@@ -583,7 +858,18 @@
         "engineering",
         "architecture",
         "domain_provenance"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/84",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tDmM",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "WP02 #2; WP04 #4",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "SR17",
@@ -611,7 +897,18 @@
         "engineering",
         "architecture",
         "domain_provenance"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/85",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tDwU",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "WP02 #2; WP04 #4",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "SR18",
@@ -639,7 +936,18 @@
         "engineering",
         "architecture",
         "domain_provenance"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/86",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tD6I",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "WP02 #2; WP04 #4",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "SR19",
@@ -667,7 +975,18 @@
         "engineering",
         "architecture",
         "domain_provenance"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/87",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tECo",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "WP02 #2; WP04 #4",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "SR20",
@@ -695,7 +1014,18 @@
         "engineering",
         "architecture",
         "privacy_security"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/88",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tEKY",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "WP01 #1",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "SR21",
@@ -724,7 +1054,18 @@
         "engineering",
         "architecture",
         "privacy_security"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/89",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tEUg",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "WP02 #2; WP04 #4",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "SR22",
@@ -815,7 +1156,18 @@
         "engineering",
         "architecture",
         "domain_provenance"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/90",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tEd8",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "None recorded; linked Feature scope applies",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "SR28",
@@ -843,7 +1195,18 @@
         "architecture",
         "privacy_security",
         "domain_provenance"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/91",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tElw",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "WP01 #1; WP02 #2",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "SR29",
@@ -869,7 +1232,18 @@
         "engineering",
         "architecture",
         "domain_provenance"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/92",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tErU",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "WP01 #1; WP02 #2",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "SR30",
@@ -896,7 +1270,18 @@
         "engineering",
         "architecture",
         "runtime"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/93",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tEx8",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "WP03 #3",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "SR31",
@@ -927,7 +1312,18 @@
         "engineering",
         "architecture",
         "domain_provenance"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/94",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tE5M",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "WP02 #2; WP04 #4",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "SR32",
@@ -959,7 +1355,18 @@
         "D01"
       ],
       "readiness": "Proposed",
-      "status": "Draft derived requirement"
+      "status": "Draft derived requirement",
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/95",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tFAc",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "None recorded; linked Feature scope applies",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "SR33",
@@ -992,7 +1399,18 @@
         "D01"
       ],
       "readiness": "Proposed",
-      "status": "Draft derived requirement"
+      "status": "Draft derived requirement",
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/96",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tFG0",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "WP01 #1",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "SR34",
@@ -1025,7 +1443,18 @@
         "D02"
       ],
       "readiness": "Proposed",
-      "status": "Draft derived requirement"
+      "status": "Draft derived requirement",
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/97",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tFOY",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "WP01 #1; WP02 #2",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "SR50",
@@ -1061,7 +1490,18 @@
       "decision_ids": [
         "D02"
       ],
-      "status": "Draft derived requirement"
+      "status": "Draft derived requirement",
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/98",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tFVk",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "WP01 #1; WP02 #2",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "SR51",
@@ -1099,7 +1539,18 @@
       "decision_ids": [
         "D02"
       ],
-      "status": "Draft derived requirement"
+      "status": "Draft derived requirement",
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/99",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tFag",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "WP01 #1; WP02 #2",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "SR52",
@@ -1134,7 +1585,18 @@
       "decision_ids": [
         "D02"
       ],
-      "status": "Draft derived requirement"
+      "status": "Draft derived requirement",
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/100",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tFf0",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "WP01 #1; WP02 #2",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "SR53",
@@ -1171,7 +1633,18 @@
       "decision_ids": [
         "D02"
       ],
-      "status": "Draft derived requirement"
+      "status": "Draft derived requirement",
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/101",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tFno",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "WP01 #1; WP02 #2",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "SR54",
@@ -1208,7 +1681,18 @@
       "decision_ids": [
         "D03"
       ],
-      "status": "Draft derived requirement"
+      "status": "Draft derived requirement",
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/102",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tFr8",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "WP03 #3",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "SR55",
@@ -1245,7 +1729,18 @@
       "decision_ids": [
         "D03"
       ],
-      "status": "Draft derived requirement"
+      "status": "Draft derived requirement",
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/103",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tFys",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "WP03 #3",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "SR56",
@@ -1282,7 +1777,18 @@
       "decision_ids": [
         "D03"
       ],
-      "status": "Draft derived requirement"
+      "status": "Draft derived requirement",
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/104",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tF4M",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "WP03 #3",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "SR57",
@@ -1320,7 +1826,18 @@
       "decision_ids": [
         "D03"
       ],
-      "status": "Draft derived requirement"
+      "status": "Draft derived requirement",
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/105",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tGAI",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "WP03 #3",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "SR58",
@@ -1356,7 +1873,18 @@
       "decision_ids": [
         "D02"
       ],
-      "status": "Draft derived requirement"
+      "status": "Draft derived requirement",
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/106",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tGIo",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "WP01 #1; WP02 #2",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "SR59",
@@ -1394,7 +1922,18 @@
       "decision_ids": [
         "D03"
       ],
-      "status": "Draft derived requirement"
+      "status": "Draft derived requirement",
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/107",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tGOg",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "WP03 #3",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "SR70",
@@ -1432,7 +1971,18 @@
         "D02",
         "D03"
       ],
-      "status": "Draft derived requirement"
+      "status": "Draft derived requirement",
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/108",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tGWA",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "WP03 #3",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "SR71",
@@ -1466,7 +2016,18 @@
       "decision_ids": [
         "D04"
       ],
-      "status": "Draft derived requirement"
+      "status": "Draft derived requirement",
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/109",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tGd0",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "None recorded; parent scope applies",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "SR72",
@@ -1503,7 +2064,18 @@
       "decision_ids": [
         "D04"
       ],
-      "status": "Draft derived requirement"
+      "status": "Draft derived requirement",
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/110",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tGjs",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "WP02 #2; WP04 #4",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "SR73",
@@ -1542,7 +2114,18 @@
         "D03",
         "D04"
       ],
-      "status": "Draft derived requirement"
+      "status": "Draft derived requirement",
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/111",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tGrs",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "WP02 #2; WP04 #4",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "SR74",
@@ -1580,7 +2163,18 @@
       "decision_ids": [
         "D03"
       ],
-      "status": "Draft derived requirement"
+      "status": "Draft derived requirement",
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/112",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tGxI",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "WP03 #3",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "SR75",
@@ -1617,7 +2211,18 @@
         "D04",
         "D05"
       ],
-      "status": "Draft derived requirement"
+      "status": "Draft derived requirement",
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/113",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tG3c",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "WP02 #2; WP04 #4",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "SR76",
@@ -1655,7 +2260,18 @@
         "D04",
         "D05"
       ],
-      "status": "Draft derived requirement"
+      "status": "Draft derived requirement",
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/114",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tG9w",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "WP02 #2; WP04 #4",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     }
   ],
   "verification_cases": [
@@ -2299,7 +2915,18 @@
         "TK10",
         "TK13",
         "TK14"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/268",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tpFU",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Primary Coordinator — Yi Tang",
+        "dependencies_text": "None recorded; parent scope applies",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "TK02",
@@ -2333,7 +2960,18 @@
         "TK66",
         "TK72",
         "TK73"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/269",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tpN8",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Primary Coordinator — Yi Tang",
+        "dependencies_text": "TK01 #268",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "TK03",
@@ -2374,7 +3012,18 @@
         "TK18",
         "TK20",
         "TK67"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/270",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tpWA",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Primary Coordinator — Yi Tang",
+        "dependencies_text": "TK01 #268; TK02 #269; WP01 #1",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "TK04",
@@ -2414,7 +3063,18 @@
         "TK43",
         "TK44",
         "TK45"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/271",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tpb0",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Primary Coordinator — Yi Tang",
+        "dependencies_text": "TK03 #270; WP01 #1; WP02 #2",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "TK05",
@@ -2452,7 +3112,18 @@
         "TK53",
         "TK55",
         "TK70"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/272",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tpjQ",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Primary Coordinator — Yi Tang",
+        "dependencies_text": "TK04 #271; WP03 #3",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "TK06",
@@ -2487,7 +3158,18 @@
         "TK61",
         "TK64",
         "TK68"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/273",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tppQ",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Primary Coordinator — Yi Tang",
+        "dependencies_text": "TK03 #270; TK05 #272; WP02 #2; WP04 #4",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "TK07",
@@ -2545,7 +3227,18 @@
         "TK69",
         "TK71",
         "TK74"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/274",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tpu4",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Primary Coordinator — Yi Tang",
+        "dependencies_text": "TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273; WP01 #1; WP02 #2; WP03 #3; WP04 #4; WP05 #5",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "TK08",
@@ -2619,7 +3312,18 @@
       "source": [
         "docs/management/wp01-requirements-package.md",
         "docs/management/decision-register.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/115",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tMk8",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Explorer — Wang Licun",
+        "dependencies_text": "None recorded; parent scope applies",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "TK10",
@@ -2678,7 +3382,18 @@
       "source": [
         "docs/management/wp01-requirements-package.md",
         "docs/management/decision-register.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/116",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tMvc",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "TK09 #115",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "TK11",
@@ -2741,7 +3456,18 @@
         "docs/management/system-requirements.md",
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/117",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tM7A",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Worker — Torsten Maier",
+        "dependencies_text": "TK10 #116; WP01 #1; TK01 #268; TK02 #269",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "TK12",
@@ -2802,7 +3528,18 @@
       "source": [
         "docs/management/validation-plan.md",
         "docs/management/p0-ui-requirements-review.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/118",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tNDw",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "User Tester — Abt Hermann",
+        "dependencies_text": "TK11 #117; WP01 #1; WP02 #2; WP03 #3; WP04 #4; WP05 #5; TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "TK13",
@@ -2855,7 +3592,18 @@
       "source": [
         "docs/management/system-requirements.md",
         "docs/management/wp01-requirements-package.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/119",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tNLs",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "None recorded; parent scope applies",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "TK14",
@@ -2904,7 +3652,18 @@
       "source": [
         "docs/management/wp01-requirements-package.md",
         "docs/management/decision-register.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/120",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tNSg",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "None recorded; parent scope applies",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "TK15",
@@ -2965,7 +3724,18 @@
         "docs/management/system-requirements.md",
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/121",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tNZc",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Worker — Torsten Maier",
+        "dependencies_text": "TK14 #120; WP01 #1; TK01 #268; TK02 #269",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "TK16",
@@ -3025,7 +3795,18 @@
       "source": [
         "docs/management/validation-plan.md",
         "docs/management/p0-ui-requirements-review.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/122",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tNfY",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "User Tester — Abt Hermann",
+        "dependencies_text": "TK15 #121; WP01 #1; WP02 #2; WP03 #3; WP04 #4; WP05 #5; TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "TK17",
@@ -3079,7 +3860,18 @@
       "source": [
         "docs/management/decision-register.md",
         "docs/management/wp01-requirements-package.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/123",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tNmY",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "WP01 #1; TK01 #268; TK02 #269",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "TK18",
@@ -3132,7 +3924,18 @@
         "docs/management/system-requirements.md",
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/124",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tNsM",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Worker — Torsten Maier",
+        "dependencies_text": "WP01 #1; TK01 #268; TK02 #269",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "TK19",
@@ -3185,7 +3988,18 @@
       "source": [
         "docs/management/validation-plan.md",
         "docs/management/p0-ui-requirements-review.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/125",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tNzA",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "User Tester — Abt Hermann",
+        "dependencies_text": "TK18 #124; WP01 #1; WP02 #2; WP03 #3; WP04 #4; WP05 #5; TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "TK20",
@@ -3241,7 +4055,18 @@
       "source": [
         "docs/management/wp01-requirements-package.md",
         "docs/management/decision-register.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/126",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tN48",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Explorer — Wang Licun",
+        "dependencies_text": "WP01 #1; TK01 #268; TK02 #269",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "TK21",
@@ -3303,7 +4128,18 @@
         "docs/management/system-requirements.md",
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/127",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tOCE",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Worker — Torsten Maier",
+        "dependencies_text": "TK18 #124; WP01 #1; WP02 #2; TK03 #270",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "TK22",
@@ -3364,7 +4200,18 @@
       "source": [
         "docs/management/validation-plan.md",
         "docs/management/p0-ui-requirements-review.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/128",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tOIc",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "User Tester — Abt Hermann",
+        "dependencies_text": "TK21 #127; WP01 #1; WP02 #2; WP03 #3; WP04 #4; WP05 #5; TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "TK30",
@@ -3416,7 +4263,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/decision-register.md"
       ],
-      "work_kind": "decision_research"
+      "work_kind": "decision_research",
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/129",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tOPY",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "WP01 #1; WP02 #2; TK03 #270",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "TK31",
@@ -3474,7 +4332,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/decision-register.md"
       ],
-      "work_kind": "contract_design"
+      "work_kind": "contract_design",
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/130",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tVIY",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "WP01 #1; WP02 #2; TK03 #270",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "TK32",
@@ -3524,7 +4393,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/decision-register.md"
       ],
-      "work_kind": "contract_design"
+      "work_kind": "contract_design",
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/131",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tVO8",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "WP01 #1; WP02 #2; TK03 #270",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "TK33",
@@ -3577,7 +4457,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/decision-register.md"
       ],
-      "work_kind": "decision_research"
+      "work_kind": "decision_research",
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/132",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tVUU",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "WP01 #1; WP02 #2; TK03 #270",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "TK34",
@@ -3631,7 +4522,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/decision-register.md"
       ],
-      "work_kind": "contract_design"
+      "work_kind": "contract_design",
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/133",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tVZo",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "WP01 #1; WP02 #2; TK03 #270",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "TK35",
@@ -3685,7 +4587,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/decision-register.md"
       ],
-      "work_kind": "contract_design"
+      "work_kind": "contract_design",
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/134",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tVgA",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "UI Designer — Wu Yunzhou",
+        "dependencies_text": "WP01 #1; WP02 #2; TK03 #270",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "TK36",
@@ -3739,7 +4652,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/decision-register.md"
       ],
-      "work_kind": "decision_research"
+      "work_kind": "decision_research",
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/135",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tVlQ",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "WP03 #3; TK04 #271",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "TK37",
@@ -3793,7 +4717,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/decision-register.md"
       ],
-      "work_kind": "decision_research"
+      "work_kind": "decision_research",
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/136",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tVp0",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "WP03 #3; TK04 #271",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "TK38",
@@ -3848,7 +4783,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/decision-register.md"
       ],
-      "work_kind": "contract_design"
+      "work_kind": "contract_design",
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/137",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tVwA",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "WP03 #3; TK04 #271",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "TK39",
@@ -3904,7 +4850,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/decision-register.md"
       ],
-      "work_kind": "contract_design"
+      "work_kind": "contract_design",
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/138",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9taK0",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "UI Designer — Wu Yunzhou",
+        "dependencies_text": "TK36 #135; TK37 #136; TK38 #137; WP03 #3; TK04 #271",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "TK40",
@@ -3958,7 +4915,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/decision-register.md"
       ],
-      "work_kind": "contract_design"
+      "work_kind": "contract_design",
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/139",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9taQA",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "TK36 #135; TK37 #136; TK38 #137; WP03 #3; TK04 #271",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "TK41",
@@ -4014,7 +4982,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/decision-register.md"
       ],
-      "work_kind": "contract_design"
+      "work_kind": "contract_design",
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/140",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9taXI",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "TK36 #135; TK37 #136; TK38 #137; WP03 #3; TK04 #271",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "TK42",
@@ -4084,7 +5063,18 @@
         "docs/management/product-requirements.md",
         "docs/management/system-requirements.md",
         "docs/management/wp01-requirements-package.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/141",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tafQ",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Worker — Torsten Maier",
+        "dependencies_text": "TK31 #130; TK32 #131; TK33 #132; WP01 #1; WP02 #2; TK03 #270",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "TK43",
@@ -4152,7 +5142,18 @@
         "docs/management/product-requirements.md",
         "docs/management/system-requirements.md",
         "docs/management/wp01-requirements-package.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/142",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9taks",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "User Tester — Abt Hermann",
+        "dependencies_text": "TK42 #141; WP01 #1; WP02 #2; TK03 #270",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "TK44",
@@ -4215,7 +5216,18 @@
         "docs/management/product-requirements.md",
         "docs/management/system-requirements.md",
         "docs/management/wp01-requirements-package.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/143",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tasw",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Worker — Torsten Maier",
+        "dependencies_text": "TK34 #133; TK35 #134; WP01 #1; WP02 #2; TK03 #270",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "TK45",
@@ -4277,7 +5289,18 @@
         "docs/management/product-requirements.md",
         "docs/management/system-requirements.md",
         "docs/management/wp01-requirements-package.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/144",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9ta1E",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "User Tester — Abt Hermann",
+        "dependencies_text": "TK44 #143; WP01 #1; WP02 #2; TK03 #270",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "TK46",
@@ -4358,7 +5381,18 @@
         "docs/management/product-requirements.md",
         "docs/management/system-requirements.md",
         "docs/management/wp01-requirements-package.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/146",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9ta70",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Worker — Torsten Maier",
+        "dependencies_text": "TK36 #135; TK38 #137; TK39 #138; TK40 #139; TK41 #140; WP03 #3; TK04 #271",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "TK47",
@@ -4435,7 +5469,18 @@
         "docs/management/product-requirements.md",
         "docs/management/system-requirements.md",
         "docs/management/wp01-requirements-package.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/147",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tbB4",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "User Tester — Abt Hermann",
+        "dependencies_text": "TK46 #146; WP03 #3; TK04 #271",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "TK50",
@@ -4488,7 +5533,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/148",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tbGw",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "TK01 #268",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "TK51",
@@ -4544,7 +5600,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/149",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tbMk",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "TK01 #268",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "TK52",
@@ -4598,7 +5665,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/150",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tbRg",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Worker — Torsten Maier",
+        "dependencies_text": "TK50 #148; TK51 #149; WP03 #3; TK04 #271",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "TK53",
@@ -4656,7 +5734,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/151",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tbX0",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Worker — Torsten Maier",
+        "dependencies_text": "TK50 #148; TK51 #149; WP03 #3; TK04 #271",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "TK54",
@@ -4721,7 +5810,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/152",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tbd4",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "User Tester — Abt Hermann",
+        "dependencies_text": "TK52 #150; TK53 #151; TK55 #153; WP01 #1; WP02 #2; WP03 #3; WP04 #4; WP05 #5; TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "TK55",
@@ -4778,7 +5878,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/153",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tblE",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Worker — Torsten Maier",
+        "dependencies_text": "TK50 #148; TK51 #149; WP03 #3; TK04 #271",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "TK56",
@@ -4833,7 +5944,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/154",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tbrQ",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "TK01 #268",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "TK57",
@@ -4892,7 +6014,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/155",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tbwg",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Worker — Torsten Maier",
+        "dependencies_text": "TK56 #154; WP02 #2; WP04 #4; TK03 #270; TK05 #272",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "TK58",
@@ -4947,7 +6080,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/156",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tb6Q",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Worker — Torsten Maier",
+        "dependencies_text": "TK56 #154; WP02 #2; WP04 #4; TK03 #270; TK05 #272",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "TK59",
@@ -5012,7 +6156,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/157",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tcBo",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "User Tester — Abt Hermann",
+        "dependencies_text": "TK57 #155; TK58 #156; WP01 #1; WP02 #2; WP03 #3; WP04 #4; WP05 #5; TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "TK60",
@@ -5067,7 +6222,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/158",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tcHk",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "TK01 #268",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "TK61",
@@ -5139,7 +6305,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/159",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tcPY",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Worker — Torsten Maier",
+        "dependencies_text": "TK60 #158; TK73 #171; WP02 #2; WP04 #4; TK03 #270; TK05 #272",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "TK62",
@@ -5212,7 +6389,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/160",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tcYQ",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "User Tester — Abt Hermann",
+        "dependencies_text": "TK61 #159; WP01 #1; WP02 #2; WP03 #3; WP04 #4; WP05 #5; TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "TK63",
@@ -5271,7 +6459,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/161",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tceg",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "TK01 #268",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "TK64",
@@ -5337,7 +6536,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/162",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tcmk",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Worker — Torsten Maier",
+        "dependencies_text": "TK63 #161; TK66 #164; WP02 #2; WP04 #4; TK03 #270; TK05 #272",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "TK65",
@@ -5402,7 +6612,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/163",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tctk",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "User Tester — Abt Hermann",
+        "dependencies_text": "TK64 #162; WP01 #1; WP02 #2; WP03 #3; WP04 #4; WP05 #5; TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "TK66",
@@ -5471,7 +6692,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/164",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tc0I",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "TK01 #268",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "TK67",
@@ -5531,7 +6763,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/165",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tc6o",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Worker — Torsten Maier",
+        "dependencies_text": "TK66 #164; WP01 #1; TK01 #268; TK02 #269",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "TK68",
@@ -5586,7 +6829,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/166",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tc_k",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Worker — Torsten Maier",
+        "dependencies_text": "TK66 #164; WP02 #2; WP04 #4; TK03 #270; TK05 #272",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "TK69",
@@ -5694,7 +6948,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/167",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tdEk",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "User Tester — Abt Hermann",
+        "dependencies_text": "TK67 #165; TK68 #166; WP01 #1; WP02 #2; WP03 #3; WP04 #4; WP05 #5; TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "TK70",
@@ -5754,7 +7019,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/168",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tdLc",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Worker — Torsten Maier",
+        "dependencies_text": "TK51 #149; WP03 #3; TK04 #271",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "TK71",
@@ -5814,7 +7090,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/169",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tdRY",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "User Tester — Abt Hermann",
+        "dependencies_text": "TK70 #168; WP01 #1; WP02 #2; WP03 #3; WP04 #4; WP05 #5; TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "TK72",
@@ -5886,7 +7173,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/170",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tdVc",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "TK01 #268",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "TK73",
@@ -5949,7 +7247,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/171",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tdbo",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "UI Designer — Wu Yunzhou",
+        "dependencies_text": "TK01 #268",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "priority": "P0",
@@ -6054,7 +7363,18 @@
         "FEAT43",
         "FEAT44",
         "FEAT46"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/172",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tfbQ",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Quality Manager — Wang Xiaofeng",
+        "dependencies_text": "TK54 #152; TK59 #157; TK62 #160; TK65 #163; TK69 #167; TK71 #169; TK72 #170; TK73 #171; WP01 #1; WP02 #2; WP03 #3; WP04 #4; WP05 #5; TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     }
   ],
   "features": [
@@ -6096,7 +7416,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md"
       ],
-      "notes": "Proposal; mappings, limits and fixture terms are not approved."
+      "notes": "Proposal; mappings, limits and fixture terms are not approved.",
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/36",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9s5WQ",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "None recorded",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "FEAT02",
@@ -6138,7 +7469,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md"
       ],
-      "notes": "Proposal; conflict tolerance and lifecycle policy remain open."
+      "notes": "Proposal; conflict tolerance and lifecycle policy remain open.",
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/37",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9s5ds",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "FEAT01 #36; WP01 #1",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "FEAT03",
@@ -6177,7 +7519,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md"
       ],
-      "notes": "Proposal; input contract and baseline skill fields await D01/D02."
+      "notes": "Proposal; input contract and baseline skill fields await D01/D02.",
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/38",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9s5lU",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "FEAT01 #36; FEAT02 #37; WP01 #1",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "FEAT21",
@@ -6218,7 +7571,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md"
       ],
-      "notes": "Proposal; exact baseline skill fields await D02."
+      "notes": "Proposal; exact baseline skill fields await D02.",
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/39",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9s5sc",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "FEAT03 #38; WP01 #1; WP02 #2",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "FEAT04",
@@ -6264,7 +7628,18 @@
       "work_package_dependencies": [
         "WP01",
         "WP02"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/40",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9s574",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "WP01 #1; WP02 #2",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "FEAT30",
@@ -6304,7 +7679,18 @@
       "work_package_dependencies": [
         "WP01",
         "WP02"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/41",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9s6GY",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "WP01 #1; WP02 #2",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "FEAT05",
@@ -6347,7 +7733,18 @@
       "work_package_dependencies": [
         "WP01",
         "WP02"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/42",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9s6Qc",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "WP01 #1; WP02 #2",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "FEAT31",
@@ -6388,7 +7785,18 @@
       "work_package_dependencies": [
         "WP01",
         "WP02"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/43",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9s6YA",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "UI Designer — Wu Yunzhou",
+        "dependencies_text": "WP01 #1; WP02 #2",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "FEAT06",
@@ -6440,7 +7848,18 @@
         "WP01",
         "WP02",
         "WP03"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/44",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9s6hE",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "WP03 #3",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "FEAT32",
@@ -6480,7 +7899,18 @@
       "work_package_dependencies": [
         "WP01",
         "WP03"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/45",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9s6nw",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "WP03 #3",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "FEAT33",
@@ -6521,7 +7951,18 @@
       "work_package_dependencies": [
         "WP01",
         "WP02"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/46",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9s9W8",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "WP03 #3",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "FEAT34",
@@ -6561,7 +8002,18 @@
       "work_package_dependencies": [
         "WP01",
         "WP03"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/47",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9s9gY",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "UI Designer — Wu Yunzhou",
+        "dependencies_text": "WP03 #3",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "FEAT35",
@@ -6601,7 +8053,18 @@
       "work_package_dependencies": [
         "WP01",
         "WP03"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/48",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9s9rI",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "WP03 #3",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "FEAT07",
@@ -6644,7 +8107,18 @@
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
       ],
-      "notes": "Proposal only; not approved or verified."
+      "notes": "Proposal only; not approved or verified.",
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/49",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9s91M",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "FEAT05 #42; FEAT06 #44; WP03 #3",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "FEAT40",
@@ -6687,7 +8161,18 @@
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
       ],
-      "notes": "Proposal only; not approved or verified."
+      "notes": "Proposal only; not approved or verified.",
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/50",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9s9-M",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "FEAT07 #49; WP03 #3",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "FEAT08",
@@ -6730,7 +8215,18 @@
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
       ],
-      "notes": "Proposal only; not approved or verified."
+      "notes": "Proposal only; not approved or verified.",
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/51",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9s-GM",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "FEAT07 #49; FEAT40 #50; WP02 #2; WP04 #4",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "FEAT41",
@@ -6769,7 +8265,18 @@
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
       ],
-      "notes": "Proposal only; not approved or verified."
+      "notes": "Proposal only; not approved or verified.",
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/52",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9s-Qc",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "FEAT08 #51; WP02 #2; WP04 #4",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "FEAT09",
@@ -6811,7 +8318,18 @@
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
       ],
-      "notes": "Proposal only; not approved or verified."
+      "notes": "Proposal only; not approved or verified.",
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/53",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9s-Ys",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "FEAT08 #51; FEAT41 #52; WP02 #2; WP04 #4",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "FEAT42",
@@ -6855,7 +8373,18 @@
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
       ],
-      "notes": "Proposal only; not approved or verified."
+      "notes": "Proposal only; not approved or verified.",
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/54",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9s-iQ",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "FEAT09 #53; WP02 #2; WP04 #4",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "FEAT10",
@@ -6901,7 +8430,18 @@
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
       ],
-      "notes": "Proposal only; not approved or verified."
+      "notes": "Proposal only; not approved or verified.",
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/55",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9s-po",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "FEAT02 #37; FEAT06 #44; FEAT07 #49; FEAT08 #51; FEAT42 #54; WP01 #1",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "FEAT43",
@@ -6941,7 +8481,18 @@
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
       ],
-      "notes": "Proposal only; not approved or verified."
+      "notes": "Proposal only; not approved or verified.",
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/56",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9s-xU",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "FEAT10 #55; FEAT09 #53; WP02 #2; WP04 #4",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "FEAT44",
@@ -6982,7 +8533,18 @@
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
       ],
-      "notes": "Proposal only; not approved or verified."
+      "notes": "Proposal only; not approved or verified.",
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/57",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9s-78",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "FEAT06 #44; FEAT07 #49; WP03 #3",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "FEAT46",
@@ -7027,7 +8589,18 @@
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
       ],
-      "notes": "Proposal only; not approved or verified."
+      "notes": "Proposal only; not approved or verified.",
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/58",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9s_CU",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "FEAT09 #53; FEAT43 #56; WP02 #2; WP04 #4",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     }
   ],
   "subtasks": [
@@ -7070,7 +8643,18 @@
       ],
       "source": [
         "docs/management/wp01-requirements-package.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/173",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tfhQ",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Explorer — Wang Licun",
+        "dependencies_text": "None recorded; parent scope applies",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK002",
@@ -7111,7 +8695,18 @@
       ],
       "source": [
         "docs/management/wp01-requirements-package.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/174",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tfnU",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Explorer — Wang Licun",
+        "dependencies_text": "None recorded; parent scope applies",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK003",
@@ -7154,7 +8749,18 @@
       ],
       "source": [
         "docs/management/wp01-requirements-package.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/175",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tft8",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "TK09 #115",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK004",
@@ -7196,7 +8802,18 @@
       ],
       "source": [
         "docs/management/wp01-requirements-package.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/176",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tf0U",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "TK09 #115",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK005",
@@ -7241,7 +8858,18 @@
       "source": [
         "docs/management/system-requirements.md",
         "docs/management/wp01-requirements-package.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/177",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tf6g",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Worker — Torsten Maier",
+        "dependencies_text": "WP01 #1; TK10 #116; TK01 #268; TK02 #269",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK006",
@@ -7281,7 +8909,18 @@
       ],
       "source": [
         "docs/management/p0-ui-requirements-review.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/178",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tf_o",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Worker — Torsten Maier",
+        "dependencies_text": "WP01 #1; TK10 #116; TK01 #268; TK02 #269",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK007",
@@ -7324,7 +8963,18 @@
       ],
       "source": [
         "docs/management/validation-plan.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/179",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tgFo",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "User Tester — Abt Hermann",
+        "dependencies_text": "TK11 #117; WP01 #1; WP02 #2; WP03 #3; WP04 #4; WP05 #5; TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK008",
@@ -7363,7 +9013,18 @@
       ],
       "source": [
         "docs/management/p0-ui-requirements-review.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/180",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tgLE",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "User Tester — Abt Hermann",
+        "dependencies_text": "TK11 #117; WP01 #1; WP02 #2; WP03 #3; WP04 #4; WP05 #5; TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK009",
@@ -7405,7 +9066,18 @@
       ],
       "source": [
         "docs/management/system-requirements.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/181",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tgPU",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "None recorded; parent scope applies",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK010",
@@ -7447,7 +9119,18 @@
       ],
       "source": [
         "docs/management/wp01-requirements-package.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/182",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tgWg",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "None recorded; parent scope applies",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK011",
@@ -7486,7 +9169,18 @@
       ],
       "source": [
         "docs/management/wp01-requirements-package.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/183",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tgd0",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "None recorded; parent scope applies",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK012",
@@ -7525,7 +9219,18 @@
       ],
       "source": [
         "docs/management/wp01-requirements-package.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/184",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tgl0",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "None recorded; parent scope applies",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK013",
@@ -7565,7 +9270,18 @@
       ],
       "source": [
         "docs/management/system-requirements.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/185",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tgqo",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Worker — Torsten Maier",
+        "dependencies_text": "WP01 #1; TK14 #120; TK01 #268; TK02 #269",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK014",
@@ -7609,7 +9325,18 @@
       "source": [
         "docs/management/system-requirements.md",
         "docs/management/p0-ui-requirements-review.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/186",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tgwQ",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Worker — Torsten Maier",
+        "dependencies_text": "WP01 #1; TK14 #120; TK01 #268; TK02 #269",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK015",
@@ -7648,7 +9375,18 @@
       ],
       "source": [
         "docs/management/validation-plan.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/187",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tg1E",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "User Tester — Abt Hermann",
+        "dependencies_text": "WP01 #1; TK15 #121; WP02 #2; WP03 #3; WP04 #4; WP05 #5; TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK016",
@@ -7691,7 +9429,18 @@
       "source": [
         "docs/management/validation-plan.md",
         "docs/management/p0-ui-requirements-review.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/188",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tg7Y",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "User Tester — Abt Hermann",
+        "dependencies_text": "WP01 #1; TK15 #121; WP02 #2; WP03 #3; WP04 #4; WP05 #5; TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK017",
@@ -7731,7 +9480,18 @@
       ],
       "source": [
         "docs/management/decision-register.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/189",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9thA4",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "WP01 #1; TK01 #268; TK02 #269",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK018",
@@ -7772,7 +9532,18 @@
       "source": [
         "docs/management/decision-register.md",
         "docs/management/wp01-requirements-package.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/190",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9thGw",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "WP01 #1; TK01 #268; TK02 #269",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK019",
@@ -7814,7 +9585,18 @@
       "source": [
         "docs/management/system-requirements.md",
         "docs/management/wp01-requirements-package.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/191",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9thLE",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Worker — Torsten Maier",
+        "dependencies_text": "WP01 #1; TK01 #268; TK02 #269",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK020",
@@ -7863,7 +9645,18 @@
         "docs/management/system-requirements.md",
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/192",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9thP0",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Worker — Torsten Maier",
+        "dependencies_text": "WP01 #1; WP02 #2; TK18 #124; TK03 #270",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK021",
@@ -7903,7 +9696,18 @@
       ],
       "source": [
         "docs/management/validation-plan.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/193",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9thVc",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "User Tester — Abt Hermann",
+        "dependencies_text": "WP01 #1; WP02 #2; WP03 #3; WP04 #4; WP05 #5; TK18 #124; TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK022",
@@ -7950,7 +9754,18 @@
       "source": [
         "docs/management/validation-plan.md",
         "docs/management/p0-ui-requirements-review.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/194",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9thbQ",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "User Tester — Abt Hermann",
+        "dependencies_text": "WP01 #1; WP02 #2; WP03 #3; WP04 #4; WP05 #5; TK21 #127; TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK023",
@@ -7993,7 +9808,18 @@
       ],
       "source": [
         "docs/management/wp01-requirements-package.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/195",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9thgs",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Explorer — Wang Licun",
+        "dependencies_text": "WP01 #1; TK01 #268; TK02 #269",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK024",
@@ -8033,7 +9859,18 @@
       ],
       "source": [
         "docs/management/wp01-requirements-package.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/196",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9thmQ",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Explorer — Wang Licun",
+        "dependencies_text": "WP01 #1; TK01 #268; TK02 #269",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK025",
@@ -8073,7 +9910,18 @@
       ],
       "source": [
         "docs/management/system-requirements.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/197",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9thwE",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Worker — Torsten Maier",
+        "dependencies_text": "WP01 #1; TK01 #268; TK02 #269",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK026",
@@ -8113,7 +9961,18 @@
       ],
       "source": [
         "docs/management/validation-plan.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/198",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9th2M",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "User Tester — Abt Hermann",
+        "dependencies_text": "WP01 #1; WP02 #2; WP03 #3; WP04 #4; WP05 #5; TK18 #124; TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK027",
@@ -8158,7 +10017,18 @@
       "source": [
         "docs/management/system-requirements.md",
         "docs/management/wp01-requirements-package.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/199",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9th6w",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Worker — Torsten Maier",
+        "dependencies_text": "WP01 #1; WP02 #2; TK18 #124; TK03 #270",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK028",
@@ -8205,7 +10075,18 @@
       "source": [
         "docs/management/validation-plan.md",
         "docs/management/p0-ui-requirements-review.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/200",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tiDo",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "User Tester — Abt Hermann",
+        "dependencies_text": "WP01 #1; WP02 #2; WP03 #3; WP04 #4; WP05 #5; TK21 #127; TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK100",
@@ -8249,7 +10130,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/decision-register.md"
       ],
-      "work_kind": "decision_research"
+      "work_kind": "decision_research",
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/201",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tiKY",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "WP01 #1; WP02 #2; TK03 #270",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK102",
@@ -8297,7 +10189,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/decision-register.md"
       ],
-      "work_kind": "contract_design"
+      "work_kind": "contract_design",
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/202",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tiRg",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "WP01 #1; WP02 #2; TK03 #270",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK104",
@@ -8340,7 +10243,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/decision-register.md"
       ],
-      "work_kind": "contract_design"
+      "work_kind": "contract_design",
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/203",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tiWY",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "WP01 #1; WP02 #2; TK03 #270",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK106",
@@ -8383,7 +10297,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/decision-register.md"
       ],
-      "work_kind": "decision_research"
+      "work_kind": "decision_research",
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/204",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tibE",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "WP01 #1; WP02 #2; TK03 #270",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK108",
@@ -8428,7 +10353,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/decision-register.md"
       ],
-      "work_kind": "contract_design"
+      "work_kind": "contract_design",
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/205",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tifc",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "WP01 #1; WP02 #2; TK03 #270",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK110",
@@ -8473,7 +10409,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/decision-register.md"
       ],
-      "work_kind": "contract_design"
+      "work_kind": "contract_design",
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/206",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tijs",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "UI Designer — Wu Yunzhou",
+        "dependencies_text": "WP01 #1; WP02 #2; TK03 #270",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK112",
@@ -8518,7 +10465,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/decision-register.md"
       ],
-      "work_kind": "contract_design"
+      "work_kind": "contract_design",
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/207",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tioE",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "WP03 #3; TK04 #271",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK114",
@@ -8563,7 +10521,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/decision-register.md"
       ],
-      "work_kind": "contract_design"
+      "work_kind": "contract_design",
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/208",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tisY",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "WP03 #3; TK04 #271",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK116",
@@ -8609,7 +10578,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/decision-register.md"
       ],
-      "work_kind": "contract_design"
+      "work_kind": "contract_design",
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/209",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tiy8",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "WP03 #3; TK04 #271",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK118",
@@ -8654,7 +10634,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/decision-register.md"
       ],
-      "work_kind": "contract_design"
+      "work_kind": "contract_design",
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/210",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9ti3k",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "UI Designer — Wu Yunzhou",
+        "dependencies_text": "WP03 #3; TK36 #135; TK37 #136; TK38 #137; TK04 #271",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK120",
@@ -8697,7 +10688,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/decision-register.md"
       ],
-      "work_kind": "contract_design"
+      "work_kind": "contract_design",
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/211",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9ti8I",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "WP03 #3; TK36 #135; TK37 #136; TK38 #137; TK04 #271",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK122",
@@ -8741,7 +10743,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/decision-register.md"
       ],
-      "work_kind": "decision_research"
+      "work_kind": "decision_research",
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/212",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tjBQ",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "WP03 #3; TK36 #135; TK37 #136; TK38 #137; TK04 #271",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK124",
@@ -8794,7 +10807,18 @@
       "source": [
         "docs/management/product-requirements.md",
         "docs/management/system-requirements.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/213",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tjHc",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Worker — Torsten Maier",
+        "dependencies_text": "WP01 #1; WP02 #2; TK31 #130; TK32 #131; TK33 #132; TK03 #270",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK126",
@@ -8847,7 +10871,18 @@
       "source": [
         "docs/management/product-requirements.md",
         "docs/management/system-requirements.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/214",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tjMQ",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "User Tester — Abt Hermann",
+        "dependencies_text": "WP01 #1; WP02 #2; TK42 #141; TK03 #270",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK128",
@@ -8896,7 +10931,18 @@
       "source": [
         "docs/management/product-requirements.md",
         "docs/management/system-requirements.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/215",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tjR8",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Worker — Torsten Maier",
+        "dependencies_text": "WP01 #1; WP02 #2; TK34 #133; TK35 #134; TK03 #270",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK130",
@@ -8945,7 +10991,18 @@
       "source": [
         "docs/management/product-requirements.md",
         "docs/management/system-requirements.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/216",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tjW4",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "User Tester — Abt Hermann",
+        "dependencies_text": "WP01 #1; WP02 #2; TK44 #143; TK03 #270",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK132",
@@ -9005,7 +11062,18 @@
       "source": [
         "docs/management/product-requirements.md",
         "docs/management/system-requirements.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/217",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tjbk",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Worker — Torsten Maier",
+        "dependencies_text": "WP03 #3; TK36 #135; TK38 #137; TK39 #138; TK40 #139; TK41 #140; TK04 #271",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK134",
@@ -9065,7 +11133,18 @@
       "source": [
         "docs/management/product-requirements.md",
         "docs/management/system-requirements.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/218",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tjg8",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "User Tester — Abt Hermann",
+        "dependencies_text": "WP03 #3; TK46 #146; TK04 #271",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK200",
@@ -9109,7 +11188,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/219",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tjmE",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "TK01 #268",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK201",
@@ -9153,7 +11243,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/220",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tjqk",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "TK01 #268",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK202",
@@ -9199,7 +11300,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/221",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tjvI",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "TK01 #268",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK203",
@@ -9245,7 +11357,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/222",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tj0s",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "TK01 #268",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK204",
@@ -9288,7 +11411,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/223",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tj5o",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Worker — Torsten Maier",
+        "dependencies_text": "WP03 #3; TK50 #148; TK51 #149; TK04 #271",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK205",
@@ -9331,7 +11465,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/224",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tkBk",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Worker — Torsten Maier",
+        "dependencies_text": "WP03 #3; TK50 #148; TK51 #149; TK04 #271",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK206",
@@ -9377,7 +11522,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/225",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tkHM",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Worker — Torsten Maier",
+        "dependencies_text": "WP03 #3; TK50 #148; TK51 #149; TK04 #271",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK207",
@@ -9423,7 +11579,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/226",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tkL4",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Worker — Torsten Maier",
+        "dependencies_text": "WP03 #3; TK50 #148; TK51 #149; TK04 #271",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK208",
@@ -9473,7 +11640,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/227",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tkRQ",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "User Tester — Abt Hermann",
+        "dependencies_text": "WP01 #1; WP02 #2; WP03 #3; WP04 #4; WP05 #5; TK52 #150; TK53 #151; TK55 #153; TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK209",
@@ -9523,7 +11701,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/228",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tkVg",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "User Tester — Abt Hermann",
+        "dependencies_text": "WP01 #1; WP02 #2; WP03 #3; WP04 #4; WP05 #5; TK52 #150; TK53 #151; TK55 #153; TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK210",
@@ -9568,7 +11757,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/229",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tka0",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Worker — Torsten Maier",
+        "dependencies_text": "WP03 #3; TK50 #148; TK51 #149; TK04 #271",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK211",
@@ -9613,7 +11813,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/230",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tkhg",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Worker — Torsten Maier",
+        "dependencies_text": "WP03 #3; TK50 #148; TK51 #149; TK04 #271",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK212",
@@ -9659,7 +11870,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/231",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tkl8",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "TK01 #268",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK213",
@@ -9705,7 +11927,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/232",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tksE",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "TK01 #268",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK214",
@@ -9753,7 +11986,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/233",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tkyE",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Worker — Torsten Maier",
+        "dependencies_text": "WP02 #2; WP04 #4; TK56 #154; TK03 #270; TK05 #272",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK215",
@@ -9801,7 +12045,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/234",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tk3k",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Worker — Torsten Maier",
+        "dependencies_text": "WP02 #2; WP04 #4; TK56 #154; TK03 #270; TK05 #272",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK216",
@@ -9845,7 +12100,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/235",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tk98",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Worker — Torsten Maier",
+        "dependencies_text": "WP02 #2; WP04 #4; TK56 #154; TK03 #270; TK05 #272",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK217",
@@ -9889,7 +12155,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/236",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tlEo",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Worker — Torsten Maier",
+        "dependencies_text": "WP02 #2; WP04 #4; TK56 #154; TK03 #270; TK05 #272",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK218",
@@ -9941,7 +12218,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/237",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tlKs",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "User Tester — Abt Hermann",
+        "dependencies_text": "WP01 #1; WP02 #2; WP03 #3; WP04 #4; WP05 #5; TK57 #155; TK58 #156; TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK219",
@@ -9993,7 +12281,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/238",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tlSY",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "User Tester — Abt Hermann",
+        "dependencies_text": "WP01 #1; WP02 #2; WP03 #3; WP04 #4; WP05 #5; TK57 #155; TK58 #156; TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK220",
@@ -10039,7 +12338,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/239",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tlZQ",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "TK01 #268",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK221",
@@ -10085,7 +12395,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/240",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tlec",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "TK01 #268",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK222",
@@ -10140,7 +12461,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/241",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tllo",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Worker — Torsten Maier",
+        "dependencies_text": "WP02 #2; WP04 #4; TK60 #158; TK73 #171; TK03 #270; TK05 #272",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK223",
@@ -10195,7 +12527,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/242",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tlrk",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Worker — Torsten Maier",
+        "dependencies_text": "WP02 #2; WP04 #4; TK60 #158; TK73 #171; TK03 #270; TK05 #272",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK224",
@@ -10252,7 +12595,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/243",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tlwg",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "User Tester — Abt Hermann",
+        "dependencies_text": "WP01 #1; WP02 #2; WP03 #3; WP04 #4; WP05 #5; TK61 #159; TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK225",
@@ -10309,7 +12663,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/244",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tl1I",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "User Tester — Abt Hermann",
+        "dependencies_text": "WP01 #1; WP02 #2; WP03 #3; WP04 #4; WP05 #5; TK61 #159; TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK226",
@@ -10358,7 +12723,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/245",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tl6g",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "TK01 #268",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK227",
@@ -10407,7 +12783,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/246",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tl_M",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "TK01 #268",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK228",
@@ -10459,7 +12846,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/247",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tmFg",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Worker — Torsten Maier",
+        "dependencies_text": "WP02 #2; WP04 #4; TK63 #161; TK66 #164; TK03 #270; TK05 #272",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK229",
@@ -10511,7 +12909,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/248",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tmLg",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Worker — Torsten Maier",
+        "dependencies_text": "WP02 #2; WP04 #4; TK63 #161; TK66 #164; TK03 #270; TK05 #272",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK230",
@@ -10563,7 +12972,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/249",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tmRw",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "User Tester — Abt Hermann",
+        "dependencies_text": "WP01 #1; WP02 #2; WP03 #3; WP04 #4; WP05 #5; TK64 #162; TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK231",
@@ -10615,7 +13035,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/250",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tmaI",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "User Tester — Abt Hermann",
+        "dependencies_text": "WP01 #1; WP02 #2; WP03 #3; WP04 #4; WP05 #5; TK64 #162; TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK232",
@@ -10670,7 +13101,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/251",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tmfs",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "TK01 #268",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK233",
@@ -10725,7 +13167,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/252",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tmlU",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "TK01 #268",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK234",
@@ -10773,7 +13226,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/253",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tmq0",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Worker — Torsten Maier",
+        "dependencies_text": "WP01 #1; TK66 #164; TK01 #268; TK02 #269",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK235",
@@ -10821,7 +13285,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/254",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tmwg",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Worker — Torsten Maier",
+        "dependencies_text": "WP01 #1; TK66 #164; TK01 #268; TK02 #269",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK236",
@@ -10865,7 +13340,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/255",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tm2A",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Worker — Torsten Maier",
+        "dependencies_text": "WP02 #2; WP04 #4; TK66 #164; TK03 #270; TK05 #272",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK237",
@@ -10909,7 +13395,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/256",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tm8Q",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Worker — Torsten Maier",
+        "dependencies_text": "WP02 #2; WP04 #4; TK66 #164; TK03 #270; TK05 #272",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK238",
@@ -10984,7 +13481,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/257",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tnDg",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "User Tester — Abt Hermann",
+        "dependencies_text": "WP01 #1; WP02 #2; WP03 #3; WP04 #4; WP05 #5; TK67 #165; TK68 #166; TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK239",
@@ -11059,7 +13567,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/258",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tnJU",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "User Tester — Abt Hermann",
+        "dependencies_text": "WP01 #1; WP02 #2; WP03 #3; WP04 #4; WP05 #5; TK67 #165; TK68 #166; TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK240",
@@ -11107,7 +13626,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/259",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tnR0",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Worker — Torsten Maier",
+        "dependencies_text": "WP03 #3; TK51 #149; TK04 #271",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK241",
@@ -11155,7 +13685,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/260",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tnX0",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Worker — Torsten Maier",
+        "dependencies_text": "WP03 #3; TK51 #149; TK04 #271",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK242",
@@ -11203,7 +13744,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/261",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tncU",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "User Tester — Abt Hermann",
+        "dependencies_text": "WP01 #1; WP02 #2; WP03 #3; WP04 #4; WP05 #5; TK70 #168; TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK243",
@@ -11251,7 +13803,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/262",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tnhk",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "User Tester — Abt Hermann",
+        "dependencies_text": "WP01 #1; WP02 #2; WP03 #3; WP04 #4; WP05 #5; TK70 #168; TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK244",
@@ -11307,7 +13870,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/263",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tnmQ",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "TK01 #268",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK245",
@@ -11363,7 +13937,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/264",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tnrc",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "System Architect — Feng Guo",
+        "dependencies_text": "TK01 #268",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK246",
@@ -11413,7 +13998,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/265",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tnvw",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "UI Designer — Wu Yunzhou",
+        "dependencies_text": "TK01 #268",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "id": "STK247",
@@ -11463,7 +14059,18 @@
         "docs/management/wp01-requirements-package.md",
         "docs/management/p0-ui-requirements-review.md",
         "docs/project-brief-and-roadmap.md"
-      ]
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/266",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tnzQ",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "UI Designer — Wu Yunzhou",
+        "dependencies_text": "TK01 #268",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     },
     {
       "work_package": "WP06",
@@ -11534,7 +14141,18 @@
       "evidence_ids": [
         "TC79"
       ],
-      "title": "[Task][quality]Check reciprocal group C requirement links"
+      "title": "[Task][quality]Check reciprocal group C requirement links",
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/267",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tn5U",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Quality Manager — Wang Xiaofeng",
+        "dependencies_text": "WP01 #1; WP02 #2; WP03 #3; WP04 #4; WP05 #5; TK54 #152; TK59 #157; TK62 #160; TK65 #163; TK69 #167; TK71 #169; TK72 #170; TK73 #171; TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273",
+        "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      }
     }
   ],
   "perspective_assessments": [

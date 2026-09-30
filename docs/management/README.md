@@ -2,7 +2,7 @@
 
 *A universe of expertise. Working for you.*
 
-This is the single management entry point for Datara. [Project control issue](https://github.com/fengguode/DATARA/issues/8) tracks delivery. One target Codex cloud environment serves management, system engineering, delivery tasks, verification, and final validation. Actual cloud provisioning is pending authenticated access.
+This is the single management entry point for Datara. [Project control issue](https://github.com/fengguode/DATARA/issues/8) tracks delivery. One target Codex cloud environment serves management, system engineering, delivery tasks, verification, and final validation. The [DATARA Codex environment](https://chatgpt.com/codex/cloud/settings/environment/6abc9f6b878c8191bca11872a839a62a) is created and connected to fengguode/DATARA. Runtime checks and product validation are tracked separately.
 
 ## Management documents
 

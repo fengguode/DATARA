@@ -1,6 +1,6 @@
 # DATARA agent roster
 
-The **Primary Coordinator (Codex)** coordinates and integrates work and owns GitHub status reporting. The initiating Codex primary agent holds this role for each issue until an explicit handoff names a successor in that issue. Roles are bounded assignments, not standing authority to change the product. Every agent reads `AGENTS.md`, the management index, the relevant product and system requirement records, [the workflow](workflow.md), [shared lessons](knowledge/shared-lessons.md), and its own knowledge file before working.
+The **Primary Coordinator (Codex)** coordinates and integrates work and owns GitHub status reporting. The initiating Codex primary agent holds this role for each issue until an explicit handoff names a successor in that issue. Roles are bounded assignments, not standing authority to change the product. Every agent reads `AGENTS.md`, the management index, the relevant CUS and SR records, [the workflow](workflow.md), [shared lessons](knowledge/shared-lessons.md), and its own knowledge file before working.
 
 | Role | Definition | Responsibility | Default edit authority |
 | --- | --- | --- | --- |

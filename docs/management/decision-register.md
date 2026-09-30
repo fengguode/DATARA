@@ -1,5 +1,9 @@
 # Open decisions and change management
 
+## Requirement hierarchy decision (30 September 2026)
+
+The founder defined Customer-User-Story (CUS) as the top level of all requirements. System requirements (SR) derive from CUS and cover applicable legal, engineering, running-environment, architecture, data-security, and other perspectives. This terminology and traceability change maps each former `PR01`–`PR13` identifier to `CUS01`–`CUS13` with the same number, priority, and existing scope. A system requirement may trace to multiple CUS records. The current SR draft has not been audited for completeness across those perspectives; adding or changing substantive obligations remains subject to the normal decision and evidence process. PR means pull request in current prose.
+
 | ID | Decision needed | Package | Status |
 | --- | --- | --- | --- |
 | D01 | Approve official FIT evidence/version, accepted mappings and variants, limits, exact/tolerant conflict policy, and fixture provenance/redistribution | WP01 | Proposed options; open |

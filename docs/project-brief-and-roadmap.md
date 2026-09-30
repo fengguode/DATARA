@@ -36,20 +36,20 @@ Initially, Datara alone creates skills; all skills are assumed free and license-
 
 ## P0 First usable release
 
-P0 proves one complete, repeatable manual workflow. Each requirement below is part of the release gate.
+P0 proves one complete, repeatable manual workflow. Each Customer-User-Story (CUS) below is part of the release gate; the canonical story text and derived system requirements are in [management records](management/product-requirements.md).
 
 | ID | Requirement | Acceptance condition |
 | --- | --- | --- |
-| PR01 | Source specification | Define accepted .fit variants, fields, units, times, validation rules, and sample fixtures. |
-| PR02 | Persistent data home | Retain originals and normalized records; identify duplicates and conflicting records. |
-| PR03 | Data preparation | Deterministic parsing, quality checks, metrics, and skill input packaging work reproducibly. |
-| PR04 | Baseline skills | A small evaluated set declares required inputs, applicability, outputs, and versions. |
-| PR05 | Eligibility | Users can select only skills supported by the selected dataset; gaps are visible. |
-| PR06 | Customer model access | Personal API credentials are protected; selected supported connections can execute skills. |
-| PR07 | Analysis execution | Manual runs validate inputs and output structure; failures are recorded explicitly. |
-| PR08 | Result history | Save evidence references, input snapshot references, skill version, model, and run date. |
-| PR09 | Dashboard and API | Predefined views and an authorized read-only API expose saved data and results. |
-| PR10 | User isolation | Access checks separate user files, results, and credentials throughout the workflow. |
+| CUS01 | Source specification | Define accepted .fit variants, fields, units, times, validation rules, and sample fixtures. |
+| CUS02 | Persistent data home | Retain originals and normalized records; identify duplicates and conflicting records. |
+| CUS03 | Data preparation | Deterministic parsing, quality checks, metrics, and skill input packaging work reproducibly. |
+| CUS04 | Baseline skills | A small evaluated set declares required inputs, applicability, outputs, and versions. |
+| CUS05 | Eligibility | Users can select only skills supported by the selected dataset; gaps are visible. |
+| CUS06 | Customer model access | Personal API credentials are protected; selected supported connections can execute skills. |
+| CUS07 | Analysis execution | Manual runs validate inputs and output structure; failures are recorded explicitly. |
+| CUS08 | Result history | Save evidence references, input snapshot references, skill version, model, and run date. |
+| CUS09 | Dashboard and API | Predefined views and an authorized read-only API expose saved data and results. |
+| CUS10 | User isolation | Access checks separate user files, results, and credentials throughout the workflow. |
 
 ### User stories unlocked
 

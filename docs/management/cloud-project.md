@@ -1,6 +1,6 @@
 # Datara cloud project setup
 
-Target name: **DATARA**. Repository: **fengguode/DATARA**. Purpose: project management, product requirements, system requirements engineering, implementation task coordination, verification, and final validation within one Codex cloud project/environment.
+Target name: **DATARA**. Repository: **fengguode/DATARA**. Purpose: project management, Customer-User-Stories, system requirements engineering, implementation task coordination, verification, and final validation within one Codex cloud project/environment.
 
 ## Creation status
 

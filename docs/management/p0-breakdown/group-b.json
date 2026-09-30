@@ -1,0 +1,3153 @@
+{
+  "group": "B",
+  "cus_ids": [
+    "CUS04",
+    "CUS05",
+    "CUS06"
+  ],
+  "features": [
+    {
+      "id": "FEAT04",
+      "title": "[Feature][backend]Define the baseline skill library",
+      "statement": "Specify a small Datara-created set of provider-independent elemental skills with explicit inputs, applicability, method, outputs, version and evaluation references; the actual shortlist and release threshold remain subject to D02.",
+      "priority": "P0",
+      "status": "Proposed",
+      "readiness": "Blocked on decision",
+      "parent_cus_ids": [
+        "CUS04"
+      ],
+      "sr_ids": [
+        "SR08",
+        "SR09",
+        "SR29",
+        "SR50",
+        "SR51"
+      ],
+      "work_package": "WP03",
+      "dependencies": [],
+      "owner_role": "System Architect — Feng Guo",
+      "acceptance_criteria": [
+        "Given a candidate skill definition, when its contract is inspected, then every required declaration is present and has a stable versioned identity; oracle: TC40 contract fixtures."
+      ],
+      "outputs": [
+        "Proposed baseline skill catalogue and common definition contract"
+      ],
+      "evidence_ids": [
+        "TC40",
+        "TC41",
+        "TC42"
+      ],
+      "decision_ids": [
+        "D02"
+      ],
+      "source": [
+        "docs/management/product-requirements.md",
+        "docs/management/system-requirements.md",
+        "docs/management/wp01-requirements-package.md",
+        "docs/management/decision-register.md"
+      ],
+      "notes": "No candidate skill is selected or evaluated by this proposal.",
+      "work_package_dependencies": [
+        "WP01",
+        "WP02"
+      ]
+    },
+    {
+      "id": "FEAT30",
+      "title": "[Feature][backend]Trace skill methods and evaluation evidence",
+      "statement": "Keep proposed skill methods connected to reviewed source references and separate deterministic, contract and substantive evaluation evidence before release.",
+      "priority": "P0",
+      "status": "Proposed",
+      "readiness": "Blocked on decision",
+      "parent_cus_ids": [
+        "CUS04"
+      ],
+      "sr_ids": [
+        "SR51",
+        "SR52"
+      ],
+      "work_package": "WP03",
+      "dependencies": [],
+      "owner_role": "System Architect — Feng Guo",
+      "acceptance_criteria": [
+        "Given a proposed skill release, when its evidence package is inspected, then source provenance and each evaluation layer are independently reviewable and the D02 gate is unresolved until approved; oracle: TC41 and TC42."
+      ],
+      "outputs": [
+        "Skill provenance and evaluation evidence package proposal"
+      ],
+      "evidence_ids": [
+        "TC41",
+        "TC42"
+      ],
+      "decision_ids": [
+        "D02"
+      ],
+      "source": [
+        "docs/brainstorming-record-2026-09-30.md",
+        "docs/management/wp01-requirements-package.md"
+      ],
+      "notes": "Source-to-skill automation remains deferred; this is manual traceability for baseline skill proposals.",
+      "work_package_dependencies": [
+        "WP01",
+        "WP02"
+      ]
+    },
+    {
+      "id": "FEAT05",
+      "title": "[Feature][backend]Determine skill eligibility",
+      "statement": "Evaluate declared mandatory inputs, history coverage and approved quality rules deterministically for a selected dataset and skill version before execution.",
+      "priority": "P0",
+      "status": "Proposed",
+      "readiness": "Blocked on decision",
+      "parent_cus_ids": [
+        "CUS05"
+      ],
+      "sr_ids": [
+        "SR10",
+        "SR11",
+        "SR53"
+      ],
+      "work_package": "WP03",
+      "dependencies": [],
+      "owner_role": "System Architect — Feng Guo",
+      "acceptance_criteria": [
+        "Given fixed skill, dataset snapshot and rule version, when eligibility runs, then its result and unmet codes are repeatable and ineligible skills cannot be submitted; oracle: TC43 and TC44."
+      ],
+      "outputs": [
+        "Eligibility decision and unmet-requirement contract proposal"
+      ],
+      "evidence_ids": [
+        "TC43",
+        "TC44"
+      ],
+      "decision_ids": [
+        "D02"
+      ],
+      "source": [
+        "docs/management/product-requirements.md",
+        "docs/management/system-requirements.md",
+        "docs/management/wp01-requirements-package.md",
+        "docs/management/decision-register.md"
+      ],
+      "notes": "Coverage and quality thresholds remain open under D02.",
+      "work_package_dependencies": [
+        "WP01",
+        "WP02"
+      ]
+    },
+    {
+      "id": "FEAT31",
+      "title": "[Feature][frontend]Explain eligibility and skill choices",
+      "statement": "Present skill declarations and eligibility gaps as understandable text and provide operable catalog states without implying unsupported analysis.",
+      "priority": "P0",
+      "status": "Proposed",
+      "readiness": "Proposed",
+      "parent_cus_ids": [
+        "CUS04",
+        "CUS05"
+      ],
+      "sr_ids": [
+        "SR53",
+        "SR58"
+      ],
+      "work_package": "WP03",
+      "dependencies": [],
+      "owner_role": "UI Designer — Wu Yunzhou",
+      "acceptance_criteria": [
+        "Given eligible and ineligible skill states, when the catalog is inspected, then users can identify the required inputs, observed gaps and selection state in text and operate controls by keyboard; oracle: TC44 and TC45."
+      ],
+      "outputs": [
+        "Skill catalog and eligibility state acceptance specification"
+      ],
+      "evidence_ids": [
+        "TC44",
+        "TC45"
+      ],
+      "decision_ids": [
+        "D02"
+      ],
+      "source": [
+        "docs/management/p0-ui-requirements-review.md",
+        "docs/management/wp01-requirements-package.md"
+      ],
+      "notes": "No formal accessibility standard or device support matrix is selected here.",
+      "work_package_dependencies": [
+        "WP01",
+        "WP02"
+      ]
+    },
+    {
+      "id": "FEAT06",
+      "title": "[Feature][backend]Use customer-selected model connections",
+      "statement": "Support analysis through an explicitly selected customer model connection while protecting customer credentials and preventing silent connection substitution.",
+      "priority": "P0",
+      "status": "Proposed",
+      "readiness": "Blocked on decision",
+      "parent_cus_ids": [
+        "CUS06"
+      ],
+      "sr_ids": [
+        "SR12",
+        "SR13",
+        "SR30",
+        "SR54",
+        "SR55",
+        "SR56",
+        "SR57",
+        "SR59"
+      ],
+      "work_package": "WP04",
+      "dependencies": [],
+      "owner_role": "System Architect — Feng Guo",
+      "acceptance_criteria": [
+        "Given a chosen supported model connection, when a request is constructed, then it is bound to that choice and secrets remain outside skill and request contracts; oracle: TC46, TC48 and TC49."
+      ],
+      "outputs": [
+        "Customer-selected model connection and credential-protection proposal"
+      ],
+      "evidence_ids": [
+        "TC46",
+        "TC47",
+        "TC48",
+        "TC49",
+        "TC50"
+      ],
+      "decision_ids": [
+        "D03"
+      ],
+      "source": [
+        "docs/management/product-requirements.md",
+        "docs/management/system-requirements.md",
+        "docs/management/wp01-requirements-package.md",
+        "docs/management/decision-register.md"
+      ],
+      "notes": "Provider, capability, credential storage and retention choices remain open under D03.",
+      "work_package_dependencies": [
+        "WP01",
+        "WP02",
+        "WP03"
+      ]
+    },
+    {
+      "id": "FEAT32",
+      "title": "[Feature][backend]Declare connection capabilities",
+      "statement": "Represent supported model-connection capabilities and block execution when the selected connection cannot meet a skill's declared needs.",
+      "priority": "P0",
+      "status": "Proposed",
+      "readiness": "Blocked on decision",
+      "parent_cus_ids": [
+        "CUS06"
+      ],
+      "sr_ids": [
+        "SR55",
+        "SR57"
+      ],
+      "work_package": "WP04",
+      "dependencies": [],
+      "owner_role": "System Architect — Feng Guo",
+      "acceptance_criteria": [
+        "Given a selected connection that lacks a required capability, when execution is requested, then execution is blocked and the missing capability is explained; oracle: TC47."
+      ],
+      "outputs": [
+        "Capability declaration and compatibility rule proposal"
+      ],
+      "evidence_ids": [
+        "TC47",
+        "TC49"
+      ],
+      "decision_ids": [
+        "D03"
+      ],
+      "source": [
+        "docs/management/wp01-requirements-package.md",
+        "docs/management/decision-register.md"
+      ],
+      "notes": "Initial providers and supported capabilities are not selected.",
+      "work_package_dependencies": [
+        "WP01",
+        "WP03"
+      ]
+    },
+    {
+      "id": "FEAT33",
+      "title": "[Feature][security]Protect selected connection credentials",
+      "statement": "Keep credential handling confined to a documented customer-scoped protection boundary and exclude secrets from skill, output, log and evidence surfaces.",
+      "priority": "P0",
+      "status": "Proposed",
+      "readiness": "Blocked on decision",
+      "parent_cus_ids": [
+        "CUS06"
+      ],
+      "sr_ids": [
+        "SR13",
+        "SR54",
+        "SR59"
+      ],
+      "work_package": "WP04",
+      "dependencies": [],
+      "owner_role": "System Architect — Feng Guo",
+      "acceptance_criteria": [
+        "Given a test credential used for analysis, when the documented access and protection controls are reviewed, then the credential is absent from skill definitions, user-visible outputs and operational evidence; oracle: TC46 and TC50."
+      ],
+      "outputs": [
+        "Credential-protection requirements and unresolved lifecycle questions"
+      ],
+      "evidence_ids": [
+        "TC46",
+        "TC50"
+      ],
+      "decision_ids": [
+        "D03"
+      ],
+      "source": [
+        "docs/management/wp01-requirements-package.md",
+        "docs/management/system-requirements.md"
+      ],
+      "notes": "This proposal does not choose storage, retention, rotation or deployment controls.",
+      "work_package_dependencies": [
+        "WP01",
+        "WP02"
+      ]
+    },
+    {
+      "id": "FEAT34",
+      "title": "[Feature][frontend]Select a supported customer model",
+      "statement": "Require an explicit user selection of a supported connection and model for analysis, and show unavailable/unsupported states without changing that selection.",
+      "priority": "P0",
+      "status": "Proposed",
+      "readiness": "Blocked on decision",
+      "parent_cus_ids": [
+        "CUS06"
+      ],
+      "sr_ids": [
+        "SR12",
+        "SR56"
+      ],
+      "work_package": "WP04",
+      "dependencies": [],
+      "owner_role": "UI Designer — Wu Yunzhou",
+      "acceptance_criteria": [
+        "Given a selected connection that becomes unavailable, when the user starts analysis, then the UI shows the selected choice and a failure/block state without selecting another connection; oracle: TC48."
+      ],
+      "outputs": [
+        "Connection-selection and unavailable-state acceptance specification"
+      ],
+      "evidence_ids": [
+        "TC45",
+        "TC48"
+      ],
+      "decision_ids": [
+        "D03"
+      ],
+      "source": [
+        "docs/management/p0-ui-requirements-review.md",
+        "docs/management/wp01-requirements-package.md"
+      ],
+      "notes": "Provider-specific setup and capability copy await D03 evidence.",
+      "work_package_dependencies": [
+        "WP01",
+        "WP03"
+      ]
+    },
+    {
+      "id": "FEAT35",
+      "title": "[Feature][operations]Bound model request lifecycle evidence",
+      "statement": "Specify the outcome information needed to diagnose customer model connection failures without exposing credentials, and identify unresolved lifecycle questions.",
+      "priority": "P0",
+      "status": "Proposed",
+      "readiness": "Blocked on decision",
+      "parent_cus_ids": [
+        "CUS06"
+      ],
+      "sr_ids": [
+        "SR57",
+        "SR59"
+      ],
+      "work_package": "WP04",
+      "dependencies": [],
+      "owner_role": "System Architect — Feng Guo",
+      "acceptance_criteria": [
+        "Given representative model connection outcomes, when the operations proposal is reviewed, then failure causes can be distinguished without credential values and unresolved limits or retention are listed against D03; oracle: TC49 and TC50."
+      ],
+      "outputs": [
+        "Model connection outcome evidence proposal"
+      ],
+      "evidence_ids": [
+        "TC49",
+        "TC50"
+      ],
+      "decision_ids": [
+        "D03"
+      ],
+      "source": [
+        "docs/management/wp01-requirements-package.md",
+        "docs/management/validation-plan.md"
+      ],
+      "notes": "Timeout values, retention periods and provider retry behavior are not set.",
+      "work_package_dependencies": [
+        "WP01",
+        "WP03"
+      ]
+    }
+  ],
+  "existing_sr_links": [
+    {
+      "id": "SR08",
+      "feature_ids": [
+        "FEAT04"
+      ],
+      "perspective_tags": [
+        "engineering",
+        "architecture",
+        "domain_provenance"
+      ],
+      "source": [
+        "docs/management/system-requirements.md"
+      ]
+    },
+    {
+      "id": "SR09",
+      "feature_ids": [
+        "FEAT04"
+      ],
+      "perspective_tags": [
+        "engineering",
+        "architecture",
+        "privacy_security"
+      ],
+      "source": [
+        "docs/management/system-requirements.md"
+      ]
+    },
+    {
+      "id": "SR10",
+      "feature_ids": [
+        "FEAT05"
+      ],
+      "perspective_tags": [
+        "engineering",
+        "architecture",
+        "runtime"
+      ],
+      "source": [
+        "docs/management/system-requirements.md"
+      ]
+    },
+    {
+      "id": "SR11",
+      "feature_ids": [
+        "FEAT05",
+        "FEAT31"
+      ],
+      "perspective_tags": [
+        "engineering",
+        "architecture",
+        "privacy_security"
+      ],
+      "source": [
+        "docs/management/system-requirements.md"
+      ]
+    },
+    {
+      "id": "SR12",
+      "feature_ids": [
+        "FEAT06",
+        "FEAT34"
+      ],
+      "perspective_tags": [
+        "engineering",
+        "architecture"
+      ],
+      "source": [
+        "docs/management/system-requirements.md"
+      ]
+    },
+    {
+      "id": "SR13",
+      "feature_ids": [
+        "FEAT06",
+        "FEAT33"
+      ],
+      "perspective_tags": [
+        "privacy_security",
+        "architecture",
+        "operations_backup_retention_recovery"
+      ],
+      "source": [
+        "docs/management/system-requirements.md"
+      ]
+    },
+    {
+      "id": "SR29",
+      "feature_ids": [
+        "FEAT04"
+      ],
+      "perspective_tags": [
+        "engineering",
+        "architecture",
+        "domain_provenance"
+      ],
+      "source": [
+        "docs/management/system-requirements.md"
+      ]
+    },
+    {
+      "id": "SR30",
+      "feature_ids": [
+        "FEAT06",
+        "FEAT32"
+      ],
+      "perspective_tags": [
+        "engineering",
+        "architecture",
+        "runtime"
+      ],
+      "source": [
+        "docs/management/system-requirements.md"
+      ]
+    }
+  ],
+  "system_requirements": [
+    {
+      "id": "SR50",
+      "title": "[SR][backend]Version released skill definitions",
+      "cus_ids": [
+        "CUS04"
+      ],
+      "feature_ids": [
+        "FEAT04"
+      ],
+      "priority": "P0",
+      "statement": "The system shall assign each released skill definition an immutable version identifier and retain the version referenced by any run.",
+      "acceptance_criteria": [
+        "Given two versions of a skill and a run referencing the earlier version, when the definition history is retrieved, then both versions remain distinguishable and the run resolves to its original version; oracle: a version-history contract fixture."
+      ],
+      "source": [
+        "docs/management/product-requirements.md",
+        "docs/management/system-requirements.md",
+        "docs/management/wp01-requirements-package.md",
+        "docs/management/decision-register.md"
+      ],
+      "perspective_tags": [
+        "engineering",
+        "architecture"
+      ],
+      "verification_ids": [
+        "TC51"
+      ],
+      "evidence_ids": [
+        "TC51"
+      ],
+      "work_package": "WP03",
+      "decision_ids": [
+        "D02"
+      ],
+      "status": "Draft derived requirement"
+    },
+    {
+      "id": "SR51",
+      "title": "[SR][backend]Separate skill evaluation evidence",
+      "cus_ids": [
+        "CUS04"
+      ],
+      "feature_ids": [
+        "FEAT04",
+        "FEAT30"
+      ],
+      "priority": "P0",
+      "statement": "The system shall prevent a candidate skill from receiving an evaluated or released label until the applicable D02 evaluation gate is approved and shall retain distinct evaluation evidence.",
+      "acceptance_criteria": [
+        "Given a candidate skill with deterministic-input, output-contract and substantive-evaluation records, when its state is reviewed before D02 approval, then the evaluation categories remain distinct and it is not labeled evaluated or released; oracle: TC41."
+      ],
+      "source": [
+        "docs/management/product-requirements.md",
+        "docs/management/system-requirements.md",
+        "docs/management/wp01-requirements-package.md",
+        "docs/management/decision-register.md"
+      ],
+      "perspective_tags": [
+        "engineering",
+        "architecture",
+        "domain_provenance"
+      ],
+      "verification_ids": [
+        "TC41"
+      ],
+      "evidence_ids": [
+        "TC41"
+      ],
+      "work_package": "WP03",
+      "decision_ids": [
+        "D02"
+      ],
+      "status": "Draft derived requirement"
+    },
+    {
+      "id": "SR52",
+      "title": "[SR][backend]Record skill method provenance",
+      "cus_ids": [
+        "CUS04"
+      ],
+      "feature_ids": [
+        "FEAT30"
+      ],
+      "priority": "P0",
+      "statement": "The system shall record source provenance for each proposed skill-method claim and expose unresolved source-rights questions without asserting a legal conclusion.",
+      "acceptance_criteria": [
+        "Given a proposed skill-method claim and its source inventory, when provenance is reviewed, then the source reference is resolvable and unresolved rights questions remain open without implying permission; oracle: TC42."
+      ],
+      "source": [
+        "docs/management/product-requirements.md",
+        "docs/management/system-requirements.md",
+        "docs/management/wp01-requirements-package.md",
+        "docs/management/decision-register.md"
+      ],
+      "perspective_tags": [
+        "domain_provenance"
+      ],
+      "verification_ids": [
+        "TC42"
+      ],
+      "evidence_ids": [
+        "TC42"
+      ],
+      "work_package": "WP03",
+      "decision_ids": [
+        "D02"
+      ],
+      "status": "Draft derived requirement"
+    },
+    {
+      "id": "SR53",
+      "title": "[SR][backend]Return deterministic eligibility reasons",
+      "cus_ids": [
+        "CUS05"
+      ],
+      "feature_ids": [
+        "FEAT05",
+        "FEAT31"
+      ],
+      "priority": "P0",
+      "statement": "The system shall produce repeatable eligibility results and reason identifiers for the same snapshot, skill and rule versions, and shall block eligibility when a mandatory input is unmet.",
+      "acceptance_criteria": [
+        "Given identical skill, snapshot and rule versions, when eligibility is evaluated twice, then the result and reason identifiers match; an unmet mandatory input blocks eligibility without an inference request; oracle: TC43."
+      ],
+      "source": [
+        "docs/management/product-requirements.md",
+        "docs/management/system-requirements.md",
+        "docs/management/wp01-requirements-package.md",
+        "docs/management/decision-register.md"
+      ],
+      "perspective_tags": [
+        "engineering",
+        "architecture"
+      ],
+      "verification_ids": [
+        "TC43"
+      ],
+      "evidence_ids": [
+        "TC43"
+      ],
+      "work_package": "WP03",
+      "decision_ids": [
+        "D02"
+      ],
+      "status": "Draft derived requirement"
+    },
+    {
+      "id": "SR54",
+      "title": "[SR][security]Keep credentials outside skill and run payloads",
+      "cus_ids": [
+        "CUS06"
+      ],
+      "feature_ids": [
+        "FEAT06",
+        "FEAT33"
+      ],
+      "priority": "P0",
+      "statement": "The system shall protect customer credentials according to the documented access and protection design and exclude them from skill definitions, user-visible outputs and operational evidence.",
+      "acceptance_criteria": [
+        "Given a test credential used for a selected connection, when the documented protection design and declared response, log and evidence surfaces are reviewed, then no credential value is exposed and any D03-dependent control remains marked open; oracle: TC46."
+      ],
+      "source": [
+        "docs/management/product-requirements.md",
+        "docs/management/system-requirements.md",
+        "docs/management/wp01-requirements-package.md",
+        "docs/management/decision-register.md"
+      ],
+      "perspective_tags": [
+        "privacy_security",
+        "architecture"
+      ],
+      "verification_ids": [
+        "TC46"
+      ],
+      "evidence_ids": [
+        "TC46"
+      ],
+      "work_package": "WP04",
+      "decision_ids": [
+        "D03"
+      ],
+      "status": "Draft derived requirement"
+    },
+    {
+      "id": "SR55",
+      "title": "[SR][backend]Reject unsupported connection capabilities",
+      "cus_ids": [
+        "CUS06"
+      ],
+      "feature_ids": [
+        "FEAT06",
+        "FEAT32"
+      ],
+      "priority": "P0",
+      "statement": "The system shall block execution when the explicitly selected connection lacks a required capability and shall explain the missing capability.",
+      "acceptance_criteria": [
+        "Given a selected connection that lacks a required capability, when execution is requested, then execution is blocked, the missing capability is explained and no analysis request is issued; oracle: TC47."
+      ],
+      "source": [
+        "docs/management/product-requirements.md",
+        "docs/management/system-requirements.md",
+        "docs/management/wp01-requirements-package.md",
+        "docs/management/decision-register.md"
+      ],
+      "perspective_tags": [
+        "engineering",
+        "architecture"
+      ],
+      "verification_ids": [
+        "TC47"
+      ],
+      "evidence_ids": [
+        "TC47"
+      ],
+      "work_package": "WP04",
+      "decision_ids": [
+        "D03"
+      ],
+      "status": "Draft derived requirement"
+    },
+    {
+      "id": "SR56",
+      "title": "[SR][backend]Bind analysis to explicit model choice",
+      "cus_ids": [
+        "CUS06"
+      ],
+      "feature_ids": [
+        "FEAT06",
+        "FEAT34"
+      ],
+      "priority": "P0",
+      "statement": "The system shall address only the explicitly selected connection and report its unavailable or failed outcome without fallback.",
+      "acceptance_criteria": [
+        "Given connection A is selected and unavailable, when the user runs an analysis, then the result identifies A and records a blocked or failed state without using connection B or Datara-owned analysis credentials; oracle: TC48."
+      ],
+      "source": [
+        "docs/management/product-requirements.md",
+        "docs/management/system-requirements.md",
+        "docs/management/wp01-requirements-package.md",
+        "docs/management/decision-register.md"
+      ],
+      "perspective_tags": [
+        "engineering",
+        "architecture"
+      ],
+      "verification_ids": [
+        "TC48"
+      ],
+      "evidence_ids": [
+        "TC48"
+      ],
+      "work_package": "WP04",
+      "decision_ids": [
+        "D03"
+      ],
+      "status": "Draft derived requirement"
+    },
+    {
+      "id": "SR57",
+      "title": "[SR][runtime]Bound and normalize connection outcomes",
+      "cus_ids": [
+        "CUS06"
+      ],
+      "feature_ids": [
+        "FEAT06",
+        "FEAT32",
+        "FEAT35"
+      ],
+      "priority": "P0",
+      "statement": "The system shall normalize success, authentication, temporary, timeout and malformed-response outcomes to their declared result classes.",
+      "acceptance_criteria": [
+        "Given successful, authentication, temporary, timeout and malformed-response cases, when outcomes are recorded, then each is distinguishable as a declared connection outcome; timeout bounds remain unresolved pending D03 evidence; oracle: TC49."
+      ],
+      "source": [
+        "docs/management/product-requirements.md",
+        "docs/management/system-requirements.md",
+        "docs/management/wp01-requirements-package.md",
+        "docs/management/decision-register.md"
+      ],
+      "perspective_tags": [
+        "engineering",
+        "runtime"
+      ],
+      "verification_ids": [
+        "TC49"
+      ],
+      "evidence_ids": [
+        "TC49"
+      ],
+      "work_package": "WP04",
+      "decision_ids": [
+        "D03"
+      ],
+      "status": "Draft derived requirement"
+    },
+    {
+      "id": "SR58",
+      "title": "[SR][frontend]Make skill choice states operable and clear",
+      "cus_ids": [
+        "CUS04"
+      ],
+      "feature_ids": [
+        "FEAT31"
+      ],
+      "priority": "P0",
+      "statement": "The system shall present eligible and ineligible catalog states so that actions and missing inputs are identifiable through text and keyboard operation.",
+      "acceptance_criteria": [
+        "Given eligible and ineligible skill states, when the catalog is inspected and operated, then names, selection state and eligibility reasons are available as text through operable controls and do not rely on color alone; oracle: TC45."
+      ],
+      "source": [
+        "docs/management/product-requirements.md",
+        "docs/management/system-requirements.md",
+        "docs/management/wp01-requirements-package.md",
+        "docs/management/decision-register.md"
+      ],
+      "perspective_tags": [
+        "engineering",
+        "accessibility"
+      ],
+      "verification_ids": [
+        "TC45"
+      ],
+      "evidence_ids": [
+        "TC45"
+      ],
+      "work_package": "WP03",
+      "decision_ids": [
+        "D02"
+      ],
+      "status": "Draft derived requirement"
+    },
+    {
+      "id": "SR59",
+      "title": "[SR][operations]Exclude secrets from model-operation evidence",
+      "cus_ids": [
+        "CUS06"
+      ],
+      "feature_ids": [
+        "FEAT33",
+        "FEAT35"
+      ],
+      "priority": "P0",
+      "statement": "The system shall provide enough operational evidence to distinguish customer model connection outcomes without exposing credential values, and shall identify unresolved credential lifecycle controls before release.",
+      "acceptance_criteria": [
+        "Given successful and failed model connection cases, when operational evidence is reviewed, then it distinguishes the declared outcome without credential values and lists any unresolved D03 credential lifecycle controls; oracle: TC50."
+      ],
+      "source": [
+        "docs/management/product-requirements.md",
+        "docs/management/system-requirements.md",
+        "docs/management/wp01-requirements-package.md",
+        "docs/management/decision-register.md"
+      ],
+      "perspective_tags": [
+        "privacy_security",
+        "runtime",
+        "operations_backup_retention_recovery"
+      ],
+      "verification_ids": [
+        "TC50"
+      ],
+      "evidence_ids": [
+        "TC50"
+      ],
+      "work_package": "WP04",
+      "decision_ids": [
+        "D03"
+      ],
+      "status": "Draft derived requirement"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "TK30",
+      "parent_task_id": "TK04",
+      "title": "[Task][backend]Propose baseline elemental skill shortlist",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Proposed",
+      "work_package": "WP03",
+      "cus_ids": [
+        "CUS04"
+      ],
+      "feature_ids": [
+        "FEAT04"
+      ],
+      "sr_ids": [
+        "SR08",
+        "SR50"
+      ],
+      "requirement_ids": [
+        "CUS04",
+        "SR08",
+        "SR50"
+      ],
+      "dependencies": [],
+      "owner_role": "System Architect — Feng Guo",
+      "child_task_ids": [],
+      "subtask_ids": [
+        "STK100"
+      ],
+      "acceptance_criteria": [
+        "The shortlist has a row per proposed skill and records candidate, intended outcome, in/out scope, origin, input needs, evidence, exclusion rationale, and unresolved D02 choice. Reviewer can mark each required item present or missing; adjacent TC40/TC51 cases do not constitute shortlist verification."
+      ],
+      "outputs": [
+        "Reviewable shortlist with explicit candidate scope and unresolved decision items"
+      ],
+      "evidence_ids": [],
+      "decision_ids": [
+        "D02"
+      ],
+      "verification_ids": [],
+      "source": [
+        "docs/management/product-requirements.md",
+        "docs/management/system-requirements.md",
+        "docs/management/wp01-requirements-package.md",
+        "docs/management/decision-register.md"
+      ],
+      "work_kind": "decision_research"
+    },
+    {
+      "id": "TK31",
+      "parent_task_id": "TK04",
+      "title": "[Task][backend]Identify provider-independent skill declaration requirements",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Blocked on decision",
+      "work_package": "WP03",
+      "cus_ids": [
+        "CUS04"
+      ],
+      "feature_ids": [
+        "FEAT04"
+      ],
+      "sr_ids": [
+        "SR08",
+        "SR09",
+        "SR29",
+        "SR50"
+      ],
+      "requirement_ids": [
+        "CUS04",
+        "SR08",
+        "SR09",
+        "SR29",
+        "SR50"
+      ],
+      "dependencies": [],
+      "owner_role": "System Architect — Feng Guo",
+      "child_task_ids": [],
+      "subtask_ids": [
+        "STK102"
+      ],
+      "acceptance_criteria": [
+        "The requirements record states the user-relevant declaration expectations for applicability, inputs, method provenance, outputs, version, and evaluation; it lists unresolved D02 decisions and does not select a technical schema or architecture."
+      ],
+      "outputs": [
+        "Versioned skill definition contract and positive/negative examples"
+      ],
+      "evidence_ids": [
+        "TC40",
+        "TC51"
+      ],
+      "decision_ids": [
+        "D02"
+      ],
+      "verification_ids": [
+        "TC40",
+        "TC51"
+      ],
+      "source": [
+        "docs/management/product-requirements.md",
+        "docs/management/system-requirements.md",
+        "docs/management/wp01-requirements-package.md",
+        "docs/management/decision-register.md"
+      ],
+      "work_kind": "contract_design"
+    },
+    {
+      "id": "TK32",
+      "parent_task_id": "TK04",
+      "title": "[Task][backend]Define layered skill evaluation protocol",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Proposed",
+      "work_package": "WP03",
+      "cus_ids": [
+        "CUS04"
+      ],
+      "feature_ids": [
+        "FEAT30"
+      ],
+      "sr_ids": [
+        "SR51"
+      ],
+      "requirement_ids": [
+        "CUS04",
+        "SR51"
+      ],
+      "dependencies": [],
+      "owner_role": "System Architect — Feng Guo",
+      "child_task_ids": [],
+      "subtask_ids": [
+        "STK104"
+      ],
+      "acceptance_criteria": [
+        "The proposed evidence rubric defines separate observable pass/fail/blocked outcomes for deterministic behavior, contract conformance, mocked interactions, and substantive evaluation; it states which evidence is required before a skill can be called evaluated/released and leaves thresholds requiring D02 approval open."
+      ],
+      "outputs": [
+        "Evaluation protocol separating deterministic, schema, mocked and substantive evidence"
+      ],
+      "evidence_ids": [
+        "TC41"
+      ],
+      "decision_ids": [
+        "D02"
+      ],
+      "verification_ids": [
+        "TC41"
+      ],
+      "source": [
+        "docs/management/product-requirements.md",
+        "docs/management/system-requirements.md",
+        "docs/management/wp01-requirements-package.md",
+        "docs/management/decision-register.md"
+      ],
+      "work_kind": "contract_design"
+    },
+    {
+      "id": "TK33",
+      "parent_task_id": "TK04",
+      "title": "[Task][architecture]Assess method provenance, rights and eligibility applicability",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Proposed",
+      "work_package": "WP03",
+      "cus_ids": [
+        "CUS04",
+        "CUS05"
+      ],
+      "feature_ids": [
+        "FEAT30",
+        "FEAT05"
+      ],
+      "sr_ids": [
+        "SR52"
+      ],
+      "requirement_ids": [
+        "CUS04",
+        "CUS05",
+        "SR52"
+      ],
+      "dependencies": [],
+      "owner_role": "System Architect — Feng Guo",
+      "child_task_ids": [],
+      "subtask_ids": [
+        "STK106"
+      ],
+      "acceptance_criteria": [
+        "The candidate-method source inventory identifies resolvable origins and open attribution/use questions; it explicitly asks whether method provenance affects proposed eligibility use, records applicability as unknown until evidence is assessed, and makes no legal conclusion. D02 remains open."
+      ],
+      "outputs": [
+        "Source inventory and unresolved rights questions for candidate methods"
+      ],
+      "evidence_ids": [
+        "TC42"
+      ],
+      "decision_ids": [
+        "D02"
+      ],
+      "verification_ids": [
+        "TC42"
+      ],
+      "source": [
+        "docs/management/product-requirements.md",
+        "docs/management/system-requirements.md",
+        "docs/management/wp01-requirements-package.md",
+        "docs/management/decision-register.md"
+      ],
+      "work_kind": "decision_research"
+    },
+    {
+      "id": "TK34",
+      "parent_task_id": "TK04",
+      "title": "[Task][backend]Define eligibility outcomes and blocking requirements",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Blocked on decision",
+      "work_package": "WP03",
+      "cus_ids": [
+        "CUS05"
+      ],
+      "feature_ids": [
+        "FEAT05"
+      ],
+      "sr_ids": [
+        "SR10",
+        "SR11",
+        "SR53"
+      ],
+      "requirement_ids": [
+        "CUS05",
+        "SR10",
+        "SR11",
+        "SR53"
+      ],
+      "dependencies": [],
+      "owner_role": "System Architect — Feng Guo",
+      "child_task_ids": [],
+      "subtask_ids": [
+        "STK108"
+      ],
+      "acceptance_criteria": [
+        "The requirements record states repeatability for an unchanged snapshot and rule version, identifies mandatory unmet-input blocking with an explanation, and lists open policy decisions without defining a data schema."
+      ],
+      "outputs": [
+        "Eligibility rule/result contract with stable unmet-requirement identifiers"
+      ],
+      "evidence_ids": [
+        "TC43"
+      ],
+      "decision_ids": [
+        "D02"
+      ],
+      "verification_ids": [
+        "TC43"
+      ],
+      "source": [
+        "docs/management/product-requirements.md",
+        "docs/management/system-requirements.md",
+        "docs/management/wp01-requirements-package.md",
+        "docs/management/decision-register.md"
+      ],
+      "work_kind": "contract_design"
+    },
+    {
+      "id": "TK35",
+      "parent_task_id": "TK04",
+      "title": "[Task][frontend]Specify eligibility explanation and catalog states",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Blocked on decision",
+      "work_package": "WP03",
+      "cus_ids": [
+        "CUS04",
+        "CUS05"
+      ],
+      "feature_ids": [
+        "FEAT31"
+      ],
+      "sr_ids": [
+        "SR11",
+        "SR58"
+      ],
+      "requirement_ids": [
+        "CUS04",
+        "CUS05",
+        "SR11",
+        "SR58"
+      ],
+      "dependencies": [],
+      "owner_role": "UI Designer — Wu Yunzhou",
+      "child_task_ids": [],
+      "subtask_ids": [
+        "STK110"
+      ],
+      "acceptance_criteria": [
+        "The requirements note covers eligible, ineligible, empty and error catalog cases, and for each names the user-visible state, eligibility or missing-input reason, and available action; it separately lists text/keyboard accessibility questions and D02 decisions without selecting a UI design or standard."
+      ],
+      "outputs": [
+        "Catalog state and accessibility acceptance specification"
+      ],
+      "evidence_ids": [
+        "TC45"
+      ],
+      "decision_ids": [
+        "D02"
+      ],
+      "verification_ids": [
+        "TC45"
+      ],
+      "source": [
+        "docs/management/product-requirements.md",
+        "docs/management/system-requirements.md",
+        "docs/management/wp01-requirements-package.md",
+        "docs/management/decision-register.md"
+      ],
+      "work_kind": "contract_design"
+    },
+    {
+      "id": "TK36",
+      "parent_task_id": "TK05",
+      "title": "[Task][architecture]Identify credential protection outcomes and D03 questions",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Proposed",
+      "work_package": "WP04",
+      "cus_ids": [
+        "CUS06"
+      ],
+      "feature_ids": [
+        "FEAT33"
+      ],
+      "sr_ids": [
+        "SR13",
+        "SR54",
+        "SR59"
+      ],
+      "requirement_ids": [
+        "CUS06",
+        "SR13",
+        "SR54",
+        "SR59"
+      ],
+      "dependencies": [],
+      "owner_role": "System Architect — Feng Guo",
+      "child_task_ids": [],
+      "subtask_ids": [
+        "STK112"
+      ],
+      "acceptance_criteria": [
+        "The requirements note lists credential-protection outcomes and relevant user-visible/operational surfaces linked to SR54/SR59. For any candidate provider/service it records cited source facts about terms and data handling, applicability questions, unknown facts, and the qualified review needed; access, retention, deletion, rotation, tenancy and provider obligations remain open for D03 owner decision. It makes no legal conclusion and prescribes no dataflow or internal boundary."
+      ],
+      "outputs": [
+        "Credential, provider-term and data-handling applicability facts/questions; unresolved D03 owner decisions"
+      ],
+      "evidence_ids": [
+        "TC46"
+      ],
+      "decision_ids": [
+        "D03"
+      ],
+      "verification_ids": [
+        "TC46"
+      ],
+      "source": [
+        "docs/management/product-requirements.md",
+        "docs/management/system-requirements.md",
+        "docs/management/wp01-requirements-package.md",
+        "docs/management/decision-register.md"
+      ],
+      "work_kind": "decision_research"
+    },
+    {
+      "id": "TK37",
+      "parent_task_id": "TK05",
+      "title": "[Task][backend]Research model connection capabilities",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Proposed",
+      "work_package": "WP04",
+      "cus_ids": [
+        "CUS06"
+      ],
+      "feature_ids": [
+        "FEAT32"
+      ],
+      "sr_ids": [
+        "SR30",
+        "SR55",
+        "SR57"
+      ],
+      "requirement_ids": [
+        "CUS06",
+        "SR30",
+        "SR55",
+        "SR57"
+      ],
+      "dependencies": [],
+      "owner_role": "System Architect — Feng Guo",
+      "child_task_ids": [],
+      "subtask_ids": [
+        "STK114"
+      ],
+      "acceptance_criteria": [
+        "For each required connection capability, the research record gives an authoritative source or marks the fact unknown, records the source date and support claim, and identifies portability cases without inferring unsupported provider capabilities; evidence gaps and D03 decisions are listed."
+      ],
+      "outputs": [
+        "Evidence-backed capability matrix format with provider facts left pending until official source review"
+      ],
+      "evidence_ids": [
+        "TC47"
+      ],
+      "decision_ids": [
+        "D03"
+      ],
+      "verification_ids": [
+        "TC47"
+      ],
+      "source": [
+        "docs/management/product-requirements.md",
+        "docs/management/system-requirements.md",
+        "docs/management/wp01-requirements-package.md",
+        "docs/management/decision-register.md"
+      ],
+      "work_kind": "decision_research"
+    },
+    {
+      "id": "TK38",
+      "parent_task_id": "TK05",
+      "title": "[Task][backend]Specify model connection request and outcome expectations",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Blocked on decision",
+      "work_package": "WP04",
+      "cus_ids": [
+        "CUS06"
+      ],
+      "feature_ids": [
+        "FEAT06",
+        "FEAT32"
+      ],
+      "sr_ids": [
+        "SR30",
+        "SR55",
+        "SR57"
+      ],
+      "requirement_ids": [
+        "CUS06",
+        "SR30",
+        "SR55",
+        "SR57"
+      ],
+      "dependencies": [],
+      "owner_role": "System Architect — Feng Guo",
+      "child_task_ids": [],
+      "subtask_ids": [
+        "STK116"
+      ],
+      "acceptance_criteria": [
+        "The requirements note lists user-relevant request inputs, explicit selected-connection/model choice, declared success/failure outcomes and no-fallback behavior; every unsupported fact and compatibility/D03 decision is marked open, with no internal request design selected."
+      ],
+      "outputs": [
+        "Shared model connection expectations and capability/failure cases"
+      ],
+      "evidence_ids": [
+        "TC49"
+      ],
+      "decision_ids": [
+        "D03"
+      ],
+      "verification_ids": [
+        "TC49"
+      ],
+      "source": [
+        "docs/management/product-requirements.md",
+        "docs/management/system-requirements.md",
+        "docs/management/wp01-requirements-package.md",
+        "docs/management/decision-register.md"
+      ],
+      "work_kind": "contract_design"
+    },
+    {
+      "id": "TK39",
+      "parent_task_id": "TK05",
+      "title": "[Task][frontend]Specify explicit connection and model selection",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Blocked on decision",
+      "work_package": "WP04",
+      "cus_ids": [
+        "CUS06"
+      ],
+      "feature_ids": [
+        "FEAT34"
+      ],
+      "sr_ids": [
+        "SR12",
+        "SR56"
+      ],
+      "requirement_ids": [
+        "CUS06",
+        "SR12",
+        "SR56"
+      ],
+      "dependencies": [
+        "TK36",
+        "TK37",
+        "TK38"
+      ],
+      "owner_role": "UI Designer — Wu Yunzhou",
+      "child_task_ids": [],
+      "subtask_ids": [
+        "STK118"
+      ],
+      "acceptance_criteria": [
+        "The proposed user-facing requirements cover selected choice, confirmation, unavailable/failed state, recovery, and accessible text/keyboard operation; unresolved accessibility applicability and D03 choices are explicit, with no automatic substitution."
+      ],
+      "outputs": [
+        "Selection, unavailable, and no-fallback interaction states"
+      ],
+      "evidence_ids": [
+        "TC48"
+      ],
+      "decision_ids": [
+        "D03"
+      ],
+      "verification_ids": [
+        "TC48"
+      ],
+      "source": [
+        "docs/management/product-requirements.md",
+        "docs/management/system-requirements.md",
+        "docs/management/wp01-requirements-package.md",
+        "docs/management/decision-register.md"
+      ],
+      "work_kind": "contract_design"
+    },
+    {
+      "id": "TK40",
+      "parent_task_id": "TK05",
+      "title": "[Task][backend]Define selected-connection capability checks",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Blocked on decision",
+      "work_package": "WP04",
+      "cus_ids": [
+        "CUS06"
+      ],
+      "feature_ids": [
+        "FEAT32"
+      ],
+      "sr_ids": [
+        "SR55"
+      ],
+      "requirement_ids": [
+        "CUS06",
+        "SR55"
+      ],
+      "dependencies": [
+        "TK36",
+        "TK37",
+        "TK38"
+      ],
+      "owner_role": "System Architect — Feng Guo",
+      "child_task_ids": [],
+      "subtask_ids": [
+        "STK120"
+      ],
+      "acceptance_criteria": [
+        "For each required skill capability and selected-connection case, the criteria state whether execution is eligible, the user-facing missing-capability reason when blocked, and that no analysis request occurs while blocked; each capability fact is cited or explicitly unknown."
+      ],
+      "outputs": [
+        "Capability needs, unsupported-execution result and explanation"
+      ],
+      "evidence_ids": [
+        "TC47"
+      ],
+      "decision_ids": [
+        "D03"
+      ],
+      "verification_ids": [
+        "TC47"
+      ],
+      "source": [
+        "docs/management/product-requirements.md",
+        "docs/management/system-requirements.md",
+        "docs/management/wp01-requirements-package.md",
+        "docs/management/decision-register.md"
+      ],
+      "work_kind": "contract_design"
+    },
+    {
+      "id": "TK41",
+      "parent_task_id": "TK05",
+      "title": "[Task][operations]Define safe model connection outcome evidence",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Blocked on decision",
+      "work_package": "WP04",
+      "cus_ids": [
+        "CUS06"
+      ],
+      "feature_ids": [
+        "FEAT35"
+      ],
+      "sr_ids": [
+        "SR57",
+        "SR59"
+      ],
+      "requirement_ids": [
+        "CUS06",
+        "SR57",
+        "SR59"
+      ],
+      "dependencies": [
+        "TK36",
+        "TK37",
+        "TK38"
+      ],
+      "owner_role": "System Architect — Feng Guo",
+      "child_task_ids": [],
+      "subtask_ids": [
+        "STK122"
+      ],
+      "acceptance_criteria": [
+        "The evidence examples distinguish the planned success, authentication, temporary, timeout and malformed-response outcomes while excluding credential values; each unresolved lifecycle, retention and D03 owner decision is listed separately, with no event or logging schema selected."
+      ],
+      "outputs": [
+        "Safe operational outcome-evidence examples and unresolved lifecycle questions"
+      ],
+      "evidence_ids": [
+        "TC50"
+      ],
+      "decision_ids": [
+        "D03"
+      ],
+      "verification_ids": [
+        "TC50"
+      ],
+      "source": [
+        "docs/management/product-requirements.md",
+        "docs/management/system-requirements.md",
+        "docs/management/wp01-requirements-package.md",
+        "docs/management/decision-register.md"
+      ],
+      "work_kind": "contract_design"
+    },
+    {
+      "id": "TK42",
+      "parent_task_id": "TK04",
+      "title": "[Task][backend]Implement approved skill definitions and evaluation",
+      "work_kind": "implementation",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Blocked on decision",
+      "work_package": "WP03",
+      "cus_ids": [
+        "CUS04"
+      ],
+      "feature_ids": [
+        "FEAT04",
+        "FEAT30"
+      ],
+      "sr_ids": [
+        "SR08",
+        "SR09",
+        "SR29",
+        "SR50",
+        "SR51",
+        "SR52"
+      ],
+      "requirement_ids": [
+        "CUS04",
+        "SR08",
+        "SR09",
+        "SR29",
+        "SR50",
+        "SR51",
+        "SR52"
+      ],
+      "dependencies": [
+        "TK31",
+        "TK32",
+        "TK33"
+      ],
+      "owner_role": "Worker — Torsten Maier",
+      "child_task_ids": [],
+      "subtask_ids": [
+        "STK124"
+      ],
+      "acceptance_criteria": [
+        "For an authorized candidate SHA and named environment, the future implementation demonstrates declarations conforming to the approved provider-independent requirements, links versioned method provenance, and keeps evaluation/release labels blocked until D02 approval; attach positive/negative fixture pass/fail, blocked cases, defects, and evidence."
+      ],
+      "outputs": [
+        "Future implementation outcome and candidate-specific verification record"
+      ],
+      "evidence_ids": [
+        "TC40",
+        "TC41",
+        "TC42",
+        "TC51"
+      ],
+      "decision_ids": [
+        "D02"
+      ],
+      "verification_ids": [
+        "TC40",
+        "TC41",
+        "TC42",
+        "TC51"
+      ],
+      "source": [
+        "docs/management/product-requirements.md",
+        "docs/management/system-requirements.md",
+        "docs/management/wp01-requirements-package.md"
+      ]
+    },
+    {
+      "id": "TK43",
+      "parent_task_id": "TK04",
+      "title": "[Task][backend]Verify approved skill definitions and evaluation",
+      "work_kind": "verification",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Blocked on decision",
+      "work_package": "WP03",
+      "cus_ids": [
+        "CUS04"
+      ],
+      "feature_ids": [
+        "FEAT04",
+        "FEAT30"
+      ],
+      "sr_ids": [
+        "SR08",
+        "SR09",
+        "SR29",
+        "SR50",
+        "SR51",
+        "SR52"
+      ],
+      "requirement_ids": [
+        "CUS04",
+        "SR08",
+        "SR09",
+        "SR29",
+        "SR50",
+        "SR51",
+        "SR52"
+      ],
+      "dependencies": [
+        "TK42"
+      ],
+      "owner_role": "User Tester — Abt Hermann",
+      "child_task_ids": [],
+      "subtask_ids": [
+        "STK126"
+      ],
+      "acceptance_criteria": [
+        "On the named candidate SHA and environment, the tester runs positive/negative declaration and provenance fixtures plus the D02 release-block case, records each pass/fail/blocked result and defect/evidence link, and reports implementation readiness without claiming provider integration."
+      ],
+      "outputs": [
+        "Candidate-specific fixture results, defects, and verification report"
+      ],
+      "evidence_ids": [
+        "TC40",
+        "TC41",
+        "TC42",
+        "TC51"
+      ],
+      "decision_ids": [
+        "D02"
+      ],
+      "verification_ids": [
+        "TC40",
+        "TC41",
+        "TC42",
+        "TC51"
+      ],
+      "source": [
+        "docs/management/product-requirements.md",
+        "docs/management/system-requirements.md",
+        "docs/management/wp01-requirements-package.md"
+      ]
+    },
+    {
+      "id": "TK44",
+      "parent_task_id": "TK04",
+      "title": "[Task][backend]Implement snapshot-bound eligibility and explanations",
+      "work_kind": "implementation",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Blocked on decision",
+      "work_package": "WP03",
+      "cus_ids": [
+        "CUS05"
+      ],
+      "feature_ids": [
+        "FEAT05",
+        "FEAT31"
+      ],
+      "sr_ids": [
+        "SR10",
+        "SR11",
+        "SR53",
+        "SR58"
+      ],
+      "requirement_ids": [
+        "CUS05",
+        "SR10",
+        "SR11",
+        "SR53",
+        "SR58"
+      ],
+      "dependencies": [
+        "TK34",
+        "TK35"
+      ],
+      "owner_role": "Worker — Torsten Maier",
+      "child_task_ids": [],
+      "subtask_ids": [
+        "STK128"
+      ],
+      "acceptance_criteria": [
+        "For an authorized candidate SHA and named environment, the future implementation returns repeatable eligibility and reason outcomes for identical snapshots/rule versions, explains each unmet mandatory input, and makes zero model calls for ineligible cases; attach fixture results and defects."
+      ],
+      "outputs": [
+        "Future eligibility behavior and candidate-specific verification record"
+      ],
+      "evidence_ids": [
+        "TC43",
+        "TC44",
+        "TC45"
+      ],
+      "decision_ids": [
+        "D02"
+      ],
+      "verification_ids": [
+        "TC43",
+        "TC44",
+        "TC45"
+      ],
+      "source": [
+        "docs/management/product-requirements.md",
+        "docs/management/system-requirements.md",
+        "docs/management/wp01-requirements-package.md"
+      ]
+    },
+    {
+      "id": "TK45",
+      "parent_task_id": "TK04",
+      "title": "[Task][backend]Verify snapshot-bound eligibility and explanations",
+      "work_kind": "verification",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Blocked on decision",
+      "work_package": "WP03",
+      "cus_ids": [
+        "CUS05"
+      ],
+      "feature_ids": [
+        "FEAT05",
+        "FEAT31"
+      ],
+      "sr_ids": [
+        "SR10",
+        "SR11",
+        "SR53",
+        "SR58"
+      ],
+      "requirement_ids": [
+        "CUS05",
+        "SR10",
+        "SR11",
+        "SR53",
+        "SR58"
+      ],
+      "dependencies": [
+        "TK44"
+      ],
+      "owner_role": "User Tester — Abt Hermann",
+      "child_task_ids": [],
+      "subtask_ids": [
+        "STK130"
+      ],
+      "acceptance_criteria": [
+        "On the named candidate SHA and environment, the tester repeats eligibility fixtures and inspects call evidence for deterministic results/reasons and zero calls on ineligible cases, then records each pass/fail/blocked result, defect, and evidence link."
+      ],
+      "outputs": [
+        "Candidate-specific eligibility fixture results and verification report"
+      ],
+      "evidence_ids": [
+        "TC43",
+        "TC44",
+        "TC45"
+      ],
+      "decision_ids": [
+        "D02"
+      ],
+      "verification_ids": [
+        "TC43",
+        "TC44",
+        "TC45"
+      ],
+      "source": [
+        "docs/management/product-requirements.md",
+        "docs/management/system-requirements.md",
+        "docs/management/wp01-requirements-package.md"
+      ]
+    },
+    {
+      "id": "TK46",
+      "parent_task_id": "TK05",
+      "title": "[Task][backend]Implement customer-selected model connections",
+      "work_kind": "implementation",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Blocked on decision",
+      "work_package": "WP04",
+      "cus_ids": [
+        "CUS06"
+      ],
+      "feature_ids": [
+        "FEAT06",
+        "FEAT32",
+        "FEAT33",
+        "FEAT34",
+        "FEAT35"
+      ],
+      "sr_ids": [
+        "SR12",
+        "SR13",
+        "SR30",
+        "SR54",
+        "SR55",
+        "SR56",
+        "SR57",
+        "SR59"
+      ],
+      "requirement_ids": [
+        "CUS06",
+        "SR12",
+        "SR13",
+        "SR30",
+        "SR54",
+        "SR55",
+        "SR56",
+        "SR57",
+        "SR59"
+      ],
+      "dependencies": [
+        "TK36",
+        "TK38",
+        "TK39",
+        "TK40",
+        "TK41"
+      ],
+      "owner_role": "Worker — Torsten Maier",
+      "child_task_ids": [],
+      "subtask_ids": [
+        "STK132"
+      ],
+      "acceptance_criteria": [
+        "For an authorized candidate SHA and named environment, the future implementation uses only the selected customer connection, blocks unsupported capability with an explanation, excludes credential values from outputs/evidence, and distinguishes declared outcomes; attach fixture results and defects. Actual supported-customer-model integration remains a separate release gate (TC08)."
+      ],
+      "outputs": [
+        "Future selected-connection behavior and candidate-specific verification record"
+      ],
+      "evidence_ids": [
+        "TC46",
+        "TC47",
+        "TC48",
+        "TC49",
+        "TC50"
+      ],
+      "decision_ids": [
+        "D03"
+      ],
+      "verification_ids": [
+        "TC46",
+        "TC47",
+        "TC48",
+        "TC49",
+        "TC50"
+      ],
+      "source": [
+        "docs/management/product-requirements.md",
+        "docs/management/system-requirements.md",
+        "docs/management/wp01-requirements-package.md"
+      ]
+    },
+    {
+      "id": "TK47",
+      "parent_task_id": "TK05",
+      "title": "[Task][backend]Verify customer-selected model connections",
+      "work_kind": "verification",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Blocked on decision",
+      "work_package": "WP04",
+      "cus_ids": [
+        "CUS06"
+      ],
+      "feature_ids": [
+        "FEAT06",
+        "FEAT32",
+        "FEAT33",
+        "FEAT34",
+        "FEAT35"
+      ],
+      "sr_ids": [
+        "SR12",
+        "SR13",
+        "SR30",
+        "SR54",
+        "SR55",
+        "SR56",
+        "SR57",
+        "SR59"
+      ],
+      "requirement_ids": [
+        "CUS06",
+        "SR12",
+        "SR13",
+        "SR30",
+        "SR54",
+        "SR55",
+        "SR56",
+        "SR57",
+        "SR59"
+      ],
+      "dependencies": [
+        "TK46"
+      ],
+      "owner_role": "User Tester — Abt Hermann",
+      "child_task_ids": [],
+      "subtask_ids": [
+        "STK134"
+      ],
+      "acceptance_criteria": [
+        "On the named candidate SHA and environment, the tester uses deterministic mock/contract cases to verify selected connection, no fallback, capability blocking, credential exclusion, and distinct outcomes; records each pass/fail/blocked result, defects, and evidence. This does not satisfy real supported-model integration TC08."
+      ],
+      "outputs": [
+        "Candidate-specific mock/contract results, defects, and verification report"
+      ],
+      "evidence_ids": [
+        "TC46",
+        "TC47",
+        "TC48",
+        "TC49",
+        "TC50"
+      ],
+      "decision_ids": [
+        "D03"
+      ],
+      "verification_ids": [
+        "TC46",
+        "TC47",
+        "TC48",
+        "TC49",
+        "TC50"
+      ],
+      "source": [
+        "docs/management/product-requirements.md",
+        "docs/management/system-requirements.md",
+        "docs/management/wp01-requirements-package.md"
+      ]
+    }
+  ],
+  "subtasks": [
+    {
+      "id": "STK100",
+      "task_id": "TK30",
+      "title": "[Task][backend]Collect candidate skill outcomes and exclusions",
+      "statement": "Produce candidate inventory for Propose baseline elemental skill shortlist. Use only the assigned DATARA scope; label unverified evidence and unresolved decisions explicitly.",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Proposed",
+      "work_package": "WP03",
+      "cus_ids": [
+        "CUS04"
+      ],
+      "feature_ids": [
+        "FEAT04"
+      ],
+      "sr_ids": [
+        "SR08",
+        "SR50"
+      ],
+      "dependencies": [],
+      "owner_role": "System Architect — Feng Guo",
+      "acceptance_criteria": [
+        "Given the shortlist review is complete, each proposed skill has a candidate name, intended user outcome, scope, source/origin, input needs, evidence, exclusions, and unresolved D02 decision recorded; the reviewer can identify any missing column."
+      ],
+      "outputs": [
+        "candidate inventory"
+      ],
+      "evidence_ids": [
+        "TC40"
+      ],
+      "decision_ids": [
+        "D02"
+      ],
+      "verification_ids": [
+        "TC40"
+      ],
+      "source": [
+        "docs/management/product-requirements.md",
+        "docs/management/system-requirements.md",
+        "docs/management/wp01-requirements-package.md",
+        "docs/management/decision-register.md"
+      ],
+      "work_kind": "decision_research"
+    },
+    {
+      "id": "STK102",
+      "task_id": "TK31",
+      "title": "[Task][backend]List model-independent skill declaration fields",
+      "statement": "Identify provider-independent skill declaration requirements and unresolved choices for the future contract.",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Blocked on decision",
+      "work_package": "WP03",
+      "cus_ids": [
+        "CUS04"
+      ],
+      "feature_ids": [
+        "FEAT04"
+      ],
+      "sr_ids": [
+        "SR08",
+        "SR09",
+        "SR29",
+        "SR50"
+      ],
+      "dependencies": [],
+      "owner_role": "System Architect — Feng Guo",
+      "acceptance_criteria": [
+        "Given each proposed skill declaration, the requirements record states provider-independent input, applicability, method, output, version, provenance, and evaluation expectations as outcomes, and marks unresolved D02 choices without prescribing a technical schema."
+      ],
+      "outputs": [
+        "Provider-independent declaration requirements and open decisions"
+      ],
+      "evidence_ids": [
+        "TC40",
+        "TC51"
+      ],
+      "decision_ids": [
+        "D02"
+      ],
+      "verification_ids": [
+        "TC40",
+        "TC51"
+      ],
+      "source": [
+        "docs/management/product-requirements.md",
+        "docs/management/system-requirements.md",
+        "docs/management/wp01-requirements-package.md",
+        "docs/management/decision-register.md"
+      ],
+      "work_kind": "contract_design"
+    },
+    {
+      "id": "STK104",
+      "task_id": "TK32",
+      "title": "[Task][backend]Separate deterministic and schema checks from substantive assessment",
+      "statement": "Produce layered evidence rubric for Define layered skill evaluation protocol. Use only the assigned DATARA scope; label unverified evidence and unresolved decisions explicitly.",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Proposed",
+      "work_package": "WP03",
+      "cus_ids": [
+        "CUS04"
+      ],
+      "feature_ids": [
+        "FEAT30"
+      ],
+      "sr_ids": [
+        "SR51"
+      ],
+      "dependencies": [],
+      "owner_role": "System Architect — Feng Guo",
+      "acceptance_criteria": [
+        "Given deterministic, contract, mocked, and substantive evaluation evidence, the proposed protocol keeps each evidence class distinct and prevents a weaker class from being reported as substantive evaluation; unresolved release thresholds remain open under D02."
+      ],
+      "outputs": [
+        "layered evidence rubric"
+      ],
+      "evidence_ids": [
+        "TC41"
+      ],
+      "decision_ids": [
+        "D02"
+      ],
+      "verification_ids": [
+        "TC41"
+      ],
+      "source": [
+        "docs/management/product-requirements.md",
+        "docs/management/system-requirements.md",
+        "docs/management/wp01-requirements-package.md",
+        "docs/management/decision-register.md"
+      ],
+      "work_kind": "contract_design"
+    },
+    {
+      "id": "STK106",
+      "task_id": "TK33",
+      "title": "[Task][backend]Inventory proposed source references per candidate method",
+      "statement": "Produce source-to-method map for Assess baseline method provenance and rights gaps. Use only the assigned DATARA scope; label unverified evidence and unresolved decisions explicitly.",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Proposed",
+      "work_package": "WP03",
+      "cus_ids": [
+        "CUS04"
+      ],
+      "feature_ids": [
+        "FEAT30"
+      ],
+      "sr_ids": [
+        "SR52"
+      ],
+      "dependencies": [],
+      "owner_role": "System Architect — Feng Guo",
+      "acceptance_criteria": [
+        "Given every candidate method claim, the source inventory includes a resolvable source reference and links it to the claim; unresolved rights and attribution questions are recorded without a legal conclusion."
+      ],
+      "outputs": [
+        "source-to-method map"
+      ],
+      "evidence_ids": [
+        "TC42"
+      ],
+      "decision_ids": [
+        "D02"
+      ],
+      "verification_ids": [
+        "TC42"
+      ],
+      "source": [
+        "docs/management/product-requirements.md",
+        "docs/management/system-requirements.md",
+        "docs/management/wp01-requirements-package.md",
+        "docs/management/decision-register.md"
+      ],
+      "work_kind": "decision_research"
+    },
+    {
+      "id": "STK108",
+      "task_id": "TK34",
+      "title": "[Task][backend]Translate declared requirements into snapshot-bound rule inputs",
+      "statement": "Identify eligibility outcomes, repeatability expectations, and blocking rules for the future requirement contract.",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Blocked on decision",
+      "work_package": "WP03",
+      "cus_ids": [
+        "CUS05"
+      ],
+      "feature_ids": [
+        "FEAT05"
+      ],
+      "sr_ids": [
+        "SR10",
+        "SR11",
+        "SR53"
+      ],
+      "dependencies": [],
+      "owner_role": "System Architect — Feng Guo",
+      "acceptance_criteria": [
+        "Given the eligibility requirements review, identical snapshot, skill, and rule versions produce repeatable eligibility and reason outcomes, and every mandatory unmet input blocks eligibility; unresolved policy choices are explicit."
+      ],
+      "outputs": [
+        "Eligibility outcomes and open policy questions"
+      ],
+      "evidence_ids": [
+        "TC43"
+      ],
+      "decision_ids": [
+        "D02"
+      ],
+      "verification_ids": [
+        "TC43"
+      ],
+      "source": [
+        "docs/management/product-requirements.md",
+        "docs/management/system-requirements.md",
+        "docs/management/wp01-requirements-package.md",
+        "docs/management/decision-register.md"
+      ],
+      "work_kind": "contract_design"
+    },
+    {
+      "id": "STK110",
+      "task_id": "TK35",
+      "title": "[Task][frontend]Map catalog eligible, ineligible, empty and error states",
+      "statement": "Identify user-facing catalog outcome and accessibility criteria for the eligibility explanation requirement.",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Blocked on decision",
+      "work_package": "WP03",
+      "cus_ids": [
+        "CUS04",
+        "CUS05"
+      ],
+      "feature_ids": [
+        "FEAT31"
+      ],
+      "sr_ids": [
+        "SR11",
+        "SR58"
+      ],
+      "dependencies": [],
+      "owner_role": "UI Designer — Wu Yunzhou",
+      "acceptance_criteria": [
+        "Given eligible, ineligible, empty, and error catalog cases, the outcome criteria specify visible state, missing-input explanation, and available action for each; unresolved applicability questions remain assigned for review."
+      ],
+      "outputs": [
+        "Catalog outcome and accessibility criteria"
+      ],
+      "evidence_ids": [
+        "TC45"
+      ],
+      "decision_ids": [
+        "D02"
+      ],
+      "verification_ids": [
+        "TC45"
+      ],
+      "source": [
+        "docs/management/product-requirements.md",
+        "docs/management/system-requirements.md",
+        "docs/management/wp01-requirements-package.md",
+        "docs/management/decision-register.md"
+      ],
+      "work_kind": "contract_design"
+    },
+    {
+      "id": "STK112",
+      "task_id": "TK36",
+      "title": "[Task][architecture]Assess credential, provider-term and data-handling questions",
+      "statement": "Collect requirements and source facts needed to assess credential and provider data-handling applicability; keep unresolved questions open.",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Proposed",
+      "work_package": "WP04",
+      "cus_ids": [
+        "CUS06"
+      ],
+      "feature_ids": [
+        "FEAT33"
+      ],
+      "sr_ids": [
+        "SR13",
+        "SR54",
+        "SR59"
+      ],
+      "dependencies": [],
+      "owner_role": "System Architect — Feng Guo",
+      "acceptance_criteria": [
+        "For each candidate provider/service, the note cites available term/data-handling facts or labels them unavailable, identifies relevant data categories and applicability questions, lists unknown facts and the qualified review needed, and records D03 owner decisions still required; it makes no legal conclusion and designs no dataflow or boundary."
+      ],
+      "outputs": [
+        "Credential and provider data-handling applicability inventory and open D03 questions"
+      ],
+      "evidence_ids": [
+        "TC46"
+      ],
+      "decision_ids": [
+        "D03"
+      ],
+      "verification_ids": [
+        "TC46"
+      ],
+      "source": [
+        "docs/management/product-requirements.md",
+        "docs/management/system-requirements.md",
+        "docs/management/wp01-requirements-package.md",
+        "docs/management/decision-register.md"
+      ],
+      "work_kind": "contract_design"
+    },
+    {
+      "id": "STK114",
+      "task_id": "TK37",
+      "title": "[Task][backend]Define capability evidence fields and official-source citation needs",
+      "statement": "Produce capability matrix template for Research model connection capabilities. Use only the assigned DATARA scope; label unverified evidence and unresolved decisions explicitly.",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Proposed",
+      "work_package": "WP04",
+      "cus_ids": [
+        "CUS06"
+      ],
+      "feature_ids": [
+        "FEAT32"
+      ],
+      "sr_ids": [
+        "SR30",
+        "SR55",
+        "SR57"
+      ],
+      "dependencies": [],
+      "owner_role": "System Architect — Feng Guo",
+      "acceptance_criteria": [
+        "Given each capability claim, the evidence matrix names the official source needed, records verified facts separately from unknowns, and does not assert unsupported provider capability."
+      ],
+      "outputs": [
+        "capability matrix template"
+      ],
+      "evidence_ids": [
+        "TC47"
+      ],
+      "decision_ids": [
+        "D03"
+      ],
+      "verification_ids": [
+        "TC47"
+      ],
+      "source": [
+        "docs/management/product-requirements.md",
+        "docs/management/system-requirements.md",
+        "docs/management/wp01-requirements-package.md",
+        "docs/management/decision-register.md"
+      ],
+      "work_kind": "contract_design"
+    },
+    {
+      "id": "STK116",
+      "task_id": "TK38",
+      "title": "[Task][backend]Draft shared model request expectations",
+      "statement": "Produce shared model request expectations for Specify model connection request and outcome expectations. Use only the assigned DATARA scope; label unverified evidence and unresolved decisions explicitly.",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Blocked on decision",
+      "work_package": "WP04",
+      "cus_ids": [
+        "CUS06"
+      ],
+      "feature_ids": [
+        "FEAT06",
+        "FEAT32"
+      ],
+      "sr_ids": [
+        "SR30",
+        "SR55",
+        "SR57"
+      ],
+      "dependencies": [],
+      "owner_role": "System Architect — Feng Guo",
+      "acceptance_criteria": [
+        "Given a declared skill request and selected connection, the shared expectations identify required request content and user-visible outcomes while leaving unresolved compatibility and D03 choices open."
+      ],
+      "outputs": [
+        "Shared request and outcome expectations with open decisions"
+      ],
+      "evidence_ids": [
+        "TC49"
+      ],
+      "decision_ids": [
+        "D03"
+      ],
+      "verification_ids": [
+        "TC49"
+      ],
+      "source": [
+        "docs/management/product-requirements.md",
+        "docs/management/system-requirements.md",
+        "docs/management/wp01-requirements-package.md",
+        "docs/management/decision-register.md"
+      ],
+      "work_kind": "contract_design"
+    },
+    {
+      "id": "STK118",
+      "task_id": "TK39",
+      "title": "[Task][frontend]Specify selected connection/model display and confirmation states",
+      "statement": "Identify user-visible selection, unavailable, and recovery outcomes without choosing an internal design.",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Blocked on decision",
+      "work_package": "WP04",
+      "cus_ids": [
+        "CUS06"
+      ],
+      "feature_ids": [
+        "FEAT34"
+      ],
+      "sr_ids": [
+        "SR12",
+        "SR56",
+        "SR58"
+      ],
+      "dependencies": [],
+      "owner_role": "UI Designer — Wu Yunzhou",
+      "acceptance_criteria": [
+        "Given available and unavailable selected-connection cases, the user-facing requirements identify the displayed selection, confirmation, blocked or failed outcome, and recovery action without substitution."
+      ],
+      "outputs": [
+        "Selected-connection user outcome requirements"
+      ],
+      "evidence_ids": [
+        "TC48"
+      ],
+      "decision_ids": [
+        "D03"
+      ],
+      "verification_ids": [
+        "TC48"
+      ],
+      "source": [
+        "docs/management/product-requirements.md",
+        "docs/management/system-requirements.md",
+        "docs/management/wp01-requirements-package.md",
+        "docs/management/decision-register.md"
+      ],
+      "work_kind": "contract_design"
+    },
+    {
+      "id": "STK120",
+      "task_id": "TK40",
+      "title": "[Task][backend]Define required capability versus selected connection comparison",
+      "statement": "Produce compatibility rule for selected-connection capability checks. Use only the assigned DATARA scope; label unverified evidence and unresolved decisions explicitly.",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Blocked on decision",
+      "work_package": "WP04",
+      "cus_ids": [
+        "CUS06"
+      ],
+      "feature_ids": [
+        "FEAT32"
+      ],
+      "sr_ids": [
+        "SR55"
+      ],
+      "dependencies": [],
+      "owner_role": "System Architect — Feng Guo",
+      "acceptance_criteria": [
+        "Given each required skill capability and selected connection, the compatibility criteria state when execution is eligible and when it must be blocked with the missing capability explained; unsupported facts stay unknown until sourced."
+      ],
+      "outputs": [
+        "compatibility rule"
+      ],
+      "evidence_ids": [
+        "TC47"
+      ],
+      "decision_ids": [
+        "D03"
+      ],
+      "verification_ids": [
+        "TC47"
+      ],
+      "source": [
+        "docs/management/product-requirements.md",
+        "docs/management/system-requirements.md",
+        "docs/management/wp01-requirements-package.md",
+        "docs/management/decision-register.md"
+      ],
+      "work_kind": "contract_design"
+    },
+    {
+      "id": "STK122",
+      "task_id": "TK41",
+      "title": "[Task][operations]Identify safe connection outcome evidence",
+      "statement": "Produce examples of outcome evidence sufficient for diagnosis without choosing an event or logging schema. Use only the assigned DATARA scope; label unverified evidence and unresolved decisions explicitly.",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Blocked on decision",
+      "work_package": "WP04",
+      "cus_ids": [
+        "CUS06"
+      ],
+      "feature_ids": [
+        "FEAT35"
+      ],
+      "sr_ids": [
+        "SR57",
+        "SR59"
+      ],
+      "dependencies": [],
+      "owner_role": "System Architect — Feng Guo",
+      "acceptance_criteria": [
+        "Given success and failure outcomes, each proposed evidence example distinguishes the outcome sufficiently for diagnosis and excludes credential values; event fields, retention, and lifecycle controls remain undecided."
+      ],
+      "outputs": [
+        "Safe outcome-evidence examples"
+      ],
+      "evidence_ids": [
+        "TC50"
+      ],
+      "decision_ids": [
+        "D03"
+      ],
+      "verification_ids": [
+        "TC50"
+      ],
+      "source": [
+        "docs/management/product-requirements.md",
+        "docs/management/system-requirements.md",
+        "docs/management/wp01-requirements-package.md",
+        "docs/management/decision-register.md"
+      ],
+      "work_kind": "decision_research"
+    },
+    {
+      "id": "STK124",
+      "task_id": "TK42",
+      "title": "[Task][backend]Implement versioned provider-independent skill declarations",
+      "statement": "Prepare the bounded implement versioned provider-independent skill declarations output for the future approved product workflow.",
+      "work_kind": "implementation",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Blocked on decision",
+      "work_package": "WP03",
+      "cus_ids": [
+        "CUS04"
+      ],
+      "feature_ids": [
+        "FEAT04",
+        "FEAT30"
+      ],
+      "sr_ids": [
+        "SR08",
+        "SR09",
+        "SR29",
+        "SR50",
+        "SR51",
+        "SR52"
+      ],
+      "dependencies": [],
+      "owner_role": "Worker — Torsten Maier",
+      "acceptance_criteria": [
+        "On a future authorized candidate revision, required skill declarations satisfy the approved provider-independent contract, link their method provenance and version, and cannot be labeled evaluated or released before the D02 gate; record candidate SHA, environment, fixture results, blocked cases, and defect evidence."
+      ],
+      "outputs": [
+        "Implement versioned provider-independent skill declarations"
+      ],
+      "evidence_ids": [
+        "TC40",
+        "TC41",
+        "TC42",
+        "TC51"
+      ],
+      "decision_ids": [
+        "D02"
+      ],
+      "verification_ids": [
+        "TC40",
+        "TC41",
+        "TC42",
+        "TC51"
+      ],
+      "source": [
+        "docs/management/product-requirements.md",
+        "docs/management/system-requirements.md"
+      ]
+    },
+    {
+      "id": "STK126",
+      "task_id": "TK43",
+      "title": "[Task][backend]Verify positive and negative skill-definition fixtures",
+      "statement": "Prepare the bounded verify positive and negative skill-definition fixtures output for the future approved product workflow.",
+      "work_kind": "verification",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Blocked on decision",
+      "work_package": "WP03",
+      "cus_ids": [
+        "CUS04"
+      ],
+      "feature_ids": [
+        "FEAT04",
+        "FEAT30"
+      ],
+      "sr_ids": [
+        "SR08",
+        "SR09",
+        "SR29",
+        "SR50",
+        "SR51",
+        "SR52"
+      ],
+      "dependencies": [],
+      "owner_role": "User Tester — Abt Hermann",
+      "acceptance_criteria": [
+        "On a future authorized candidate SHA, run positive and negative declaration fixtures and D02-blocking cases; record environment, fixture-by-fixture pass/fail, blocked cases, defects, and evidence links, and keep the result Not run until executed."
+      ],
+      "outputs": [
+        "Verify positive and negative skill-definition fixtures"
+      ],
+      "evidence_ids": [
+        "TC40",
+        "TC41",
+        "TC42",
+        "TC51"
+      ],
+      "decision_ids": [
+        "D02"
+      ],
+      "verification_ids": [
+        "TC40",
+        "TC41",
+        "TC42",
+        "TC51"
+      ],
+      "source": [
+        "docs/management/product-requirements.md",
+        "docs/management/system-requirements.md"
+      ]
+    },
+    {
+      "id": "STK128",
+      "task_id": "TK44",
+      "title": "[Task][backend]Implement deterministic snapshot-bound eligibility checks",
+      "statement": "Prepare the bounded implement deterministic snapshot-bound eligibility checks output for the future approved product workflow.",
+      "work_kind": "implementation",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Blocked on decision",
+      "work_package": "WP03",
+      "cus_ids": [
+        "CUS05"
+      ],
+      "feature_ids": [
+        "FEAT05",
+        "FEAT31"
+      ],
+      "sr_ids": [
+        "SR10",
+        "SR11",
+        "SR53",
+        "SR58"
+      ],
+      "dependencies": [],
+      "owner_role": "Worker — Torsten Maier",
+      "acceptance_criteria": [
+        "On a future authorized candidate revision, eligibility is repeatable for the same snapshot and rule versions, every unmet mandatory input has an explained blocking reason, and ineligible cases issue zero model calls; record candidate SHA and environment."
+      ],
+      "outputs": [
+        "Implement deterministic snapshot-bound eligibility checks"
+      ],
+      "evidence_ids": [
+        "TC43",
+        "TC44",
+        "TC45"
+      ],
+      "decision_ids": [
+        "D02"
+      ],
+      "verification_ids": [
+        "TC43",
+        "TC44",
+        "TC45"
+      ],
+      "source": [
+        "docs/management/product-requirements.md",
+        "docs/management/system-requirements.md"
+      ]
+    },
+    {
+      "id": "STK130",
+      "task_id": "TK45",
+      "title": "[Task][backend]Verify repeatable eligibility and zero-call ineligible behavior",
+      "statement": "Prepare the bounded verify repeatable eligibility and zero-call ineligible behavior output for the future approved product workflow.",
+      "work_kind": "verification",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Blocked on decision",
+      "work_package": "WP03",
+      "cus_ids": [
+        "CUS05"
+      ],
+      "feature_ids": [
+        "FEAT05",
+        "FEAT31"
+      ],
+      "sr_ids": [
+        "SR10",
+        "SR11",
+        "SR53",
+        "SR58"
+      ],
+      "dependencies": [],
+      "owner_role": "User Tester — Abt Hermann",
+      "acceptance_criteria": [
+        "On a future authorized candidate SHA, repeat eligibility fixtures and inspect call evidence to confirm identical results/reasons and zero calls for every ineligible case; record fixture pass/fail, blocked cases, defects, and evidence links."
+      ],
+      "outputs": [
+        "Verify repeatable eligibility and zero-call ineligible behavior"
+      ],
+      "evidence_ids": [
+        "TC43",
+        "TC44",
+        "TC45"
+      ],
+      "decision_ids": [
+        "D02"
+      ],
+      "verification_ids": [
+        "TC43",
+        "TC44",
+        "TC45"
+      ],
+      "source": [
+        "docs/management/product-requirements.md",
+        "docs/management/system-requirements.md"
+      ]
+    },
+    {
+      "id": "STK132",
+      "task_id": "TK46",
+      "title": "[Task][backend]Support customer-selected connections with protected credentials",
+      "statement": "Future planned implementation: support the explicitly selected customer connection and apply the credential-protection design approved under D03.",
+      "work_kind": "implementation",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Blocked on decision",
+      "work_package": "WP04",
+      "cus_ids": [
+        "CUS06"
+      ],
+      "feature_ids": [
+        "FEAT06",
+        "FEAT32",
+        "FEAT33",
+        "FEAT34",
+        "FEAT35"
+      ],
+      "sr_ids": [
+        "SR12",
+        "SR13",
+        "SR30",
+        "SR54",
+        "SR55",
+        "SR56",
+        "SR57",
+        "SR59"
+      ],
+      "dependencies": [],
+      "owner_role": "Worker — Torsten Maier",
+      "acceptance_criteria": [
+        "On a future authorized candidate revision, only the explicitly selected customer connection is used, unsupported capability blocks with an explanation, credentials are excluded from outputs/evidence, and declared outcomes remain distinguishable; record candidate SHA and environment."
+      ],
+      "outputs": [
+        "Planned credential protection and explicit selected-connection behavior"
+      ],
+      "evidence_ids": [
+        "TC46",
+        "TC47",
+        "TC48",
+        "TC49",
+        "TC50"
+      ],
+      "decision_ids": [
+        "D03"
+      ],
+      "verification_ids": [
+        "TC46",
+        "TC47",
+        "TC48",
+        "TC49",
+        "TC50"
+      ],
+      "source": [
+        "docs/management/product-requirements.md",
+        "docs/management/system-requirements.md"
+      ]
+    },
+    {
+      "id": "STK134",
+      "task_id": "TK47",
+      "title": "[Task][backend]Verify selected-connection choice and unsupported-execution outcomes",
+      "statement": "Future planned verification: confirm analysis uses the selected connection, never substitutes another, and explains unsupported execution.",
+      "work_kind": "verification",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Blocked on decision",
+      "work_package": "WP04",
+      "cus_ids": [
+        "CUS06"
+      ],
+      "feature_ids": [
+        "FEAT06",
+        "FEAT32",
+        "FEAT33",
+        "FEAT34",
+        "FEAT35"
+      ],
+      "sr_ids": [
+        "SR12",
+        "SR13",
+        "SR30",
+        "SR54",
+        "SR55",
+        "SR56",
+        "SR57",
+        "SR59"
+      ],
+      "dependencies": [],
+      "owner_role": "User Tester — Abt Hermann",
+      "acceptance_criteria": [
+        "On a future authorized candidate SHA, run deterministic mock/contract cases for selected-connection choice, no fallback, capability blocking, credential exclusion, and declared outcomes; record fixture pass/fail, blocked cases, defects, and evidence links. Actual supported-customer-model integration remains a separate release gate."
+      ],
+      "outputs": [
+        "Verify selected-connection routing, no fallback and unsupported-capability blocking"
+      ],
+      "evidence_ids": [
+        "TC46",
+        "TC47",
+        "TC48",
+        "TC49",
+        "TC50"
+      ],
+      "decision_ids": [
+        "D03"
+      ],
+      "verification_ids": [
+        "TC46",
+        "TC47",
+        "TC48",
+        "TC49",
+        "TC50"
+      ],
+      "source": [
+        "docs/management/product-requirements.md",
+        "docs/management/system-requirements.md"
+      ]
+    }
+  ],
+  "verification_cases": [
+    {
+      "id": "TC40",
+      "title": "Skill definition contract",
+      "method": "Inspection and contract test",
+      "expected": "For each proposed skill fixture, inspect version, declared inputs, applicability, method, output schema and evaluation references; the contract checker accepts complete provider-independent definitions and rejects a missing mandatory declaration.",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "TC41",
+      "title": "Skill evaluation evidence and release gate",
+      "method": "Inspection and evaluation",
+      "expected": "Run the approved evaluation procedure on its declared fixtures and selected supported connection; record deterministic assertions, schema checks, substantive review results and unresolved threshold separately; no skill is labeled evaluated or releasable without the D02-approved gate.",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "TC42",
+      "title": "Skill source provenance review",
+      "method": "Inspection",
+      "expected": "Inspect each proposed baseline skill's source/evidence inventory; every included method claim has a reviewable provenance entry and unresolved source-rights questions are assigned for decision, with no rights conclusion inferred.",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "TC43",
+      "title": "Eligibility repeatability",
+      "method": "Test",
+      "expected": "Evaluate identical skill version, dataset snapshot and rule version twice; eligibility and unmet requirement codes match, and an unavailable mandatory input produces ineligible without an inference request.",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "TC44",
+      "title": "Eligibility explanations",
+      "method": "Test and inspection",
+      "expected": "For eligible and ineligible fixtures, compare displayed reasons with the machine unmet-requirements result; every blocking rule names its required input and observed gap, and reasons contain no other user's data.",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "TC45",
+      "title": "Skill and eligibility accessibility states",
+      "method": "Inspection and test",
+      "expected": "Inspect catalog, eligible/ineligible states and empty/error states with keyboard navigation and text output; each action has an accessible name and meaning is available without color alone; record unsupported assistive-technology assumptions.",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "TC46",
+      "title": "Credential boundary and exposure",
+      "method": "Inspection and test",
+      "expected": "Trace a test credential through connection setup and request construction; credential bytes are absent from skill definitions, execution envelopes, responses, logs and public evidence, while the documented protection boundary remains marked proposed pending D03.",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "TC47",
+      "title": "Connection capability declaration",
+      "method": "Contract test",
+      "expected": "Compare declared skill needs with supported connection capabilities; unsupported execution is blocked and the missing capability is explained before analysis begins.",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "TC48",
+      "title": "Explicit model selection and no fallback",
+      "method": "Deterministic mock/contract test; actual supported-customer-model integration remains separate release gate TC08",
+      "expected": "Select connection/model A in the mock and capture the candidate request; it identifies A, and when A is unavailable the run is blocked/failed with a safe reason and no request reaches B or a Datara-owned analysis credential. This case does not establish real provider integration.",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "TC49",
+      "title": "Model connection outcome handling",
+      "method": "Deterministic mock/contract test; actual supported-customer-model integration remains separate release gate TC08",
+      "expected": "Exercise mocked success, authentication, temporary, timeout and malformed-response cases; each is distinguishable as a declared model connection outcome, and credential values are excluded from user-visible errors. This case does not establish real provider integration.",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "TC50",
+      "title": "Credential lifecycle and operational evidence",
+      "method": "Inspection",
+      "expected": "Review credential protection, access paths, deletion and rotation questions against D03; unresolved lifecycle choices remain explicit, and outcome evidence examples contain no credential values.",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "TC51",
+      "title": "Skill version retention and run binding",
+      "method": "Contract test and inspection",
+      "expected": "Publish two distinct skill definition versions and create a run reference to the first; history resolves the run to the original immutable definition while retaining both versions and does not silently replace either.",
+      "status": "Not run",
+      "evidence": []
+    }
+  ],
+  "perspective_assessments": [
+    {
+      "cus_id": "CUS04",
+      "perspectives": {
+        "legal": {
+          "applicability": "unknown",
+          "rationale": "Third-party methods and source use need rights review; no permission conclusion is available.",
+          "sr_ids": [],
+          "task_ids": [
+            "TK33"
+          ]
+        },
+        "engineering": {
+          "applicability": "applicable",
+          "rationale": "Provider-independent versioned skill contracts and evaluation need verifiable definitions.",
+          "sr_ids": [
+            "SR08",
+            "SR09",
+            "SR29",
+            "SR50",
+            "SR51"
+          ],
+          "task_ids": []
+        },
+        "runtime": {
+          "applicability": "unknown",
+          "rationale": "Evaluation runtime and resource bounds are not defined; investigate without selecting thresholds.",
+          "sr_ids": [],
+          "task_ids": [
+            "TK32"
+          ]
+        },
+        "architecture": {
+          "applicability": "applicable",
+          "rationale": "Skill declarations and output contracts distinguish data preparation from model-specific operation.",
+          "sr_ids": [
+            "SR09",
+            "SR29",
+            "SR50"
+          ],
+          "task_ids": []
+        },
+        "privacy_security": {
+          "applicability": "unknown",
+          "rationale": "Candidate skill inputs, evidence and source material access require a bounded data-flow review.",
+          "sr_ids": [],
+          "task_ids": [
+            "TK31",
+            "TK33"
+          ]
+        },
+        "accessibility": {
+          "applicability": "unknown",
+          "rationale": "Catalog and selection states need an operability/text review; supported standards and technologies are not chosen.",
+          "sr_ids": [],
+          "task_ids": [
+            "TK35"
+          ]
+        },
+        "operations_backup_retention_recovery": {
+          "applicability": "unknown",
+          "rationale": "Skill version retention, rollback and evidence lifecycle are not specified.",
+          "sr_ids": [],
+          "task_ids": [
+            "TK32"
+          ]
+        },
+        "domain_provenance": {
+          "applicability": "applicable",
+          "rationale": "Athlete-domain claims require source provenance and must remain within reviewed skill methods.",
+          "sr_ids": [
+            "SR52"
+          ],
+          "task_ids": []
+        }
+      }
+    },
+    {
+      "cus_id": "CUS05",
+      "perspectives": {
+        "legal": {
+          "applicability": "unknown",
+          "rationale": "Legal applicability of candidate-method provenance to eligibility is unassessed. TK33 records source/use questions for later review; no legal conclusion or eligibility restriction is inferred.",
+          "sr_ids": [],
+          "task_ids": [
+            "TK33"
+          ]
+        },
+        "engineering": {
+          "applicability": "applicable",
+          "rationale": "Eligibility is deterministic and must block execution while identifying unmet inputs.",
+          "sr_ids": [
+            "SR10",
+            "SR11",
+            "SR53"
+          ],
+          "task_ids": []
+        },
+        "runtime": {
+          "applicability": "unknown",
+          "rationale": "Cost/latency bounds for eligibility evaluation are not established; investigate using representative fixtures.",
+          "sr_ids": [],
+          "task_ids": [
+            "TK34"
+          ]
+        },
+        "architecture": {
+          "applicability": "applicable",
+          "rationale": "Eligibility is a pre-execution gate between prepared snapshots and skill/model execution.",
+          "sr_ids": [
+            "SR10",
+            "SR53"
+          ],
+          "task_ids": []
+        },
+        "privacy_security": {
+          "applicability": "applicable",
+          "rationale": "Reason outputs must not disclose another user's dataset or history.",
+          "sr_ids": [
+            "SR11",
+            "SR53"
+          ],
+          "task_ids": []
+        },
+        "accessibility": {
+          "applicability": "applicable",
+          "rationale": "Blocking gaps and selection state must be available as text and operable controls.",
+          "sr_ids": [
+            "SR58"
+          ],
+          "task_ids": []
+        },
+        "operations_backup_retention_recovery": {
+          "applicability": "unknown",
+          "rationale": "Operational monitoring and recovery for stale or failed readiness evaluation need assessment.",
+          "sr_ids": [],
+          "task_ids": [
+            "TK34"
+          ]
+        },
+        "domain_provenance": {
+          "applicability": "applicable",
+          "rationale": "Eligibility must use only the skill's declared input and coverage requirements, not infer unsupported suitability.",
+          "sr_ids": [
+            "SR10",
+            "SR53"
+          ],
+          "task_ids": []
+        }
+      }
+    },
+    {
+      "cus_id": "CUS06",
+      "perspectives": {
+        "legal": {
+          "applicability": "unknown",
+          "rationale": "Legal/regulatory duties for customer API credentials and provider use have not been assessed.",
+          "sr_ids": [],
+          "task_ids": [
+            "TK36"
+          ]
+        },
+        "engineering": {
+          "applicability": "applicable",
+          "rationale": "Requests use an explicitly chosen connection, with success and declared failure outcomes made distinguishable.",
+          "sr_ids": [
+            "SR12",
+            "SR30",
+            "SR55",
+            "SR56",
+            "SR57"
+          ],
+          "task_ids": []
+        },
+        "runtime": {
+          "applicability": "unknown",
+          "rationale": "Timeout, retry, rate handling and deploy-time limits require official interface evidence and D03.",
+          "sr_ids": [],
+          "task_ids": [
+            "TK37",
+            "TK38",
+            "TK41"
+          ]
+        },
+        "architecture": {
+          "applicability": "applicable",
+          "rationale": "Skill definitions remain independent of provider interfaces; the selected model connection is explicit.",
+          "sr_ids": [
+            "SR30",
+            "SR55",
+            "SR56"
+          ],
+          "task_ids": []
+        },
+        "privacy_security": {
+          "applicability": "applicable",
+          "rationale": "Customer secrets require scoped isolation and exclusion from payloads, outputs and logs.",
+          "sr_ids": [
+            "SR13",
+            "SR54",
+            "SR59"
+          ],
+          "task_ids": []
+        },
+        "accessibility": {
+          "applicability": "unknown",
+          "rationale": "Connection setup and error recovery need accessible-state review; no supported viewport/assistive technology is set.",
+          "sr_ids": [],
+          "task_ids": [
+            "TK39"
+          ]
+        },
+        "operations_backup_retention_recovery": {
+          "applicability": "unknown",
+          "rationale": "Secret rotation/deletion/retention and safe operational evidence remain open under D03.",
+          "sr_ids": [
+            "SR59"
+          ],
+          "task_ids": [
+            "TK36",
+            "TK41"
+          ]
+        },
+        "domain_provenance": {
+          "applicability": "applicable",
+          "rationale": "Model differences are recorded; portability does not imply equal skill performance.",
+          "sr_ids": [
+            "SR30",
+            "SR57"
+          ],
+          "task_ids": []
+        }
+      }
+    }
+  ],
+  "notes": [
+    "Proposal only: open founder decisions D02 (skill shortlist/evaluation/eligibility thresholds) and D03 (supported connections, capability, credential boundary and lifecycle) remain unresolved; source-rights questions remain an assessment only; source-to-skill work stays deferred, and no thresholds, provider capabilities or legal conclusions are selected.",
+    "Work packages and aggregate parents are inherited from the frozen plan: skill definition/eligibility drafting is under TK04; WP01 contract proposal under TK02; WP04 connection work under TK05. Existing aggregate meanings and all P1 records remain untouched.",
+    "FEAT31 crosses CUS04 and CUS05 for a shared catalog/explanation outcome; it does not add recommendation or other P1 behavior.",
+    "Configured role names identify planned owners only. Native role/config loading was not confirmed in this agent runtime; no product verification was performed.",
+    "The original 36 draft subtask leaves were rationalized to one bounded leaf per task (18 total); retired draft IDs are not reused. Implementation and verification work remains planned and unexecuted.",
+    "Feature dependencies reference feature IDs only; former WP prerequisite values are retained in work_package_dependencies. No feature-to-feature dependency is claimed until justified by an approved outcome."
+  ]
+}

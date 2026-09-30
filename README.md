@@ -26,3 +26,11 @@ AI skill recommendations and automatic routines follow at P1. Source-to-skill to
 ## Next milestone
 
 Define the supported dataset specification, baseline skill set, and first dashboard outcome before estimating implementation effort.
+
+## Founding session archive
+
+- [Brainstorming record — 30 September 2026](docs/brainstorming-record-2026-09-30.md): founder statements, decisions, alternatives, and open questions.
+- [Original concept drawing](docs/assets/original-concept-IMG_1464.png): preserved unchanged and embedded in the record.
+- [Project brief and roadmap in Word](docs/Datara_Project_Brief_and_Roadmap.docx).
+
+The session record preserves the rationale; the project brief and roadmap is the current delivery baseline.

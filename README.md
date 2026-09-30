@@ -38,3 +38,7 @@ The session record preserves the rationale; the project brief and roadmap is the
 ## Project and requirements management
 
 Start at the [management index](docs/management/README.md) for product and system requirements, delivery issues, traceability, and final validation planning.
+
+## GitHub lifecycle project
+
+[DATARA — Development and Lifecycle](https://github.com/users/fengguode/projects/3) tracks repository issues and PRs, priorities, lifecycle stages and release milestones. See [lifecycle and release management](docs/management/lifecycle-and-releases.md).

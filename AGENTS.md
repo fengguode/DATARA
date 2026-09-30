@@ -22,6 +22,8 @@ Run `python scripts/check_requirements.py` for registry changes. Execute relevan
 
 ## Agent team
 
+Use [the named attribution protocol](docs/team/attribution.md) for assignments, comments, commits, and pull request contribution tables. Identify each agent by role and configured name, link actual runtime evidence when available, and distinguish contributor, integrator, and authenticated publisher. The primary maintains the Project Agent field. Preserve existing permission limits and historical identities; do not infer a contribution from a role label alone.
+
 Read [the team workflow](docs/team/workflow.md) and the relevant saved knowledge in `docs/team/knowledge/` before team work. The primary agent coordinates assignments and integrates all changes. Delegate only bounded, independent work with an issue, scope, acceptance criteria, evidence request, and exclusive file ownership. Avoid concurrent edits to the same files. Role file restrictions are assignment rules; a `workspace-write` sandbox may technically allow broader edits, so the primary must inspect every tracked and untracked changed path before integration.
 
 Use [the DATARA GitHub Project](https://github.com/users/fengguode/projects/3) as the shared task-status record. Report agent runtime status explicitly; it is not synchronized to GitHub automatically. Require independent technical review and evidence-backed QA appropriate to the change. Record actual checks and limitations, preserve candidate-specific release evidence, and keep Done, Verified, Accepted, and released distinct. The founder owns product decisions and final acceptance; release readiness requires the gates in `docs/management/validation-plan.md` and `docs/management/lifecycle-and-releases.md`.

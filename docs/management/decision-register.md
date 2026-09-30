@@ -1,5 +1,9 @@
 # Open decisions and change management
 
+## Team confirmation decision (30 September 2026)
+
+After nine-role consultation in [issue #26](https://github.com/fengguode/DATARA/issues/26), the founder approved the proposed confirmation flow: founder final confirmation for CUS-level changes, dedicated role confirmation for other scopes, independent nonauthor review, applicable cross-domain evidence gates, and SHA-specific confirmation refreshed after relevant changes. The founder named the Primary Coordinator persona **Yi Tang** and required role/name attribution on GitHub for commits and Project-management changes. The [confirmation policy](../team/pull-request-confirmation.md) records stage ownership and scope mapping. This approval adopts the process; it does not accept a product candidate, approve open product decisions, or authorize merge/deployment.
+
 ## Requirement title decision (30 September 2026)
 
 The founder requires all requirement and backlog titles to follow `[Type][area]content_of_title`, with one type (for example CUS, SR, Feature, Task, or bug) and one affected area (for example frontend, backend, database, or security). Priority belongs in its dedicated Project field or requirement metadata and must not appear in titles. See the [project title convention](README.md#requirement-and-backlog-title-convention). This changes presentation guidance; requirement identifiers, product obligations, priorities, and evidence states are not changed by the rule. Delivery is tracked in [issue #25](https://github.com/fengguode/DATARA/issues/25) and [pull request #24](https://github.com/fengguode/DATARA/pull/24).

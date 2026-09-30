@@ -34,3 +34,7 @@ Define the supported dataset specification, baseline skill set, and first dashbo
 - [Project brief and roadmap in Word](docs/Datara_Project_Brief_and_Roadmap.docx).
 
 The session record preserves the rationale; the project brief and roadmap is the current delivery baseline.
+
+## Project and requirements management
+
+Start at the [management index](docs/management/README.md) for product and system requirements, delivery issues, traceability, and final validation planning.

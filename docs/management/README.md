@@ -10,6 +10,7 @@ This is the single management entry point for Datara. [Project control issue](ht
 - [Founding brainstorming record](../brainstorming-record-2026-09-30.md)
 - [Customer-User-Stories (top-level requirements)](product-requirements.md)
 - [P0 requirement breakdown](p0-breakdown.md)
+- [First-milestone implementation roadmap and ordered plan](p0-implementation-plan.md)
 - [System requirements](system-requirements.md)
 - [Machine-readable registry](requirements-registry.json)
 - [GitHub requirement issue and Project mapping](github-requirements-map.json)

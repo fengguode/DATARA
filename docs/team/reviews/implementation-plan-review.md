@@ -1,0 +1,17 @@
+# First-milestone implementation-plan review
+
+Assignment: [issue277](https://github.com/fengguode/DATARA/issues/277); branch `codex/p0-implementation-plan`; baseline `cd6bbe807a539337b50b96fa02a883172a56bc3e`. Primary Coordinator Yi Tang owns all file writes/integration/publication. Independent Reviewer Dennis Windmaier and Quality Manager Wang Xiaofeng review; QM is final process confirmer. Founder owns material product/technology choices. Runtime identities here describe AI-role runs, not human participation or native automatic configuration loading. Execution links unavailable; native automatic role loading remains unconfirmed (#18).
+
+## Actual investigation and contributions
+
+Architect Feng Guo, actual collaboration runtime `/root/roadmap_architect`, read-only assignment: confirmed64P0Tasks/95Subtasks and identified the later-WP discovery versus WP01 decision sequencing deadlock. Recommended pre-code decision preparation before coding, preservation of canonical dependencies, intermediate data-home then skills/eligibility then selected model execution then saved outputs, incremental slice evidence and separate final P0/athlete gates. No edits or product architecture designed.
+
+Explorer Wang Licun, runtime `/root/roadmap_explorer`, read-only: repository is planning-only; no committed product code/dependency manifests or licensed fixture manifest; proposed FIT/provider/stack/contract decisions unapproved. Existing TK09 already covers source/fixture inventory; do not duplicate it. His PATH-level `python` invocation failed. Primary used the existing bundled Python runtime and the unchanged checker passed13CUS/51SR/65Tasks/60plannedcases; no runtime installation was needed. Codex's running Node processes are not DATARA service evidence. Historical official-source401/403 failures remain historical, not a present auth blocker or technical FIT fact.
+
+Nils Traeger, runtime `/root/roadmap_controller`, fresh telemetry: short window19%used/81%available, weekly18%used/82%available, ordinary usage allowed. No strict below3% pause condition. Suggested3–5 dependent subtasks per handoff and no invented effort/billing estimates. Primary reactivated the existing heartbeat for this new goal, issue277/currentlinkedcandidate, preserving quota thresholds/manual-pause precedence and no credits/permission changes.
+
+Primary external source check retrieved the official Garmin SDK-tools repository README with Profile.xlsx/tools/example references: https://github.com/garmin/fit-sdk-tools . Garmin SDK/protocol URLs were reachable but the web page extractor returned navigation shells rather than protocol body. Search snippets are not accepted protocol/mapping evidence. This is evidence that TK09 has a usable official source starting point, not pinning a decoder/profile version, approving example-file redistribution, validating FIT semantics or closingD01. No SDK/fixture was downloaded or installed.
+
+## Planned checks and status
+
+Complete plan maps64P0Tasks/95Subtasks onto six waves, with all existing issue/Project links and acceptance/evidence copied. Added prerequisite edges retain canonical task dependencies, treat aggregates as completion gates, schedule pre-code preparation separately from package execution and strengthen aggregate verification gates. No product checks run; all60 cases/VAL-P0 remain Notrun. Independent full-content/order/readiness and Project-publication reviews are pending. Final reviewed full head and GitHub confirmations will be recorded after integration.

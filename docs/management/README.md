@@ -35,3 +35,7 @@ Product directions derive from the founding decisions. System requirements are i
 Use each linked issue as its package record. Split implementation tasks under that package when scope is known, preserving requirement links. Estimate after dependencies and contracts are understood. The founder owns product decisions and final acceptance; cloud tasks prepare reviewable engineering artifacts and evidence.
 
 Run `python scripts/check_requirements.py` after registry changes. It checks links and planned coverage only. Final validation requires actual software and a fixed candidate commit.
+
+## GitHub lifecycle project
+
+[DATARA — Development and Lifecycle](https://github.com/users/fengguode/projects/3) tracks repository issues and PRs, priorities, lifecycle stages and release milestones. See [lifecycle and release management](lifecycle-and-releases.md).

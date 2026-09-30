@@ -1,0 +1,13 @@
+# Local API credentials
+.env
+.env.*
+!.env.example
+
+# Personal uploads and generated runtime data
+/runtime-data/
+/uploads/
+/local-data/
+
+# Local editor and operating system files
+.DS_Store
+Thumbs.db

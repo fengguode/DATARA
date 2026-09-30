@@ -1,7 +1,7 @@
 # P0 requirements engineering and breakdown plan
 
-**Assignment:** Issue #28 / Work package: complete the P0 requirements breakdown — System Architect — Feng Guo (AI agent)  
-**Scope:** Requirements engineering and traceability planning for CUS01–CUS10 only. No implementation or detailed technical architecture design is included in this assignment.  
+**Assignment:** Issue #28 / Work package: complete the P0 requirements breakdown — System Architect — Feng Guo (AI agent)
+**Scope:** Requirements engineering and traceability planning for CUS01–CUS10 only. No implementation or detailed technical architecture design is included in this assignment.
 **Status:** Proposal for Quality Manager audit and coordinator integration. D01–D05 remain open; no founder decision or acceptance is implied.
 
 ## 1. Milestone and acceptance

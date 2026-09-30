@@ -1,7 +1,7 @@
 {
   "project_url": "https://github.com/users/fengguode/projects/3",
   "tracking_issue": "https://github.com/fengguode/DATARA/issues/28",
-  "snapshot_utc": "2026-09-30T16:57:42.4335305Z",
+  "snapshot_utc": "2026-09-30T21:13:42.209058Z",
   "authority": "GitHub content/status/priority/ownership/dependencies; this file is a synchronized identifier and evidence mirror",
   "scope": "P0 CUS10/Features23/SR46/Tasks64/Subtasks95",
   "records": [
@@ -16,7 +16,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "FEAT02",
@@ -29,7 +29,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "FEAT03",
@@ -42,7 +42,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "FEAT21",
@@ -55,7 +55,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "FEAT04",
@@ -68,7 +68,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "FEAT30",
@@ -81,7 +81,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "FEAT05",
@@ -94,7 +94,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "FEAT31",
@@ -107,7 +107,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "UI Designer — Wu Yunzhou",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "FEAT06",
@@ -120,7 +120,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "FEAT32",
@@ -133,7 +133,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "FEAT33",
@@ -146,7 +146,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "FEAT34",
@@ -159,7 +159,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "UI Designer — Wu Yunzhou",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "FEAT35",
@@ -172,7 +172,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "FEAT07",
@@ -185,7 +185,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "FEAT40",
@@ -198,7 +198,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "FEAT08",
@@ -211,7 +211,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "FEAT41",
@@ -224,7 +224,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "FEAT09",
@@ -237,7 +237,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "FEAT42",
@@ -250,7 +250,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "FEAT10",
@@ -263,7 +263,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "FEAT43",
@@ -276,7 +276,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "FEAT44",
@@ -289,7 +289,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "FEAT46",
@@ -302,7 +302,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "CUS01",
@@ -315,7 +315,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "CUS02",
@@ -328,7 +328,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "CUS03",
@@ -341,7 +341,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "CUS04",
@@ -354,7 +354,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "CUS05",
@@ -367,7 +367,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "CUS06",
@@ -380,7 +380,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "CUS07",
@@ -393,7 +393,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "CUS08",
@@ -406,7 +406,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "CUS09",
@@ -419,7 +419,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "CUS10",
@@ -432,7 +432,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "SR01",
@@ -445,7 +445,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "SR02",
@@ -458,7 +458,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "SR03",
@@ -471,7 +471,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "SR04",
@@ -484,7 +484,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "SR05",
@@ -497,7 +497,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "SR06",
@@ -510,7 +510,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "SR07",
@@ -523,7 +523,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "SR08",
@@ -536,7 +536,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "SR09",
@@ -549,7 +549,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "SR10",
@@ -562,7 +562,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "SR11",
@@ -575,7 +575,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "SR12",
@@ -588,7 +588,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "SR13",
@@ -601,7 +601,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "SR14",
@@ -614,7 +614,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "SR15",
@@ -627,7 +627,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "SR16",
@@ -640,7 +640,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "SR17",
@@ -653,7 +653,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "SR18",
@@ -666,7 +666,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "SR19",
@@ -679,7 +679,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "SR20",
@@ -692,7 +692,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "SR21",
@@ -705,7 +705,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "SR27",
@@ -718,7 +718,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "SR28",
@@ -731,7 +731,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "SR29",
@@ -744,7 +744,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "SR30",
@@ -757,7 +757,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "SR31",
@@ -770,7 +770,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "SR32",
@@ -783,7 +783,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "SR33",
@@ -796,7 +796,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "SR34",
@@ -809,7 +809,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "SR50",
@@ -822,7 +822,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "SR51",
@@ -835,7 +835,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "SR52",
@@ -848,7 +848,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "SR53",
@@ -861,7 +861,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "SR54",
@@ -874,7 +874,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "SR55",
@@ -887,7 +887,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "SR56",
@@ -900,7 +900,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "SR57",
@@ -913,7 +913,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "SR58",
@@ -926,7 +926,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "SR59",
@@ -939,7 +939,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "SR70",
@@ -952,7 +952,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "SR71",
@@ -965,7 +965,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "SR72",
@@ -978,7 +978,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "SR73",
@@ -991,7 +991,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "SR74",
@@ -1004,7 +1004,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "SR75",
@@ -1017,7 +1017,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "SR76",
@@ -1030,7 +1030,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "TK09",
@@ -1043,7 +1043,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "Explorer — Wang Licun",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "TK10",
@@ -1056,7 +1056,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "TK11",
@@ -1069,7 +1069,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "Worker — Torsten Maier",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "TK12",
@@ -1082,7 +1082,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "User Tester — Abt Hermann",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "TK13",
@@ -1095,7 +1095,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "TK14",
@@ -1108,7 +1108,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "TK15",
@@ -1121,7 +1121,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "Worker — Torsten Maier",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "TK16",
@@ -1134,7 +1134,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "User Tester — Abt Hermann",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "TK17",
@@ -1147,7 +1147,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "TK18",
@@ -1160,7 +1160,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "Worker — Torsten Maier",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "TK19",
@@ -1173,7 +1173,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "User Tester — Abt Hermann",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "TK20",
@@ -1186,7 +1186,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "Explorer — Wang Licun",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "TK21",
@@ -1199,7 +1199,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "Worker — Torsten Maier",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "TK22",
@@ -1212,7 +1212,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "User Tester — Abt Hermann",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "TK30",
@@ -1225,7 +1225,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "TK31",
@@ -1238,7 +1238,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "TK32",
@@ -1251,7 +1251,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "TK33",
@@ -1264,7 +1264,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "TK34",
@@ -1277,7 +1277,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "TK35",
@@ -1290,7 +1290,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "UI Designer — Wu Yunzhou",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "TK36",
@@ -1303,7 +1303,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "TK37",
@@ -1316,7 +1316,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "TK38",
@@ -1329,7 +1329,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "TK39",
@@ -1342,7 +1342,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "UI Designer — Wu Yunzhou",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "TK40",
@@ -1355,7 +1355,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "TK41",
@@ -1368,7 +1368,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "TK42",
@@ -1381,7 +1381,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "Worker — Torsten Maier",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "TK43",
@@ -1394,7 +1394,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "User Tester — Abt Hermann",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "TK44",
@@ -1407,7 +1407,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "Worker — Torsten Maier",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "TK45",
@@ -1420,7 +1420,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "User Tester — Abt Hermann",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "TK46",
@@ -1433,7 +1433,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "Worker — Torsten Maier",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "TK47",
@@ -1446,7 +1446,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "User Tester — Abt Hermann",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "TK50",
@@ -1459,7 +1459,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "TK51",
@@ -1472,7 +1472,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "TK52",
@@ -1485,7 +1485,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "Worker — Torsten Maier",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "TK53",
@@ -1498,7 +1498,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "Worker — Torsten Maier",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "TK54",
@@ -1511,7 +1511,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "User Tester — Abt Hermann",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "TK55",
@@ -1524,7 +1524,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "Worker — Torsten Maier",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "TK56",
@@ -1537,7 +1537,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "TK57",
@@ -1550,7 +1550,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "Worker — Torsten Maier",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "TK58",
@@ -1563,7 +1563,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "Worker — Torsten Maier",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "TK59",
@@ -1576,7 +1576,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "User Tester — Abt Hermann",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "TK60",
@@ -1589,7 +1589,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "TK61",
@@ -1602,7 +1602,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "Worker — Torsten Maier",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "TK62",
@@ -1615,7 +1615,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "User Tester — Abt Hermann",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "TK63",
@@ -1628,7 +1628,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "TK64",
@@ -1641,7 +1641,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "Worker — Torsten Maier",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "TK65",
@@ -1654,7 +1654,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "User Tester — Abt Hermann",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "TK66",
@@ -1667,7 +1667,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "TK67",
@@ -1680,7 +1680,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "Worker — Torsten Maier",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "TK68",
@@ -1693,7 +1693,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "Worker — Torsten Maier",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "TK69",
@@ -1706,7 +1706,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "User Tester — Abt Hermann",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "TK70",
@@ -1719,7 +1719,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "Worker — Torsten Maier",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "TK71",
@@ -1732,7 +1732,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "User Tester — Abt Hermann",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "TK72",
@@ -1745,7 +1745,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "TK73",
@@ -1758,7 +1758,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "UI Designer — Wu Yunzhou",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "TK74",
@@ -1771,7 +1771,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "Quality Manager — Wang Xiaofeng",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK001",
@@ -1784,7 +1784,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "Explorer — Wang Licun",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK002",
@@ -1797,7 +1797,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "Explorer — Wang Licun",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK003",
@@ -1810,7 +1810,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK004",
@@ -1823,7 +1823,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK005",
@@ -1836,7 +1836,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "Worker — Torsten Maier",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK006",
@@ -1849,7 +1849,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "Worker — Torsten Maier",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK007",
@@ -1862,7 +1862,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "User Tester — Abt Hermann",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK008",
@@ -1875,7 +1875,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "User Tester — Abt Hermann",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK009",
@@ -1888,7 +1888,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK010",
@@ -1901,7 +1901,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK011",
@@ -1914,7 +1914,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK012",
@@ -1927,7 +1927,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK013",
@@ -1940,7 +1940,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "Worker — Torsten Maier",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK014",
@@ -1953,7 +1953,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "Worker — Torsten Maier",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK015",
@@ -1966,7 +1966,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "User Tester — Abt Hermann",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK016",
@@ -1979,7 +1979,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "User Tester — Abt Hermann",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK017",
@@ -1992,7 +1992,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK018",
@@ -2005,7 +2005,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK019",
@@ -2018,7 +2018,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "Worker — Torsten Maier",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK020",
@@ -2031,7 +2031,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "Worker — Torsten Maier",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK021",
@@ -2044,7 +2044,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "User Tester — Abt Hermann",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK022",
@@ -2057,7 +2057,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "User Tester — Abt Hermann",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK023",
@@ -2070,7 +2070,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "Explorer — Wang Licun",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK024",
@@ -2083,7 +2083,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "Explorer — Wang Licun",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK025",
@@ -2096,7 +2096,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "Worker — Torsten Maier",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK026",
@@ -2109,7 +2109,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "User Tester — Abt Hermann",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK027",
@@ -2122,7 +2122,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "Worker — Torsten Maier",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK028",
@@ -2135,7 +2135,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "User Tester — Abt Hermann",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK100",
@@ -2148,7 +2148,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK102",
@@ -2161,7 +2161,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK104",
@@ -2174,7 +2174,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK106",
@@ -2187,7 +2187,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK108",
@@ -2200,7 +2200,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK110",
@@ -2213,7 +2213,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "UI Designer — Wu Yunzhou",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK112",
@@ -2226,7 +2226,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK114",
@@ -2239,7 +2239,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK116",
@@ -2252,7 +2252,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK118",
@@ -2265,7 +2265,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "UI Designer — Wu Yunzhou",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK120",
@@ -2278,7 +2278,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK122",
@@ -2291,7 +2291,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK124",
@@ -2304,7 +2304,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "Worker — Torsten Maier",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK126",
@@ -2317,7 +2317,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "User Tester — Abt Hermann",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK128",
@@ -2330,7 +2330,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "Worker — Torsten Maier",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK130",
@@ -2343,7 +2343,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "User Tester — Abt Hermann",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK132",
@@ -2356,7 +2356,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "Worker — Torsten Maier",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK134",
@@ -2369,7 +2369,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "User Tester — Abt Hermann",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK200",
@@ -2382,7 +2382,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK201",
@@ -2395,7 +2395,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK202",
@@ -2408,7 +2408,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK203",
@@ -2421,7 +2421,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK204",
@@ -2434,7 +2434,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "Worker — Torsten Maier",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK205",
@@ -2447,7 +2447,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "Worker — Torsten Maier",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK206",
@@ -2460,7 +2460,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "Worker — Torsten Maier",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK207",
@@ -2473,7 +2473,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "Worker — Torsten Maier",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK208",
@@ -2486,7 +2486,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "User Tester — Abt Hermann",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK209",
@@ -2499,7 +2499,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "User Tester — Abt Hermann",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK210",
@@ -2512,7 +2512,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "Worker — Torsten Maier",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK211",
@@ -2525,7 +2525,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "Worker — Torsten Maier",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK212",
@@ -2538,7 +2538,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK213",
@@ -2551,7 +2551,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK214",
@@ -2564,7 +2564,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "Worker — Torsten Maier",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK215",
@@ -2577,7 +2577,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "Worker — Torsten Maier",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK216",
@@ -2590,7 +2590,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "Worker — Torsten Maier",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK217",
@@ -2603,7 +2603,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "Worker — Torsten Maier",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK218",
@@ -2616,7 +2616,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "User Tester — Abt Hermann",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK219",
@@ -2629,7 +2629,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "User Tester — Abt Hermann",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK220",
@@ -2642,7 +2642,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK221",
@@ -2655,7 +2655,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK222",
@@ -2668,7 +2668,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "Worker — Torsten Maier",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK223",
@@ -2681,7 +2681,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "Worker — Torsten Maier",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK224",
@@ -2694,7 +2694,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "User Tester — Abt Hermann",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK225",
@@ -2707,7 +2707,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "User Tester — Abt Hermann",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK226",
@@ -2720,7 +2720,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK227",
@@ -2733,7 +2733,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK228",
@@ -2746,7 +2746,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "Worker — Torsten Maier",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK229",
@@ -2759,7 +2759,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "Worker — Torsten Maier",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK230",
@@ -2772,7 +2772,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "User Tester — Abt Hermann",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK231",
@@ -2785,7 +2785,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "User Tester — Abt Hermann",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK232",
@@ -2798,7 +2798,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK233",
@@ -2811,7 +2811,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK234",
@@ -2824,7 +2824,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "Worker — Torsten Maier",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK235",
@@ -2837,7 +2837,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "Worker — Torsten Maier",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK236",
@@ -2850,7 +2850,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "Worker — Torsten Maier",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK237",
@@ -2863,7 +2863,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "Worker — Torsten Maier",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK238",
@@ -2876,7 +2876,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "User Tester — Abt Hermann",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK239",
@@ -2889,7 +2889,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "User Tester — Abt Hermann",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK240",
@@ -2902,7 +2902,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "Worker — Torsten Maier",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK241",
@@ -2915,7 +2915,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "Worker — Torsten Maier",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK242",
@@ -2928,7 +2928,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "User Tester — Abt Hermann",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK243",
@@ -2941,7 +2941,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "User Tester — Abt Hermann",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK244",
@@ -2954,7 +2954,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK245",
@@ -2967,7 +2967,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "System Architect — Feng Guo",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK246",
@@ -2980,7 +2980,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "UI Designer — Wu Yunzhou",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK247",
@@ -2993,7 +2993,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "UI Designer — Wu Yunzhou",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "STK248",
@@ -3006,7 +3006,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "Quality Manager — Wang Xiaofeng",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "TK01",
@@ -3019,7 +3019,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "Primary Coordinator — Yi Tang",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "TK02",
@@ -3032,7 +3032,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "Primary Coordinator — Yi Tang",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "TK03",
@@ -3045,7 +3045,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "Primary Coordinator — Yi Tang",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "TK04",
@@ -3058,7 +3058,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "Primary Coordinator — Yi Tang",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "TK05",
@@ -3071,7 +3071,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "Primary Coordinator — Yi Tang",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "TK06",
@@ -3084,7 +3084,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "Primary Coordinator — Yi Tang",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     },
     {
       "requirement_id": "TK07",
@@ -3097,7 +3097,7 @@
       "priority": "P0",
       "lifecycle": "Requirements",
       "owner_role": "Primary Coordinator — Yi Tang",
-      "publication_state": "Exact content and complete Project field/parent snapshot audited; body-link final readback pending"
+      "publication_state": "Independent Quality Manager publication audit PASS; requirement agreement and product evidence remain separate"
     }
   ]
 }

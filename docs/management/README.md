@@ -9,6 +9,7 @@ This is the single management entry point for Datara. [Project control issue](ht
 - [Agreed project brief and roadmap](../project-brief-and-roadmap.md)
 - [Founding brainstorming record](../brainstorming-record-2026-09-30.md)
 - [Customer-User-Stories (top-level requirements)](product-requirements.md)
+- [P0 requirement breakdown](p0-breakdown.md)
 - [System requirements](system-requirements.md)
 - [Machine-readable registry](requirements-registry.json)
 - [Traceability](traceability.md)
@@ -32,11 +33,11 @@ This is the single management entry point for Datara. [Project control issue](ht
 
 ## Control rules
 
-Customer-User-Stories (CUS) are the top-level customer and user outcomes derived from the founding decisions. System requirements (SR) are derived obligations across applicable perspectives, including legal, engineering, running environments, architecture, and data security. The current SR set is an initial draft; this classification does not assert complete coverage of those perspectives. The JSON registry is the canonical identifier, task, and coverage record; synchronize human-readable documents in the same change. Track planned, implemented, verified, and accepted states separately. No verification case currently has passing evidence.
+Customer-User-Stories (CUS) are the top-level customer and user outcomes derived from the founding decisions. System requirements (SR) are derived obligations across applicable perspectives, including legal, engineering, running environments, architecture, and data security. The current SR set is an initial draft; this classification does not assert complete coverage of those perspectives. The GitHub Project is the central shared backlog and authoritative status record. The local JSON registry is a machine-readable content and traceability mirror, not a second status board. Features link CUS outcomes to SR obligations; planned tasks and STKs inherit package and parent gates. Synchronize human-readable documents and registry links after Project publication. Track planned, implemented, verified, accepted, and released states separately. No added verification case currently has passing evidence.
 
 Use each linked issue as its package record. Split implementation tasks under that package when scope is known, preserving requirement links. Estimate after dependencies and contracts are understood. The founder owns product decisions and final acceptance; cloud tasks prepare reviewable engineering artifacts and evidence.
 
-Run `python scripts/check_requirements.py` after registry changes. It checks links and planned coverage only. Final validation requires actual software and a fixed candidate commit.
+Run `python scripts/check_requirements.py` after registry changes. It checks legacy CUS/SR/TK/WP/TC links and planned coverage only. Additive Features, STKs, and perspective assessments require direct audit and independent QM/Reviewer review. Final validation requires actual software and a fixed candidate commit.
 
 ## Requirement and backlog title convention
 

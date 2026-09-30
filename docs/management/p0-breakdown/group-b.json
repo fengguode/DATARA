@@ -909,16 +909,20 @@
         "STK100"
       ],
       "acceptance_criteria": [
-        "The shortlist has a row per proposed skill and records candidate, intended outcome, in/out scope, origin, input needs, evidence, exclusion rationale, and unresolved D02 choice. Reviewer can mark each required item present or missing; adjacent TC40/TC51 cases do not constitute shortlist verification."
+        "The shortlist has a row per proposed skill and records candidate, intended outcome, in/out scope, origin, input needs, evidence, exclusion rationale, and unresolved D02 choice; the review checklist records each required field as present, missing, or open. TC80 inspects this artifact and does not imply product verification."
       ],
       "outputs": [
         "Reviewable shortlist with explicit candidate scope and unresolved decision items"
       ],
-      "evidence_ids": [],
+      "evidence_ids": [
+        "TC80"
+      ],
       "decision_ids": [
         "D02"
       ],
-      "verification_ids": [],
+      "verification_ids": [
+        "TC80"
+      ],
       "source": [
         "docs/management/product-requirements.md",
         "docs/management/system-requirements.md",
@@ -1976,13 +1980,13 @@
         "candidate inventory"
       ],
       "evidence_ids": [
-        "TC40"
+        "TC80"
       ],
       "decision_ids": [
         "D02"
       ],
       "verification_ids": [
-        "TC40"
+        "TC80"
       ],
       "source": [
         "docs/management/product-requirements.md",
@@ -2905,6 +2909,20 @@
       "expected": "Publish two distinct skill definition versions and create a run reference to the first; history resolves the run to the original immutable definition while retaining both versions and does not silently replace either.",
       "status": "Not run",
       "evidence": []
+    },
+    {
+      "id": "TC80",
+      "title": "Baseline skill shortlist completeness review",
+      "method": "Inspection",
+      "procedure": "Inspect the proposed shortlist against the WP03 candidate scope. For each included and excluded skill, check intended user outcome, in-scope/out-of-scope behavior, source/origin, input needs, available evidence, exclusion reason, and unresolved D02 questions. Mark each item present, missing, or open; do not infer approval or substantive evaluation.",
+      "expected": "Every shortlist entry has the required scope, origin, input, evidence, and exclusion information or is explicitly marked missing/open; D02 choices remain open and no skill is represented as evaluated or approved.",
+      "status": "Not run",
+      "evidence": [],
+      "source": [
+        "docs/management/wp01-requirements-package.md",
+        "docs/management/product-requirements.md",
+        "docs/management/decision-register.md"
+      ]
     }
   ],
   "perspective_assessments": [

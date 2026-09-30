@@ -1,23 +1,25 @@
 # Requirements and validation traceability
 
-All cases are planned and **not run**. This table shows intended CUS → SR → verification coverage, not proof of compliance or completeness across all system perspectives. Actual results and evidence belong in the registry and a candidate-specific release report. A cross-cutting SR can appear under more than one CUS.
+The GitHub Project is the shared authoritative backlog and status record. The registry and these tables are synchronized requirement/traceability mirrors. Planned checks are **Not run** with empty evidence; no row is proof of compliance or acceptance. A cross-cutting SR may link to multiple CUS and Features.
 
-| Customer-User-Story | System requirements | Planned verification |
-| --- | --- | --- |
-| CUS01 | SR01, SR02, SR27 | TC01, TC19 |
-| CUS02 | SR03, SR04 | TC02, TC03 |
-| CUS03 | SR05, SR06, SR07, SR28 | TC04, TC05, TC20 |
-| CUS04 | SR08, SR09, SR29 | TC06, TC20 |
-| CUS05 | SR10, SR11 | TC07 |
-| CUS06 | SR12, SR13, SR30 | TC08, TC09, TC10, TC20 |
-| CUS07 | SR14, SR15 | TC10 |
-| CUS08 | SR16, SR17 | TC11 |
-| CUS09 | SR18, SR19, SR31 | TC12, TC13, TC20 |
-| CUS10 | SR20, SR21 | TC14 |
-| CUS11 | SR22, SR23 | TC16 |
-| CUS12 | SR24, SR25 | TC17 |
-| CUS13 | SR26 | TC18 |
+| CUS | P0 Features | System requirements | Tasks / STKs | Planned verification |
+| --- | --- | --- | --- | --- |
+| CUS01 | FEAT01 | SR01, SR02, SR27, SR32 | STK001, STK002, STK003, STK004, STK005, STK006, STK007, STK008, STK009, STK010, TK01, TK03, TK07, TK09, TK10, TK11, TK12, TK13 | TC01, TC02, TC03, TC04, TC05, TC06, TC07, TC08, TC09, TC10, TC11, TC12, TC13, TC14, TC15, TC19, TC20, TC21, TC24, TC25 |
+| CUS02 | FEAT02 | SR03, SR04, SR33 | STK011, STK012, STK013, STK014, STK015, STK016, STK017, STK018, TK01, TK03, TK07, TK14, TK15, TK16, TK17 | TC01, TC02, TC03, TC04, TC05, TC06, TC07, TC08, TC09, TC10, TC11, TC12, TC13, TC14, TC15, TC19, TC20, TC22, TC24, TC26 |
+| CUS03 | FEAT03, FEAT21 | SR05, SR06, SR07, SR28, SR34 | STK017, STK018, STK019, STK020, STK021, STK022, STK023, STK024, STK025, STK026, STK027, STK028, TK01, TK03, TK04, TK07, TK17, TK18, TK19, TK20, TK21, TK22 | TC01, TC02, TC03, TC04, TC05, TC06, TC07, TC08, TC09, TC10, TC11, TC12, TC13, TC14, TC15, TC19, TC20, TC23, TC24, TC25, TC26, TC27 |
+| CUS04 | FEAT04, FEAT30, FEAT31 | SR08, SR09, SR29, SR50, SR51, SR52, SR58 | STK100, STK102, STK104, STK106, STK110, STK124, STK126, TK02, TK04, TK07, TK30, TK31, TK32, TK33, TK35, TK42, TK43 | TC01, TC02, TC03, TC04, TC05, TC06, TC07, TC08, TC09, TC10, TC11, TC12, TC13, TC14, TC15, TC19, TC20, TC40, TC41, TC42, TC45, TC51, TC80 |
+| CUS05 | FEAT05, FEAT31 | SR10, SR11, SR53 | STK106, STK108, STK110, STK128, STK130, TK02, TK04, TK07, TK33, TK34, TK35, TK44, TK45 | TC01, TC02, TC03, TC04, TC05, TC06, TC07, TC08, TC09, TC10, TC11, TC12, TC13, TC14, TC15, TC19, TC20, TC42, TC43, TC44, TC45 |
+| CUS06 | FEAT06, FEAT32, FEAT33, FEAT34, FEAT35 | SR12, SR13, SR30, SR54, SR55, SR56, SR57, SR59 | STK112, STK114, STK116, STK118, STK120, STK122, STK132, STK134, TK02, TK05, TK07, TK36, TK37, TK38, TK39, TK40, TK41, TK46, TK47 | TC01, TC02, TC03, TC04, TC05, TC06, TC07, TC08, TC09, TC10, TC11, TC12, TC13, TC14, TC15, TC19, TC20, TC46, TC47, TC48, TC49, TC50 |
+| CUS07 | FEAT07, FEAT40, FEAT44, FEAT46 | SR14, SR15, SR70, SR74, SR75, SR76 | STK200, STK201, STK202, STK203, STK204, STK205, STK206, STK207, STK208, STK209, STK210, STK211, STK222, STK223, STK224, STK225, STK238, STK239, STK240, STK241, STK242, STK243, STK244, STK245, STK246, STK247, STK248, TK02, TK05, TK07, TK50, TK51, TK52, TK53, TK54, TK55, TK61, TK62, TK69, TK70, TK71, TK72, TK73, TK74 | TC01, TC02, TC03, TC04, TC05, TC06, TC07, TC08, TC09, TC10, TC11, TC12, TC13, TC14, TC15, TC19, TC20, TC60, TC61, TC62, TC63, TC66, TC68, TC69, TC70, TC73, TC74, TC75, TC76, TC77, TC78, TC79 |
+| CUS08 | FEAT40, FEAT08, FEAT41, FEAT46 | SR16, SR17, SR70, SR72, SR75, SR76 | STK202, STK203, STK208, STK209, STK212, STK213, STK214, STK215, STK216, STK217, STK218, STK219, STK222, STK223, STK224, STK225, STK232, STK233, STK238, STK239, STK244, STK245, STK246, STK247, STK248, TK02, TK06, TK07, TK51, TK54, TK56, TK57, TK58, TK59, TK61, TK62, TK66, TK69, TK72, TK73, TK74 | TC01, TC02, TC03, TC04, TC05, TC06, TC07, TC08, TC09, TC10, TC11, TC12, TC13, TC14, TC15, TC19, TC20, TC60, TC61, TC64, TC65, TC66, TC67, TC68, TC69, TC70, TC73, TC74, TC75, TC77, TC78, TC79 |
+| CUS09 | FEAT09, FEAT42, FEAT46 | SR18, SR19, SR31, SR73, SR75, SR76 | STK220, STK221, STK222, STK223, STK224, STK225, STK226, STK227, STK228, STK229, STK230, STK231, STK232, STK233, STK238, STK239, STK244, STK245, STK246, STK247, STK248, TK02, TK06, TK07, TK60, TK61, TK62, TK63, TK64, TK65, TK66, TK69, TK72, TK73, TK74 | TC01, TC02, TC03, TC04, TC05, TC06, TC07, TC08, TC09, TC10, TC11, TC12, TC13, TC14, TC15, TC19, TC20, TC68, TC69, TC70, TC71, TC72, TC73, TC74, TC75, TC77, TC78, TC79 |
+| CUS10 | FEAT42, FEAT10, FEAT43, FEAT44, FEAT46 | SR20, SR21, SR71, SR73, SR74, SR75, SR76 | STK222, STK223, STK224, STK225, STK228, STK229, STK230, STK231, STK232, STK233, STK234, STK235, STK236, STK237, STK238, STK239, STK240, STK241, STK242, STK243, STK244, STK245, STK246, STK247, STK248, TK03, TK06, TK07, TK61, TK62, TK64, TK65, TK66, TK67, TK68, TK69, TK70, TK71, TK72, TK73, TK74 | TC01, TC02, TC03, TC04, TC05, TC06, TC07, TC08, TC09, TC10, TC11, TC12, TC13, TC14, TC15, TC19, TC20, TC63, TC68, TC69, TC70, TC71, TC72, TC73, TC74, TC75, TC76, TC77, TC78, TC79 |
+| CUS11 |  | SR22, SR23 | TK08 | TC16, TC17, TC18 |
+| CUS12 |  | SR24, SR25 | TK08 | TC16, TC17, TC18 |
+| CUS13 |  | SR26 | TK08 | TC16, TC17, TC18 |
 
-TC15 additionally validates the complete P0 user journey across CUS01–CUS10. No requirement is complete merely because its issue is closed. Trace every implemented statement to a PR or commit and candidate-specific passing evidence.
+TC15 remains the separate end-to-end athlete validation for the P0 journey. TC79 is a requirements traceability audit, not athlete validation. Task/subtask links, owners and decisions are detailed in [P0 requirement breakdown](p0-breakdown.md).
 
-Task-level CUS → SR → task → validation links and dependencies are canonical in the registry and summarized as TK01–TK08 in the [WP01 requirements package](wp01-requirements-package.md). A task's planned cases are coverage intent, not results.
+Trace every implemented statement to a PR or commit and candidate-specific passing evidence. Issue closure or Project completion alone does not mean a requirement is verified or accepted. Requirement statuses remain distinct from implementation, verification, founder acceptance, and release.
+
+The existing checker validates the legacy CUS/SR/TK/WP/TC core. Added Feature, STK, perspective-assessment and reciprocal extension links require direct audit and independent QM/Reviewer review.

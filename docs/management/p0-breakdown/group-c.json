@@ -3834,7 +3834,9 @@
         "CUS09",
         "CUS10"
       ],
-      "feature_ids": "FEAT42",
+      "feature_ids": [
+        "FEAT42"
+      ],
       "sr_ids": [
         "SR19",
         "SR31",
@@ -3884,7 +3886,9 @@
         "CUS09",
         "CUS10"
       ],
-      "feature_ids": "FEAT42",
+      "feature_ids": [
+        "FEAT42"
+      ],
       "sr_ids": [
         "SR19",
         "SR31",
@@ -3934,7 +3938,9 @@
         "CUS09",
         "CUS10"
       ],
-      "feature_ids": "FEAT42",
+      "feature_ids": [
+        "FEAT42"
+      ],
       "sr_ids": [
         "SR19",
         "SR31",
@@ -3984,7 +3990,9 @@
         "CUS09",
         "CUS10"
       ],
-      "feature_ids": "FEAT42",
+      "feature_ids": [
+        "FEAT42"
+      ],
       "sr_ids": [
         "SR19",
         "SR31",

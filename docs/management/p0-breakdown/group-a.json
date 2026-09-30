@@ -1,0 +1,2729 @@
+{
+  "group": "A",
+  "cus_ids": [
+    "CUS01",
+    "CUS02",
+    "CUS03"
+  ],
+  "features": [
+    {
+      "id": "FEAT01",
+      "title": "[Feature][backend]Define supported activity source and file disposition",
+      "statement": "Define the supported FIT source boundary and classify submitted files with explicit outcomes under an approved source contract.",
+      "priority": "P0",
+      "status": "Proposed",
+      "readiness": "Proposed",
+      "parent_cus_ids": [
+        "CUS01"
+      ],
+      "sr_ids": [
+        "SR01",
+        "SR02",
+        "SR27",
+        "SR32"
+      ],
+      "work_package": "WP01",
+      "dependencies": [],
+      "owner_role": "System Architect — Feng Guo",
+      "acceptance_criteria": [
+        "Given a file and approved versioned source contract, supported/rejected cases have explicit reasons; oracle: each matrix row cites evidence or remains unresolved."
+      ],
+      "outputs": [
+        "Versioned FIT support matrix and per-file disposition contract"
+      ],
+      "evidence_ids": [
+        "TC01",
+        "TC19",
+        "TC21"
+      ],
+      "decision_ids": [
+        "D01"
+      ],
+      "source": [
+        "docs/project-brief-and-roadmap.md",
+        "docs/management/wp01-requirements-package.md",
+        "docs/management/p0-ui-requirements-review.md"
+      ],
+      "notes": "Proposal; mappings, limits and fixture terms are not approved."
+    },
+    {
+      "id": "FEAT02",
+      "title": "[Feature][database]Preserve original uploads and conflict-aware history",
+      "statement": "Preserve accepted source bytes and provenance while handling repeated uploads and logical conflicts without silent overwrite.",
+      "priority": "P0",
+      "status": "Proposed",
+      "readiness": "Proposed",
+      "parent_cus_ids": [
+        "CUS02"
+      ],
+      "sr_ids": [
+        "SR03",
+        "SR04",
+        "SR33"
+      ],
+      "work_package": "WP02",
+      "dependencies": [
+        "FEAT01"
+      ],
+      "owner_role": "System Architect — Feng Guo",
+      "acceptance_criteria": [
+        "Given accepted and repeated/conflicting imports, bytes remain identifiable, normalized records link to source, duplicates do not create new history, and conflicts surface; oracle: TC02/TC03 under approved policy."
+      ],
+      "outputs": [
+        "Immutable-source and duplicate/conflict history behavior"
+      ],
+      "evidence_ids": [
+        "TC02",
+        "TC03",
+        "TC22",
+        "TC26"
+      ],
+      "decision_ids": [
+        "D01"
+      ],
+      "source": [
+        "docs/project-brief-and-roadmap.md",
+        "docs/management/wp01-requirements-package.md",
+        "docs/management/p0-ui-requirements-review.md"
+      ],
+      "notes": "Proposal; conflict tolerance and lifecycle policy remain open."
+    },
+    {
+      "id": "FEAT03",
+      "title": "[Feature][backend]Prepare activity data deterministically",
+      "statement": "Normalize supported activity data reproducibly using conventional processing without inference.",
+      "priority": "P0",
+      "status": "Proposed",
+      "readiness": "Proposed",
+      "parent_cus_ids": [
+        "CUS03"
+      ],
+      "sr_ids": [
+        "SR05",
+        "SR06"
+      ],
+      "work_package": "WP02",
+      "dependencies": [
+        "FEAT01",
+        "FEAT02"
+      ],
+      "owner_role": "System Architect — Feng Guo",
+      "acceptance_criteria": [
+        "Given identical source/configuration/version, normalized output is semantically identical and no inference occurs; oracle: TC04."
+      ],
+      "outputs": [
+        "Deterministic model-free activity preparation"
+      ],
+      "evidence_ids": [
+        "TC04"
+      ],
+      "decision_ids": [
+        "D01"
+      ],
+      "source": [
+        "docs/project-brief-and-roadmap.md",
+        "docs/management/wp01-requirements-package.md",
+        "docs/management/p0-ui-requirements-review.md"
+      ],
+      "notes": "Proposal; input contract and baseline skill fields await D01/D02."
+    },
+    {
+      "id": "FEAT21",
+      "title": "[Feature][backend]Package scoped skill inputs with provenance",
+      "statement": "Package only selected, provenance-linked prepared data required by a skill in a versioned envelope.",
+      "priority": "P0",
+      "status": "Proposed",
+      "readiness": "Proposed",
+      "parent_cus_ids": [
+        "CUS03"
+      ],
+      "sr_ids": [
+        "SR07",
+        "SR28",
+        "SR34"
+      ],
+      "work_package": "WP03",
+      "dependencies": [
+        "FEAT03"
+      ],
+      "owner_role": "System Architect — Feng Guo",
+      "acceptance_criteria": [
+        "Given a selected scope and declared skill inputs, envelope values are versioned, traceable and free of credentials/out-of-scope records; oracle: TC05/20/23."
+      ],
+      "outputs": [
+        "Versioned scoped skill-input envelope and provenance presentation"
+      ],
+      "evidence_ids": [
+        "TC05",
+        "TC20",
+        "TC23"
+      ],
+      "decision_ids": [
+        "D02"
+      ],
+      "source": [
+        "docs/project-brief-and-roadmap.md",
+        "docs/management/wp01-requirements-package.md",
+        "docs/management/p0-ui-requirements-review.md"
+      ],
+      "notes": "Proposal; exact baseline skill fields await D02."
+    }
+  ],
+  "existing_sr_links": [
+    {
+      "id": "SR01",
+      "feature_ids": [
+        "FEAT01"
+      ],
+      "source": [
+        "docs/management/system-requirements.md"
+      ],
+      "perspective_tags": [
+        "engineering",
+        "architecture"
+      ]
+    },
+    {
+      "id": "SR02",
+      "feature_ids": [
+        "FEAT01"
+      ],
+      "source": [
+        "docs/management/system-requirements.md"
+      ],
+      "perspective_tags": [
+        "engineering",
+        "runtime",
+        "architecture"
+      ]
+    },
+    {
+      "id": "SR03",
+      "feature_ids": [
+        "FEAT02"
+      ],
+      "source": [
+        "docs/management/system-requirements.md"
+      ],
+      "perspective_tags": [
+        "engineering",
+        "architecture",
+        "domain_provenance"
+      ]
+    },
+    {
+      "id": "SR04",
+      "feature_ids": [
+        "FEAT02"
+      ],
+      "source": [
+        "docs/management/system-requirements.md"
+      ],
+      "perspective_tags": [
+        "engineering",
+        "runtime",
+        "architecture",
+        "domain_provenance"
+      ]
+    },
+    {
+      "id": "SR05",
+      "feature_ids": [
+        "FEAT03"
+      ],
+      "source": [
+        "docs/management/system-requirements.md"
+      ],
+      "perspective_tags": [
+        "engineering",
+        "runtime",
+        "architecture",
+        "operations_backup_retention_recovery"
+      ]
+    },
+    {
+      "id": "SR06",
+      "feature_ids": [
+        "FEAT03"
+      ],
+      "source": [
+        "docs/management/system-requirements.md"
+      ],
+      "perspective_tags": [
+        "engineering",
+        "runtime"
+      ]
+    },
+    {
+      "id": "SR07",
+      "feature_ids": [
+        "FEAT21"
+      ],
+      "source": [
+        "docs/management/system-requirements.md"
+      ],
+      "perspective_tags": [
+        "engineering",
+        "architecture",
+        "privacy_security",
+        "domain_provenance"
+      ]
+    },
+    {
+      "id": "SR27",
+      "feature_ids": [
+        "FEAT01"
+      ],
+      "source": [
+        "docs/management/system-requirements.md",
+        "docs/management/wp01-requirements-package.md"
+      ],
+      "perspective_tags": [
+        "engineering",
+        "architecture",
+        "domain_provenance"
+      ]
+    },
+    {
+      "id": "SR28",
+      "feature_ids": [
+        "FEAT21"
+      ],
+      "source": [
+        "docs/management/system-requirements.md",
+        "docs/management/wp01-requirements-package.md"
+      ],
+      "perspective_tags": [
+        "engineering",
+        "architecture",
+        "privacy_security",
+        "domain_provenance"
+      ]
+    }
+  ],
+  "system_requirements": [
+    {
+      "id": "SR32",
+      "title": "[SR][frontend]Present file disposition with textual reason",
+      "cus_ids": [
+        "CUS01"
+      ],
+      "feature_ids": [
+        "FEAT01"
+      ],
+      "priority": "P0",
+      "statement": "For each submitted file, the system shall present its accepted or rejected disposition as text associated with that file and include the applicable approved rejection reason.",
+      "acceptance_criteria": [
+        "Given each approved accepted/rejected fixture, the interface identifies file and textual disposition; oracle: rendered result matches TC21 and is understandable without color/icon alone.",
+        "Given a rejected fixture, displayed reason matches the approved contract reason; oracle: compare displayed reason/code to the approved matrix."
+      ],
+      "source": [
+        "docs/management/p0-ui-requirements-review.md"
+      ],
+      "perspective_tags": [
+        "accessibility",
+        "engineering"
+      ],
+      "verification_ids": [
+        "TC21"
+      ],
+      "work_package": "WP01",
+      "decision_ids": [
+        "D01"
+      ],
+      "readiness": "Proposed",
+      "status": "Draft derived requirement"
+    },
+    {
+      "id": "SR33",
+      "title": "[SR][frontend]Distinguish duplicate imports and unresolved conflicts",
+      "cus_ids": [
+        "CUS02"
+      ],
+      "feature_ids": [
+        "FEAT02"
+      ],
+      "priority": "P0",
+      "statement": "The history view shall distinguish persisted activities, exact duplicate imports, and unresolved conflicts according to the approved persistence contract.",
+      "acceptance_criteria": [
+        "Given identical bytes are imported twice, history does not show a second activity and identifies the duplicate import reference; oracle: TC22 agrees with persisted activity count.",
+        "Given an approved conflict fixture, history identifies affected records and unresolved status without implying merge or overwrite; oracle: TC22 matches the approved conflict policy."
+      ],
+      "source": [
+        "docs/management/p0-ui-requirements-review.md"
+      ],
+      "perspective_tags": [
+        "accessibility",
+        "engineering",
+        "domain_provenance"
+      ],
+      "verification_ids": [
+        "TC22"
+      ],
+      "work_package": "WP02",
+      "decision_ids": [
+        "D01"
+      ],
+      "readiness": "Proposed",
+      "status": "Draft derived requirement"
+    },
+    {
+      "id": "SR34",
+      "title": "[SR][frontend]Label prepared data scope and provenance",
+      "cus_ids": [
+        "CUS03"
+      ],
+      "feature_ids": [
+        "FEAT21"
+      ],
+      "priority": "P0",
+      "statement": "Readiness presentation shall label selected data scope, source observations, computed metrics, and quality warnings according to their contract provenance.",
+      "acceptance_criteria": [
+        "Given a prepared fixture, interface displays scope and distinguishes observations, computed metrics and warnings; oracle: displayed labels and values map to prepared provenance in TC23.",
+        "Given an absent optional value, presentation identifies it as unavailable/unknown and does not render zero or infer a value; oracle: TC23 negative fixture."
+      ],
+      "source": [
+        "docs/management/p0-ui-requirements-review.md"
+      ],
+      "perspective_tags": [
+        "accessibility",
+        "domain_provenance",
+        "engineering"
+      ],
+      "verification_ids": [
+        "TC23"
+      ],
+      "work_package": "WP03",
+      "decision_ids": [
+        "D02"
+      ],
+      "readiness": "Proposed",
+      "status": "Draft derived requirement"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "TK09",
+      "parent_task_id": "TK01",
+      "title": "[Task][legal]Inventory FIT source and fixture terms",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Proposed",
+      "work_kind": "decision_research",
+      "work_package": "WP01",
+      "cus_ids": [
+        "CUS01"
+      ],
+      "feature_ids": [
+        "FEAT01"
+      ],
+      "sr_ids": [
+        "SR27"
+      ],
+      "requirement_ids": [
+        "CUS01",
+        "SR27"
+      ],
+      "dependencies": [],
+      "owner_role": "Explorer — Wang Licun",
+      "child_task_ids": [],
+      "subtask_ids": [
+        "STK001",
+        "STK002"
+      ],
+      "acceptance_criteria": [
+        "For each candidate official reference/fixture, provenance and terms or unresolved rights questions are recorded; oracle: every source has a provenance row or explicit gap and no legal conclusion is invented."
+      ],
+      "outputs": [
+        "Evidence-indexed FIT source and fixture provenance inventory"
+      ],
+      "evidence_ids": [
+        "TC19",
+        "TC24"
+      ],
+      "decision_ids": [
+        "D01"
+      ],
+      "verification_ids": [
+        "TC19",
+        "TC24"
+      ],
+      "source": [
+        "docs/management/wp01-requirements-package.md",
+        "docs/management/decision-register.md"
+      ]
+    },
+    {
+      "id": "TK10",
+      "parent_task_id": "TK01",
+      "title": "[Task][architecture]Draft FIT support and mapping matrix",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Proposed",
+      "work_kind": "contract_design",
+      "work_package": "WP01",
+      "cus_ids": [
+        "CUS01"
+      ],
+      "feature_ids": [
+        "FEAT01"
+      ],
+      "sr_ids": [
+        "SR01",
+        "SR02",
+        "SR27"
+      ],
+      "requirement_ids": [
+        "CUS01",
+        "SR01",
+        "SR02",
+        "SR27"
+      ],
+      "dependencies": [
+        "TK09"
+      ],
+      "owner_role": "System Architect — Feng Guo",
+      "child_task_ids": [],
+      "subtask_ids": [
+        "STK003",
+        "STK004"
+      ],
+      "acceptance_criteria": [
+        "Each proposed FIT variant, record, mapping, unit, timestamp, integrity and rejection rule cites official evidence or remains explicitly unsupported/unresolved; oracle: traceable matrix, with no guessed mapping or numeric limit."
+      ],
+      "outputs": [
+        "Traceable proposed FIT acceptance/rejection matrix"
+      ],
+      "evidence_ids": [
+        "TC01",
+        "TC19",
+        "TC25"
+      ],
+      "decision_ids": [
+        "D01"
+      ],
+      "verification_ids": [
+        "TC01",
+        "TC19",
+        "TC25"
+      ],
+      "source": [
+        "docs/management/wp01-requirements-package.md",
+        "docs/management/decision-register.md"
+      ]
+    },
+    {
+      "id": "TK11",
+      "parent_task_id": "TK03",
+      "title": "[Task][backend]Implement approved file classification and diagnostics",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Blocked on decision",
+      "work_kind": "implementation",
+      "work_package": "WP02",
+      "cus_ids": [
+        "CUS01"
+      ],
+      "feature_ids": [
+        "FEAT01"
+      ],
+      "sr_ids": [
+        "SR01",
+        "SR02",
+        "SR27",
+        "SR32"
+      ],
+      "requirement_ids": [
+        "CUS01",
+        "SR01",
+        "SR02",
+        "SR27",
+        "SR32"
+      ],
+      "dependencies": [
+        "TK10"
+      ],
+      "owner_role": "Worker — Torsten Maier",
+      "child_task_ids": [],
+      "subtask_ids": [
+        "STK005",
+        "STK006"
+      ],
+      "acceptance_criteria": [
+        "Given an approved-matrix fixture, classification and textual per-file outcome match its expected disposition/reason; oracle: unsupported/malformed cases reject and approved accepted cases import without silent fallback."
+      ],
+      "outputs": [
+        "Implemented contract-versioned classification and accessible per-file diagnostics"
+      ],
+      "evidence_ids": [
+        "TC01",
+        "TC19",
+        "TC21"
+      ],
+      "decision_ids": [
+        "D01",
+        "D05"
+      ],
+      "verification_ids": [
+        "TC01",
+        "TC19",
+        "TC21"
+      ],
+      "source": [
+        "docs/management/system-requirements.md",
+        "docs/management/wp01-requirements-package.md",
+        "docs/management/p0-ui-requirements-review.md"
+      ]
+    },
+    {
+      "id": "TK12",
+      "parent_task_id": "TK07",
+      "title": "[Task][management]Verify FIT classification and file disposition",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Blocked on decision",
+      "work_kind": "verification",
+      "work_package": "WP06",
+      "cus_ids": [
+        "CUS01"
+      ],
+      "feature_ids": [
+        "FEAT01"
+      ],
+      "sr_ids": [
+        "SR01",
+        "SR02",
+        "SR27",
+        "SR32"
+      ],
+      "requirement_ids": [
+        "CUS01",
+        "SR01",
+        "SR02",
+        "SR27",
+        "SR32"
+      ],
+      "dependencies": [
+        "TK11"
+      ],
+      "owner_role": "User Tester — Abt Hermann",
+      "child_task_ids": [],
+      "subtask_ids": [
+        "STK007",
+        "STK008"
+      ],
+      "acceptance_criteria": [
+        "On the fixed candidate, execute supported, malformed, unsupported and missing-field fixtures; oracle: dispositions/reasons match the approved matrix and rendered text identifies file/outcome; record actual environment, result and limits."
+      ],
+      "outputs": [
+        "Candidate-specific TC01/TC19/TC21 verification record"
+      ],
+      "evidence_ids": [
+        "TC01",
+        "TC19",
+        "TC21"
+      ],
+      "decision_ids": [
+        "D01"
+      ],
+      "verification_ids": [
+        "TC01",
+        "TC19",
+        "TC21"
+      ],
+      "source": [
+        "docs/management/validation-plan.md",
+        "docs/management/p0-ui-requirements-review.md"
+      ]
+    },
+    {
+      "id": "TK13",
+      "parent_task_id": "TK01",
+      "title": "[Task][security]Assess FIT intake data flow and operational gaps",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Proposed",
+      "work_kind": "decision_research",
+      "work_package": "WP01",
+      "cus_ids": [
+        "CUS01"
+      ],
+      "feature_ids": [
+        "FEAT01"
+      ],
+      "sr_ids": [
+        "SR01",
+        "SR27"
+      ],
+      "requirement_ids": [
+        "CUS01",
+        "SR01",
+        "SR27"
+      ],
+      "dependencies": [],
+      "owner_role": "System Architect — Feng Guo",
+      "child_task_ids": [],
+      "subtask_ids": [
+        "STK009",
+        "STK010"
+      ],
+      "acceptance_criteria": [
+        "Map source bytes, identifiers and diagnostics across intake; identify access, logging and recovery questions; oracle: each concern links an existing SR or explicit evidence gap, without assuming security controls or service targets."
+      ],
+      "outputs": [
+        "FIT intake data-flow and operations gap report"
+      ],
+      "evidence_ids": [
+        "TC14",
+        "TC25"
+      ],
+      "decision_ids": [
+        "D01"
+      ],
+      "verification_ids": [
+        "TC14",
+        "TC25"
+      ],
+      "source": [
+        "docs/management/system-requirements.md",
+        "docs/management/wp01-requirements-package.md"
+      ]
+    },
+    {
+      "id": "TK14",
+      "parent_task_id": "TK01",
+      "title": "[Task][architecture]Compare duplicate and conflict policy options",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Proposed",
+      "work_kind": "decision_research",
+      "work_package": "WP01",
+      "cus_ids": [
+        "CUS02"
+      ],
+      "feature_ids": [
+        "FEAT02"
+      ],
+      "sr_ids": [
+        "SR04"
+      ],
+      "requirement_ids": [
+        "CUS02",
+        "SR04"
+      ],
+      "dependencies": [],
+      "owner_role": "System Architect — Feng Guo",
+      "child_task_ids": [],
+      "subtask_ids": [
+        "STK011",
+        "STK012"
+      ],
+      "acceptance_criteria": [
+        "Compare only exact-byte, documented-tolerance and no-logical-detection options from WP01; oracle: each describes observable duplicate/conflict outcomes and leaves D01 choice to founder."
+      ],
+      "outputs": [
+        "Decision-ready duplicate/conflict options table"
+      ],
+      "evidence_ids": [
+        "TC03"
+      ],
+      "decision_ids": [
+        "D01"
+      ],
+      "verification_ids": [
+        "TC03"
+      ],
+      "source": [
+        "docs/management/wp01-requirements-package.md",
+        "docs/management/decision-register.md"
+      ]
+    },
+    {
+      "id": "TK15",
+      "parent_task_id": "TK03",
+      "title": "[Task][database]Implement immutable originals and duplicate-safe history",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Blocked on decision",
+      "work_kind": "implementation",
+      "work_package": "WP02",
+      "cus_ids": [
+        "CUS02"
+      ],
+      "feature_ids": [
+        "FEAT02"
+      ],
+      "sr_ids": [
+        "SR03",
+        "SR04",
+        "SR33"
+      ],
+      "requirement_ids": [
+        "CUS02",
+        "SR03",
+        "SR04",
+        "SR33"
+      ],
+      "dependencies": [
+        "TK14"
+      ],
+      "owner_role": "Worker — Torsten Maier",
+      "child_task_ids": [],
+      "subtask_ids": [
+        "STK013",
+        "STK014"
+      ],
+      "acceptance_criteria": [
+        "Given the approved storage/identity contract, accepted bytes retain an integrity identifier and normalized records link to source; identical re-import is idempotent and a conflict is never silently overwritten; oracle: TC02/03/22."
+      ],
+      "outputs": [
+        "Immutable source lineage and duplicate/conflict-safe history behavior"
+      ],
+      "evidence_ids": [
+        "TC02",
+        "TC03",
+        "TC22"
+      ],
+      "decision_ids": [
+        "D01",
+        "D05"
+      ],
+      "verification_ids": [
+        "TC02",
+        "TC03",
+        "TC22"
+      ],
+      "source": [
+        "docs/management/system-requirements.md",
+        "docs/management/wp01-requirements-package.md",
+        "docs/management/p0-ui-requirements-review.md"
+      ]
+    },
+    {
+      "id": "TK16",
+      "parent_task_id": "TK07",
+      "title": "[Task][management]Verify original preservation and history behavior",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Blocked on decision",
+      "work_kind": "verification",
+      "work_package": "WP06",
+      "cus_ids": [
+        "CUS02"
+      ],
+      "feature_ids": [
+        "FEAT02"
+      ],
+      "sr_ids": [
+        "SR03",
+        "SR04",
+        "SR33"
+      ],
+      "requirement_ids": [
+        "CUS02",
+        "SR03",
+        "SR04",
+        "SR33"
+      ],
+      "dependencies": [
+        "TK15"
+      ],
+      "owner_role": "User Tester — Abt Hermann",
+      "child_task_ids": [],
+      "subtask_ids": [
+        "STK015",
+        "STK016"
+      ],
+      "acceptance_criteria": [
+        "On the fixed candidate, reload originals, re-import identical bytes and submit approved conflict fixtures; oracle: integrity/source links resolve, duplicate count is unchanged, conflict remains visible, and actual results/limits are recorded."
+      ],
+      "outputs": [
+        "Candidate-specific TC02/TC03/TC22 verification record"
+      ],
+      "evidence_ids": [
+        "TC02",
+        "TC03",
+        "TC22"
+      ],
+      "decision_ids": [
+        "D01"
+      ],
+      "verification_ids": [
+        "TC02",
+        "TC03",
+        "TC22"
+      ],
+      "source": [
+        "docs/management/validation-plan.md",
+        "docs/management/p0-ui-requirements-review.md"
+      ]
+    },
+    {
+      "id": "TK17",
+      "parent_task_id": "TK03",
+      "title": "[Task][management]Investigate history rights and lifecycle policy gaps",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Proposed",
+      "work_kind": "decision_research",
+      "work_package": "WP02",
+      "cus_ids": [
+        "CUS02",
+        "CUS03"
+      ],
+      "feature_ids": [
+        "FEAT02",
+        "FEAT03"
+      ],
+      "sr_ids": [
+        "SR03",
+        "SR28"
+      ],
+      "requirement_ids": [
+        "CUS02",
+        "CUS03",
+        "SR03",
+        "SR28"
+      ],
+      "dependencies": [],
+      "owner_role": "System Architect — Feng Guo",
+      "child_task_ids": [],
+      "subtask_ids": [
+        "STK017",
+        "STK018"
+      ],
+      "acceptance_criteria": [
+        "Record sourced rights, retention, backup/recovery and privacy questions for retained and prepared user data; oracle: each issue has a source or explicit unknown/owner question; no legal duty, duration, RPO or RTO is invented."
+      ],
+      "outputs": [
+        "Evidence-linked persistent-data lifecycle gap report"
+      ],
+      "evidence_ids": [
+        "TC24",
+        "TC26"
+      ],
+      "decision_ids": [],
+      "verification_ids": [
+        "TC24",
+        "TC26"
+      ],
+      "source": [
+        "docs/management/decision-register.md",
+        "docs/management/wp01-requirements-package.md"
+      ]
+    },
+    {
+      "id": "TK18",
+      "parent_task_id": "TK03",
+      "title": "[Task][backend]Implement deterministic model-free normalization",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Blocked on decision",
+      "work_kind": "implementation",
+      "work_package": "WP02",
+      "cus_ids": [
+        "CUS03"
+      ],
+      "feature_ids": [
+        "FEAT03"
+      ],
+      "sr_ids": [
+        "SR05",
+        "SR06"
+      ],
+      "requirement_ids": [
+        "CUS03",
+        "SR05",
+        "SR06"
+      ],
+      "dependencies": [],
+      "owner_role": "Worker — Torsten Maier",
+      "child_task_ids": [],
+      "subtask_ids": [
+        "STK019",
+        "STK025"
+      ],
+      "acceptance_criteria": [
+        "Given approved source/configuration/version, repeat preparation produces semantically identical normalized output and no inference request; oracle: TC04."
+      ],
+      "outputs": [
+        "Deterministic model-free normalization"
+      ],
+      "evidence_ids": [
+        "TC04"
+      ],
+      "decision_ids": [
+        "D01",
+        "D05"
+      ],
+      "verification_ids": [
+        "TC04"
+      ],
+      "source": [
+        "docs/management/system-requirements.md",
+        "docs/management/wp01-requirements-package.md",
+        "docs/management/p0-ui-requirements-review.md"
+      ]
+    },
+    {
+      "id": "TK19",
+      "parent_task_id": "TK07",
+      "title": "[Task][management]Verify deterministic normalization",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Blocked on decision",
+      "work_kind": "verification",
+      "work_package": "WP06",
+      "cus_ids": [
+        "CUS03"
+      ],
+      "feature_ids": [
+        "FEAT03"
+      ],
+      "sr_ids": [
+        "SR05",
+        "SR06"
+      ],
+      "requirement_ids": [
+        "CUS03",
+        "SR05",
+        "SR06"
+      ],
+      "dependencies": [
+        "TK18"
+      ],
+      "owner_role": "User Tester — Abt Hermann",
+      "child_task_ids": [],
+      "subtask_ids": [
+        "STK021",
+        "STK026"
+      ],
+      "acceptance_criteria": [
+        "On the fixed candidate, repeat preparation with inference disabled; oracle: semantic output matches excluding permitted IDs/timestamps and observed inference calls equal zero; record actual environment/results."
+      ],
+      "outputs": [
+        "Candidate-specific TC04 verification record"
+      ],
+      "evidence_ids": [
+        "TC04"
+      ],
+      "decision_ids": [
+        "D01"
+      ],
+      "verification_ids": [
+        "TC04"
+      ],
+      "source": [
+        "docs/management/validation-plan.md",
+        "docs/management/p0-ui-requirements-review.md"
+      ]
+    },
+    {
+      "id": "TK20",
+      "parent_task_id": "TK03",
+      "title": "[Task][runtime]Assess preprocessing runtime and operations gaps",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Proposed",
+      "work_kind": "decision_research",
+      "work_package": "WP02",
+      "cus_ids": [
+        "CUS03"
+      ],
+      "feature_ids": [
+        "FEAT03"
+      ],
+      "sr_ids": [
+        "SR05",
+        "SR06",
+        "SR28"
+      ],
+      "requirement_ids": [
+        "CUS03",
+        "SR05",
+        "SR06",
+        "SR28"
+      ],
+      "dependencies": [],
+      "owner_role": "Explorer — Wang Licun",
+      "child_task_ids": [],
+      "subtask_ids": [
+        "STK023",
+        "STK024"
+      ],
+      "acceptance_criteria": [
+        "Identify source-backed resource dimensions and run-version/configuration diagnostics needed to interpret repeat preparation; oracle: proposed bounds cite evidence or remain open, and no service target is fabricated."
+      ],
+      "outputs": [
+        "Preprocessing resource and reproducibility operations gap report"
+      ],
+      "evidence_ids": [
+        "TC25",
+        "TC27"
+      ],
+      "decision_ids": [
+        "D01",
+        "D05"
+      ],
+      "verification_ids": [
+        "TC25",
+        "TC27"
+      ],
+      "source": [
+        "docs/management/wp01-requirements-package.md",
+        "docs/management/decision-register.md"
+      ]
+    },
+    {
+      "id": "TK21",
+      "parent_task_id": "TK04",
+      "title": "[Task][backend]Implement versioned scoped skill input and provenance display",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Blocked on decision",
+      "work_kind": "implementation",
+      "work_package": "WP03",
+      "cus_ids": [
+        "CUS03"
+      ],
+      "feature_ids": [
+        "FEAT21"
+      ],
+      "sr_ids": [
+        "SR07",
+        "SR28",
+        "SR34"
+      ],
+      "requirement_ids": [
+        "CUS03",
+        "SR07",
+        "SR28",
+        "SR34"
+      ],
+      "dependencies": [
+        "TK18"
+      ],
+      "owner_role": "Worker — Torsten Maier",
+      "child_task_ids": [],
+      "subtask_ids": [
+        "STK020",
+        "STK027"
+      ],
+      "acceptance_criteria": [
+        "Given approved input contract, package only selected declared inputs with snapshot/source or calculation lineage and display scope/value classes; oracle: TC05/20/23, including out-of-scope/secret and absent-value negatives."
+      ],
+      "outputs": [
+        "Scoped versioned skill-input envelope and provenance/readiness display"
+      ],
+      "evidence_ids": [
+        "TC05",
+        "TC20",
+        "TC23"
+      ],
+      "decision_ids": [
+        "D01",
+        "D02",
+        "D05"
+      ],
+      "verification_ids": [
+        "TC05",
+        "TC20",
+        "TC23"
+      ],
+      "source": [
+        "docs/management/system-requirements.md",
+        "docs/management/wp01-requirements-package.md",
+        "docs/management/p0-ui-requirements-review.md"
+      ]
+    },
+    {
+      "id": "TK22",
+      "parent_task_id": "TK07",
+      "title": "[Task][management]Verify scoped input provenance and readiness",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Blocked on decision",
+      "work_kind": "verification",
+      "work_package": "WP06",
+      "cus_ids": [
+        "CUS03"
+      ],
+      "feature_ids": [
+        "FEAT21"
+      ],
+      "sr_ids": [
+        "SR07",
+        "SR28",
+        "SR34"
+      ],
+      "requirement_ids": [
+        "CUS03",
+        "SR07",
+        "SR28",
+        "SR34"
+      ],
+      "dependencies": [
+        "TK21"
+      ],
+      "owner_role": "User Tester — Abt Hermann",
+      "child_task_ids": [],
+      "subtask_ids": [
+        "STK022",
+        "STK028"
+      ],
+      "acceptance_criteria": [
+        "On the fixed candidate, inspect narrow scope, envelope and rendered labels; oracle: included values are declared/in-scope with resolvable lineage, absent optional data is not zero, and negative secret/out-of-scope examples reject; record actual evidence."
+      ],
+      "outputs": [
+        "Candidate-specific TC05/TC20/TC23 verification record"
+      ],
+      "evidence_ids": [
+        "TC05",
+        "TC20",
+        "TC23"
+      ],
+      "decision_ids": [
+        "D01",
+        "D02"
+      ],
+      "verification_ids": [
+        "TC05",
+        "TC20",
+        "TC23"
+      ],
+      "source": [
+        "docs/management/validation-plan.md",
+        "docs/management/p0-ui-requirements-review.md"
+      ]
+    }
+  ],
+  "subtasks": [
+    {
+      "id": "STK001",
+      "task_id": "TK09",
+      "title": "[Task][legal]Identify official FIT source references",
+      "statement": "Locate candidate official FIT protocol/profile references and record their source/version labels.",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Proposed",
+      "work_package": "WP01",
+      "cus_ids": [
+        "CUS01"
+      ],
+      "feature_ids": [
+        "FEAT01"
+      ],
+      "sr_ids": [
+        "SR27"
+      ],
+      "dependencies": [],
+      "owner_role": "Explorer — Wang Licun",
+      "acceptance_criteria": [
+        "Reference inventory contains a location and version for each candidate reference or labels it unknown; oracle: each matrix row is traceable to source metadata."
+      ],
+      "outputs": [
+        "Official FIT reference inventory"
+      ],
+      "evidence_ids": [
+        "TC19",
+        "TC24"
+      ],
+      "decision_ids": [
+        "D01"
+      ],
+      "verification_ids": [
+        "TC19",
+        "TC24"
+      ],
+      "source": [
+        "docs/management/wp01-requirements-package.md"
+      ]
+    },
+    {
+      "id": "STK002",
+      "task_id": "TK09",
+      "title": "[Task][legal]Record fixture provenance and terms",
+      "statement": "Inventory proposed fixture origin and usage terms without copying material whose terms are unresolved.",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Proposed",
+      "work_package": "WP01",
+      "cus_ids": [
+        "CUS01"
+      ],
+      "feature_ids": [
+        "FEAT01"
+      ],
+      "sr_ids": [
+        "SR27"
+      ],
+      "dependencies": [],
+      "owner_role": "Explorer — Wang Licun",
+      "acceptance_criteria": [
+        "Every candidate fixture has a provenance/terms row or explicit unknown and owner question; oracle: TC24 inspection list contains no unsupported rights conclusion."
+      ],
+      "outputs": [
+        "Fixture provenance and open terms table"
+      ],
+      "evidence_ids": [
+        "TC19",
+        "TC24"
+      ],
+      "decision_ids": [
+        "D01"
+      ],
+      "verification_ids": [
+        "TC19",
+        "TC24"
+      ],
+      "source": [
+        "docs/management/wp01-requirements-package.md"
+      ]
+    },
+    {
+      "id": "STK003",
+      "task_id": "TK10",
+      "title": "[Task][architecture]Map records and fields to evidence",
+      "statement": "Compare candidate record/field coverage with official FIT profile evidence and identify unsupported entries.",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Proposed",
+      "work_package": "WP01",
+      "cus_ids": [
+        "CUS01"
+      ],
+      "feature_ids": [
+        "FEAT01"
+      ],
+      "sr_ids": [
+        "SR01",
+        "SR02",
+        "SR27"
+      ],
+      "dependencies": [],
+      "owner_role": "System Architect — Feng Guo",
+      "acceptance_criteria": [
+        "Each proposed record/field mapping cites evidence or is marked unresolved/unsupported; oracle: matrix rows satisfy TC19 traceability."
+      ],
+      "outputs": [
+        "Evidence-linked record and field matrix"
+      ],
+      "evidence_ids": [
+        "TC01",
+        "TC19"
+      ],
+      "decision_ids": [
+        "D01"
+      ],
+      "verification_ids": [
+        "TC01",
+        "TC19"
+      ],
+      "source": [
+        "docs/management/wp01-requirements-package.md"
+      ]
+    },
+    {
+      "id": "STK004",
+      "task_id": "TK10",
+      "title": "[Task][architecture]Document timestamp unit null and integrity rules",
+      "statement": "Record source-supported timestamp, unit conversion, null and integrity behavior and leave unsupported values open.",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Proposed",
+      "work_package": "WP01",
+      "cus_ids": [
+        "CUS01"
+      ],
+      "feature_ids": [
+        "FEAT01"
+      ],
+      "sr_ids": [
+        "SR02",
+        "SR27"
+      ],
+      "dependencies": [],
+      "owner_role": "System Architect — Feng Guo",
+      "acceptance_criteria": [
+        "Rule table cites evidence for every specified behavior and flags unresolved choices; oracle: no unmapped value is silently assigned a conversion or fallback."
+      ],
+      "outputs": [
+        "Timestamp/unit/null/integrity rule table"
+      ],
+      "evidence_ids": [
+        "TC01",
+        "TC19"
+      ],
+      "decision_ids": [
+        "D01"
+      ],
+      "verification_ids": [
+        "TC01",
+        "TC19"
+      ],
+      "source": [
+        "docs/management/wp01-requirements-package.md"
+      ]
+    },
+    {
+      "id": "STK005",
+      "task_id": "TK11",
+      "title": "[Task][backend]Implement source-matrix classification",
+      "statement": "Implement deterministic accepted/rejected classification from the approved source matrix and contract version.",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Blocked on decision",
+      "work_package": "WP02",
+      "cus_ids": [
+        "CUS01"
+      ],
+      "feature_ids": [
+        "FEAT01"
+      ],
+      "sr_ids": [
+        "SR01",
+        "SR02",
+        "SR27"
+      ],
+      "dependencies": [],
+      "owner_role": "Worker — Torsten Maier",
+      "acceptance_criteria": [
+        "For each approved fixture, classification equals the expected matrix result; oracle: TC01/TC19 accepted cases succeed and unsupported/malformed cases reject."
+      ],
+      "outputs": [
+        "Versioned deterministic file classification"
+      ],
+      "evidence_ids": [
+        "TC01",
+        "TC19"
+      ],
+      "decision_ids": [
+        "D01",
+        "D05"
+      ],
+      "verification_ids": [
+        "TC01",
+        "TC19"
+      ],
+      "source": [
+        "docs/management/system-requirements.md",
+        "docs/management/wp01-requirements-package.md"
+      ]
+    },
+    {
+      "id": "STK006",
+      "task_id": "TK11",
+      "title": "[Task][frontend]Render textual file status and reason",
+      "statement": "Render each file result with file identity, textual disposition and approved rejection reason.",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Blocked on decision",
+      "work_package": "WP02",
+      "cus_ids": [
+        "CUS01"
+      ],
+      "feature_ids": [
+        "FEAT01"
+      ],
+      "sr_ids": [
+        "SR01",
+        "SR32"
+      ],
+      "dependencies": [],
+      "owner_role": "Worker — Torsten Maier",
+      "acceptance_criteria": [
+        "Rendered accepted/rejected fixtures identify file, status and reason without color-only meaning; oracle: TC21."
+      ],
+      "outputs": [
+        "Accessible per-file disposition display"
+      ],
+      "evidence_ids": [
+        "TC21"
+      ],
+      "decision_ids": [
+        "D01"
+      ],
+      "verification_ids": [
+        "TC21"
+      ],
+      "source": [
+        "docs/management/p0-ui-requirements-review.md"
+      ]
+    },
+    {
+      "id": "STK007",
+      "task_id": "TK12",
+      "title": "[Task][management]Run source conformance fixtures",
+      "statement": "Execute approved supported, malformed, unsupported and missing-field fixtures against fixed candidate.",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Blocked on decision",
+      "work_package": "WP01",
+      "cus_ids": [
+        "CUS01"
+      ],
+      "feature_ids": [
+        "FEAT01"
+      ],
+      "sr_ids": [
+        "SR01",
+        "SR02",
+        "SR27"
+      ],
+      "dependencies": [],
+      "owner_role": "User Tester — Abt Hermann",
+      "acceptance_criteria": [
+        "Record actual result and target commit per fixture; oracle: outcomes/reasons match approved matrix or a reproducible defect is logged."
+      ],
+      "outputs": [
+        "TC01/TC19 candidate evidence record"
+      ],
+      "evidence_ids": [
+        "TC01",
+        "TC19"
+      ],
+      "decision_ids": [
+        "D01"
+      ],
+      "verification_ids": [
+        "TC01",
+        "TC19"
+      ],
+      "source": [
+        "docs/management/validation-plan.md"
+      ]
+    },
+    {
+      "id": "STK008",
+      "task_id": "TK12",
+      "title": "[Task][management]Inspect rendered file disposition",
+      "statement": "Inspect file-linked text and rejection reasons for approved fixtures in the fixed rendered UI.",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Blocked on decision",
+      "work_package": "WP01",
+      "cus_ids": [
+        "CUS01"
+      ],
+      "feature_ids": [
+        "FEAT01"
+      ],
+      "sr_ids": [
+        "SR32"
+      ],
+      "dependencies": [],
+      "owner_role": "User Tester — Abt Hermann",
+      "acceptance_criteria": [
+        "Record actual rendered result/viewport and any failure; oracle: file/outcome/reason are identifiable without color/icon alone per TC21."
+      ],
+      "outputs": [
+        "TC21 candidate rendered evidence"
+      ],
+      "evidence_ids": [
+        "TC21"
+      ],
+      "decision_ids": [
+        "D01"
+      ],
+      "verification_ids": [
+        "TC21"
+      ],
+      "source": [
+        "docs/management/p0-ui-requirements-review.md"
+      ]
+    },
+    {
+      "id": "STK009",
+      "task_id": "TK13",
+      "title": "[Task][security]Trace source bytes and metadata through intake",
+      "statement": "List source data, identifiers and diagnostics crossing the FIT intake boundary.",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Proposed",
+      "work_package": "WP01",
+      "cus_ids": [
+        "CUS01"
+      ],
+      "feature_ids": [
+        "FEAT01"
+      ],
+      "sr_ids": [
+        "SR01",
+        "SR27"
+      ],
+      "dependencies": [],
+      "owner_role": "System Architect — Feng Guo",
+      "acceptance_criteria": [
+        "Each identified data item has purpose and CUS/SR trace or explicit open question; oracle: data-flow inventory is reviewable and makes no unsupported control claim."
+      ],
+      "outputs": [
+        "FIT intake data-flow inventory"
+      ],
+      "evidence_ids": [
+        "TC14",
+        "TC25"
+      ],
+      "decision_ids": [
+        "D01"
+      ],
+      "verification_ids": [
+        "TC14",
+        "TC25"
+      ],
+      "source": [
+        "docs/management/system-requirements.md"
+      ]
+    },
+    {
+      "id": "STK010",
+      "task_id": "TK13",
+      "title": "[Task][operations]Map intake failure recovery questions",
+      "statement": "Record operational questions for decoder rejection/failure, diagnostics and recovery.",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Proposed",
+      "work_package": "WP01",
+      "cus_ids": [
+        "CUS01"
+      ],
+      "feature_ids": [
+        "FEAT01"
+      ],
+      "sr_ids": [
+        "SR01",
+        "SR02"
+      ],
+      "dependencies": [],
+      "owner_role": "System Architect — Feng Guo",
+      "acceptance_criteria": [
+        "Every failure category has a reason/recovery note or an explicit gap owner; oracle: no unapproved service target or numeric limit is stated."
+      ],
+      "outputs": [
+        "Source intake operational gap list"
+      ],
+      "evidence_ids": [
+        "TC01",
+        "TC25"
+      ],
+      "decision_ids": [
+        "D01"
+      ],
+      "verification_ids": [
+        "TC01",
+        "TC25"
+      ],
+      "source": [
+        "docs/management/wp01-requirements-package.md"
+      ]
+    },
+    {
+      "id": "STK011",
+      "task_id": "TK14",
+      "title": "[Task][architecture]Trace exact-byte duplicate behavior",
+      "statement": "Map same-user same-byte re-import behavior to SR04 and the planned duplicate fixture.",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Proposed",
+      "work_package": "WP01",
+      "cus_ids": [
+        "CUS02"
+      ],
+      "feature_ids": [
+        "FEAT02"
+      ],
+      "sr_ids": [
+        "SR04"
+      ],
+      "dependencies": [],
+      "owner_role": "System Architect — Feng Guo",
+      "acceptance_criteria": [
+        "Exact-byte case points to current SR04 and TC03; oracle: no logical identity or tolerance policy is added by this trace."
+      ],
+      "outputs": [
+        "Exact duplicate trace row"
+      ],
+      "evidence_ids": [
+        "TC03"
+      ],
+      "decision_ids": [
+        "D01"
+      ],
+      "verification_ids": [
+        "TC03"
+      ],
+      "source": [
+        "docs/management/wp01-requirements-package.md"
+      ]
+    },
+    {
+      "id": "STK012",
+      "task_id": "TK14",
+      "title": "[Task][architecture]Compare unresolved logical conflict examples",
+      "statement": "List different-byte candidate records whose logical identity outcome depends on D01.",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Proposed",
+      "work_package": "WP01",
+      "cus_ids": [
+        "CUS02"
+      ],
+      "feature_ids": [
+        "FEAT02"
+      ],
+      "sr_ids": [
+        "SR04"
+      ],
+      "dependencies": [],
+      "owner_role": "System Architect — Feng Guo",
+      "acceptance_criteria": [
+        "Each example states competing outcomes and remains unresolved; oracle: no tolerance threshold is encoded before founder D01 decision."
+      ],
+      "outputs": [
+        "Conflict fixture decision table"
+      ],
+      "evidence_ids": [
+        "TC03"
+      ],
+      "decision_ids": [
+        "D01"
+      ],
+      "verification_ids": [
+        "TC03"
+      ],
+      "source": [
+        "docs/management/wp01-requirements-package.md"
+      ]
+    },
+    {
+      "id": "STK013",
+      "task_id": "TK15",
+      "title": "[Task][database]Persist original bytes with integrity reference",
+      "statement": "Implement approved original-byte retention and integrity identifier without selecting a stack outside D05.",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Blocked on decision",
+      "work_package": "WP02",
+      "cus_ids": [
+        "CUS02"
+      ],
+      "feature_ids": [
+        "FEAT02"
+      ],
+      "sr_ids": [
+        "SR03"
+      ],
+      "dependencies": [],
+      "owner_role": "Worker — Torsten Maier",
+      "acceptance_criteria": [
+        "Reloaded original bytes match the submitted digest and each normalized record resolves to source; oracle: TC02."
+      ],
+      "outputs": [
+        "Integrity-identified original and source link"
+      ],
+      "evidence_ids": [
+        "TC02"
+      ],
+      "decision_ids": [
+        "D01",
+        "D05"
+      ],
+      "verification_ids": [
+        "TC02"
+      ],
+      "source": [
+        "docs/management/system-requirements.md"
+      ]
+    },
+    {
+      "id": "STK014",
+      "task_id": "TK15",
+      "title": "[Task][database]Implement approved duplicate and conflict disposition",
+      "statement": "Apply the approved same-byte duplicate and logical conflict policies without overwrite or unapproved merge.",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Blocked on decision",
+      "work_package": "WP02",
+      "cus_ids": [
+        "CUS02"
+      ],
+      "feature_ids": [
+        "FEAT02"
+      ],
+      "sr_ids": [
+        "SR04",
+        "SR33"
+      ],
+      "dependencies": [],
+      "owner_role": "Worker — Torsten Maier",
+      "acceptance_criteria": [
+        "Repeated identical bytes create no additional activity and an approved conflict is surfaced unresolved; oracle: TC03/TC22."
+      ],
+      "outputs": [
+        "Duplicate-safe history and visible conflict behavior"
+      ],
+      "evidence_ids": [
+        "TC03",
+        "TC22"
+      ],
+      "decision_ids": [
+        "D01",
+        "D05"
+      ],
+      "verification_ids": [
+        "TC03",
+        "TC22"
+      ],
+      "source": [
+        "docs/management/system-requirements.md",
+        "docs/management/p0-ui-requirements-review.md"
+      ]
+    },
+    {
+      "id": "STK015",
+      "task_id": "TK16",
+      "title": "[Task][management]Verify original integrity and lineage",
+      "statement": "Reload original files and resolve normalized records to their stored source on fixed candidate.",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Blocked on decision",
+      "work_package": "WP02",
+      "cus_ids": [
+        "CUS02"
+      ],
+      "feature_ids": [
+        "FEAT02"
+      ],
+      "sr_ids": [
+        "SR03"
+      ],
+      "dependencies": [],
+      "owner_role": "User Tester — Abt Hermann",
+      "acceptance_criteria": [
+        "Actual digest and source-link outcomes are recorded for fixtures; oracle: bytes and lineage match TC02 or a defect is logged."
+      ],
+      "outputs": [
+        "Candidate-specific TC02 evidence"
+      ],
+      "evidence_ids": [
+        "TC02"
+      ],
+      "decision_ids": [
+        "D01"
+      ],
+      "verification_ids": [
+        "TC02"
+      ],
+      "source": [
+        "docs/management/validation-plan.md"
+      ]
+    },
+    {
+      "id": "STK016",
+      "task_id": "TK16",
+      "title": "[Task][management]Verify duplicate and conflict history states",
+      "statement": "Repeat identical imports and exercise approved logical-conflict fixtures against rendered history.",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Blocked on decision",
+      "work_package": "WP02",
+      "cus_ids": [
+        "CUS02"
+      ],
+      "feature_ids": [
+        "FEAT02"
+      ],
+      "sr_ids": [
+        "SR04",
+        "SR33"
+      ],
+      "dependencies": [],
+      "owner_role": "User Tester — Abt Hermann",
+      "acceptance_criteria": [
+        "Record actual state/count and candidate/viewport; oracle: duplicate is not counted twice and conflict remains textually unresolved per TC03/TC22."
+      ],
+      "outputs": [
+        "Candidate-specific TC03/TC22 evidence"
+      ],
+      "evidence_ids": [
+        "TC03",
+        "TC22"
+      ],
+      "decision_ids": [
+        "D01"
+      ],
+      "verification_ids": [
+        "TC03",
+        "TC22"
+      ],
+      "source": [
+        "docs/management/validation-plan.md",
+        "docs/management/p0-ui-requirements-review.md"
+      ]
+    },
+    {
+      "id": "STK017",
+      "task_id": "TK17",
+      "title": "[Task][legal]Separate source terms from user data questions",
+      "statement": "Identify source-term questions for the official specification, uploaded files and derived records, without deciding legal rights.",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Proposed",
+      "work_package": "WP02",
+      "cus_ids": [
+        "CUS02",
+        "CUS03"
+      ],
+      "feature_ids": [
+        "FEAT02",
+        "FEAT03"
+      ],
+      "sr_ids": [
+        "SR03",
+        "SR28"
+      ],
+      "dependencies": [],
+      "owner_role": "System Architect — Feng Guo",
+      "acceptance_criteria": [
+        "Each data class has a cited term or explicit unknown and owner question; oracle: TC24 has no fabricated legal conclusion."
+      ],
+      "outputs": [
+        "Source/user/derived-data rights question inventory"
+      ],
+      "evidence_ids": [
+        "TC24"
+      ],
+      "decision_ids": [],
+      "verification_ids": [
+        "TC24"
+      ],
+      "source": [
+        "docs/management/decision-register.md"
+      ]
+    },
+    {
+      "id": "STK018",
+      "task_id": "TK17",
+      "title": "[Task][operations]List history retention backup and privacy gaps",
+      "statement": "Document open retention, access/privacy, backup and recovery choices for persistent source and prepared data.",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Proposed",
+      "work_package": "WP02",
+      "cus_ids": [
+        "CUS02",
+        "CUS03"
+      ],
+      "feature_ids": [
+        "FEAT02",
+        "FEAT03"
+      ],
+      "sr_ids": [
+        "SR03",
+        "SR28"
+      ],
+      "dependencies": [],
+      "owner_role": "System Architect — Feng Guo",
+      "acceptance_criteria": [
+        "Each missing lifecycle policy is an explicit sourced or owner-assigned gap; oracle: TC26 identifies questions without duration, duty, RPO or RTO assumptions."
+      ],
+      "outputs": [
+        "Persistent-data lifecycle policy gap register"
+      ],
+      "evidence_ids": [
+        "TC26"
+      ],
+      "decision_ids": [],
+      "verification_ids": [
+        "TC26"
+      ],
+      "source": [
+        "docs/management/decision-register.md",
+        "docs/management/wp01-requirements-package.md"
+      ]
+    },
+    {
+      "id": "STK019",
+      "task_id": "TK18",
+      "title": "[Task][backend]Implement deterministic model-free normalization",
+      "statement": "Implement approved normalization with conventional deterministic processing and no inference calls.",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Blocked on decision",
+      "work_package": "WP02",
+      "cus_ids": [
+        "CUS03"
+      ],
+      "feature_ids": [
+        "FEAT03"
+      ],
+      "sr_ids": [
+        "SR05",
+        "SR06"
+      ],
+      "dependencies": [],
+      "owner_role": "Worker — Torsten Maier",
+      "acceptance_criteria": [
+        "Given approved source rules, normalizer emits expected values; oracle: independent fixture values match TC04."
+      ],
+      "outputs": [
+        "Deterministic inference-free normalization"
+      ],
+      "evidence_ids": [
+        "TC04"
+      ],
+      "decision_ids": [
+        "D01",
+        "D05"
+      ],
+      "verification_ids": [
+        "TC04"
+      ],
+      "source": [
+        "docs/management/system-requirements.md",
+        "docs/management/wp01-requirements-package.md"
+      ]
+    },
+    {
+      "id": "STK020",
+      "task_id": "TK21",
+      "title": "[Task][backend]Implement scoped versioned input and provenance presentation",
+      "statement": "Package declared selected-scope inputs with snapshot/source or calculation lineage, exclude credentials/out-of-scope records, and show provenance labels.",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Blocked on decision",
+      "work_package": "WP03",
+      "cus_ids": [
+        "CUS03"
+      ],
+      "feature_ids": [
+        "FEAT21"
+      ],
+      "sr_ids": [
+        "SR07",
+        "SR28",
+        "SR34"
+      ],
+      "dependencies": [],
+      "owner_role": "Worker — Torsten Maier",
+      "acceptance_criteria": [
+        "Valid scoped envelope citations resolve, and missing optional values are labeled unavailable/unknown; oracle: TC05/20/23 and negative cases reject credentials/out-of-scope values."
+      ],
+      "outputs": [
+        "Versioned scoped skill-input envelope and provenance labels"
+      ],
+      "evidence_ids": [
+        "TC05",
+        "TC20",
+        "TC23"
+      ],
+      "decision_ids": [
+        "D01",
+        "D02",
+        "D05"
+      ],
+      "verification_ids": [
+        "TC05",
+        "TC20",
+        "TC23"
+      ],
+      "source": [
+        "docs/management/system-requirements.md",
+        "docs/management/wp01-requirements-package.md",
+        "docs/management/p0-ui-requirements-review.md"
+      ]
+    },
+    {
+      "id": "STK021",
+      "task_id": "TK19",
+      "title": "[Task][management]Verify repeat preparation and model isolation",
+      "statement": "Run the same approved source/configuration twice while inference access is disabled and record actual candidate results.",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Blocked on decision",
+      "work_package": "WP06",
+      "cus_ids": [
+        "CUS03"
+      ],
+      "feature_ids": [
+        "FEAT03"
+      ],
+      "sr_ids": [
+        "SR05",
+        "SR06"
+      ],
+      "dependencies": [],
+      "owner_role": "User Tester — Abt Hermann",
+      "acceptance_criteria": [
+        "Target commit/environment and repeat outputs are recorded; oracle: semantic values match under TC04."
+      ],
+      "outputs": [
+        "Candidate-specific TC04 evidence"
+      ],
+      "evidence_ids": [
+        "TC04"
+      ],
+      "decision_ids": [
+        "D01"
+      ],
+      "verification_ids": [
+        "TC04"
+      ],
+      "source": [
+        "docs/management/validation-plan.md"
+      ]
+    },
+    {
+      "id": "STK022",
+      "task_id": "TK22",
+      "title": "[Task][management]Verify scope provenance and readiness labels",
+      "statement": "Inspect a narrow prepared-data envelope and rendered readiness state with missing optional values and warnings.",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Blocked on decision",
+      "work_package": "WP06",
+      "cus_ids": [
+        "CUS03"
+      ],
+      "feature_ids": [
+        "FEAT21"
+      ],
+      "sr_ids": [
+        "SR07",
+        "SR28",
+        "SR34"
+      ],
+      "dependencies": [],
+      "owner_role": "User Tester — Abt Hermann",
+      "acceptance_criteria": [
+        "Target commit/viewport and actual displayed and packaged fields are recorded; oracle: all fields are in selected declared scope with resolvable lineage and missing optional data is not shown as zero per TC05/20/23."
+      ],
+      "outputs": [
+        "Candidate-specific TC05/TC20/TC23 evidence"
+      ],
+      "evidence_ids": [
+        "TC05",
+        "TC20",
+        "TC23"
+      ],
+      "decision_ids": [
+        "D01",
+        "D02"
+      ],
+      "verification_ids": [
+        "TC05",
+        "TC20",
+        "TC23"
+      ],
+      "source": [
+        "docs/management/validation-plan.md",
+        "docs/management/p0-ui-requirements-review.md"
+      ]
+    },
+    {
+      "id": "STK023",
+      "task_id": "TK20",
+      "title": "[Task][runtime]List preprocessing resource dimensions",
+      "statement": "Identify file/record/compute dimensions relevant to deterministic preprocessing and their measurement method.",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Proposed",
+      "work_package": "WP02",
+      "cus_ids": [
+        "CUS03"
+      ],
+      "feature_ids": [
+        "FEAT03"
+      ],
+      "sr_ids": [
+        "SR05",
+        "SR06"
+      ],
+      "dependencies": [],
+      "owner_role": "Explorer — Wang Licun",
+      "acceptance_criteria": [
+        "Each candidate dimension has a measurement method and source or an explicit evidence gap; oracle: no unsupported limit is stated in TC25/TC27."
+      ],
+      "outputs": [
+        "Preprocessing resource-variable inventory"
+      ],
+      "evidence_ids": [
+        "TC25",
+        "TC27"
+      ],
+      "decision_ids": [
+        "D01",
+        "D05"
+      ],
+      "verification_ids": [
+        "TC25",
+        "TC27"
+      ],
+      "source": [
+        "docs/management/wp01-requirements-package.md"
+      ]
+    },
+    {
+      "id": "STK024",
+      "task_id": "TK20",
+      "title": "[Task][operations]Specify repeat-run diagnostic fields",
+      "statement": "List source, configuration and version fields needed to interpret preparation results and failures.",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Proposed",
+      "work_package": "WP02",
+      "cus_ids": [
+        "CUS03"
+      ],
+      "feature_ids": [
+        "FEAT03"
+      ],
+      "sr_ids": [
+        "SR05",
+        "SR28"
+      ],
+      "dependencies": [],
+      "owner_role": "Explorer — Wang Licun",
+      "acceptance_criteria": [
+        "Repeat-run record identifies source/configuration/preprocessing version or flags the missing field; oracle: TC27 can establish whether two runs are comparable."
+      ],
+      "outputs": [
+        "Reproducibility diagnostic field checklist"
+      ],
+      "evidence_ids": [
+        "TC27"
+      ],
+      "decision_ids": [
+        "D05"
+      ],
+      "verification_ids": [
+        "TC27"
+      ],
+      "source": [
+        "docs/management/wp01-requirements-package.md"
+      ]
+    },
+    {
+      "id": "STK025",
+      "task_id": "TK18",
+      "title": "[Task][backend]Execute preprocessing with model access disabled",
+      "statement": "Ensure ingestion/preparation path completes without creating or calling an inference adapter.",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Blocked on decision",
+      "work_package": "WP02",
+      "cus_ids": [
+        "CUS03"
+      ],
+      "feature_ids": [
+        "FEAT03"
+      ],
+      "sr_ids": [
+        "SR06"
+      ],
+      "dependencies": [],
+      "owner_role": "Worker — Torsten Maier",
+      "acceptance_criteria": [
+        "Preparation succeeds with model access disabled and observable inference call count is zero; oracle: TC04."
+      ],
+      "outputs": [
+        "Model-free preprocessing control flow"
+      ],
+      "evidence_ids": [
+        "TC04"
+      ],
+      "decision_ids": [
+        "D01",
+        "D05"
+      ],
+      "verification_ids": [
+        "TC04"
+      ],
+      "source": [
+        "docs/management/system-requirements.md"
+      ]
+    },
+    {
+      "id": "STK026",
+      "task_id": "TK19",
+      "title": "[Task][management]Record repeat-preparation outcomes",
+      "statement": "Execute two runs with fixed source/configuration/version and compare semantic output fields.",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Blocked on decision",
+      "work_package": "WP06",
+      "cus_ids": [
+        "CUS03"
+      ],
+      "feature_ids": [
+        "FEAT03"
+      ],
+      "sr_ids": [
+        "SR05",
+        "SR06"
+      ],
+      "dependencies": [],
+      "owner_role": "User Tester — Abt Hermann",
+      "acceptance_criteria": [
+        "Target commit/environment and both outputs are recorded; oracle: equality excludes only approved generated IDs and processing timestamps per TC04."
+      ],
+      "outputs": [
+        "Repeat-preparation candidate evidence"
+      ],
+      "evidence_ids": [
+        "TC04"
+      ],
+      "decision_ids": [
+        "D01"
+      ],
+      "verification_ids": [
+        "TC04"
+      ],
+      "source": [
+        "docs/management/validation-plan.md"
+      ]
+    },
+    {
+      "id": "STK027",
+      "task_id": "TK21",
+      "title": "[Task][backend]Implement versioned scoped input envelope",
+      "statement": "Bind input envelope to snapshot/scope and include only skill-declared records, context and provenance.",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Blocked on decision",
+      "work_package": "WP03",
+      "cus_ids": [
+        "CUS03"
+      ],
+      "feature_ids": [
+        "FEAT21"
+      ],
+      "sr_ids": [
+        "SR07",
+        "SR28"
+      ],
+      "dependencies": [],
+      "owner_role": "Worker — Torsten Maier",
+      "acceptance_criteria": [
+        "Envelope validates selected snapshot/scope and each computed metric has source/calculation lineage; oracle: TC05/20, with credentials/out-of-scope negative cases rejected."
+      ],
+      "outputs": [
+        "Versioned skill input envelope"
+      ],
+      "evidence_ids": [
+        "TC05",
+        "TC20"
+      ],
+      "decision_ids": [
+        "D01",
+        "D02",
+        "D05"
+      ],
+      "verification_ids": [
+        "TC05",
+        "TC20"
+      ],
+      "source": [
+        "docs/management/system-requirements.md",
+        "docs/management/wp01-requirements-package.md"
+      ]
+    },
+    {
+      "id": "STK028",
+      "task_id": "TK22",
+      "title": "[Task][management]Verify envelope scope and rendered provenance",
+      "statement": "Inspect prepared envelope and readiness display using a narrow known fixture with absent optional data.",
+      "priority": "P0",
+      "status": "Planned",
+      "readiness": "Blocked on decision",
+      "work_package": "WP06",
+      "cus_ids": [
+        "CUS03"
+      ],
+      "feature_ids": [
+        "FEAT21"
+      ],
+      "sr_ids": [
+        "SR07",
+        "SR28",
+        "SR34"
+      ],
+      "dependencies": [],
+      "owner_role": "User Tester — Abt Hermann",
+      "acceptance_criteria": [
+        "Candidate commit, viewport and field links are recorded; oracle: TC05/20/23 show only declared in-scope fields, resolvable evidence and unavailable rather than zero."
+      ],
+      "outputs": [
+        "Scoped input/provenance verification evidence"
+      ],
+      "evidence_ids": [
+        "TC05",
+        "TC20",
+        "TC23"
+      ],
+      "decision_ids": [
+        "D01",
+        "D02"
+      ],
+      "verification_ids": [
+        "TC05",
+        "TC20",
+        "TC23"
+      ],
+      "source": [
+        "docs/management/validation-plan.md",
+        "docs/management/p0-ui-requirements-review.md"
+      ]
+    }
+  ],
+  "verification_cases": [
+    {
+      "id": "TC21",
+      "title": "Accessible file disposition and rejection reason",
+      "method": "Inspection and rendered UI test",
+      "expected": "For every approved accepted/rejected fixture, result identifies file, textual disposition and approved reason; outcome is not conveyed by color or icon alone.",
+      "status": "Not run",
+      "evidence": [],
+      "source": [
+        "docs/management/p0-ui-requirements-review.md"
+      ]
+    },
+    {
+      "id": "TC22",
+      "title": "History duplicate and conflict presentation",
+      "method": "Inspection and rendered UI test",
+      "expected": "Repeated identical bytes do not appear as a second activity; approved conflicts identify affected records and remain unresolved without implying merge or overwrite.",
+      "status": "Not run",
+      "evidence": [],
+      "source": [
+        "docs/management/p0-ui-requirements-review.md"
+      ]
+    },
+    {
+      "id": "TC23",
+      "title": "Readiness scope and provenance presentation",
+      "method": "Inspection and rendered UI test",
+      "expected": "Selected scope and source/calculated/quality value classes match prepared fixture provenance; absent optional value is unavailable/unknown, never zero or inferred.",
+      "status": "Not run",
+      "evidence": [],
+      "source": [
+        "docs/management/p0-ui-requirements-review.md"
+      ]
+    },
+    {
+      "id": "TC24",
+      "title": "FIT source and fixture provenance inspection",
+      "method": "Inspection",
+      "expected": "Official protocol/profile references and proposed fixture sources have provenance and terms recorded; unresolved rights questions are explicit and no unsupported legal conclusion is made.",
+      "status": "Not run",
+      "evidence": [],
+      "source": [
+        "docs/management/wp01-requirements-package.md"
+      ]
+    },
+    {
+      "id": "TC25",
+      "title": "FIT decoder resource-bound evidence inspection",
+      "method": "Inspection",
+      "expected": "Candidate decoder resource dimensions and bounds cite authoritative evidence or remain unresolved; no numeric threshold is invented.",
+      "status": "Not run",
+      "evidence": [],
+      "source": [
+        "docs/management/wp01-requirements-package.md"
+      ]
+    },
+    {
+      "id": "TC26",
+      "title": "Persistent data lifecycle policy inspection",
+      "method": "Inspection",
+      "expected": "Retention, privacy, backup and recovery choices are cited or remain explicit gaps; no duration, legal duty, RPO or RTO is fabricated.",
+      "status": "Not run",
+      "evidence": [],
+      "source": [
+        "docs/management/decision-register.md"
+      ]
+    },
+    {
+      "id": "TC27",
+      "title": "Preprocessing runtime and reproducibility inspection",
+      "method": "Inspection",
+      "expected": "Resource variables and run configuration/version needed to interpret repeated preparation are documented; unapproved limits remain open.",
+      "status": "Not run",
+      "evidence": [],
+      "source": [
+        "docs/management/wp01-requirements-package.md"
+      ]
+    }
+  ],
+  "perspective_assessments": [
+    {
+      "cus_id": "CUS01",
+      "perspectives": {
+        "legal": {
+          "applicability": "unknown",
+          "rationale": "FIT documentation and fixture terms have not been assessed; no rights or legal duty is inferred.",
+          "sr_ids": [],
+          "task_ids": [
+            "TK09"
+          ]
+        },
+        "engineering": {
+          "applicability": "applicable",
+          "rationale": "Acceptance/rejection and source field rules are explicit obligations.",
+          "sr_ids": [
+            "SR01",
+            "SR02",
+            "SR27"
+          ],
+          "task_ids": [
+            "TK10",
+            "TK11",
+            "TK12"
+          ]
+        },
+        "runtime": {
+          "applicability": "unknown",
+          "rationale": "Decoder resource bounds require evidence and decision; no threshold selected.",
+          "sr_ids": [
+            "SR02",
+            "SR27"
+          ],
+          "task_ids": [
+            "TK10",
+            "TK11"
+          ]
+        },
+        "architecture": {
+          "applicability": "applicable",
+          "rationale": "A versioned source matrix defines the import boundary.",
+          "sr_ids": [
+            "SR01",
+            "SR02",
+            "SR27"
+          ],
+          "task_ids": [
+            "TK10"
+          ]
+        },
+        "privacy_security": {
+          "applicability": "unknown",
+          "rationale": "Upload data flow/access questions need review; CUS10 requirements do not prove this path is implemented.",
+          "sr_ids": [],
+          "task_ids": [
+            "TK13"
+          ]
+        },
+        "accessibility": {
+          "applicability": "applicable",
+          "rationale": "Users need textual file outcome and approved rejection reason.",
+          "sr_ids": [
+            "SR32"
+          ],
+          "task_ids": [
+            "TK11",
+            "TK12"
+          ]
+        },
+        "operations_backup_retention_recovery": {
+          "applicability": "unknown",
+          "rationale": "Source failure diagnostics/recovery are not fully specified.",
+          "sr_ids": [],
+          "task_ids": [
+            "TK13"
+          ]
+        },
+        "domain_provenance": {
+          "applicability": "applicable",
+          "rationale": "FIT variants and field mappings require authoritative source evidence.",
+          "sr_ids": [
+            "SR27"
+          ],
+          "task_ids": [
+            "TK09",
+            "TK10"
+          ]
+        }
+      }
+    },
+    {
+      "cus_id": "CUS02",
+      "perspectives": {
+        "legal": {
+          "applicability": "unknown",
+          "rationale": "Rights/retention implications for uploaded and derived data are not assessed; no duration or duty is inferred.",
+          "sr_ids": [],
+          "task_ids": [
+            "TK17"
+          ]
+        },
+        "engineering": {
+          "applicability": "applicable",
+          "rationale": "Original preservation, normalized source links, duplicate and conflict behavior are explicit obligations.",
+          "sr_ids": [
+            "SR03",
+            "SR04",
+            "SR33"
+          ],
+          "task_ids": [
+            "TK14",
+            "TK15",
+            "TK16"
+          ]
+        },
+        "runtime": {
+          "applicability": "unknown",
+          "rationale": "History growth/resource bounds and operating constraints are not selected.",
+          "sr_ids": [],
+          "task_ids": [
+            "TK17"
+          ]
+        },
+        "architecture": {
+          "applicability": "applicable",
+          "rationale": "Persistent source lineage and conflict lifecycle need a defined model.",
+          "sr_ids": [
+            "SR03",
+            "SR04"
+          ],
+          "task_ids": [
+            "TK14",
+            "TK15"
+          ]
+        },
+        "privacy_security": {
+          "applicability": "unknown",
+          "rationale": "Access and lifecycle impacts of retained source data require assessment.",
+          "sr_ids": [],
+          "task_ids": [
+            "TK17"
+          ]
+        },
+        "accessibility": {
+          "applicability": "applicable",
+          "rationale": "History needs distinct duplicate and unresolved-conflict states.",
+          "sr_ids": [
+            "SR33"
+          ],
+          "task_ids": [
+            "TK15",
+            "TK16"
+          ]
+        },
+        "operations_backup_retention_recovery": {
+          "applicability": "unknown",
+          "rationale": "Retention, backup, recovery and capacity policies remain open.",
+          "sr_ids": [],
+          "task_ids": [
+            "TK17"
+          ]
+        },
+        "domain_provenance": {
+          "applicability": "applicable",
+          "rationale": "Activity history retains links to original source bytes.",
+          "sr_ids": [
+            "SR03",
+            "SR04"
+          ],
+          "task_ids": [
+            "TK15"
+          ]
+        }
+      }
+    },
+    {
+      "cus_id": "CUS03",
+      "perspectives": {
+        "legal": {
+          "applicability": "unknown",
+          "rationale": "Source/derived-data rights questions are not assessed; no legal duty is asserted.",
+          "sr_ids": [],
+          "task_ids": [
+            "TK17"
+          ]
+        },
+        "engineering": {
+          "applicability": "applicable",
+          "rationale": "Deterministic normalization, no inference, and scoped skill inputs are explicit obligations.",
+          "sr_ids": [
+            "SR05",
+            "SR06",
+            "SR07",
+            "SR28",
+            "SR34"
+          ],
+          "task_ids": [
+            "TK18",
+            "TK19"
+          ]
+        },
+        "runtime": {
+          "applicability": "unknown",
+          "rationale": "Preprocessing resource bounds and execution environment remain unmeasured/unselected.",
+          "sr_ids": [],
+          "task_ids": [
+            "TK20"
+          ]
+        },
+        "architecture": {
+          "applicability": "applicable",
+          "rationale": "Versioned canonical input packaging is proposed by SR28.",
+          "sr_ids": [
+            "SR28"
+          ],
+          "task_ids": [
+            "TK18"
+          ]
+        },
+        "privacy_security": {
+          "applicability": "applicable",
+          "rationale": "SR28 requires credential and out-of-scope data exclusion; a negative-case review is still planned.",
+          "sr_ids": [
+            "SR28"
+          ],
+          "task_ids": [
+            "TK18",
+            "TK19"
+          ]
+        },
+        "accessibility": {
+          "applicability": "applicable",
+          "rationale": "Readiness, selected scope, value class and missing data are user-facing.",
+          "sr_ids": [
+            "SR34"
+          ],
+          "task_ids": [
+            "TK18",
+            "TK19"
+          ]
+        },
+        "operations_backup_retention_recovery": {
+          "applicability": "unknown",
+          "rationale": "Repeatability diagnostics and recovery from preprocessing/packaging failures need assessment.",
+          "sr_ids": [],
+          "task_ids": [
+            "TK20"
+          ]
+        },
+        "domain_provenance": {
+          "applicability": "applicable",
+          "rationale": "Prepared metrics and observations need traceable source/calculation lineage.",
+          "sr_ids": [
+            "SR07",
+            "SR28",
+            "SR34"
+          ],
+          "task_ids": [
+            "TK18",
+            "TK19"
+          ]
+        }
+      }
+    }
+  ],
+  "notes": [
+    "CUS01-CUS03 statements and priorities are referenced unchanged.",
+    "Existing SR01-SR07, SR27 and SR28 statements/statuses are unchanged; only feature/source/perspective link metadata is proposed.",
+    "Every P0 SR in this fragment is linked to both a bounded implementation Task and a bounded verification Task with STK leaves.",
+    "TC21-TC27 are planned cases, all Not run with empty evidence; no product verification is claimed.",
+    "Unresolved legal, runtime, privacy and operations perspectives have named investigation tasks; D01-D05 thresholds/decisions remain open."
+  ]
+}

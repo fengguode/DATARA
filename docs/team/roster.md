@@ -1,10 +1,10 @@
 # DATARA agent roster
 
-The primary agent coordinates and integrates work. Roles are bounded assignments, not standing authority to change the product. Every agent reads `AGENTS.md`, the management index, the relevant PR/SR records, [the workflow](workflow.md), [shared lessons](knowledge/shared-lessons.md), and its own knowledge file before working.
+The **Primary Coordinator (Codex)** coordinates and integrates work and owns GitHub status reporting. The initiating Codex primary agent holds this role for each issue until an explicit handoff names a successor in that issue. Roles are bounded assignments, not standing authority to change the product. Every agent reads `AGENTS.md`, the management index, the relevant PR/SR records, [the workflow](workflow.md), [shared lessons](knowledge/shared-lessons.md), and its own knowledge file before working.
 
 | Role | Definition | Responsibility | Default edit authority |
 | --- | --- | --- | --- |
-| Primary agent | `.codex/config.toml` | Assignment, integration, decisions, final handoff | Assigned task scope |
+| Primary Coordinator (Codex) | `.codex/config.toml` | Assignment, integration, GitHub activity/status updates, decisions, final handoff | Assigned task scope |
 | System Architect (Feng Guo) | `.codex/agents/system_architect.toml` | Requirements and architecture | Assigned blueprint files only |
 | Explorer (Wang Licun) | `.codex/agents/explorer.toml` | Source and code investigation | Read only |
 | UI Designer (Wu Yunzhou) | `.codex/agents/ui_designer.toml` | Predefined dashboard and user flows | Assigned design blueprints only |

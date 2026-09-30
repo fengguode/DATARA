@@ -394,6 +394,67 @@
       ],
       "work_package": "WP07",
       "status": "Draft derived requirement"
+    },
+    {
+      "id": "SR27",
+      "product_id": "PR01",
+      "priority": "P0",
+      "statement": "The approved source contract shall identify the authoritative official FIT protocol/profile version and evidence used for every accepted variant, field mapping, unit conversion, timestamp rule, integrity rule, and fixture oracle; unverified variants shall be rejected as unsupported.",
+      "verification_ids": [
+        "TC19"
+      ],
+      "work_package": "WP01",
+      "status": "Proposed derived requirement"
+    },
+    {
+      "id": "SR28",
+      "product_id": "PR03",
+      "priority": "P0",
+      "statement": "The skill input envelope shall be schema-versioned, deterministically canonicalized, bound to one immutable snapshot, and carry source or calculation provenance and data-quality metadata without credentials or out-of-scope records.",
+      "verification_ids": [
+        "TC05",
+        "TC20"
+      ],
+      "work_package": "WP03",
+      "status": "Proposed derived requirement"
+    },
+    {
+      "id": "SR29",
+      "product_id": "PR04",
+      "priority": "P0",
+      "statement": "The skill output envelope shall distinguish observations, computed metrics, and assessments; require resolvable evidence for every finding; reject unapproved classifications or unresolved references; and prohibit P0 recommendation outputs.",
+      "verification_ids": [
+        "TC06",
+        "TC20"
+      ],
+      "work_package": "WP03",
+      "status": "Proposed derived requirement"
+    },
+    {
+      "id": "SR30",
+      "product_id": "PR06",
+      "priority": "P0",
+      "statement": "Each supported model adapter shall accept the common provider-independent execution request and return normalized outcomes for responses and declared failure classes while keeping credentials and provider transport outside skill definitions.",
+      "verification_ids": [
+        "TC08",
+        "TC10",
+        "TC20"
+      ],
+      "work_package": "WP04",
+      "status": "Proposed derived requirement"
+    },
+    {
+      "id": "SR31",
+      "product_id": "PR09",
+      "priority": "P0",
+      "statement": "The versioned output API shall expose only authorized read-only activity, readiness, run-history, and validated-result resources using stable error and pagination contracts, and the predefined dashboard shall derive its displayed saved values from the same contracts.",
+      "verification_ids": [
+        "TC12",
+        "TC13",
+        "TC20"
+      ],
+      "work_package": "WP05",
+      "status": "Proposed derived requirement"
     }
   ],
   "verification_cases": [
@@ -540,6 +601,22 @@
       "expected": "Comparisons display relevant version changes and corrections remain distinct from observations and inferences.",
       "status": "Not run",
       "evidence": []
+    },
+    {
+      "id": "TC19",
+      "title": "Official source evidence inspection",
+      "method": "Inspection",
+      "expected": "The approved acceptance matrix pins official Garmin FIT protocol/profile evidence and every supported mapping, conversion, timestamp and integrity rule and fixture oracle is traceable to it; unsupported variants reject deterministically.",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "TC20",
+      "title": "WP01 contract conformance",
+      "method": "Inspection and contract test",
+      "expected": "Approved skill input/output, model-adapter, dashboard and API schemas validate positive and negative fixtures; evidence references resolve, prohibited recommendations and methods fail, failures normalize, dashboard/API values agree, and no credential or silent fallback appears.",
+      "status": "Not run",
+      "evidence": []
     }
   ],
   "release_validation": {
@@ -628,6 +705,224 @@
       ],
       "issue_url": "https://github.com/fengguode/DATARA/issues/7",
       "status": "Backlog"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "TK01",
+      "work_package": "WP01",
+      "dependencies": [],
+      "requirement_ids": [
+        "PR01",
+        "PR02",
+        "PR03",
+        "SR01",
+        "SR02",
+        "SR27"
+      ],
+      "verification_ids": [
+        "TC01",
+        "TC19"
+      ],
+      "status": "Proposed"
+    },
+    {
+      "id": "TK02",
+      "work_package": "WP01",
+      "dependencies": [
+        "TK01"
+      ],
+      "requirement_ids": [
+        "PR04",
+        "PR05",
+        "PR06",
+        "PR07",
+        "PR08",
+        "PR09",
+        "SR28",
+        "SR29",
+        "SR30",
+        "SR31"
+      ],
+      "verification_ids": [
+        "TC20"
+      ],
+      "status": "Proposed"
+    },
+    {
+      "id": "TK03",
+      "work_package": "WP02",
+      "dependencies": [
+        "TK01",
+        "TK02"
+      ],
+      "requirement_ids": [
+        "PR01",
+        "PR02",
+        "PR03",
+        "PR10",
+        "SR01",
+        "SR02",
+        "SR03",
+        "SR04",
+        "SR05",
+        "SR06",
+        "SR20",
+        "SR27"
+      ],
+      "verification_ids": [
+        "TC01",
+        "TC02",
+        "TC03",
+        "TC04",
+        "TC05",
+        "TC14",
+        "TC19"
+      ],
+      "status": "Planned"
+    },
+    {
+      "id": "TK04",
+      "work_package": "WP03",
+      "dependencies": [
+        "TK03"
+      ],
+      "requirement_ids": [
+        "PR03",
+        "PR04",
+        "PR05",
+        "SR07",
+        "SR08",
+        "SR09",
+        "SR10",
+        "SR11",
+        "SR28",
+        "SR29"
+      ],
+      "verification_ids": [
+        "TC05",
+        "TC06",
+        "TC07",
+        "TC20"
+      ],
+      "status": "Planned"
+    },
+    {
+      "id": "TK05",
+      "work_package": "WP04",
+      "dependencies": [
+        "TK04"
+      ],
+      "requirement_ids": [
+        "PR06",
+        "PR07",
+        "SR12",
+        "SR13",
+        "SR14",
+        "SR15",
+        "SR30"
+      ],
+      "verification_ids": [
+        "TC08",
+        "TC09",
+        "TC10",
+        "TC20"
+      ],
+      "status": "Planned"
+    },
+    {
+      "id": "TK06",
+      "work_package": "WP05",
+      "dependencies": [
+        "TK03",
+        "TK05"
+      ],
+      "requirement_ids": [
+        "PR08",
+        "PR09",
+        "PR10",
+        "SR16",
+        "SR17",
+        "SR18",
+        "SR19",
+        "SR21",
+        "SR31"
+      ],
+      "verification_ids": [
+        "TC11",
+        "TC12",
+        "TC13",
+        "TC14",
+        "TC20"
+      ],
+      "status": "Planned"
+    },
+    {
+      "id": "TK07",
+      "work_package": "WP06",
+      "dependencies": [
+        "TK01",
+        "TK02",
+        "TK03",
+        "TK04",
+        "TK05",
+        "TK06"
+      ],
+      "requirement_ids": [
+        "PR01",
+        "PR02",
+        "PR03",
+        "PR04",
+        "PR05",
+        "PR06",
+        "PR07",
+        "PR08",
+        "PR09",
+        "PR10"
+      ],
+      "verification_ids": [
+        "TC01",
+        "TC02",
+        "TC03",
+        "TC04",
+        "TC05",
+        "TC06",
+        "TC07",
+        "TC08",
+        "TC09",
+        "TC10",
+        "TC11",
+        "TC12",
+        "TC13",
+        "TC14",
+        "TC15",
+        "TC19",
+        "TC20"
+      ],
+      "status": "Planned"
+    },
+    {
+      "id": "TK08",
+      "work_package": "WP07",
+      "dependencies": [
+        "TK07"
+      ],
+      "requirement_ids": [
+        "PR11",
+        "PR12",
+        "PR13",
+        "SR22",
+        "SR23",
+        "SR24",
+        "SR25",
+        "SR26"
+      ],
+      "verification_ids": [
+        "TC16",
+        "TC17",
+        "TC18"
+      ],
+      "status": "Planned"
     }
   ]
 }

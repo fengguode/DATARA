@@ -60,4 +60,6 @@ Apply the convention to requirement-record titles and GitHub backlog issue title
 
 ## GitHub lifecycle project
 
+Follow the [pull request confirmation policy](../team/pull-request-confirmation.md) for founder CUS confirmation, dedicated team-role confirmations, independent evidence gates, and named GitHub reporting.
+
 [DATARA — Development and Lifecycle](https://github.com/users/fengguode/projects/3) tracks repository issues and PRs, priorities, lifecycle stages and release milestones. See [lifecycle and release management](lifecycle-and-releases.md).

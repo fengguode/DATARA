@@ -4,6 +4,8 @@
 
 ## Tracking
 
+Use the [pull request confirmation policy](../team/pull-request-confirmation.md). The coordinator records the final confirmer, required scoped gates, role/name labels and named Project-change comments. CUS-level final confirmation belongs to the founder; merge and release authorization remain separate decisions.
+
 All repository issues and PRs are included automatically when created or updated; existing 15 issues are present. Views: prioritized backlog, status board, roadmap, bugs, review and assigned work. Classify work with Priority, Lifecycle and Milestone. New issues default to Backlog; set priority and lifecycle during triage. Keep dates and estimates unset until grounded. Bugs view uses the bug label; apply it to actual defect reports.
 
 Statuses: Backlog → Ready → In progress → In review → Done. Blocked records a named dependency in the issue. Done tracks completion, not verification or acceptance: record Verified and Accepted decisions with actual evidence in the issue and requirement/test records. Closing an issue or merging a PR alone is insufficient. Do not close a parent issue merely because a partial PR merged. Retain completed items for release history.

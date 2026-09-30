@@ -6,7 +6,7 @@ Use this protocol for new work under the [DATARA Project](https://github.com/use
 
 Use the roster's role and configured name together, for example **Worker — Torsten Maier (AI agent)**. These are AI role personas, not evidence that a person with that name participated. Distinguish the assigned persona, actual runtime agent ID or execution link, contributor, integrator, and authenticated GitHub publisher. If a role definition or effective settings were not observably loaded, say so; a named assignment does not prove native activation.
 
-The Project's single-select **Agent** field identifies the currently responsible role. Use the ten role/name options in the roster, including Primary Coordinator — Codex. It records ownership, not who is currently running or every contributor. Give independent bounded assignments separate linked issues or sub-issues when they need separate ownership or status. An issue-recorded handoff updates this field and names the successor. Leave unassigned work unset rather than inferring an agent from its topic. Multiple contributors appear in the assignment record and contribution table.
+The Project's single-select **Agent** field identifies the currently responsible role. Use the ten role/name options in the roster, including Primary Coordinator — Yi Tang. It records ownership, not who is currently running or every contributor. Give independent bounded assignments separate linked issues or sub-issues when they need separate ownership or status. An issue-recorded handoff updates this field and names the successor. Leave unassigned work unset rather than inferring an agent from its topic. Multiple contributors appear in the assignment record and contribution table.
 
 GitHub's authenticated account remains the publisher of comments and pushes. The comment heading names the contributing agent and whether the primary relayed its report. Git author and committer identities remain accurate; changing a commit message does not create a GitHub account or independent runtime identity. Separate bot identities would require a separately authorized account/App setup. This agreement does not create them or grant agents publishing rights.
 
@@ -16,7 +16,7 @@ Before delegation, record the following in the linked issue. The primary owns in
 
 ```text
 Assigned agent: Worker — Torsten Maier (AI agent)
-Coordinator: Primary Coordinator — Codex
+Coordinator: Primary Coordinator — Yi Tang
 Assignment: #<issue> / <bounded assignment ID>
 Work package / CUS / SR: <IDs, or no product scope changes>
 Scope and exclusive files: <outcome and exact paths>
@@ -37,7 +37,7 @@ Prefix each issue or pull request comment with the role/name that produced the o
 
 ```text
 Worker — Torsten Maier (AI agent) · Implementation completed
-Published by: Primary Coordinator — Codex, relaying the Worker's report
+Published by: Primary Coordinator — Yi Tang, relaying the Worker's report
 Assignment: #<issue> / <assignment ID>
 Runtime agent ID / execution: <actual ID/link, or unavailable>
 Outcome: <concrete result>
@@ -59,7 +59,7 @@ Add duplicate detection
 Describe the behavior and paths changed by this contribution.
 
 Implemented-by: Worker — Torsten Maier (AI agent)
-Integrated-by: Primary Coordinator — Codex
+Integrated-by: Primary Coordinator — Yi Tang
 Assignment: #<issue> / <assignment ID>
 Agent-run: <actual ID/link, or unavailable>
 ```

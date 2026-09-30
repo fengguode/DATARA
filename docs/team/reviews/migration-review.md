@@ -6,7 +6,7 @@ Tracking: [DATARA issue #17](https://github.com/fengguode/DATARA/issues/17), [co
 
 Base: `main`; migration candidate: `1700ccf50cc80bb41001f04c89f236a8ae4885cd` on `setup/reusable-agent-team`
 
-Scope: agent configuration, instructions, team workflow, roster, and knowledge files. No product PR/SR behavior was changed or tested.
+Scope: agent configuration, instructions, team workflow, roster, and knowledge files. No product or system requirement behavior was changed or tested.
 
 ## Independent Reviewer assignment and activation
 

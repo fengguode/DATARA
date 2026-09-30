@@ -1,6 +1,6 @@
 # Product requirements
 
-The founding P0 and P1 directions are preserved here with stable identifiers. System statements are derived drafts until their open contracts are resolved; recording a requirement does not imply implementation or validation.
+The founding P0 and P1 directions are preserved here with stable identifiers. The `PR01`–`PR13` codes are registry identifiers; in prose, say “product requirement.” “PR” by itself means pull request. System statements are derived drafts until their open contracts are resolved; recording a requirement does not imply implementation or validation.
 
 | ID | Priority | Requirement | User outcome |
 | --- | --- | --- | --- |

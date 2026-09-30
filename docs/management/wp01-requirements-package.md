@@ -2,7 +2,7 @@
 
 Status: **proposed for founder and engineering review; not approved, implemented, verified, or accepted**  
 Package: WP01 ([issue #1](https://github.com/fengguode/DATARA/issues/1)); control hub: [issue #8](https://github.com/fengguode/DATARA/issues/8)  
-Affected product requirements: PR01–PR10. P1 boundaries preserved: PR11–PR13.
+Affected Customer-User-Stories: CUS01–CUS10. P1 boundaries preserved: CUS11–CUS13.
 
 ## 1. Authority and decision labels
 
@@ -173,14 +173,14 @@ The identifiers below provide product → system → task → validation traceab
 
 | Task | Package / dependency | Deliverable | Requirements | Planned validation |
 | --- | --- | --- | --- | --- |
-| TK01 | WP01 / none | approve official FIT evidence matrix, source contract, limits, conflict policy and licensed fixture manifest | PR01–PR03; SR01, SR02, SR27 | TC01, TC19 |
-| TK02 | WP01 / TK01 | approve shortlist, schemas, adapter boundary, dashboard outcome/API and open-decision resolutions | PR04–PR09; SR28–SR31 | TC20 |
-| TK03 | WP02 / WP01 approved | implement isolated immutable originals, normalization, dedup/conflicts and deterministic history | PR01–PR03, PR10; SR01–SR06, SR20, SR27 | TC01–TC05, TC14, TC19 |
-| TK04 | WP03 / WP02 | implement envelopes, baseline skills and deterministic eligibility | PR03–PR05; SR07–SR11, SR28, SR29 | TC05–TC07, TC20 |
-| TK05 | WP04 / WP03 | implement approved customer connection(s), secret boundary and manual run lifecycle | PR06–PR07; SR12–SR15, SR30 | TC08–TC10, TC20 |
-| TK06 | WP05 / WP02 and WP04 | persist immutable results; deliver approved dashboard and read-only API | PR08–PR10; SR16–SR21, SR31 | TC11–TC14, TC20 |
-| TK07 | WP06 / WP01–WP05 | verify a fixed candidate, then conduct separate athlete validation and founder acceptance | PR01–PR10; all P0 SRs | TC01–TC15, TC19, TC20 |
-| TK08 | WP07 / WP06 acceptance | P1 recommendations, routines, comparison and feedback; no silent changes | PR11–PR13; SR22–SR26 | TC16–TC18 |
+| TK01 | WP01 / none | approve official FIT evidence matrix, source contract, limits, conflict policy and licensed fixture manifest | CUS01–CUS03; SR01, SR02, SR27 | TC01, TC19 |
+| TK02 | WP01 / TK01 | approve shortlist, schemas, adapter boundary, dashboard outcome/API and open-decision resolutions | CUS04–CUS09; SR28–SR31 | TC20 |
+| TK03 | WP02 / WP01 approved | implement isolated immutable originals, normalization, dedup/conflicts and deterministic history | CUS01–CUS03, CUS10; SR01–SR06, SR20, SR27 | TC01–TC05, TC14, TC19 |
+| TK04 | WP03 / WP02 | implement envelopes, baseline skills and deterministic eligibility | CUS03–CUS05; SR07–SR11, SR28, SR29 | TC05–TC07, TC20 |
+| TK05 | WP04 / WP03 | implement approved customer connection(s), secret boundary and manual run lifecycle | CUS06–CUS07; SR12–SR15, SR30 | TC08–TC10, TC20 |
+| TK06 | WP05 / WP02 and WP04 | persist immutable results; deliver approved dashboard and read-only API | CUS08–CUS10; SR16–SR21, SR31 | TC11–TC14, TC20 |
+| TK07 | WP06 / WP01–WP05 | verify a fixed candidate, then conduct separate athlete validation and founder acceptance | CUS01–CUS10; all P0 SRs | TC01–TC15, TC19, TC20 |
+| TK08 | WP07 / WP06 acceptance | P1 recommendations, routines, comparison and feedback; no silent changes | CUS11–CUS13; SR22–SR26 | TC16–TC18 |
 
 WP02 must not start until TK01/TK02 contracts needed for implementation are approved. Stack/topology selection and estimates remain D05, after contract approval. WP07 cannot supply P0 behavior. Deferred commercialization and source-to-skill automation have no implementation task in this plan.
 

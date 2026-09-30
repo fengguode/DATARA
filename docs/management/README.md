@@ -8,7 +8,7 @@ This is the single management entry point for Datara. [Project control issue](ht
 
 - [Agreed project brief and roadmap](../project-brief-and-roadmap.md)
 - [Founding brainstorming record](../brainstorming-record-2026-09-30.md)
-- [Product requirements](product-requirements.md)
+- [Customer-User-Stories (top-level requirements)](product-requirements.md)
 - [System requirements](system-requirements.md)
 - [Machine-readable registry](requirements-registry.json)
 - [Traceability](traceability.md)
@@ -32,7 +32,7 @@ This is the single management entry point for Datara. [Project control issue](ht
 
 ## Control rules
 
-Product directions derive from the founding decisions. System requirements are initial derived drafts and become a testable baseline as WP01 resolves contracts. The JSON registry is the canonical identifier, task, and coverage record; synchronize human-readable documents in the same change. Track planned, implemented, verified, and accepted states separately. No verification case currently has passing evidence.
+Customer-User-Stories (CUS) are the top-level customer and user outcomes derived from the founding decisions. System requirements (SR) are derived obligations across applicable perspectives, including legal, engineering, running environments, architecture, and data security. The current SR set is an initial draft; this classification does not assert complete coverage of those perspectives. The JSON registry is the canonical identifier, task, and coverage record; synchronize human-readable documents in the same change. Track planned, implemented, verified, and accepted states separately. No verification case currently has passing evidence.
 
 Use each linked issue as its package record. Split implementation tasks under that package when scope is known, preserving requirement links. Estimate after dependencies and contracts are understood. The founder owns product decisions and final acceptance; cloud tasks prepare reviewable engineering artifacts and evidence.
 

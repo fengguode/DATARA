@@ -1,107 +1,120 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "2.0",
   "baseline_date": "2026-09-30",
   "scope": "P0 and P1",
-  "product_requirements": [
+  "customer_user_stories": [
     {
-      "id": "PR01",
+      "id": "CUS01",
       "title": "Supported source specification",
+      "story": "As an athlete, I want to upload supported activity files so that I can rely on the imported data.",
       "priority": "P0",
       "statement": "Accept manually uploaded Garmin .fit files only through a published source specification.",
       "status": "Agreed direction",
       "source": "docs/project-brief-and-roadmap.md"
     },
     {
-      "id": "PR02",
+      "id": "CUS02",
       "title": "Persistent data home",
+      "story": "As an athlete, I want my uploads and training history retained so that I can return to earlier activities.",
       "priority": "P0",
       "statement": "Preserve original uploads and normalized history, with explicit duplicate and conflict handling.",
       "status": "Agreed direction",
       "source": "docs/project-brief-and-roadmap.md"
     },
     {
-      "id": "PR03",
+      "id": "CUS03",
       "title": "Deterministic preparation",
+      "story": "As an athlete, I want activity data prepared consistently so that analyses are repeatable.",
       "priority": "P0",
       "statement": "Validate, normalize, calculate, and package skill inputs without AI.",
       "status": "Agreed direction",
       "source": "docs/project-brief-and-roadmap.md"
     },
     {
-      "id": "PR04",
+      "id": "CUS04",
       "title": "Baseline elemental skills",
+      "story": "As an athlete, I want evaluated expertise options so that I can choose a useful analysis.",
       "priority": "P0",
       "statement": "Offer a small evaluated Datara-created library with explicit inputs, methods, outputs, and versions.",
       "status": "Agreed direction",
       "source": "docs/project-brief-and-roadmap.md"
     },
     {
-      "id": "PR05",
+      "id": "CUS05",
       "title": "Input eligibility",
+      "story": "As an athlete, I want unavailable analyses explained so that I know which inputs are missing.",
       "priority": "P0",
       "statement": "Exclude skills whose required inputs are unavailable and explain the missing requirements.",
       "status": "Agreed direction",
       "source": "docs/project-brief-and-roadmap.md"
     },
     {
-      "id": "PR06",
+      "id": "CUS06",
       "title": "Customer model access",
+      "story": "As an athlete, I want to use my chosen model account so that I control access for my analyses.",
       "priority": "P0",
       "statement": "Use the customer's own API access for analysis; keep skills independent of model interfaces.",
       "status": "Agreed direction",
       "source": "docs/project-brief-and-roadmap.md"
     },
     {
-      "id": "PR07",
+      "id": "CUS07",
       "title": "Manual analysis execution",
+      "story": "As an athlete, I want to run selected analyses and see failures clearly so that I can trust the outcomes.",
       "priority": "P0",
       "statement": "Execute selected eligible skills against a defined dataset and report failures explicitly.",
       "status": "Agreed direction",
       "source": "docs/project-brief-and-roadmap.md"
     },
     {
-      "id": "PR08",
+      "id": "CUS08",
       "title": "Traceable result history",
+      "story": "As an athlete, I want to revisit analyses with their evidence so that I can understand my history.",
       "priority": "P0",
       "statement": "Persist results with evidence, input references, skill version, model, and run date.",
       "status": "Agreed direction",
       "source": "docs/project-brief-and-roadmap.md"
     },
     {
-      "id": "PR09",
+      "id": "CUS09",
       "title": "Dashboard and output API",
+      "story": "As an athlete, I want saved results in a dashboard and output API so that I can use them elsewhere.",
       "priority": "P0",
       "statement": "Present saved results through a predefined dashboard and authorized read-only API.",
       "status": "Agreed direction",
       "source": "docs/project-brief-and-roadmap.md"
     },
     {
-      "id": "PR10",
+      "id": "CUS10",
       "title": "User isolation",
+      "story": "As a customer, I want my data and credentials isolated so that other users cannot access them.",
       "priority": "P0",
       "statement": "Isolate user files, credentials, and results across all access paths.",
       "status": "Agreed direction",
       "source": "docs/project-brief-and-roadmap.md"
     },
     {
-      "id": "PR11",
+      "id": "CUS11",
       "title": "Demand-based recommendations",
+      "story": "As an athlete, I want suitable skill recommendations so that I can address my demand with available data.",
       "priority": "P1",
       "statement": "Recommend only eligible marketplace combinations, prefer suitable owned skills, and explain demand coverage.",
       "status": "Agreed direction",
       "source": "docs/project-brief-and-roadmap.md"
     },
     {
-      "id": "PR12",
+      "id": "CUS12",
       "title": "Automatic routines",
+      "story": "As an athlete, I want recurring analysis under my chosen settings so that I receive updates without manual runs.",
       "priority": "P1",
       "statement": "Support user-configured scheduled and upload-triggered analysis without silently changing selected skills or model.",
       "status": "Agreed direction",
       "source": "docs/project-brief-and-roadmap.md"
     },
     {
-      "id": "PR13",
+      "id": "CUS13",
       "title": "Comparison and feedback",
+      "story": "As an athlete, I want comparisons and corrections so that I can understand changes and refine context.",
       "priority": "P1",
       "statement": "Support user corrections and comparisons that disclose model and skill version changes.",
       "status": "Agreed direction",
@@ -111,7 +124,7 @@
   "system_requirements": [
     {
       "id": "SR01",
-      "product_id": "PR01",
+      "cus_ids": ["CUS01"],
       "priority": "P0",
       "statement": "The system shall classify every submitted file as accepted or rejected using the versioned source specification and return a reason for every rejection.",
       "verification_ids": [
@@ -122,7 +135,7 @@
     },
     {
       "id": "SR02",
-      "product_id": "PR01",
+      "cus_ids": ["CUS01"],
       "priority": "P0",
       "statement": "The source specification shall define supported records, timestamp interpretation, units, null values, required fields, and validation limits before import implementation is accepted.",
       "verification_ids": [
@@ -133,7 +146,7 @@
     },
     {
       "id": "SR03",
-      "product_id": "PR02",
+      "cus_ids": ["CUS02"],
       "priority": "P0",
       "statement": "The system shall preserve original file bytes with an integrity identifier and retain normalized records linked to their original source.",
       "verification_ids": [
@@ -144,7 +157,7 @@
     },
     {
       "id": "SR04",
-      "product_id": "PR02",
+      "cus_ids": ["CUS02"],
       "priority": "P0",
       "statement": "Re-importing the same accepted file for the same user shall not create a duplicate activity; conflict cases shall be surfaced and not silently overwrite history.",
       "verification_ids": [
@@ -155,7 +168,7 @@
     },
     {
       "id": "SR05",
-      "product_id": "PR03",
+      "cus_ids": ["CUS03"],
       "priority": "P0",
       "statement": "For the same source bytes, configuration, and preprocessing version, preparation shall produce semantically identical normalized records and metrics, excluding generated identifiers and processing timestamps.",
       "verification_ids": [
@@ -166,7 +179,7 @@
     },
     {
       "id": "SR06",
-      "product_id": "PR03",
+      "cus_ids": ["CUS03"],
       "priority": "P0",
       "statement": "Ingestion and preprocessing shall complete with model access disabled and shall make no inference requests.",
       "verification_ids": [
@@ -177,7 +190,7 @@
     },
     {
       "id": "SR07",
-      "product_id": "PR03",
+      "cus_ids": ["CUS03"],
       "priority": "P0",
       "statement": "Prepared skill inputs shall contain only the selected dataset and context required by the selected skill, with provenance for computed metrics.",
       "verification_ids": [
@@ -188,7 +201,7 @@
     },
     {
       "id": "SR08",
-      "product_id": "PR04",
+      "cus_ids": ["CUS04"],
       "priority": "P0",
       "statement": "Each published skill shall declare an immutable version, mandatory inputs, applicability rules, method, output schema, and evaluation cases.",
       "verification_ids": [
@@ -199,7 +212,7 @@
     },
     {
       "id": "SR09",
-      "product_id": "PR04",
+      "cus_ids": ["CUS04"],
       "priority": "P0",
       "statement": "Skill definitions shall not embed provider credentials or provider-specific endpoint and transport logic; such logic shall reside in model adapters.",
       "verification_ids": [
@@ -210,7 +223,7 @@
     },
     {
       "id": "SR10",
-      "product_id": "PR05",
+      "cus_ids": ["CUS05"],
       "priority": "P0",
       "statement": "The system shall evaluate eligibility deterministically for the selected dataset before execution, including mandatory fields, history coverage, and permitted quality limits specified by the skill.",
       "verification_ids": [
@@ -221,7 +234,7 @@
     },
     {
       "id": "SR11",
-      "product_id": "PR05",
+      "cus_ids": ["CUS05"],
       "priority": "P0",
       "statement": "An ineligible skill shall be unavailable for execution and shall identify unmet requirements without invoking a model.",
       "verification_ids": [
@@ -232,7 +245,7 @@
     },
     {
       "id": "SR12",
-      "product_id": "PR06",
+      "cus_ids": ["CUS06"],
       "priority": "P0",
       "statement": "Analysis requests shall use the user's explicitly selected supported model connection and shall never silently fall back to Datara-owned analysis credentials.",
       "verification_ids": [
@@ -243,7 +256,7 @@
     },
     {
       "id": "SR13",
-      "product_id": "PR06",
+      "cus_ids": ["CUS06"],
       "priority": "P0",
       "statement": "Credentials shall not appear in repository files, dashboard or API responses, or application logs; credential handling shall follow a documented access and protection design.",
       "verification_ids": [
@@ -254,7 +267,7 @@
     },
     {
       "id": "SR14",
-      "product_id": "PR07",
+      "cus_ids": ["CUS07"],
       "priority": "P0",
       "statement": "A manual analysis run shall record its dataset scope, selected skill versions, and model before execution and expose pending, running, succeeded, and failed states.",
       "verification_ids": [
@@ -265,7 +278,7 @@
     },
     {
       "id": "SR15",
-      "product_id": "PR07",
+      "cus_ids": ["CUS07"],
       "priority": "P0",
       "statement": "Timeouts, authentication failures, and malformed model responses shall result in explicit failure or invalid-result states; they shall not be persisted as successful assessments.",
       "verification_ids": [
@@ -276,7 +289,7 @@
     },
     {
       "id": "SR16",
-      "product_id": "PR08",
+      "cus_ids": ["CUS08"],
       "priority": "P0",
       "statement": "Each stored assessment shall reference the input snapshot or immutable source records, preprocessing version, skill version, model identifier, execution time, and supporting evidence.",
       "verification_ids": [
@@ -287,7 +300,7 @@
     },
     {
       "id": "SR17",
-      "product_id": "PR08",
+      "cus_ids": ["CUS08"],
       "priority": "P0",
       "statement": "A re-run shall create a new assessment without overwriting the previous one; observations, computed metrics, assessments, and recommendations shall remain distinguishable.",
       "verification_ids": [
@@ -298,7 +311,7 @@
     },
     {
       "id": "SR18",
-      "product_id": "PR09",
+      "cus_ids": ["CUS09"],
       "priority": "P0",
       "statement": "The predefined dashboard shall display data readiness, selected analysis scope, saved findings, evidence, and failures without requiring a new model call for viewing.",
       "verification_ids": [
@@ -309,7 +322,7 @@
     },
     {
       "id": "SR19",
-      "product_id": "PR09",
+      "cus_ids": ["CUS09"],
       "priority": "P0",
       "statement": "The read-only API shall return versioned structured records and results consistent with the dashboard and shall reject attempts to mutate data through its read-only routes.",
       "verification_ids": [
@@ -320,7 +333,7 @@
     },
     {
       "id": "SR20",
-      "product_id": "PR10",
+      "cus_ids": ["CUS10"],
       "priority": "P0",
       "statement": "Every upload, data query, analysis run, credential operation, and result query shall enforce user authorization.",
       "verification_ids": [
@@ -331,7 +344,7 @@
     },
     {
       "id": "SR21",
-      "product_id": "PR10",
+      "cus_ids": ["CUS10"],
       "priority": "P0",
       "statement": "One user shall not read or execute against another user's files, credentials, or results by changing identifiers in supported UI or API requests.",
       "verification_ids": [
@@ -342,7 +355,7 @@
     },
     {
       "id": "SR22",
-      "product_id": "PR11",
+      "cus_ids": ["CUS11"],
       "priority": "P1",
       "statement": "The recommendation model shall receive only deterministically eligible skill candidates and data-availability summaries rather than raw activity records.",
       "verification_ids": [
@@ -353,7 +366,7 @@
     },
     {
       "id": "SR23",
-      "product_id": "PR11",
+      "cus_ids": ["CUS11"],
       "priority": "P1",
       "statement": "Suggested combinations shall identify contributions, unmet portions of the demand, and ownership; suitability shall take precedence over ownership and a narrower demand shall require user choice.",
       "verification_ids": [
@@ -364,7 +377,7 @@
     },
     {
       "id": "SR24",
-      "product_id": "PR12",
+      "cus_ids": ["CUS12"],
       "priority": "P1",
       "statement": "A routine shall persist user-selected skills and model, dataset scope, trigger, and notification preference, and shall recheck eligibility before each run.",
       "verification_ids": [
@@ -375,7 +388,7 @@
     },
     {
       "id": "SR25",
-      "product_id": "PR12",
+      "cus_ids": ["CUS12"],
       "priority": "P1",
       "statement": "An upload-triggered routine shall process the completed batch once according to its configured scope rather than initiating one review per file; changing its skills or model shall require user selection.",
       "verification_ids": [
@@ -386,7 +399,7 @@
     },
     {
       "id": "SR26",
-      "product_id": "PR13",
+      "cus_ids": ["CUS13"],
       "priority": "P1",
       "statement": "Comparisons shall disclose relevant model and skill version differences; feedback shall not silently convert model assessments into observed facts.",
       "verification_ids": [
@@ -397,7 +410,7 @@
     },
     {
       "id": "SR27",
-      "product_id": "PR01",
+      "cus_ids": ["CUS01"],
       "priority": "P0",
       "statement": "The approved source contract shall identify the authoritative official FIT protocol/profile version and evidence used for every accepted variant, field mapping, unit conversion, timestamp rule, integrity rule, and fixture oracle; unverified variants shall be rejected as unsupported.",
       "verification_ids": [
@@ -408,7 +421,7 @@
     },
     {
       "id": "SR28",
-      "product_id": "PR03",
+      "cus_ids": ["CUS03"],
       "priority": "P0",
       "statement": "The skill input envelope shall be schema-versioned, deterministically canonicalized, bound to one immutable snapshot, and carry source or calculation provenance and data-quality metadata without credentials or out-of-scope records.",
       "verification_ids": [
@@ -420,7 +433,7 @@
     },
     {
       "id": "SR29",
-      "product_id": "PR04",
+      "cus_ids": ["CUS04"],
       "priority": "P0",
       "statement": "The skill output envelope shall distinguish observations, computed metrics, and assessments; require resolvable evidence for every finding; reject unapproved classifications or unresolved references; and prohibit P0 recommendation outputs.",
       "verification_ids": [
@@ -432,7 +445,7 @@
     },
     {
       "id": "SR30",
-      "product_id": "PR06",
+      "cus_ids": ["CUS06"],
       "priority": "P0",
       "statement": "Each supported model adapter shall accept the common provider-independent execution request and return normalized outcomes for responses and declared failure classes while keeping credentials and provider transport outside skill definitions.",
       "verification_ids": [
@@ -445,7 +458,7 @@
     },
     {
       "id": "SR31",
-      "product_id": "PR09",
+      "cus_ids": ["CUS09"],
       "priority": "P0",
       "statement": "The versioned output API shall expose only authorized read-only activity, readiness, run-history, and validated-result resources using stable error and pagination contracts, and the predefined dashboard shall derive its displayed saved values from the same contracts.",
       "verification_ids": [
@@ -622,17 +635,17 @@
   "release_validation": {
     "id": "VAL-P0",
     "verification_id": "TC15",
-    "product_ids": [
-      "PR01",
-      "PR02",
-      "PR03",
-      "PR04",
-      "PR05",
-      "PR06",
-      "PR07",
-      "PR08",
-      "PR09",
-      "PR10"
+    "cus_ids": [
+      "CUS01",
+      "CUS02",
+      "CUS03",
+      "CUS04",
+      "CUS05",
+      "CUS06",
+      "CUS07",
+      "CUS08",
+      "CUS09",
+      "CUS10"
     ],
     "status": "Not run",
     "candidate_commit": null,
@@ -713,9 +726,9 @@
       "work_package": "WP01",
       "dependencies": [],
       "requirement_ids": [
-        "PR01",
-        "PR02",
-        "PR03",
+        "CUS01",
+        "CUS02",
+        "CUS03",
         "SR01",
         "SR02",
         "SR27"
@@ -733,12 +746,12 @@
         "TK01"
       ],
       "requirement_ids": [
-        "PR04",
-        "PR05",
-        "PR06",
-        "PR07",
-        "PR08",
-        "PR09",
+        "CUS04",
+        "CUS05",
+        "CUS06",
+        "CUS07",
+        "CUS08",
+        "CUS09",
         "SR28",
         "SR29",
         "SR30",
@@ -757,10 +770,10 @@
         "TK02"
       ],
       "requirement_ids": [
-        "PR01",
-        "PR02",
-        "PR03",
-        "PR10",
+        "CUS01",
+        "CUS02",
+        "CUS03",
+        "CUS10",
         "SR01",
         "SR02",
         "SR03",
@@ -788,9 +801,9 @@
         "TK03"
       ],
       "requirement_ids": [
-        "PR03",
-        "PR04",
-        "PR05",
+        "CUS03",
+        "CUS04",
+        "CUS05",
         "SR07",
         "SR08",
         "SR09",
@@ -814,8 +827,8 @@
         "TK04"
       ],
       "requirement_ids": [
-        "PR06",
-        "PR07",
+        "CUS06",
+        "CUS07",
         "SR12",
         "SR13",
         "SR14",
@@ -838,9 +851,9 @@
         "TK05"
       ],
       "requirement_ids": [
-        "PR08",
-        "PR09",
-        "PR10",
+        "CUS08",
+        "CUS09",
+        "CUS10",
         "SR16",
         "SR17",
         "SR18",
@@ -869,16 +882,16 @@
         "TK06"
       ],
       "requirement_ids": [
-        "PR01",
-        "PR02",
-        "PR03",
-        "PR04",
-        "PR05",
-        "PR06",
-        "PR07",
-        "PR08",
-        "PR09",
-        "PR10"
+        "CUS01",
+        "CUS02",
+        "CUS03",
+        "CUS04",
+        "CUS05",
+        "CUS06",
+        "CUS07",
+        "CUS08",
+        "CUS09",
+        "CUS10"
       ],
       "verification_ids": [
         "TC01",
@@ -908,9 +921,9 @@
         "TK07"
       ],
       "requirement_ids": [
-        "PR11",
-        "PR12",
-        "PR13",
+        "CUS11",
+        "CUS12",
+        "CUS13",
         "SR22",
         "SR23",
         "SR24",

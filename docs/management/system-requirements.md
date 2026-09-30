@@ -1,6 +1,6 @@
 # System requirements engineering
 
-Status: initial derived draft, 30 September 2026. These statements translate agreed product directions into verifiable system behavior. They do not select a technology stack. FIT field coverage, quality limits, sample cases, model interfaces, and skill quality thresholds remain to be specified before a release baseline is frozen.
+Status: proposed derived baseline, 30 September 2026. These statements translate agreed product directions into verifiable system behavior. They do not select a technology stack. The [WP01 requirements package](wp01-requirements-package.md) proposes the open contracts; official FIT evidence, limits, interfaces, and quality thresholds require approval before a release baseline is frozen.
 
 | ID | Parent | Priority | System requirement | Verification | Work package |
 | --- | --- | --- | --- | --- | --- |
@@ -30,5 +30,10 @@ Status: initial derived draft, 30 September 2026. These statements translate agr
 | SR24 | PR12 | P1 | A routine shall persist user-selected skills and model, dataset scope, trigger, and notification preference, and shall recheck eligibility before each run. | TC17 | WP07 |
 | SR25 | PR12 | P1 | An upload-triggered routine shall process the completed batch once according to its configured scope rather than initiating one review per file; changing its skills or model shall require user selection. | TC17 | WP07 |
 | SR26 | PR13 | P1 | Comparisons shall disclose relevant model and skill version differences; feedback shall not silently convert model assessments into observed facts. | TC18 | WP07 |
+| SR27 | PR01 | P0 | The approved source contract shall identify the authoritative official FIT protocol/profile version and evidence used for every accepted variant, field mapping, unit conversion, timestamp rule, integrity rule, and fixture oracle; unverified variants shall be rejected as unsupported. | TC19 | WP01 |
+| SR28 | PR03 | P0 | The skill input envelope shall be schema-versioned, deterministically canonicalized, bound to one immutable snapshot, and carry source or calculation provenance and data-quality metadata without credentials or out-of-scope records. | TC05, TC20 | WP03 |
+| SR29 | PR04 | P0 | The skill output envelope shall distinguish observations, computed metrics, and assessments; require resolvable evidence for every finding; reject unapproved classifications or unresolved references; and prohibit P0 recommendation outputs. | TC06, TC20 | WP03 |
+| SR30 | PR06 | P0 | Each supported model adapter shall accept the common provider-independent execution request and return normalized outcomes for responses and declared failure classes while keeping credentials and provider transport outside skill definitions. | TC08, TC10, TC20 | WP04 |
+| SR31 | PR09 | P0 | The versioned output API shall expose only authorized read-only activity, readiness, run-history, and validated-result resources using stable error and pagination contracts, and the predefined dashboard shall derive its displayed saved values from the same contracts. | TC12, TC13, TC20 | WP05 |
 
 Each system requirement traces to one product parent here. A work package may implement several requirements. PR reviews must list affected requirement IDs and verification evidence; modifications to public contracts need an explicit decision record.

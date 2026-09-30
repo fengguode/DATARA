@@ -15,6 +15,7 @@ p = index("product_requirements")
 s = index("system_requirements")
 t = index("verification_cases")
 w = index("work_packages")
+k = index("tasks")
 for sid, x in s.items():
     if x["product_id"] not in p:
         errors.append(f"{sid}: unknown product parent")
@@ -34,6 +35,43 @@ for wid, x in w.items():
     for dep in x["dependencies"]:
         if dep not in w:
             errors.append(f"{wid}: unknown dependency {dep}")
+for kid, x in k.items():
+    if x["work_package"] not in w:
+        errors.append(f"{kid}: unknown work package")
+    if not x["requirement_ids"]:
+        errors.append(f"{kid}: no linked requirements")
+    for rid in x["requirement_ids"]:
+        if rid not in p and rid not in s:
+            errors.append(f"{kid}: unknown requirement {rid}")
+    if not x["verification_ids"]:
+        errors.append(f"{kid}: no planned verification")
+    for tid in x["verification_ids"]:
+        if tid not in t:
+            errors.append(f"{kid}: unknown verification {tid}")
+    for dep in x["dependencies"]:
+        if dep not in k:
+            errors.append(f"{kid}: unknown task dependency {dep}")
+# Detect cyclic task dependencies.
+task_visiting, task_done = set(), set()
+def visit_task(kid):
+    if kid in task_visiting:
+        errors.append(f"Task dependency cycle at {kid}")
+        return
+    if kid in task_done: return
+    task_visiting.add(kid)
+    for dep in k[kid]["dependencies"]:
+        if dep in k: visit_task(dep)
+    task_visiting.remove(kid)
+    task_done.add(kid)
+for kid in k: visit_task(kid)
+linked_requirements = {rid for x in k.values() for rid in x["requirement_ids"]}
+for rid in set(p) | set(s):
+    if rid not in linked_requirements:
+        errors.append(f"{rid}: no linked task")
+linked_verification = {tid for x in k.values() for tid in x["verification_ids"]}
+for tid in t:
+    if tid not in linked_verification:
+        errors.append(f"{tid}: no linked task")
 # Detect cyclic task dependencies.
 visiting, done = set(), set()
 def visit(wid):
@@ -61,5 +99,5 @@ if v["status"] == "Passed" and (not v["candidate_commit"] or not v["evidence"]):
     errors.append("Release validation passed without candidate and evidence")
 if errors:
     raise SystemExit("\\n".join(errors))
-print(f"Traceability valid: {len(p)} product requirements, {len(s)} system requirements, {len(t)} planned cases")
+print(f"Traceability valid: {len(p)} product requirements, {len(s)} system requirements, {len(k)} tasks, {len(t)} planned cases")
 print("This check validates registry integrity only, not product behavior or user acceptance.")

@@ -14,6 +14,8 @@ This is the single management entry point for Datara. [Project control issue](ht
 - [Traceability](traceability.md)
 - [Verification and final validation plan](validation-plan.md)
 - [Decisions and change management](decision-register.md)
+- [WP01 proposed requirements baseline](wp01-requirements-package.md)
+- [WP01 issue-update handoff](wp01-issue-handoff.md)
 - [Cloud project setup and first task](cloud-project.md)
 
 ## Delivery order
@@ -30,7 +32,7 @@ This is the single management entry point for Datara. [Project control issue](ht
 
 ## Control rules
 
-Product directions derive from the founding decisions. System requirements are initial derived drafts and become a testable baseline as WP01 resolves contracts. The JSON registry is the canonical identifier and coverage record; synchronize human-readable documents in the same change. Track planned, implemented, verified, and accepted states separately. No verification case currently has passing evidence.
+Product directions derive from the founding decisions. System requirements are initial derived drafts and become a testable baseline as WP01 resolves contracts. The JSON registry is the canonical identifier, task, and coverage record; synchronize human-readable documents in the same change. Track planned, implemented, verified, and accepted states separately. No verification case currently has passing evidence.
 
 Use each linked issue as its package record. Split implementation tasks under that package when scope is known, preserving requirement links. Estimate after dependencies and contracts are understood. The founder owns product decisions and final acceptance; cloud tasks prepare reviewable engineering artifacts and evidence.
 

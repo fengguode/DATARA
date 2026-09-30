@@ -28,6 +28,8 @@ Verification demonstrates that system requirements are satisfied. Final validati
 | TC16 | Recommendation coverage | Test | Eligible, insufficient, partial-demand, owned, and marketplace fixtures yield explainable choices without raw-data recommendation payloads. |
 | TC17 | Routine execution | Test | Schedule and batch triggers execute the configured scope; insufficient inputs block runs and selected skills and model remain unchanged. |
 | TC18 | Comparisons and feedback | Test | Comparisons display relevant version changes and corrections remain distinct from observations and inferences. |
+| TC19 | Official source evidence inspection | Inspection | The approved acceptance matrix pins official Garmin FIT protocol/profile evidence and every supported mapping, conversion, timestamp and integrity rule and fixture oracle is traceable to it; unsupported variants reject deterministically. |
+| TC20 | WP01 contract conformance | Inspection and contract test | Approved skill input/output, model-adapter, dashboard and API schemas validate positive and negative fixtures; evidence references resolve, prohibited recommendations and methods fail, failures normalize, dashboard/API values agree, and no credential or silent fallback appears. |
 
 ## Release gate
 

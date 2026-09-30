@@ -16,6 +16,8 @@ Read docs/management/README.md, docs/project-brief-and-roadmap.md, and the relev
 
 Use one project backlog. Name the work package and affected Customer-User-Story (CUS) and system requirement (SR) IDs. Respect dependencies. Use isolated task branches and reviewable pull requests. Record decisions and traceability changes. Do not commit credentials, personal FIT telemetry, or runtime data to this public repository.
 
+Requirement and backlog titles must follow `[Type][area]content_of_title`, using a type such as `CUS`, `SR`, `Feature`, `Task`, or `bug` and an area such as `frontend`, `backend`, `database`, or `security`. Follow the [project title convention](docs/management/README.md#requirement-and-backlog-title-convention); keep priority in its dedicated field or metadata, never in the title.
+
 Terminology: **PR means pull request only.** A Customer-User-Story (CUS) states the top-level customer or user need and outcome. System requirements (SR) derive from CUS and cover every applicable perspective, including legal, engineering, running environments, architecture, and data security. Use CUS and SR IDs in traceability. See `docs/management/product-requirements.md` for the one-to-one mapping from historical identifiers.
 
 Run `python scripts/check_requirements.py` for registry changes. Execute relevant product checks once they exist; report actual results, not plans. Distinguish mocked tests, real model integration, system verification, and final user validation. Preserve historical results and record candidate commits in release evidence. Requirements must not be marked verified without evidence. Cloud environment setup is distinct from product deployment.

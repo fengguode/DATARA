@@ -1,5 +1,9 @@
 # Open decisions and change management
 
+## Requirement title decision (30 September 2026)
+
+The founder requires all requirement and backlog titles to follow `[Type][area]content_of_title`, with one type (for example CUS, SR, Feature, Task, or bug) and one affected area (for example frontend, backend, database, or security). Priority belongs in its dedicated Project field or requirement metadata and must not appear in titles. See the [project title convention](README.md#requirement-and-backlog-title-convention). This changes presentation guidance; requirement identifiers, product obligations, priorities, and evidence states are not changed by the rule. Delivery is tracked in [issue #25](https://github.com/fengguode/DATARA/issues/25) and [pull request #24](https://github.com/fengguode/DATARA/pull/24).
+
 ## Requirement hierarchy decision (30 September 2026)
 
 The founder defined Customer-User-Story (CUS) as the top level of all requirements. System requirements (SR) derive from CUS and cover applicable legal, engineering, running-environment, architecture, data-security, and other perspectives. This terminology and traceability change maps each former `PR01`–`PR13` identifier to `CUS01`–`CUS13` with the same number, priority, and existing scope. A system requirement may trace to multiple CUS records. The current SR draft has not been audited for completeness across those perspectives; adding or changing substantive obligations remains subject to the normal decision and evidence process. PR means pull request in current prose.

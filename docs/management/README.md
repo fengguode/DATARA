@@ -38,6 +38,26 @@ Use each linked issue as its package record. Split implementation tasks under th
 
 Run `python scripts/check_requirements.py` after registry changes. It checks links and planned coverage only. Final validation requires actual software and a fixed candidate commit.
 
+## Requirement and backlog title convention
+
+Every requirement and backlog-item title must use the same template:
+
+```text
+[Type][area]content_of_title
+```
+
+Use one actual type and one actual area, not the slash-separated lists. Types include `CUS`, `SR`, `Feature`, `Task`, and `bug`; areas include `frontend`, `backend`, `database`, and `security`. Use an appropriate additional type or area when needed, consistently across the project (for example `management`, `architecture`, `legal`, or `runtime`). The content is a concise, readable description of the need, obligation, feature, task, or defect.
+
+Examples:
+
+- `[CUS][frontend]View saved training results`
+- `[SR][security]Enforce user authorization on every result query`
+- `[Feature][database]Persist normalized activity history`
+- `[Task][backend]Implement deterministic eligibility checks`
+- `[bug][frontend]Show failed analysis runs in history`
+
+Apply the convention to requirement-record titles and GitHub backlog issue titles. Keep stable CUS/SR identifiers and their traceability links in the record or issue body; a title prefix does not replace an identifier or change the CUS-to-SR hierarchy. **Priority must not appear in the title**, including `P0`, `P1`, `P2`, or urgency labels. Store priority in the GitHub Project **Priority** field and the requirement record's dedicated priority metadata.
+
 ## GitHub lifecycle project
 
 [DATARA — Development and Lifecycle](https://github.com/users/fengguode/projects/3) tracks repository issues and PRs, priorities, lifecycle stages and release milestones. See [lifecycle and release management](lifecycle-and-releases.md).

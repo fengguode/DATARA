@@ -1,6 +1,6 @@
 # First P0 milestone implementation roadmap and plan
 
-Status: planning proposal, with independent review and Project publication pending. Tracking: [issue #277](https://github.com/fengguode/DATARA/issues/277); Project: https://github.com/users/fengguode/projects/3. Baseline: merged main `cd6bbe807a539337b50b96fa02a883172a56bc3e`. Planning branch: `codex/p0-implementation-plan`. Coordinator: Yi Tang; planning contributor: Architect Feng Guo; quality lead/final process confirmer: Wang Xiaofeng; independent technical reviewer: Dennis Windmaier. All names identify AI roles. Founder owns CUS/material choices and final athlete acceptance.
+Status: planning proposal; independent content review PASS, all238 Project records published with fresh authenticated readback PASS; independent publication QA PASS. Final candidate confirmation is reported on issue #277 and the linked pull request. Tracking: [issue #277](https://github.com/fengguode/DATARA/issues/277); Project: https://github.com/users/fengguode/projects/3. Baseline: merged main `cd6bbe807a539337b50b96fa02a883172a56bc3e`. Planning branch: `codex/p0-implementation-plan`. Coordinator: Yi Tang; planning contributor: Architect Feng Guo; quality lead/final process confirmer: Wang Xiaofeng; independent technical reviewer: Dennis Windmaier. All names identify AI roles. Founder owns CUS/material choices and final athlete acceptance.
 
 ## Target and readiness
 
@@ -12,7 +12,7 @@ Existing 64 P0 Tasks and 95 Subtasks are mapped exactly in [the machine-readable
 
 ## Sequence and gate semantics
 
-`Plan order` is a dependency-valid traversal and a sorting aid, not a date, duration, token estimate or forced serial schedule. `Plan wave` groups tasks; parallel execution is allowed only when all inputs are fixed and exclusive file ownership is recorded. Tasks retain canonical direct dependencies, work-package assignments and original priority/acceptance. The plan adds explicit package/verification completion prerequisites. Aggregate TK01–TK07 are completion gates, not duplicate implementation assignments and not prerequisite parents that prevent their own children from starting.
+`Plan order` is a dependency-valid traversal and a sorting aid, not a date, duration, token estimate or forced serial schedule. `Plan wave` groups tasks; parallel execution is allowed only when all inputs are fixed and exclusive file ownership is recorded. Tasks and Subtasks retain canonical direct dependencies, source work-package assignments, decision references and original priority/acceptance. The JSON separately records `execution_work_package`/`execution_wp_dependencies` for the parent activity and `inherited_decision_ids` for parent topics. For example STK007/STK008 and STK015/STK016 retain their source WP01/WP02 while their verification activity executes with the parent WP06 task. Research topics do not imply prerequisite approval. The plan adds explicit package/verification completion prerequisites. Aggregate TK01–TK07 are completion gates, not duplicate implementation assignments and not prerequisite parents that prevent their own children from starting.
 
 W0 gathers evidence and prepares contract/decision options across the original WPs before product execution. Some D02/D03 research is registered in WP03/WP04 but feeds WP01 approval. Scheduling that **pre-code decision preparation** early does not complete those product packages or waive their implementation gates. Similarly, WP06 tests can collect candidate-specific slice evidence as implementations land; final WP06 completion still waits for WP01–WP05 and the complete verification/athlete gates. The plan makes this scheduling interpretation explicit rather than deleting canonical package dependencies. Each cross-package preparation assignment must be identified as preparation in its issue; downstream implementation remains Backlog until approved prerequisites exist.
 
@@ -67,7 +67,7 @@ GitHub Project holds live status, Priority, Agent, Dependencies plus Plan wave/o
 
 ## Complete ordered Task map
 
-Task acceptance, detailed outputs and verification IDs are copied without semantic changes into the linked JSON plan; each row links the original issue. Subtask rows below retain the canonical parent/acceptance in JSON. Aggregate completion rows are visibly distinct from bounded assignments.
+Task acceptance, detailed outputs and verification IDs are copied without semantic changes into the linked JSON plan; legacy aggregate planning acceptance is explicitly added without changing its requirement contract. Each row links the original issue. Aggregate completion rows are visibly distinct from bounded assignments. TK11/TK15 additionally wait for TK67 so protected intake/persistence cannot precede authorization; TK18/STK019/STK025 and repeat checks TK19/STK021/STK026 can run before TK67 only as isolated pure transformations on approved disposable fixtures, with no protected user storage/service reads or writes; their JSON execution_scope/start_gate makes that restriction explicit. Integrated user-facing use waits for TK67 authorization.
 
 | Order | ID / issue | Wave | Work kind | Owner | Prerequisites in this plan | Decision IDs |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -99,13 +99,13 @@ Task acceptance, detailed outputs and verification IDs are copied without semant
 | 2600 | [TK41](https://github.com/fengguode/DATARA/issues/140) | W0 | contract_design | System Architect — Feng Guo | TK36, TK37, TK38 | D03 |
 | 2700 | [TK01](https://github.com/fengguode/DATARA/issues/268) | W0 | aggregate | Primary Coordinator — Yi Tang | TK09, TK10, TK13, TK14, TK17, TK20 | Inherited gate/applicability |
 | 2800 | [TK02](https://github.com/fengguode/DATARA/issues/269) | W0 | aggregate | Primary Coordinator — Yi Tang | TK01, TK30, TK31, TK32, TK33, TK34, TK35, TK36, TK37, TK38, TK39, TK40, TK41, TK50, TK51, TK56, TK60, TK63, TK66, TK72, TK73 | Inherited gate/applicability |
-| 2900 | [TK11](https://github.com/fengguode/DATARA/issues/117) | W1 | implementation | Worker — Torsten Maier | TK01, TK02, TK10 | D01, D05 |
-| 3000 | [TK15](https://github.com/fengguode/DATARA/issues/121) | W1 | implementation | Worker — Torsten Maier | TK01, TK02, TK14 | D01, D05 |
-| 3100 | [TK18](https://github.com/fengguode/DATARA/issues/124) | W1 | implementation | Worker — Torsten Maier | TK01, TK02 | D01, D05 |
-| 3200 | [TK67](https://github.com/fengguode/DATARA/issues/165) | W1 | implementation | Worker — Torsten Maier | TK01, TK02, TK66 | D03, D04 |
-| 3300 | [TK12](https://github.com/fengguode/DATARA/issues/118) | W1 | verification | User Tester — Abt Hermann | TK11 | D01 |
-| 3400 | [TK16](https://github.com/fengguode/DATARA/issues/122) | W1 | verification | User Tester — Abt Hermann | TK15 | D01 |
-| 3500 | [TK19](https://github.com/fengguode/DATARA/issues/125) | W1 | verification | User Tester — Abt Hermann | TK18 | D01 |
+| 2900 | [TK18](https://github.com/fengguode/DATARA/issues/124) | W1 | implementation | Worker — Torsten Maier | TK01, TK02 | D01, D05 |
+| 3000 | [TK67](https://github.com/fengguode/DATARA/issues/165) | W1 | implementation | Worker — Torsten Maier | TK01, TK02, TK66 | D03, D04 |
+| 3100 | [TK11](https://github.com/fengguode/DATARA/issues/117) | W1 | implementation | Worker — Torsten Maier | TK01, TK02, TK10, TK67 | D01, D05 |
+| 3200 | [TK15](https://github.com/fengguode/DATARA/issues/121) | W1 | implementation | Worker — Torsten Maier | TK01, TK02, TK14, TK67 | D01, D05 |
+| 3300 | [TK19](https://github.com/fengguode/DATARA/issues/125) | W1 | verification | User Tester — Abt Hermann | TK18 | D01 |
+| 3400 | [TK12](https://github.com/fengguode/DATARA/issues/118) | W1 | verification | User Tester — Abt Hermann | TK11 | D01 |
+| 3500 | [TK16](https://github.com/fengguode/DATARA/issues/122) | W1 | verification | User Tester — Abt Hermann | TK15 | D01 |
 | 3600 | [TK03](https://github.com/fengguode/DATARA/issues/270) | W1 | aggregate | Primary Coordinator — Yi Tang | TK01, TK02, TK11, TK12, TK15, TK16, TK17, TK18, TK19, TK20, TK67 | Inherited gate/applicability |
 | 3700 | [TK21](https://github.com/fengguode/DATARA/issues/127) | W2 | implementation | Worker — Torsten Maier | TK03, TK18 | D01, D02, D05 |
 | 3800 | [TK42](https://github.com/fengguode/DATARA/issues/141) | W2 | implementation | Worker — Torsten Maier | TK03, TK31, TK32, TK33 | D02 |
@@ -138,103 +138,103 @@ Task acceptance, detailed outputs and verification IDs are copied without semant
 
 ## Complete Subtask map
 
-| Order | Subtask / issue | Parent | Wave | Owner |
-| --- | --- | --- | --- | --- |
-| 101 | [STK001](https://github.com/fengguode/DATARA/issues/173) | TK09 | W0 | Explorer — Wang Licun |
-| 102 | [STK002](https://github.com/fengguode/DATARA/issues/174) | TK09 | W0 | Explorer — Wang Licun |
-| 201 | [STK009](https://github.com/fengguode/DATARA/issues/181) | TK13 | W0 | System Architect — Feng Guo |
-| 202 | [STK010](https://github.com/fengguode/DATARA/issues/182) | TK13 | W0 | System Architect — Feng Guo |
-| 301 | [STK011](https://github.com/fengguode/DATARA/issues/183) | TK14 | W0 | System Architect — Feng Guo |
-| 302 | [STK012](https://github.com/fengguode/DATARA/issues/184) | TK14 | W0 | System Architect — Feng Guo |
-| 401 | [STK017](https://github.com/fengguode/DATARA/issues/189) | TK17 | W0 | System Architect — Feng Guo |
-| 402 | [STK018](https://github.com/fengguode/DATARA/issues/190) | TK17 | W0 | System Architect — Feng Guo |
-| 501 | [STK023](https://github.com/fengguode/DATARA/issues/195) | TK20 | W0 | Explorer — Wang Licun |
-| 502 | [STK024](https://github.com/fengguode/DATARA/issues/196) | TK20 | W0 | Explorer — Wang Licun |
-| 601 | [STK100](https://github.com/fengguode/DATARA/issues/201) | TK30 | W0 | System Architect — Feng Guo |
-| 701 | [STK102](https://github.com/fengguode/DATARA/issues/202) | TK31 | W0 | System Architect — Feng Guo |
-| 801 | [STK104](https://github.com/fengguode/DATARA/issues/203) | TK32 | W0 | System Architect — Feng Guo |
-| 901 | [STK106](https://github.com/fengguode/DATARA/issues/204) | TK33 | W0 | System Architect — Feng Guo |
-| 1001 | [STK108](https://github.com/fengguode/DATARA/issues/205) | TK34 | W0 | System Architect — Feng Guo |
-| 1101 | [STK110](https://github.com/fengguode/DATARA/issues/206) | TK35 | W0 | UI Designer — Wu Yunzhou |
-| 1201 | [STK112](https://github.com/fengguode/DATARA/issues/207) | TK36 | W0 | System Architect — Feng Guo |
-| 1301 | [STK114](https://github.com/fengguode/DATARA/issues/208) | TK37 | W0 | System Architect — Feng Guo |
-| 1401 | [STK116](https://github.com/fengguode/DATARA/issues/209) | TK38 | W0 | System Architect — Feng Guo |
-| 1501 | [STK200](https://github.com/fengguode/DATARA/issues/219) | TK50 | W0 | System Architect — Feng Guo |
-| 1502 | [STK201](https://github.com/fengguode/DATARA/issues/220) | TK50 | W0 | System Architect — Feng Guo |
-| 1601 | [STK202](https://github.com/fengguode/DATARA/issues/221) | TK51 | W0 | System Architect — Feng Guo |
-| 1602 | [STK203](https://github.com/fengguode/DATARA/issues/222) | TK51 | W0 | System Architect — Feng Guo |
-| 1701 | [STK212](https://github.com/fengguode/DATARA/issues/231) | TK56 | W0 | System Architect — Feng Guo |
-| 1702 | [STK213](https://github.com/fengguode/DATARA/issues/232) | TK56 | W0 | System Architect — Feng Guo |
-| 1801 | [STK220](https://github.com/fengguode/DATARA/issues/239) | TK60 | W0 | System Architect — Feng Guo |
-| 1802 | [STK221](https://github.com/fengguode/DATARA/issues/240) | TK60 | W0 | System Architect — Feng Guo |
-| 1901 | [STK226](https://github.com/fengguode/DATARA/issues/245) | TK63 | W0 | System Architect — Feng Guo |
-| 1902 | [STK227](https://github.com/fengguode/DATARA/issues/246) | TK63 | W0 | System Architect — Feng Guo |
-| 2001 | [STK232](https://github.com/fengguode/DATARA/issues/251) | TK66 | W0 | System Architect — Feng Guo |
-| 2002 | [STK233](https://github.com/fengguode/DATARA/issues/252) | TK66 | W0 | System Architect — Feng Guo |
-| 2101 | [STK244](https://github.com/fengguode/DATARA/issues/263) | TK72 | W0 | System Architect — Feng Guo |
-| 2102 | [STK245](https://github.com/fengguode/DATARA/issues/264) | TK72 | W0 | System Architect — Feng Guo |
-| 2201 | [STK246](https://github.com/fengguode/DATARA/issues/265) | TK73 | W0 | UI Designer — Wu Yunzhou |
-| 2202 | [STK247](https://github.com/fengguode/DATARA/issues/266) | TK73 | W0 | UI Designer — Wu Yunzhou |
-| 2301 | [STK003](https://github.com/fengguode/DATARA/issues/175) | TK10 | W0 | System Architect — Feng Guo |
-| 2302 | [STK004](https://github.com/fengguode/DATARA/issues/176) | TK10 | W0 | System Architect — Feng Guo |
-| 2401 | [STK118](https://github.com/fengguode/DATARA/issues/210) | TK39 | W0 | UI Designer — Wu Yunzhou |
-| 2501 | [STK120](https://github.com/fengguode/DATARA/issues/211) | TK40 | W0 | System Architect — Feng Guo |
-| 2601 | [STK122](https://github.com/fengguode/DATARA/issues/212) | TK41 | W0 | System Architect — Feng Guo |
-| 2901 | [STK005](https://github.com/fengguode/DATARA/issues/177) | TK11 | W1 | Worker — Torsten Maier |
-| 2902 | [STK006](https://github.com/fengguode/DATARA/issues/178) | TK11 | W1 | Worker — Torsten Maier |
-| 3001 | [STK013](https://github.com/fengguode/DATARA/issues/185) | TK15 | W1 | Worker — Torsten Maier |
-| 3002 | [STK014](https://github.com/fengguode/DATARA/issues/186) | TK15 | W1 | Worker — Torsten Maier |
-| 3101 | [STK019](https://github.com/fengguode/DATARA/issues/191) | TK18 | W1 | Worker — Torsten Maier |
-| 3102 | [STK025](https://github.com/fengguode/DATARA/issues/197) | TK18 | W1 | Worker — Torsten Maier |
-| 3201 | [STK234](https://github.com/fengguode/DATARA/issues/253) | TK67 | W1 | Worker — Torsten Maier |
-| 3202 | [STK235](https://github.com/fengguode/DATARA/issues/254) | TK67 | W1 | Worker — Torsten Maier |
-| 3301 | [STK007](https://github.com/fengguode/DATARA/issues/179) | TK12 | W1 | User Tester — Abt Hermann |
-| 3302 | [STK008](https://github.com/fengguode/DATARA/issues/180) | TK12 | W1 | User Tester — Abt Hermann |
-| 3401 | [STK015](https://github.com/fengguode/DATARA/issues/187) | TK16 | W1 | User Tester — Abt Hermann |
-| 3402 | [STK016](https://github.com/fengguode/DATARA/issues/188) | TK16 | W1 | User Tester — Abt Hermann |
-| 3501 | [STK021](https://github.com/fengguode/DATARA/issues/193) | TK19 | W1 | User Tester — Abt Hermann |
-| 3502 | [STK026](https://github.com/fengguode/DATARA/issues/198) | TK19 | W1 | User Tester — Abt Hermann |
-| 3701 | [STK020](https://github.com/fengguode/DATARA/issues/192) | TK21 | W2 | Worker — Torsten Maier |
-| 3702 | [STK027](https://github.com/fengguode/DATARA/issues/199) | TK21 | W2 | Worker — Torsten Maier |
-| 3801 | [STK124](https://github.com/fengguode/DATARA/issues/213) | TK42 | W2 | Worker — Torsten Maier |
-| 3901 | [STK128](https://github.com/fengguode/DATARA/issues/215) | TK44 | W2 | Worker — Torsten Maier |
-| 4001 | [STK022](https://github.com/fengguode/DATARA/issues/194) | TK22 | W2 | User Tester — Abt Hermann |
-| 4002 | [STK028](https://github.com/fengguode/DATARA/issues/200) | TK22 | W2 | User Tester — Abt Hermann |
-| 4101 | [STK126](https://github.com/fengguode/DATARA/issues/214) | TK43 | W2 | User Tester — Abt Hermann |
-| 4201 | [STK130](https://github.com/fengguode/DATARA/issues/216) | TK45 | W2 | User Tester — Abt Hermann |
-| 4401 | [STK132](https://github.com/fengguode/DATARA/issues/217) | TK46 | W3 | Worker — Torsten Maier |
-| 4501 | [STK204](https://github.com/fengguode/DATARA/issues/223) | TK52 | W3 | Worker — Torsten Maier |
-| 4502 | [STK205](https://github.com/fengguode/DATARA/issues/224) | TK52 | W3 | Worker — Torsten Maier |
-| 4601 | [STK206](https://github.com/fengguode/DATARA/issues/225) | TK53 | W3 | Worker — Torsten Maier |
-| 4602 | [STK207](https://github.com/fengguode/DATARA/issues/226) | TK53 | W3 | Worker — Torsten Maier |
-| 4701 | [STK210](https://github.com/fengguode/DATARA/issues/229) | TK55 | W3 | Worker — Torsten Maier |
-| 4702 | [STK211](https://github.com/fengguode/DATARA/issues/230) | TK55 | W3 | Worker — Torsten Maier |
-| 4801 | [STK240](https://github.com/fengguode/DATARA/issues/259) | TK70 | W3 | Worker — Torsten Maier |
-| 4802 | [STK241](https://github.com/fengguode/DATARA/issues/260) | TK70 | W3 | Worker — Torsten Maier |
-| 4901 | [STK134](https://github.com/fengguode/DATARA/issues/218) | TK47 | W3 | User Tester — Abt Hermann |
-| 5001 | [STK208](https://github.com/fengguode/DATARA/issues/227) | TK54 | W3 | User Tester — Abt Hermann |
-| 5002 | [STK209](https://github.com/fengguode/DATARA/issues/228) | TK54 | W3 | User Tester — Abt Hermann |
-| 5101 | [STK242](https://github.com/fengguode/DATARA/issues/261) | TK71 | W3 | User Tester — Abt Hermann |
-| 5102 | [STK243](https://github.com/fengguode/DATARA/issues/262) | TK71 | W3 | User Tester — Abt Hermann |
-| 5301 | [STK214](https://github.com/fengguode/DATARA/issues/233) | TK57 | W4 | Worker — Torsten Maier |
-| 5302 | [STK215](https://github.com/fengguode/DATARA/issues/234) | TK57 | W4 | Worker — Torsten Maier |
-| 5401 | [STK216](https://github.com/fengguode/DATARA/issues/235) | TK58 | W4 | Worker — Torsten Maier |
-| 5402 | [STK217](https://github.com/fengguode/DATARA/issues/236) | TK58 | W4 | Worker — Torsten Maier |
-| 5501 | [STK222](https://github.com/fengguode/DATARA/issues/241) | TK61 | W4 | Worker — Torsten Maier |
-| 5502 | [STK223](https://github.com/fengguode/DATARA/issues/242) | TK61 | W4 | Worker — Torsten Maier |
-| 5601 | [STK228](https://github.com/fengguode/DATARA/issues/247) | TK64 | W4 | Worker — Torsten Maier |
-| 5602 | [STK229](https://github.com/fengguode/DATARA/issues/248) | TK64 | W4 | Worker — Torsten Maier |
-| 5701 | [STK236](https://github.com/fengguode/DATARA/issues/255) | TK68 | W4 | Worker — Torsten Maier |
-| 5702 | [STK237](https://github.com/fengguode/DATARA/issues/256) | TK68 | W4 | Worker — Torsten Maier |
-| 5801 | [STK218](https://github.com/fengguode/DATARA/issues/237) | TK59 | W4 | User Tester — Abt Hermann |
-| 5802 | [STK219](https://github.com/fengguode/DATARA/issues/238) | TK59 | W4 | User Tester — Abt Hermann |
-| 5901 | [STK224](https://github.com/fengguode/DATARA/issues/243) | TK62 | W4 | User Tester — Abt Hermann |
-| 5902 | [STK225](https://github.com/fengguode/DATARA/issues/244) | TK62 | W4 | User Tester — Abt Hermann |
-| 6001 | [STK230](https://github.com/fengguode/DATARA/issues/249) | TK65 | W4 | User Tester — Abt Hermann |
-| 6002 | [STK231](https://github.com/fengguode/DATARA/issues/250) | TK65 | W4 | User Tester — Abt Hermann |
-| 6101 | [STK238](https://github.com/fengguode/DATARA/issues/257) | TK69 | W4 | User Tester — Abt Hermann |
-| 6102 | [STK239](https://github.com/fengguode/DATARA/issues/258) | TK69 | W4 | User Tester — Abt Hermann |
-| 6301 | [STK248](https://github.com/fengguode/DATARA/issues/267) | TK74 | W5 | Quality Manager — Wang Xiaofeng |
+| Order | Subtask / issue | Parent | Wave | Source WP / activity WP | Owner |
+| --- | --- | --- | --- | --- | --- |
+| 101 | [STK001](https://github.com/fengguode/DATARA/issues/173) | TK09 | W0 | WP01 / WP01 | Explorer — Wang Licun |
+| 102 | [STK002](https://github.com/fengguode/DATARA/issues/174) | TK09 | W0 | WP01 / WP01 | Explorer — Wang Licun |
+| 201 | [STK009](https://github.com/fengguode/DATARA/issues/181) | TK13 | W0 | WP01 / WP01 | System Architect — Feng Guo |
+| 202 | [STK010](https://github.com/fengguode/DATARA/issues/182) | TK13 | W0 | WP01 / WP01 | System Architect — Feng Guo |
+| 301 | [STK011](https://github.com/fengguode/DATARA/issues/183) | TK14 | W0 | WP01 / WP01 | System Architect — Feng Guo |
+| 302 | [STK012](https://github.com/fengguode/DATARA/issues/184) | TK14 | W0 | WP01 / WP01 | System Architect — Feng Guo |
+| 401 | [STK017](https://github.com/fengguode/DATARA/issues/189) | TK17 | W0 | WP02 / WP02 | System Architect — Feng Guo |
+| 402 | [STK018](https://github.com/fengguode/DATARA/issues/190) | TK17 | W0 | WP02 / WP02 | System Architect — Feng Guo |
+| 501 | [STK023](https://github.com/fengguode/DATARA/issues/195) | TK20 | W0 | WP02 / WP02 | Explorer — Wang Licun |
+| 502 | [STK024](https://github.com/fengguode/DATARA/issues/196) | TK20 | W0 | WP02 / WP02 | Explorer — Wang Licun |
+| 601 | [STK100](https://github.com/fengguode/DATARA/issues/201) | TK30 | W0 | WP03 / WP03 | System Architect — Feng Guo |
+| 701 | [STK102](https://github.com/fengguode/DATARA/issues/202) | TK31 | W0 | WP03 / WP03 | System Architect — Feng Guo |
+| 801 | [STK104](https://github.com/fengguode/DATARA/issues/203) | TK32 | W0 | WP03 / WP03 | System Architect — Feng Guo |
+| 901 | [STK106](https://github.com/fengguode/DATARA/issues/204) | TK33 | W0 | WP03 / WP03 | System Architect — Feng Guo |
+| 1001 | [STK108](https://github.com/fengguode/DATARA/issues/205) | TK34 | W0 | WP03 / WP03 | System Architect — Feng Guo |
+| 1101 | [STK110](https://github.com/fengguode/DATARA/issues/206) | TK35 | W0 | WP03 / WP03 | UI Designer — Wu Yunzhou |
+| 1201 | [STK112](https://github.com/fengguode/DATARA/issues/207) | TK36 | W0 | WP04 / WP04 | System Architect — Feng Guo |
+| 1301 | [STK114](https://github.com/fengguode/DATARA/issues/208) | TK37 | W0 | WP04 / WP04 | System Architect — Feng Guo |
+| 1401 | [STK116](https://github.com/fengguode/DATARA/issues/209) | TK38 | W0 | WP04 / WP04 | System Architect — Feng Guo |
+| 1501 | [STK200](https://github.com/fengguode/DATARA/issues/219) | TK50 | W0 | WP01 / WP01 | System Architect — Feng Guo |
+| 1502 | [STK201](https://github.com/fengguode/DATARA/issues/220) | TK50 | W0 | WP01 / WP01 | System Architect — Feng Guo |
+| 1601 | [STK202](https://github.com/fengguode/DATARA/issues/221) | TK51 | W0 | WP01 / WP01 | System Architect — Feng Guo |
+| 1602 | [STK203](https://github.com/fengguode/DATARA/issues/222) | TK51 | W0 | WP01 / WP01 | System Architect — Feng Guo |
+| 1701 | [STK212](https://github.com/fengguode/DATARA/issues/231) | TK56 | W0 | WP01 / WP01 | System Architect — Feng Guo |
+| 1702 | [STK213](https://github.com/fengguode/DATARA/issues/232) | TK56 | W0 | WP01 / WP01 | System Architect — Feng Guo |
+| 1801 | [STK220](https://github.com/fengguode/DATARA/issues/239) | TK60 | W0 | WP01 / WP01 | System Architect — Feng Guo |
+| 1802 | [STK221](https://github.com/fengguode/DATARA/issues/240) | TK60 | W0 | WP01 / WP01 | System Architect — Feng Guo |
+| 1901 | [STK226](https://github.com/fengguode/DATARA/issues/245) | TK63 | W0 | WP01 / WP01 | System Architect — Feng Guo |
+| 1902 | [STK227](https://github.com/fengguode/DATARA/issues/246) | TK63 | W0 | WP01 / WP01 | System Architect — Feng Guo |
+| 2001 | [STK232](https://github.com/fengguode/DATARA/issues/251) | TK66 | W0 | WP01 / WP01 | System Architect — Feng Guo |
+| 2002 | [STK233](https://github.com/fengguode/DATARA/issues/252) | TK66 | W0 | WP01 / WP01 | System Architect — Feng Guo |
+| 2101 | [STK244](https://github.com/fengguode/DATARA/issues/263) | TK72 | W0 | WP01 / WP01 | System Architect — Feng Guo |
+| 2102 | [STK245](https://github.com/fengguode/DATARA/issues/264) | TK72 | W0 | WP01 / WP01 | System Architect — Feng Guo |
+| 2201 | [STK246](https://github.com/fengguode/DATARA/issues/265) | TK73 | W0 | WP01 / WP01 | UI Designer — Wu Yunzhou |
+| 2202 | [STK247](https://github.com/fengguode/DATARA/issues/266) | TK73 | W0 | WP01 / WP01 | UI Designer — Wu Yunzhou |
+| 2301 | [STK003](https://github.com/fengguode/DATARA/issues/175) | TK10 | W0 | WP01 / WP01 | System Architect — Feng Guo |
+| 2302 | [STK004](https://github.com/fengguode/DATARA/issues/176) | TK10 | W0 | WP01 / WP01 | System Architect — Feng Guo |
+| 2401 | [STK118](https://github.com/fengguode/DATARA/issues/210) | TK39 | W0 | WP04 / WP04 | UI Designer — Wu Yunzhou |
+| 2501 | [STK120](https://github.com/fengguode/DATARA/issues/211) | TK40 | W0 | WP04 / WP04 | System Architect — Feng Guo |
+| 2601 | [STK122](https://github.com/fengguode/DATARA/issues/212) | TK41 | W0 | WP04 / WP04 | System Architect — Feng Guo |
+| 2901 | [STK019](https://github.com/fengguode/DATARA/issues/191) | TK18 | W1 | WP02 / WP02 | Worker — Torsten Maier |
+| 2902 | [STK025](https://github.com/fengguode/DATARA/issues/197) | TK18 | W1 | WP02 / WP02 | Worker — Torsten Maier |
+| 3001 | [STK234](https://github.com/fengguode/DATARA/issues/253) | TK67 | W1 | WP02 / WP02 | Worker — Torsten Maier |
+| 3002 | [STK235](https://github.com/fengguode/DATARA/issues/254) | TK67 | W1 | WP02 / WP02 | Worker — Torsten Maier |
+| 3101 | [STK005](https://github.com/fengguode/DATARA/issues/177) | TK11 | W1 | WP02 / WP02 | Worker — Torsten Maier |
+| 3102 | [STK006](https://github.com/fengguode/DATARA/issues/178) | TK11 | W1 | WP02 / WP02 | Worker — Torsten Maier |
+| 3201 | [STK013](https://github.com/fengguode/DATARA/issues/185) | TK15 | W1 | WP02 / WP02 | Worker — Torsten Maier |
+| 3202 | [STK014](https://github.com/fengguode/DATARA/issues/186) | TK15 | W1 | WP02 / WP02 | Worker — Torsten Maier |
+| 3301 | [STK021](https://github.com/fengguode/DATARA/issues/193) | TK19 | W1 | WP06 / WP06 | User Tester — Abt Hermann |
+| 3302 | [STK026](https://github.com/fengguode/DATARA/issues/198) | TK19 | W1 | WP06 / WP06 | User Tester — Abt Hermann |
+| 3401 | [STK007](https://github.com/fengguode/DATARA/issues/179) | TK12 | W1 | WP01 / WP06 | User Tester — Abt Hermann |
+| 3402 | [STK008](https://github.com/fengguode/DATARA/issues/180) | TK12 | W1 | WP01 / WP06 | User Tester — Abt Hermann |
+| 3501 | [STK015](https://github.com/fengguode/DATARA/issues/187) | TK16 | W1 | WP02 / WP06 | User Tester — Abt Hermann |
+| 3502 | [STK016](https://github.com/fengguode/DATARA/issues/188) | TK16 | W1 | WP02 / WP06 | User Tester — Abt Hermann |
+| 3701 | [STK020](https://github.com/fengguode/DATARA/issues/192) | TK21 | W2 | WP03 / WP03 | Worker — Torsten Maier |
+| 3702 | [STK027](https://github.com/fengguode/DATARA/issues/199) | TK21 | W2 | WP03 / WP03 | Worker — Torsten Maier |
+| 3801 | [STK124](https://github.com/fengguode/DATARA/issues/213) | TK42 | W2 | WP03 / WP03 | Worker — Torsten Maier |
+| 3901 | [STK128](https://github.com/fengguode/DATARA/issues/215) | TK44 | W2 | WP03 / WP03 | Worker — Torsten Maier |
+| 4001 | [STK022](https://github.com/fengguode/DATARA/issues/194) | TK22 | W2 | WP06 / WP06 | User Tester — Abt Hermann |
+| 4002 | [STK028](https://github.com/fengguode/DATARA/issues/200) | TK22 | W2 | WP06 / WP06 | User Tester — Abt Hermann |
+| 4101 | [STK126](https://github.com/fengguode/DATARA/issues/214) | TK43 | W2 | WP03 / WP03 | User Tester — Abt Hermann |
+| 4201 | [STK130](https://github.com/fengguode/DATARA/issues/216) | TK45 | W2 | WP03 / WP03 | User Tester — Abt Hermann |
+| 4401 | [STK132](https://github.com/fengguode/DATARA/issues/217) | TK46 | W3 | WP04 / WP04 | Worker — Torsten Maier |
+| 4501 | [STK204](https://github.com/fengguode/DATARA/issues/223) | TK52 | W3 | WP04 / WP04 | Worker — Torsten Maier |
+| 4502 | [STK205](https://github.com/fengguode/DATARA/issues/224) | TK52 | W3 | WP04 / WP04 | Worker — Torsten Maier |
+| 4601 | [STK206](https://github.com/fengguode/DATARA/issues/225) | TK53 | W3 | WP04 / WP04 | Worker — Torsten Maier |
+| 4602 | [STK207](https://github.com/fengguode/DATARA/issues/226) | TK53 | W3 | WP04 / WP04 | Worker — Torsten Maier |
+| 4701 | [STK210](https://github.com/fengguode/DATARA/issues/229) | TK55 | W3 | WP04 / WP04 | Worker — Torsten Maier |
+| 4702 | [STK211](https://github.com/fengguode/DATARA/issues/230) | TK55 | W3 | WP04 / WP04 | Worker — Torsten Maier |
+| 4801 | [STK240](https://github.com/fengguode/DATARA/issues/259) | TK70 | W3 | WP04 / WP04 | Worker — Torsten Maier |
+| 4802 | [STK241](https://github.com/fengguode/DATARA/issues/260) | TK70 | W3 | WP04 / WP04 | Worker — Torsten Maier |
+| 4901 | [STK134](https://github.com/fengguode/DATARA/issues/218) | TK47 | W3 | WP04 / WP04 | User Tester — Abt Hermann |
+| 5001 | [STK208](https://github.com/fengguode/DATARA/issues/227) | TK54 | W3 | WP06 / WP06 | User Tester — Abt Hermann |
+| 5002 | [STK209](https://github.com/fengguode/DATARA/issues/228) | TK54 | W3 | WP06 / WP06 | User Tester — Abt Hermann |
+| 5101 | [STK242](https://github.com/fengguode/DATARA/issues/261) | TK71 | W3 | WP06 / WP06 | User Tester — Abt Hermann |
+| 5102 | [STK243](https://github.com/fengguode/DATARA/issues/262) | TK71 | W3 | WP06 / WP06 | User Tester — Abt Hermann |
+| 5301 | [STK214](https://github.com/fengguode/DATARA/issues/233) | TK57 | W4 | WP05 / WP05 | Worker — Torsten Maier |
+| 5302 | [STK215](https://github.com/fengguode/DATARA/issues/234) | TK57 | W4 | WP05 / WP05 | Worker — Torsten Maier |
+| 5401 | [STK216](https://github.com/fengguode/DATARA/issues/235) | TK58 | W4 | WP05 / WP05 | Worker — Torsten Maier |
+| 5402 | [STK217](https://github.com/fengguode/DATARA/issues/236) | TK58 | W4 | WP05 / WP05 | Worker — Torsten Maier |
+| 5501 | [STK222](https://github.com/fengguode/DATARA/issues/241) | TK61 | W4 | WP05 / WP05 | Worker — Torsten Maier |
+| 5502 | [STK223](https://github.com/fengguode/DATARA/issues/242) | TK61 | W4 | WP05 / WP05 | Worker — Torsten Maier |
+| 5601 | [STK228](https://github.com/fengguode/DATARA/issues/247) | TK64 | W4 | WP05 / WP05 | Worker — Torsten Maier |
+| 5602 | [STK229](https://github.com/fengguode/DATARA/issues/248) | TK64 | W4 | WP05 / WP05 | Worker — Torsten Maier |
+| 5701 | [STK236](https://github.com/fengguode/DATARA/issues/255) | TK68 | W4 | WP05 / WP05 | Worker — Torsten Maier |
+| 5702 | [STK237](https://github.com/fengguode/DATARA/issues/256) | TK68 | W4 | WP05 / WP05 | Worker — Torsten Maier |
+| 5801 | [STK218](https://github.com/fengguode/DATARA/issues/237) | TK59 | W4 | WP06 / WP06 | User Tester — Abt Hermann |
+| 5802 | [STK219](https://github.com/fengguode/DATARA/issues/238) | TK59 | W4 | WP06 / WP06 | User Tester — Abt Hermann |
+| 5901 | [STK224](https://github.com/fengguode/DATARA/issues/243) | TK62 | W4 | WP06 / WP06 | User Tester — Abt Hermann |
+| 5902 | [STK225](https://github.com/fengguode/DATARA/issues/244) | TK62 | W4 | WP06 / WP06 | User Tester — Abt Hermann |
+| 6001 | [STK230](https://github.com/fengguode/DATARA/issues/249) | TK65 | W4 | WP06 / WP06 | User Tester — Abt Hermann |
+| 6002 | [STK231](https://github.com/fengguode/DATARA/issues/250) | TK65 | W4 | WP06 / WP06 | User Tester — Abt Hermann |
+| 6101 | [STK238](https://github.com/fengguode/DATARA/issues/257) | TK69 | W4 | WP06 / WP06 | User Tester — Abt Hermann |
+| 6102 | [STK239](https://github.com/fengguode/DATARA/issues/258) | TK69 | W4 | WP06 / WP06 | User Tester — Abt Hermann |
+| 6301 | [STK248](https://github.com/fengguode/DATARA/issues/267) | TK74 | W5 | WP06 / WP06 | Quality Manager — Wang Xiaofeng |
 
 ## Review and current limitations
 

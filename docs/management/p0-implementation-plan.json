@@ -9,7 +9,7 @@
   "approval_status": "Planning proposal; no product decision or coding authorization inferred",
   "coding_readiness": "Blocked on G0: unapproved D01–D05, runtime/setup commands and fixture evidence",
   "first_ready_assignment": "TK09/STK001/STK002: bounded WP01 source/fixture evidence inventory, not product coding",
-  "schedule_semantics": "Plan order is a dependency-valid traversal, not a time estimate or a forced serial schedule. Aggregate records are completion gates. W0 is pre-code evidence/contract preparation across original WPs; incremental verification can follow owned slices while final WP06 remains gated. Canonical WP completion prerequisites remain unchanged and are not silently removed.",
+  "schedule_semantics": "Plan order is a dependency-valid traversal, not a time estimate or a forced serial schedule. Aggregate records are completion gates. W0 is pre-code evidence/contract preparation across original WPs; incremental verification can follow owned slices while final WP06 remains gated. Canonical WP completion prerequisites remain unchanged and are not silently removed. work_package/decision_ids and canonical_wp_dependencies preserve source fields exactly. execution_work_package/execution_wp_dependencies name the parent activity package; inherited_decision_ids records additional parent topics separately from canonical decision references. Required decision approvals are in required_decision_gates/start_gate, not inferred from a research question.",
   "waves": [
     {
       "id": "W0",
@@ -81,12 +81,12 @@
       "github": {
         "issue_url": "https://github.com/fengguode/DATARA/issues/115",
         "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tMk8",
-        "project_status": "Backlog",
+        "project_status": "Ready",
         "priority": "P0",
         "lifecycle": "Requirements",
         "agent": "Explorer — Wang Licun",
         "dependencies_text": "None recorded; parent scope applies",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "subtask_ids": [
@@ -95,7 +95,12 @@
       ],
       "planning_status": "Ready for bounded evidence assignment",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP01",
+      "execution_wp_dependencies": [],
+      "inherited_decision_ids": [
+        "D01"
+      ]
     },
     {
       "wave": "W0",
@@ -136,17 +141,22 @@
       "github": {
         "issue_url": "https://github.com/fengguode/DATARA/issues/173",
         "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tfhQ",
-        "project_status": "Backlog",
+        "project_status": "Ready",
         "priority": "P0",
         "lifecycle": "Requirements",
         "agent": "Explorer — Wang Licun",
         "dependencies_text": "None recorded; parent scope applies",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Ready for bounded evidence assignment",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP01",
+      "execution_wp_dependencies": [],
+      "inherited_decision_ids": [
+        "D01"
+      ]
     },
     {
       "wave": "W0",
@@ -187,17 +197,22 @@
       "github": {
         "issue_url": "https://github.com/fengguode/DATARA/issues/174",
         "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tfnU",
-        "project_status": "Backlog",
+        "project_status": "Ready",
         "priority": "P0",
         "lifecycle": "Requirements",
         "agent": "Explorer — Wang Licun",
         "dependencies_text": "None recorded; parent scope applies",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Ready for bounded evidence assignment",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP01",
+      "execution_wp_dependencies": [],
+      "inherited_decision_ids": [
+        "D01"
+      ]
     },
     {
       "id": "TK13",
@@ -243,7 +258,7 @@
         "lifecycle": "Requirements",
         "agent": "System Architect — Feng Guo",
         "dependencies_text": "None recorded; parent scope applies",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "subtask_ids": [
@@ -252,7 +267,12 @@
       ],
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP01",
+      "execution_wp_dependencies": [],
+      "inherited_decision_ids": [
+        "D01"
+      ]
     },
     {
       "wave": "W0",
@@ -299,12 +319,17 @@
         "lifecycle": "Requirements",
         "agent": "System Architect — Feng Guo",
         "dependencies_text": "None recorded; parent scope applies",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP01",
+      "execution_wp_dependencies": [],
+      "inherited_decision_ids": [
+        "D01"
+      ]
     },
     {
       "wave": "W0",
@@ -351,12 +376,17 @@
         "lifecycle": "Requirements",
         "agent": "System Architect — Feng Guo",
         "dependencies_text": "None recorded; parent scope applies",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP01",
+      "execution_wp_dependencies": [],
+      "inherited_decision_ids": [
+        "D01"
+      ]
     },
     {
       "id": "TK14",
@@ -400,7 +430,7 @@
         "lifecycle": "Requirements",
         "agent": "System Architect — Feng Guo",
         "dependencies_text": "None recorded; parent scope applies",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "subtask_ids": [
@@ -409,7 +439,12 @@
       ],
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP01",
+      "execution_wp_dependencies": [],
+      "inherited_decision_ids": [
+        "D01"
+      ]
     },
     {
       "wave": "W0",
@@ -454,12 +489,17 @@
         "lifecycle": "Requirements",
         "agent": "System Architect — Feng Guo",
         "dependencies_text": "None recorded; parent scope applies",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP01",
+      "execution_wp_dependencies": [],
+      "inherited_decision_ids": [
+        "D01"
+      ]
     },
     {
       "wave": "W0",
@@ -504,12 +544,17 @@
         "lifecycle": "Requirements",
         "agent": "System Architect — Feng Guo",
         "dependencies_text": "None recorded; parent scope applies",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP01",
+      "execution_wp_dependencies": [],
+      "inherited_decision_ids": [
+        "D01"
+      ]
     },
     {
       "id": "TK17",
@@ -557,7 +602,7 @@
         "lifecycle": "Requirements",
         "agent": "System Architect — Feng Guo",
         "dependencies_text": "WP01 #1; TK01 #268; TK02 #269",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "subtask_ids": [
@@ -566,7 +611,12 @@
       ],
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP02",
+      "execution_wp_dependencies": [
+        "WP01"
+      ],
+      "inherited_decision_ids": []
     },
     {
       "wave": "W0",
@@ -614,12 +664,17 @@
         "lifecycle": "Requirements",
         "agent": "System Architect — Feng Guo",
         "dependencies_text": "WP01 #1; TK01 #268; TK02 #269",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP02",
+      "execution_wp_dependencies": [
+        "WP01"
+      ],
+      "inherited_decision_ids": []
     },
     {
       "wave": "W0",
@@ -667,12 +722,17 @@
         "lifecycle": "Requirements",
         "agent": "System Architect — Feng Guo",
         "dependencies_text": "WP01 #1; TK01 #268; TK02 #269",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP02",
+      "execution_wp_dependencies": [
+        "WP01"
+      ],
+      "inherited_decision_ids": []
     },
     {
       "id": "TK20",
@@ -722,7 +782,7 @@
         "lifecycle": "Requirements",
         "agent": "Explorer — Wang Licun",
         "dependencies_text": "WP01 #1; TK01 #268; TK02 #269",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "subtask_ids": [
@@ -731,7 +791,15 @@
       ],
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP02",
+      "execution_wp_dependencies": [
+        "WP01"
+      ],
+      "inherited_decision_ids": [
+        "D01",
+        "D05"
+      ]
     },
     {
       "wave": "W0",
@@ -781,12 +849,20 @@
         "lifecycle": "Requirements",
         "agent": "Explorer — Wang Licun",
         "dependencies_text": "WP01 #1; TK01 #268; TK02 #269",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP02",
+      "execution_wp_dependencies": [
+        "WP01"
+      ],
+      "inherited_decision_ids": [
+        "D01",
+        "D05"
+      ]
     },
     {
       "wave": "W0",
@@ -805,7 +881,6 @@
       "canonical_dependencies": [],
       "plan_prerequisites": [],
       "decision_ids": [
-        "D01",
         "D05"
       ],
       "cus_ids": [
@@ -835,12 +910,20 @@
         "lifecycle": "Requirements",
         "agent": "Explorer — Wang Licun",
         "dependencies_text": "WP01 #1; TK01 #268; TK02 #269",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP02",
+      "execution_wp_dependencies": [
+        "WP01"
+      ],
+      "inherited_decision_ids": [
+        "D01",
+        "D05"
+      ]
     },
     {
       "id": "TK30",
@@ -888,7 +971,7 @@
         "lifecycle": "Requirements",
         "agent": "System Architect — Feng Guo",
         "dependencies_text": "WP01 #1; WP02 #2; TK03 #270",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "subtask_ids": [
@@ -896,7 +979,15 @@
       ],
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP03",
+      "execution_wp_dependencies": [
+        "WP01",
+        "WP02"
+      ],
+      "inherited_decision_ids": [
+        "D02"
+      ]
     },
     {
       "wave": "W0",
@@ -945,12 +1036,20 @@
         "lifecycle": "Requirements",
         "agent": "System Architect — Feng Guo",
         "dependencies_text": "WP01 #1; WP02 #2; TK03 #270",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP03",
+      "execution_wp_dependencies": [
+        "WP01",
+        "WP02"
+      ],
+      "inherited_decision_ids": [
+        "D02"
+      ]
     },
     {
       "id": "TK31",
@@ -1001,7 +1100,7 @@
         "lifecycle": "Requirements",
         "agent": "System Architect — Feng Guo",
         "dependencies_text": "WP01 #1; WP02 #2; TK03 #270",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "subtask_ids": [
@@ -1009,7 +1108,15 @@
       ],
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP03",
+      "execution_wp_dependencies": [
+        "WP01",
+        "WP02"
+      ],
+      "inherited_decision_ids": [
+        "D02"
+      ]
     },
     {
       "wave": "W0",
@@ -1061,12 +1168,20 @@
         "lifecycle": "Requirements",
         "agent": "System Architect — Feng Guo",
         "dependencies_text": "WP01 #1; WP02 #2; TK03 #270",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP03",
+      "execution_wp_dependencies": [
+        "WP01",
+        "WP02"
+      ],
+      "inherited_decision_ids": [
+        "D02"
+      ]
     },
     {
       "id": "TK32",
@@ -1113,7 +1228,7 @@
         "lifecycle": "Requirements",
         "agent": "System Architect — Feng Guo",
         "dependencies_text": "WP01 #1; WP02 #2; TK03 #270",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "subtask_ids": [
@@ -1121,7 +1236,15 @@
       ],
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP03",
+      "execution_wp_dependencies": [
+        "WP01",
+        "WP02"
+      ],
+      "inherited_decision_ids": [
+        "D02"
+      ]
     },
     {
       "wave": "W0",
@@ -1169,12 +1292,20 @@
         "lifecycle": "Requirements",
         "agent": "System Architect — Feng Guo",
         "dependencies_text": "WP01 #1; WP02 #2; TK03 #270",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP03",
+      "execution_wp_dependencies": [
+        "WP01",
+        "WP02"
+      ],
+      "inherited_decision_ids": [
+        "D02"
+      ]
     },
     {
       "id": "TK33",
@@ -1223,7 +1354,7 @@
         "lifecycle": "Requirements",
         "agent": "System Architect — Feng Guo",
         "dependencies_text": "WP01 #1; WP02 #2; TK03 #270",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "subtask_ids": [
@@ -1231,7 +1362,15 @@
       ],
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP03",
+      "execution_wp_dependencies": [
+        "WP01",
+        "WP02"
+      ],
+      "inherited_decision_ids": [
+        "D02"
+      ]
     },
     {
       "wave": "W0",
@@ -1279,12 +1418,20 @@
         "lifecycle": "Requirements",
         "agent": "System Architect — Feng Guo",
         "dependencies_text": "WP01 #1; WP02 #2; TK03 #270",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP03",
+      "execution_wp_dependencies": [
+        "WP01",
+        "WP02"
+      ],
+      "inherited_decision_ids": [
+        "D02"
+      ]
     },
     {
       "id": "TK34",
@@ -1333,7 +1480,7 @@
         "lifecycle": "Requirements",
         "agent": "System Architect — Feng Guo",
         "dependencies_text": "WP01 #1; WP02 #2; TK03 #270",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "subtask_ids": [
@@ -1341,7 +1488,15 @@
       ],
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP03",
+      "execution_wp_dependencies": [
+        "WP01",
+        "WP02"
+      ],
+      "inherited_decision_ids": [
+        "D02"
+      ]
     },
     {
       "wave": "W0",
@@ -1391,12 +1546,20 @@
         "lifecycle": "Requirements",
         "agent": "System Architect — Feng Guo",
         "dependencies_text": "WP01 #1; WP02 #2; TK03 #270",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP03",
+      "execution_wp_dependencies": [
+        "WP01",
+        "WP02"
+      ],
+      "inherited_decision_ids": [
+        "D02"
+      ]
     },
     {
       "id": "TK35",
@@ -1445,7 +1608,7 @@
         "lifecycle": "Requirements",
         "agent": "UI Designer — Wu Yunzhou",
         "dependencies_text": "WP01 #1; WP02 #2; TK03 #270",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "subtask_ids": [
@@ -1453,7 +1616,15 @@
       ],
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP03",
+      "execution_wp_dependencies": [
+        "WP01",
+        "WP02"
+      ],
+      "inherited_decision_ids": [
+        "D02"
+      ]
     },
     {
       "wave": "W0",
@@ -1503,12 +1674,20 @@
         "lifecycle": "Requirements",
         "agent": "UI Designer — Wu Yunzhou",
         "dependencies_text": "WP01 #1; WP02 #2; TK03 #270",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP03",
+      "execution_wp_dependencies": [
+        "WP01",
+        "WP02"
+      ],
+      "inherited_decision_ids": [
+        "D02"
+      ]
     },
     {
       "id": "TK36",
@@ -1556,7 +1735,7 @@
         "lifecycle": "Requirements",
         "agent": "System Architect — Feng Guo",
         "dependencies_text": "WP03 #3; TK04 #271",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "subtask_ids": [
@@ -1564,7 +1743,14 @@
       ],
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP04",
+      "execution_wp_dependencies": [
+        "WP03"
+      ],
+      "inherited_decision_ids": [
+        "D03"
+      ]
     },
     {
       "wave": "W0",
@@ -1613,12 +1799,19 @@
         "lifecycle": "Requirements",
         "agent": "System Architect — Feng Guo",
         "dependencies_text": "WP03 #3; TK04 #271",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP04",
+      "execution_wp_dependencies": [
+        "WP03"
+      ],
+      "inherited_decision_ids": [
+        "D03"
+      ]
     },
     {
       "id": "TK37",
@@ -1666,7 +1859,7 @@
         "lifecycle": "Requirements",
         "agent": "System Architect — Feng Guo",
         "dependencies_text": "WP03 #3; TK04 #271",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "subtask_ids": [
@@ -1674,7 +1867,14 @@
       ],
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP04",
+      "execution_wp_dependencies": [
+        "WP03"
+      ],
+      "inherited_decision_ids": [
+        "D03"
+      ]
     },
     {
       "wave": "W0",
@@ -1723,12 +1923,19 @@
         "lifecycle": "Requirements",
         "agent": "System Architect — Feng Guo",
         "dependencies_text": "WP03 #3; TK04 #271",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP04",
+      "execution_wp_dependencies": [
+        "WP03"
+      ],
+      "inherited_decision_ids": [
+        "D03"
+      ]
     },
     {
       "id": "TK38",
@@ -1777,7 +1984,7 @@
         "lifecycle": "Requirements",
         "agent": "System Architect — Feng Guo",
         "dependencies_text": "WP03 #3; TK04 #271",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "subtask_ids": [
@@ -1785,7 +1992,14 @@
       ],
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP04",
+      "execution_wp_dependencies": [
+        "WP03"
+      ],
+      "inherited_decision_ids": [
+        "D03"
+      ]
     },
     {
       "wave": "W0",
@@ -1835,12 +2049,19 @@
         "lifecycle": "Requirements",
         "agent": "System Architect — Feng Guo",
         "dependencies_text": "WP03 #3; TK04 #271",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP04",
+      "execution_wp_dependencies": [
+        "WP03"
+      ],
+      "inherited_decision_ids": [
+        "D03"
+      ]
     },
     {
       "id": "TK50",
@@ -1885,7 +2106,7 @@
         "lifecycle": "Requirements",
         "agent": "System Architect — Feng Guo",
         "dependencies_text": "TK01 #268",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "subtask_ids": [
@@ -1894,7 +2115,12 @@
       ],
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP01",
+      "execution_wp_dependencies": [],
+      "inherited_decision_ids": [
+        "D03"
+      ]
     },
     {
       "wave": "W0",
@@ -1940,12 +2166,17 @@
         "lifecycle": "Requirements",
         "agent": "System Architect — Feng Guo",
         "dependencies_text": "TK01 #268",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP01",
+      "execution_wp_dependencies": [],
+      "inherited_decision_ids": [
+        "D03"
+      ]
     },
     {
       "wave": "W0",
@@ -1991,12 +2222,17 @@
         "lifecycle": "Requirements",
         "agent": "System Architect — Feng Guo",
         "dependencies_text": "TK01 #268",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP01",
+      "execution_wp_dependencies": [],
+      "inherited_decision_ids": [
+        "D03"
+      ]
     },
     {
       "id": "TK51",
@@ -2043,7 +2279,7 @@
         "lifecycle": "Requirements",
         "agent": "System Architect — Feng Guo",
         "dependencies_text": "TK01 #268",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "subtask_ids": [
@@ -2052,7 +2288,13 @@
       ],
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP01",
+      "execution_wp_dependencies": [],
+      "inherited_decision_ids": [
+        "D02",
+        "D03"
+      ]
     },
     {
       "wave": "W0",
@@ -2100,12 +2342,18 @@
         "lifecycle": "Requirements",
         "agent": "System Architect — Feng Guo",
         "dependencies_text": "TK01 #268",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP01",
+      "execution_wp_dependencies": [],
+      "inherited_decision_ids": [
+        "D02",
+        "D03"
+      ]
     },
     {
       "wave": "W0",
@@ -2153,12 +2401,18 @@
         "lifecycle": "Requirements",
         "agent": "System Architect — Feng Guo",
         "dependencies_text": "TK01 #268",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP01",
+      "execution_wp_dependencies": [],
+      "inherited_decision_ids": [
+        "D02",
+        "D03"
+      ]
     },
     {
       "id": "TK56",
@@ -2204,7 +2458,7 @@
         "lifecycle": "Requirements",
         "agent": "System Architect — Feng Guo",
         "dependencies_text": "TK01 #268",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "subtask_ids": [
@@ -2213,7 +2467,12 @@
       ],
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP01",
+      "execution_wp_dependencies": [],
+      "inherited_decision_ids": [
+        "D04"
+      ]
     },
     {
       "wave": "W0",
@@ -2260,12 +2519,17 @@
         "lifecycle": "Requirements",
         "agent": "System Architect — Feng Guo",
         "dependencies_text": "TK01 #268",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP01",
+      "execution_wp_dependencies": [],
+      "inherited_decision_ids": [
+        "D04"
+      ]
     },
     {
       "wave": "W0",
@@ -2312,12 +2576,17 @@
         "lifecycle": "Requirements",
         "agent": "System Architect — Feng Guo",
         "dependencies_text": "TK01 #268",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP01",
+      "execution_wp_dependencies": [],
+      "inherited_decision_ids": [
+        "D04"
+      ]
     },
     {
       "id": "TK60",
@@ -2363,7 +2632,7 @@
         "lifecycle": "Requirements",
         "agent": "System Architect — Feng Guo",
         "dependencies_text": "TK01 #268",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "subtask_ids": [
@@ -2372,7 +2641,12 @@
       ],
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP01",
+      "execution_wp_dependencies": [],
+      "inherited_decision_ids": [
+        "D04"
+      ]
     },
     {
       "wave": "W0",
@@ -2419,12 +2693,17 @@
         "lifecycle": "Requirements",
         "agent": "System Architect — Feng Guo",
         "dependencies_text": "TK01 #268",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP01",
+      "execution_wp_dependencies": [],
+      "inherited_decision_ids": [
+        "D04"
+      ]
     },
     {
       "wave": "W0",
@@ -2471,12 +2750,17 @@
         "lifecycle": "Requirements",
         "agent": "System Architect — Feng Guo",
         "dependencies_text": "TK01 #268",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP01",
+      "execution_wp_dependencies": [],
+      "inherited_decision_ids": [
+        "D04"
+      ]
     },
     {
       "id": "TK63",
@@ -2524,7 +2808,7 @@
         "lifecycle": "Requirements",
         "agent": "System Architect — Feng Guo",
         "dependencies_text": "TK01 #268",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "subtask_ids": [
@@ -2533,7 +2817,12 @@
       ],
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP01",
+      "execution_wp_dependencies": [],
+      "inherited_decision_ids": [
+        "D04"
+      ]
     },
     {
       "wave": "W0",
@@ -2582,12 +2871,17 @@
         "lifecycle": "Requirements",
         "agent": "System Architect — Feng Guo",
         "dependencies_text": "TK01 #268",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP01",
+      "execution_wp_dependencies": [],
+      "inherited_decision_ids": [
+        "D04"
+      ]
     },
     {
       "wave": "W0",
@@ -2636,12 +2930,17 @@
         "lifecycle": "Requirements",
         "agent": "System Architect — Feng Guo",
         "dependencies_text": "TK01 #268",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP01",
+      "execution_wp_dependencies": [],
+      "inherited_decision_ids": [
+        "D04"
+      ]
     },
     {
       "id": "TK66",
@@ -2696,7 +2995,7 @@
         "lifecycle": "Requirements",
         "agent": "System Architect — Feng Guo",
         "dependencies_text": "TK01 #268",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "subtask_ids": [
@@ -2705,7 +3004,13 @@
       ],
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP01",
+      "execution_wp_dependencies": [],
+      "inherited_decision_ids": [
+        "D03",
+        "D04"
+      ]
     },
     {
       "wave": "W0",
@@ -2761,12 +3066,18 @@
         "lifecycle": "Requirements",
         "agent": "System Architect — Feng Guo",
         "dependencies_text": "TK01 #268",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP01",
+      "execution_wp_dependencies": [],
+      "inherited_decision_ids": [
+        "D03",
+        "D04"
+      ]
     },
     {
       "wave": "W0",
@@ -2822,12 +3133,18 @@
         "lifecycle": "Requirements",
         "agent": "System Architect — Feng Guo",
         "dependencies_text": "TK01 #268",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP01",
+      "execution_wp_dependencies": [],
+      "inherited_decision_ids": [
+        "D03",
+        "D04"
+      ]
     },
     {
       "id": "TK72",
@@ -2884,7 +3201,7 @@
         "lifecycle": "Requirements",
         "agent": "System Architect — Feng Guo",
         "dependencies_text": "TK01 #268",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "subtask_ids": [
@@ -2893,7 +3210,14 @@
       ],
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP01",
+      "execution_wp_dependencies": [],
+      "inherited_decision_ids": [
+        "D03",
+        "D04",
+        "D05"
+      ]
     },
     {
       "wave": "W0",
@@ -2951,12 +3275,19 @@
         "lifecycle": "Requirements",
         "agent": "System Architect — Feng Guo",
         "dependencies_text": "TK01 #268",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP01",
+      "execution_wp_dependencies": [],
+      "inherited_decision_ids": [
+        "D03",
+        "D04",
+        "D05"
+      ]
     },
     {
       "wave": "W0",
@@ -3014,12 +3345,19 @@
         "lifecycle": "Requirements",
         "agent": "System Architect — Feng Guo",
         "dependencies_text": "TK01 #268",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP01",
+      "execution_wp_dependencies": [],
+      "inherited_decision_ids": [
+        "D03",
+        "D04",
+        "D05"
+      ]
     },
     {
       "id": "TK73",
@@ -3070,7 +3408,7 @@
         "lifecycle": "Requirements",
         "agent": "UI Designer — Wu Yunzhou",
         "dependencies_text": "TK01 #268",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "subtask_ids": [
@@ -3079,7 +3417,13 @@
       ],
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP01",
+      "execution_wp_dependencies": [],
+      "inherited_decision_ids": [
+        "D04",
+        "D05"
+      ]
     },
     {
       "wave": "W0",
@@ -3131,12 +3475,18 @@
         "lifecycle": "Requirements",
         "agent": "UI Designer — Wu Yunzhou",
         "dependencies_text": "TK01 #268",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP01",
+      "execution_wp_dependencies": [],
+      "inherited_decision_ids": [
+        "D04",
+        "D05"
+      ]
     },
     {
       "wave": "W0",
@@ -3188,12 +3538,18 @@
         "lifecycle": "Requirements",
         "agent": "UI Designer — Wu Yunzhou",
         "dependencies_text": "TK01 #268",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP01",
+      "execution_wp_dependencies": [],
+      "inherited_decision_ids": [
+        "D04",
+        "D05"
+      ]
     },
     {
       "id": "TK10",
@@ -3245,7 +3601,7 @@
         "lifecycle": "Requirements",
         "agent": "System Architect — Feng Guo",
         "dependencies_text": "TK09 #115",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "subtask_ids": [
@@ -3254,7 +3610,12 @@
       ],
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP01",
+      "execution_wp_dependencies": [],
+      "inherited_decision_ids": [
+        "D01"
+      ]
     },
     {
       "wave": "W0",
@@ -3304,12 +3665,17 @@
         "lifecycle": "Requirements",
         "agent": "System Architect — Feng Guo",
         "dependencies_text": "TK09 #115",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP01",
+      "execution_wp_dependencies": [],
+      "inherited_decision_ids": [
+        "D01"
+      ]
     },
     {
       "wave": "W0",
@@ -3358,12 +3724,17 @@
         "lifecycle": "Requirements",
         "agent": "System Architect — Feng Guo",
         "dependencies_text": "TK09 #115",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP01",
+      "execution_wp_dependencies": [],
+      "inherited_decision_ids": [
+        "D01"
+      ]
     },
     {
       "id": "TK39",
@@ -3418,7 +3789,7 @@
         "lifecycle": "Requirements",
         "agent": "UI Designer — Wu Yunzhou",
         "dependencies_text": "TK36 #135; TK37 #136; TK38 #137; WP03 #3; TK04 #271",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "subtask_ids": [
@@ -3426,7 +3797,14 @@
       ],
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP04",
+      "execution_wp_dependencies": [
+        "WP03"
+      ],
+      "inherited_decision_ids": [
+        "D03"
+      ]
     },
     {
       "wave": "W0",
@@ -3479,12 +3857,19 @@
         "lifecycle": "Requirements",
         "agent": "UI Designer — Wu Yunzhou",
         "dependencies_text": "WP03 #3; TK36 #135; TK37 #136; TK38 #137; TK04 #271",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP04",
+      "execution_wp_dependencies": [
+        "WP03"
+      ],
+      "inherited_decision_ids": [
+        "D03"
+      ]
     },
     {
       "id": "TK40",
@@ -3538,7 +3923,7 @@
         "lifecycle": "Requirements",
         "agent": "System Architect — Feng Guo",
         "dependencies_text": "TK36 #135; TK37 #136; TK38 #137; WP03 #3; TK04 #271",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "subtask_ids": [
@@ -3546,7 +3931,14 @@
       ],
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP04",
+      "execution_wp_dependencies": [
+        "WP03"
+      ],
+      "inherited_decision_ids": [
+        "D03"
+      ]
     },
     {
       "wave": "W0",
@@ -3597,12 +3989,19 @@
         "lifecycle": "Requirements",
         "agent": "System Architect — Feng Guo",
         "dependencies_text": "WP03 #3; TK36 #135; TK37 #136; TK38 #137; TK04 #271",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP04",
+      "execution_wp_dependencies": [
+        "WP03"
+      ],
+      "inherited_decision_ids": [
+        "D03"
+      ]
     },
     {
       "id": "TK41",
@@ -3657,7 +4056,7 @@
         "lifecycle": "Requirements",
         "agent": "System Architect — Feng Guo",
         "dependencies_text": "TK36 #135; TK37 #136; TK38 #137; WP03 #3; TK04 #271",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "subtask_ids": [
@@ -3665,7 +4064,14 @@
       ],
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP04",
+      "execution_wp_dependencies": [
+        "WP03"
+      ],
+      "inherited_decision_ids": [
+        "D03"
+      ]
     },
     {
       "wave": "W0",
@@ -3717,12 +4123,19 @@
         "lifecycle": "Requirements",
         "agent": "System Architect — Feng Guo",
         "dependencies_text": "WP03 #3; TK36 #135; TK37 #136; TK38 #137; TK04 #271",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP04",
+      "execution_wp_dependencies": [
+        "WP03"
+      ],
+      "inherited_decision_ids": [
+        "D03"
+      ]
     },
     {
       "id": "TK01",
@@ -3777,13 +4190,16 @@
         "lifecycle": "Requirements",
         "agent": "Primary Coordinator — Yi Tang",
         "dependencies_text": "None recorded; parent scope applies",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "subtask_ids": [],
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP01",
+      "execution_wp_dependencies": [],
+      "inherited_decision_ids": []
     },
     {
       "id": "TK02",
@@ -3865,423 +4281,23 @@
         "lifecycle": "Requirements",
         "agent": "Primary Coordinator — Yi Tang",
         "dependencies_text": "TK01 #268",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "subtask_ids": [],
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
-    },
-    {
-      "id": "TK11",
-      "title": "[Task][backend]Implement approved file classification and diagnostics",
-      "level": "Task",
-      "wave": "W1",
-      "order": 2900,
-      "owner_role": "Worker — Torsten Maier",
-      "work_kind": "implementation",
-      "work_package": "WP02",
-      "canonical_dependencies": [
-        "TK10"
-      ],
-      "plan_prerequisites": [
-        "TK01",
-        "TK02",
-        "TK10"
-      ],
-      "canonical_wp_dependencies": [
-        "WP01"
-      ],
-      "decision_ids": [
-        "D01",
-        "D05"
-      ],
-      "start_gate": "Coding gate G0: TK01/TK02 approved, D01–D05 closure/approved applicability, pinned runtime/fixtures/setup; package predecessors and direct prerequisites",
-      "cus_ids": [
-        "CUS01"
-      ],
-      "sr_ids": [
-        "SR01",
-        "SR02",
-        "SR27",
-        "SR32"
-      ],
-      "feature_ids": [
-        "FEAT01"
-      ],
-      "acceptance_criteria": [
-        "Given an approved-matrix fixture, classification and textual per-file outcome match its expected disposition/reason; oracle: unsupported/malformed cases reject and approved accepted cases import without silent fallback."
-      ],
-      "outputs": [
-        "Implemented contract-versioned classification and accessible per-file diagnostics"
-      ],
-      "verification_ids": [
-        "TC01",
-        "TC19",
-        "TC21"
-      ],
-      "github": {
-        "issue_url": "https://github.com/fengguode/DATARA/issues/117",
-        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tM7A",
-        "project_status": "Backlog",
-        "priority": "P0",
-        "lifecycle": "Requirements",
-        "agent": "Worker — Torsten Maier",
-        "dependencies_text": "TK10 #116; WP01 #1; TK01 #268; TK02 #269",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
-        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
-      },
-      "subtask_ids": [
-        "STK005",
-        "STK006"
-      ],
-      "planning_status": "Future assignment; gates apply",
-      "priority": "P0",
-      "required_decision_gates": [
-        "D01",
-        "D02",
-        "D03",
-        "D04",
-        "D05"
-      ]
-    },
-    {
-      "wave": "W1",
-      "owner_role": "Worker — Torsten Maier",
-      "work_kind": "implementation",
-      "work_package": "WP02",
-      "canonical_wp_dependencies": [
-        "WP01"
-      ],
-      "start_gate": "Coding gate G0: TK01/TK02 approved, D01–D05 closure/approved applicability, pinned runtime/fixtures/setup; package predecessors and direct prerequisites",
-      "id": "STK005",
-      "level": "Subtask",
-      "title": "[Task][backend]Implement source-matrix classification",
-      "order": 2901,
-      "parent_task_id": "TK11",
-      "canonical_dependencies": [],
-      "plan_prerequisites": [
-        "TK01",
-        "TK02",
-        "TK10"
-      ],
-      "decision_ids": [
-        "D01",
-        "D05"
-      ],
-      "cus_ids": [
-        "CUS01"
-      ],
-      "sr_ids": [
-        "SR01",
-        "SR02",
-        "SR27"
-      ],
-      "feature_ids": [
-        "FEAT01"
-      ],
-      "acceptance_criteria": [
-        "For each approved fixture, classification equals the expected matrix result; oracle: TC01/TC19 accepted cases succeed and unsupported/malformed cases reject."
-      ],
-      "outputs": [
-        "Versioned deterministic file classification"
-      ],
-      "verification_ids": [
-        "TC01",
-        "TC19"
-      ],
-      "github": {
-        "issue_url": "https://github.com/fengguode/DATARA/issues/177",
-        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tf6g",
-        "project_status": "Backlog",
-        "priority": "P0",
-        "lifecycle": "Requirements",
-        "agent": "Worker — Torsten Maier",
-        "dependencies_text": "WP01 #1; TK10 #116; TK01 #268; TK02 #269",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
-        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
-      },
-      "planning_status": "Future assignment; gates apply",
-      "priority": "P0",
-      "required_decision_gates": [
-        "D01",
-        "D02",
-        "D03",
-        "D04",
-        "D05"
-      ]
-    },
-    {
-      "wave": "W1",
-      "owner_role": "Worker — Torsten Maier",
-      "work_kind": "implementation",
-      "work_package": "WP02",
-      "canonical_wp_dependencies": [
-        "WP01"
-      ],
-      "start_gate": "Coding gate G0: TK01/TK02 approved, D01–D05 closure/approved applicability, pinned runtime/fixtures/setup; package predecessors and direct prerequisites",
-      "id": "STK006",
-      "level": "Subtask",
-      "title": "[Task][frontend]Render textual file status and reason",
-      "order": 2902,
-      "parent_task_id": "TK11",
-      "canonical_dependencies": [],
-      "plan_prerequisites": [
-        "TK01",
-        "TK02",
-        "TK10"
-      ],
-      "decision_ids": [
-        "D01",
-        "D05"
-      ],
-      "cus_ids": [
-        "CUS01"
-      ],
-      "sr_ids": [
-        "SR01",
-        "SR32"
-      ],
-      "feature_ids": [
-        "FEAT01"
-      ],
-      "acceptance_criteria": [
-        "Rendered accepted/rejected fixtures identify file, status and reason without color-only meaning; oracle: TC21."
-      ],
-      "outputs": [
-        "Accessible per-file disposition display"
-      ],
-      "verification_ids": [
-        "TC21"
-      ],
-      "github": {
-        "issue_url": "https://github.com/fengguode/DATARA/issues/178",
-        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tf_o",
-        "project_status": "Backlog",
-        "priority": "P0",
-        "lifecycle": "Requirements",
-        "agent": "Worker — Torsten Maier",
-        "dependencies_text": "WP01 #1; TK10 #116; TK01 #268; TK02 #269",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
-        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
-      },
-      "planning_status": "Future assignment; gates apply",
-      "priority": "P0",
-      "required_decision_gates": [
-        "D01",
-        "D02",
-        "D03",
-        "D04",
-        "D05"
-      ]
-    },
-    {
-      "id": "TK15",
-      "title": "[Task][database]Implement immutable originals and duplicate-safe history",
-      "level": "Task",
-      "wave": "W1",
-      "order": 3000,
-      "owner_role": "Worker — Torsten Maier",
-      "work_kind": "implementation",
-      "work_package": "WP02",
-      "canonical_dependencies": [
-        "TK14"
-      ],
-      "plan_prerequisites": [
-        "TK01",
-        "TK02",
-        "TK14"
-      ],
-      "canonical_wp_dependencies": [
-        "WP01"
-      ],
-      "decision_ids": [
-        "D01",
-        "D05"
-      ],
-      "start_gate": "Coding gate G0: TK01/TK02 approved, D01–D05 closure/approved applicability, pinned runtime/fixtures/setup; package predecessors and direct prerequisites",
-      "cus_ids": [
-        "CUS02"
-      ],
-      "sr_ids": [
-        "SR03",
-        "SR04",
-        "SR33"
-      ],
-      "feature_ids": [
-        "FEAT02"
-      ],
-      "acceptance_criteria": [
-        "Given the approved storage/identity contract, accepted bytes retain an integrity identifier and normalized records link to source; identical re-import is idempotent and a conflict is never silently overwritten; oracle: TC02/03/22."
-      ],
-      "outputs": [
-        "Immutable source lineage and duplicate/conflict-safe history behavior"
-      ],
-      "verification_ids": [
-        "TC02",
-        "TC03",
-        "TC22"
-      ],
-      "github": {
-        "issue_url": "https://github.com/fengguode/DATARA/issues/121",
-        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tNZc",
-        "project_status": "Backlog",
-        "priority": "P0",
-        "lifecycle": "Requirements",
-        "agent": "Worker — Torsten Maier",
-        "dependencies_text": "TK14 #120; WP01 #1; TK01 #268; TK02 #269",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
-        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
-      },
-      "subtask_ids": [
-        "STK013",
-        "STK014"
-      ],
-      "planning_status": "Future assignment; gates apply",
-      "priority": "P0",
-      "required_decision_gates": [
-        "D01",
-        "D02",
-        "D03",
-        "D04",
-        "D05"
-      ]
-    },
-    {
-      "wave": "W1",
-      "owner_role": "Worker — Torsten Maier",
-      "work_kind": "implementation",
-      "work_package": "WP02",
-      "canonical_wp_dependencies": [
-        "WP01"
-      ],
-      "start_gate": "Coding gate G0: TK01/TK02 approved, D01–D05 closure/approved applicability, pinned runtime/fixtures/setup; package predecessors and direct prerequisites",
-      "id": "STK013",
-      "level": "Subtask",
-      "title": "[Task][database]Persist original bytes with integrity reference",
-      "order": 3001,
-      "parent_task_id": "TK15",
-      "canonical_dependencies": [],
-      "plan_prerequisites": [
-        "TK01",
-        "TK02",
-        "TK14"
-      ],
-      "decision_ids": [
-        "D01",
-        "D05"
-      ],
-      "cus_ids": [
-        "CUS02"
-      ],
-      "sr_ids": [
-        "SR03"
-      ],
-      "feature_ids": [
-        "FEAT02"
-      ],
-      "acceptance_criteria": [
-        "Reloaded original bytes match the submitted digest and each normalized record resolves to source; oracle: TC02."
-      ],
-      "outputs": [
-        "Integrity-identified original and source link"
-      ],
-      "verification_ids": [
-        "TC02"
-      ],
-      "github": {
-        "issue_url": "https://github.com/fengguode/DATARA/issues/185",
-        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tgqo",
-        "project_status": "Backlog",
-        "priority": "P0",
-        "lifecycle": "Requirements",
-        "agent": "Worker — Torsten Maier",
-        "dependencies_text": "WP01 #1; TK14 #120; TK01 #268; TK02 #269",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
-        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
-      },
-      "planning_status": "Future assignment; gates apply",
-      "priority": "P0",
-      "required_decision_gates": [
-        "D01",
-        "D02",
-        "D03",
-        "D04",
-        "D05"
-      ]
-    },
-    {
-      "wave": "W1",
-      "owner_role": "Worker — Torsten Maier",
-      "work_kind": "implementation",
-      "work_package": "WP02",
-      "canonical_wp_dependencies": [
-        "WP01"
-      ],
-      "start_gate": "Coding gate G0: TK01/TK02 approved, D01–D05 closure/approved applicability, pinned runtime/fixtures/setup; package predecessors and direct prerequisites",
-      "id": "STK014",
-      "level": "Subtask",
-      "title": "[Task][database]Implement approved duplicate and conflict disposition",
-      "order": 3002,
-      "parent_task_id": "TK15",
-      "canonical_dependencies": [],
-      "plan_prerequisites": [
-        "TK01",
-        "TK02",
-        "TK14"
-      ],
-      "decision_ids": [
-        "D01",
-        "D05"
-      ],
-      "cus_ids": [
-        "CUS02"
-      ],
-      "sr_ids": [
-        "SR04",
-        "SR33"
-      ],
-      "feature_ids": [
-        "FEAT02"
-      ],
-      "acceptance_criteria": [
-        "Repeated identical bytes create no additional activity and an approved conflict is surfaced unresolved; oracle: TC03/TC22."
-      ],
-      "outputs": [
-        "Duplicate-safe history and visible conflict behavior"
-      ],
-      "verification_ids": [
-        "TC03",
-        "TC22"
-      ],
-      "github": {
-        "issue_url": "https://github.com/fengguode/DATARA/issues/186",
-        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tgwQ",
-        "project_status": "Backlog",
-        "priority": "P0",
-        "lifecycle": "Requirements",
-        "agent": "Worker — Torsten Maier",
-        "dependencies_text": "WP01 #1; TK14 #120; TK01 #268; TK02 #269",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
-        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
-      },
-      "planning_status": "Future assignment; gates apply",
-      "priority": "P0",
-      "required_decision_gates": [
-        "D01",
-        "D02",
-        "D03",
-        "D04",
-        "D05"
-      ]
+      "required_decision_gates": [],
+      "execution_work_package": "WP01",
+      "execution_wp_dependencies": [],
+      "inherited_decision_ids": []
     },
     {
       "id": "TK18",
       "title": "[Task][backend]Implement deterministic model-free normalization",
       "level": "Task",
       "wave": "W1",
-      "order": 3100,
+      "order": 2900,
       "owner_role": "Worker — Torsten Maier",
       "work_kind": "implementation",
       "work_package": "WP02",
@@ -4297,7 +4313,7 @@
         "D01",
         "D05"
       ],
-      "start_gate": "Coding gate G0: TK01/TK02 approved, D01–D05 closure/approved applicability, pinned runtime/fixtures/setup; package predecessors and direct prerequisites",
+      "start_gate": "Coding gate G0: TK01/TK02 approved, D01–D05 closure/approved applicability, pinned runtime/fixtures/setup; package predecessors and direct prerequisites; fixture-only before TK67, no protected user storage/service access; integration waits for authorization",
       "cus_ids": [
         "CUS03"
       ],
@@ -4325,7 +4341,7 @@
         "lifecycle": "Requirements",
         "agent": "Worker — Torsten Maier",
         "dependencies_text": "WP01 #1; TK01 #268; TK02 #269",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "subtask_ids": [
@@ -4340,7 +4356,16 @@
         "D03",
         "D04",
         "D05"
-      ]
+      ],
+      "execution_work_package": "WP02",
+      "execution_wp_dependencies": [
+        "WP01"
+      ],
+      "inherited_decision_ids": [
+        "D01",
+        "D05"
+      ],
+      "execution_scope": "Before TK67 completes, only isolated pure transformation/repeat checks on approved disposable fixtures; no protected user storage/service reads or writes. Integrated user-facing use waits for TK67 authorization."
     },
     {
       "wave": "W1",
@@ -4350,11 +4375,11 @@
       "canonical_wp_dependencies": [
         "WP01"
       ],
-      "start_gate": "Coding gate G0: TK01/TK02 approved, D01–D05 closure/approved applicability, pinned runtime/fixtures/setup; package predecessors and direct prerequisites",
+      "start_gate": "Coding gate G0: TK01/TK02 approved, D01–D05 closure/approved applicability, pinned runtime/fixtures/setup; package predecessors and direct prerequisites; fixture-only before TK67, no protected user storage/service access; integration waits for authorization",
       "id": "STK019",
       "level": "Subtask",
       "title": "[Task][backend]Implement deterministic model-free normalization",
-      "order": 3101,
+      "order": 2901,
       "parent_task_id": "TK18",
       "canonical_dependencies": [],
       "plan_prerequisites": [
@@ -4392,7 +4417,7 @@
         "lifecycle": "Requirements",
         "agent": "Worker — Torsten Maier",
         "dependencies_text": "WP01 #1; TK01 #268; TK02 #269",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
@@ -4403,7 +4428,16 @@
         "D03",
         "D04",
         "D05"
-      ]
+      ],
+      "execution_work_package": "WP02",
+      "execution_wp_dependencies": [
+        "WP01"
+      ],
+      "inherited_decision_ids": [
+        "D01",
+        "D05"
+      ],
+      "execution_scope": "Before TK67 completes, only isolated pure transformation/repeat checks on approved disposable fixtures; no protected user storage/service reads or writes. Integrated user-facing use waits for TK67 authorization."
     },
     {
       "wave": "W1",
@@ -4413,11 +4447,11 @@
       "canonical_wp_dependencies": [
         "WP01"
       ],
-      "start_gate": "Coding gate G0: TK01/TK02 approved, D01–D05 closure/approved applicability, pinned runtime/fixtures/setup; package predecessors and direct prerequisites",
+      "start_gate": "Coding gate G0: TK01/TK02 approved, D01–D05 closure/approved applicability, pinned runtime/fixtures/setup; package predecessors and direct prerequisites; fixture-only before TK67, no protected user storage/service access; integration waits for authorization",
       "id": "STK025",
       "level": "Subtask",
       "title": "[Task][backend]Execute preprocessing with model access disabled",
-      "order": 3102,
+      "order": 2902,
       "parent_task_id": "TK18",
       "canonical_dependencies": [],
       "plan_prerequisites": [
@@ -4454,7 +4488,7 @@
         "lifecycle": "Requirements",
         "agent": "Worker — Torsten Maier",
         "dependencies_text": "WP01 #1; TK01 #268; TK02 #269",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
@@ -4465,14 +4499,23 @@
         "D03",
         "D04",
         "D05"
-      ]
+      ],
+      "execution_work_package": "WP02",
+      "execution_wp_dependencies": [
+        "WP01"
+      ],
+      "inherited_decision_ids": [
+        "D01",
+        "D05"
+      ],
+      "execution_scope": "Before TK67 completes, only isolated pure transformation/repeat checks on approved disposable fixtures; no protected user storage/service reads or writes. Integrated user-facing use waits for TK67 authorization."
     },
     {
       "id": "TK67",
       "title": "[Task][security]Implement authorization before protected use",
       "level": "Task",
       "wave": "W1",
-      "order": 3200,
+      "order": 3000,
       "owner_role": "Worker — Torsten Maier",
       "work_kind": "implementation",
       "work_package": "WP02",
@@ -4521,7 +4564,7 @@
         "lifecycle": "Requirements",
         "agent": "Worker — Torsten Maier",
         "dependencies_text": "TK66 #164; WP01 #1; TK01 #268; TK02 #269",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "subtask_ids": [
@@ -4536,6 +4579,14 @@
         "D03",
         "D04",
         "D05"
+      ],
+      "execution_work_package": "WP02",
+      "execution_wp_dependencies": [
+        "WP01"
+      ],
+      "inherited_decision_ids": [
+        "D03",
+        "D04"
       ]
     },
     {
@@ -4550,7 +4601,7 @@
       "id": "STK234",
       "level": "Subtask",
       "title": "[Task][security]Implement file/run checks",
-      "order": 3201,
+      "order": 3001,
       "parent_task_id": "TK67",
       "canonical_dependencies": [],
       "plan_prerequisites": [
@@ -4591,7 +4642,7 @@
         "lifecycle": "Requirements",
         "agent": "Worker — Torsten Maier",
         "dependencies_text": "WP01 #1; TK66 #164; TK01 #268; TK02 #269",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
@@ -4602,6 +4653,14 @@
         "D03",
         "D04",
         "D05"
+      ],
+      "execution_work_package": "WP02",
+      "execution_wp_dependencies": [
+        "WP01"
+      ],
+      "inherited_decision_ids": [
+        "D03",
+        "D04"
       ]
     },
     {
@@ -4616,7 +4675,7 @@
       "id": "STK235",
       "level": "Subtask",
       "title": "[Task][security]Implement history/API checks",
-      "order": 3202,
+      "order": 3002,
       "parent_task_id": "TK67",
       "canonical_dependencies": [],
       "plan_prerequisites": [
@@ -4657,7 +4716,7 @@
         "lifecycle": "Requirements",
         "agent": "Worker — Torsten Maier",
         "dependencies_text": "WP01 #1; TK66 #164; TK01 #268; TK02 #269",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
@@ -4668,14 +4727,702 @@
         "D03",
         "D04",
         "D05"
+      ],
+      "execution_work_package": "WP02",
+      "execution_wp_dependencies": [
+        "WP01"
+      ],
+      "inherited_decision_ids": [
+        "D03",
+        "D04"
       ]
+    },
+    {
+      "id": "TK11",
+      "title": "[Task][backend]Implement approved file classification and diagnostics",
+      "level": "Task",
+      "wave": "W1",
+      "order": 3100,
+      "owner_role": "Worker — Torsten Maier",
+      "work_kind": "implementation",
+      "work_package": "WP02",
+      "canonical_dependencies": [
+        "TK10"
+      ],
+      "plan_prerequisites": [
+        "TK01",
+        "TK02",
+        "TK10",
+        "TK67"
+      ],
+      "canonical_wp_dependencies": [
+        "WP01"
+      ],
+      "decision_ids": [
+        "D01",
+        "D05"
+      ],
+      "start_gate": "Coding gate G0: TK01/TK02 approved, D01–D05 closure/approved applicability, pinned runtime/fixtures/setup; package predecessors and direct prerequisites",
+      "cus_ids": [
+        "CUS01"
+      ],
+      "sr_ids": [
+        "SR01",
+        "SR02",
+        "SR27",
+        "SR32"
+      ],
+      "feature_ids": [
+        "FEAT01"
+      ],
+      "acceptance_criteria": [
+        "Given an approved-matrix fixture, classification and textual per-file outcome match its expected disposition/reason; oracle: unsupported/malformed cases reject and approved accepted cases import without silent fallback."
+      ],
+      "outputs": [
+        "Implemented contract-versioned classification and accessible per-file diagnostics"
+      ],
+      "verification_ids": [
+        "TC01",
+        "TC19",
+        "TC21"
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/117",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tM7A",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Worker — Torsten Maier",
+        "dependencies_text": "TK10 #116; WP01 #1; TK01 #268; TK02 #269",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      },
+      "subtask_ids": [
+        "STK005",
+        "STK006"
+      ],
+      "planning_status": "Future assignment; gates apply",
+      "priority": "P0",
+      "required_decision_gates": [
+        "D01",
+        "D02",
+        "D03",
+        "D04",
+        "D05"
+      ],
+      "execution_work_package": "WP02",
+      "execution_wp_dependencies": [
+        "WP01"
+      ],
+      "inherited_decision_ids": [
+        "D01",
+        "D05"
+      ]
+    },
+    {
+      "wave": "W1",
+      "owner_role": "Worker — Torsten Maier",
+      "work_kind": "implementation",
+      "work_package": "WP02",
+      "canonical_wp_dependencies": [
+        "WP01"
+      ],
+      "start_gate": "Coding gate G0: TK01/TK02 approved, D01–D05 closure/approved applicability, pinned runtime/fixtures/setup; package predecessors and direct prerequisites",
+      "id": "STK005",
+      "level": "Subtask",
+      "title": "[Task][backend]Implement source-matrix classification",
+      "order": 3101,
+      "parent_task_id": "TK11",
+      "canonical_dependencies": [],
+      "plan_prerequisites": [
+        "TK01",
+        "TK02",
+        "TK10",
+        "TK67"
+      ],
+      "decision_ids": [
+        "D01",
+        "D05"
+      ],
+      "cus_ids": [
+        "CUS01"
+      ],
+      "sr_ids": [
+        "SR01",
+        "SR02",
+        "SR27"
+      ],
+      "feature_ids": [
+        "FEAT01"
+      ],
+      "acceptance_criteria": [
+        "For each approved fixture, classification equals the expected matrix result; oracle: TC01/TC19 accepted cases succeed and unsupported/malformed cases reject."
+      ],
+      "outputs": [
+        "Versioned deterministic file classification"
+      ],
+      "verification_ids": [
+        "TC01",
+        "TC19"
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/177",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tf6g",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Worker — Torsten Maier",
+        "dependencies_text": "WP01 #1; TK10 #116; TK01 #268; TK02 #269",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      },
+      "planning_status": "Future assignment; gates apply",
+      "priority": "P0",
+      "required_decision_gates": [
+        "D01",
+        "D02",
+        "D03",
+        "D04",
+        "D05"
+      ],
+      "execution_work_package": "WP02",
+      "execution_wp_dependencies": [
+        "WP01"
+      ],
+      "inherited_decision_ids": [
+        "D01",
+        "D05"
+      ]
+    },
+    {
+      "wave": "W1",
+      "owner_role": "Worker — Torsten Maier",
+      "work_kind": "implementation",
+      "work_package": "WP02",
+      "canonical_wp_dependencies": [
+        "WP01"
+      ],
+      "start_gate": "Coding gate G0: TK01/TK02 approved, D01–D05 closure/approved applicability, pinned runtime/fixtures/setup; package predecessors and direct prerequisites",
+      "id": "STK006",
+      "level": "Subtask",
+      "title": "[Task][frontend]Render textual file status and reason",
+      "order": 3102,
+      "parent_task_id": "TK11",
+      "canonical_dependencies": [],
+      "plan_prerequisites": [
+        "TK01",
+        "TK02",
+        "TK10",
+        "TK67"
+      ],
+      "decision_ids": [
+        "D01"
+      ],
+      "cus_ids": [
+        "CUS01"
+      ],
+      "sr_ids": [
+        "SR01",
+        "SR32"
+      ],
+      "feature_ids": [
+        "FEAT01"
+      ],
+      "acceptance_criteria": [
+        "Rendered accepted/rejected fixtures identify file, status and reason without color-only meaning; oracle: TC21."
+      ],
+      "outputs": [
+        "Accessible per-file disposition display"
+      ],
+      "verification_ids": [
+        "TC21"
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/178",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tf_o",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Worker — Torsten Maier",
+        "dependencies_text": "WP01 #1; TK10 #116; TK01 #268; TK02 #269",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      },
+      "planning_status": "Future assignment; gates apply",
+      "priority": "P0",
+      "required_decision_gates": [
+        "D01",
+        "D02",
+        "D03",
+        "D04",
+        "D05"
+      ],
+      "execution_work_package": "WP02",
+      "execution_wp_dependencies": [
+        "WP01"
+      ],
+      "inherited_decision_ids": [
+        "D01",
+        "D05"
+      ]
+    },
+    {
+      "id": "TK15",
+      "title": "[Task][database]Implement immutable originals and duplicate-safe history",
+      "level": "Task",
+      "wave": "W1",
+      "order": 3200,
+      "owner_role": "Worker — Torsten Maier",
+      "work_kind": "implementation",
+      "work_package": "WP02",
+      "canonical_dependencies": [
+        "TK14"
+      ],
+      "plan_prerequisites": [
+        "TK01",
+        "TK02",
+        "TK14",
+        "TK67"
+      ],
+      "canonical_wp_dependencies": [
+        "WP01"
+      ],
+      "decision_ids": [
+        "D01",
+        "D05"
+      ],
+      "start_gate": "Coding gate G0: TK01/TK02 approved, D01–D05 closure/approved applicability, pinned runtime/fixtures/setup; package predecessors and direct prerequisites",
+      "cus_ids": [
+        "CUS02"
+      ],
+      "sr_ids": [
+        "SR03",
+        "SR04",
+        "SR33"
+      ],
+      "feature_ids": [
+        "FEAT02"
+      ],
+      "acceptance_criteria": [
+        "Given the approved storage/identity contract, accepted bytes retain an integrity identifier and normalized records link to source; identical re-import is idempotent and a conflict is never silently overwritten; oracle: TC02/03/22."
+      ],
+      "outputs": [
+        "Immutable source lineage and duplicate/conflict-safe history behavior"
+      ],
+      "verification_ids": [
+        "TC02",
+        "TC03",
+        "TC22"
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/121",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tNZc",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Worker — Torsten Maier",
+        "dependencies_text": "TK14 #120; WP01 #1; TK01 #268; TK02 #269",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      },
+      "subtask_ids": [
+        "STK013",
+        "STK014"
+      ],
+      "planning_status": "Future assignment; gates apply",
+      "priority": "P0",
+      "required_decision_gates": [
+        "D01",
+        "D02",
+        "D03",
+        "D04",
+        "D05"
+      ],
+      "execution_work_package": "WP02",
+      "execution_wp_dependencies": [
+        "WP01"
+      ],
+      "inherited_decision_ids": [
+        "D01",
+        "D05"
+      ]
+    },
+    {
+      "wave": "W1",
+      "owner_role": "Worker — Torsten Maier",
+      "work_kind": "implementation",
+      "work_package": "WP02",
+      "canonical_wp_dependencies": [
+        "WP01"
+      ],
+      "start_gate": "Coding gate G0: TK01/TK02 approved, D01–D05 closure/approved applicability, pinned runtime/fixtures/setup; package predecessors and direct prerequisites",
+      "id": "STK013",
+      "level": "Subtask",
+      "title": "[Task][database]Persist original bytes with integrity reference",
+      "order": 3201,
+      "parent_task_id": "TK15",
+      "canonical_dependencies": [],
+      "plan_prerequisites": [
+        "TK01",
+        "TK02",
+        "TK14",
+        "TK67"
+      ],
+      "decision_ids": [
+        "D01",
+        "D05"
+      ],
+      "cus_ids": [
+        "CUS02"
+      ],
+      "sr_ids": [
+        "SR03"
+      ],
+      "feature_ids": [
+        "FEAT02"
+      ],
+      "acceptance_criteria": [
+        "Reloaded original bytes match the submitted digest and each normalized record resolves to source; oracle: TC02."
+      ],
+      "outputs": [
+        "Integrity-identified original and source link"
+      ],
+      "verification_ids": [
+        "TC02"
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/185",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tgqo",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Worker — Torsten Maier",
+        "dependencies_text": "WP01 #1; TK14 #120; TK01 #268; TK02 #269",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      },
+      "planning_status": "Future assignment; gates apply",
+      "priority": "P0",
+      "required_decision_gates": [
+        "D01",
+        "D02",
+        "D03",
+        "D04",
+        "D05"
+      ],
+      "execution_work_package": "WP02",
+      "execution_wp_dependencies": [
+        "WP01"
+      ],
+      "inherited_decision_ids": [
+        "D01",
+        "D05"
+      ]
+    },
+    {
+      "wave": "W1",
+      "owner_role": "Worker — Torsten Maier",
+      "work_kind": "implementation",
+      "work_package": "WP02",
+      "canonical_wp_dependencies": [
+        "WP01"
+      ],
+      "start_gate": "Coding gate G0: TK01/TK02 approved, D01–D05 closure/approved applicability, pinned runtime/fixtures/setup; package predecessors and direct prerequisites",
+      "id": "STK014",
+      "level": "Subtask",
+      "title": "[Task][database]Implement approved duplicate and conflict disposition",
+      "order": 3202,
+      "parent_task_id": "TK15",
+      "canonical_dependencies": [],
+      "plan_prerequisites": [
+        "TK01",
+        "TK02",
+        "TK14",
+        "TK67"
+      ],
+      "decision_ids": [
+        "D01",
+        "D05"
+      ],
+      "cus_ids": [
+        "CUS02"
+      ],
+      "sr_ids": [
+        "SR04",
+        "SR33"
+      ],
+      "feature_ids": [
+        "FEAT02"
+      ],
+      "acceptance_criteria": [
+        "Repeated identical bytes create no additional activity and an approved conflict is surfaced unresolved; oracle: TC03/TC22."
+      ],
+      "outputs": [
+        "Duplicate-safe history and visible conflict behavior"
+      ],
+      "verification_ids": [
+        "TC03",
+        "TC22"
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/186",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tgwQ",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "Worker — Torsten Maier",
+        "dependencies_text": "WP01 #1; TK14 #120; TK01 #268; TK02 #269",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      },
+      "planning_status": "Future assignment; gates apply",
+      "priority": "P0",
+      "required_decision_gates": [
+        "D01",
+        "D02",
+        "D03",
+        "D04",
+        "D05"
+      ],
+      "execution_work_package": "WP02",
+      "execution_wp_dependencies": [
+        "WP01"
+      ],
+      "inherited_decision_ids": [
+        "D01",
+        "D05"
+      ]
+    },
+    {
+      "id": "TK19",
+      "title": "[Task][management]Verify deterministic normalization",
+      "level": "Task",
+      "wave": "W1",
+      "order": 3300,
+      "owner_role": "User Tester — Abt Hermann",
+      "work_kind": "verification",
+      "work_package": "WP06",
+      "canonical_dependencies": [
+        "TK18"
+      ],
+      "plan_prerequisites": [
+        "TK18"
+      ],
+      "canonical_wp_dependencies": [
+        "WP01",
+        "WP02",
+        "WP03",
+        "WP04",
+        "WP05"
+      ],
+      "decision_ids": [
+        "D01"
+      ],
+      "start_gate": "Incremental check: linked implementation candidate/fixture exists, applicable decisions approved; final WP06 acceptance waits for WP01–05; fixture-only before TK67, no protected user storage/service access; integration waits for authorization",
+      "cus_ids": [
+        "CUS03"
+      ],
+      "sr_ids": [
+        "SR05",
+        "SR06"
+      ],
+      "feature_ids": [
+        "FEAT03"
+      ],
+      "acceptance_criteria": [
+        "On the fixed candidate, repeat preparation with inference disabled; oracle: semantic output matches excluding permitted IDs/timestamps and observed inference calls equal zero; record actual environment/results."
+      ],
+      "outputs": [
+        "Candidate-specific TC04 verification record"
+      ],
+      "verification_ids": [
+        "TC04"
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/125",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tNzA",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "User Tester — Abt Hermann",
+        "dependencies_text": "TK18 #124; WP01 #1; WP02 #2; WP03 #3; WP04 #4; WP05 #5; TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      },
+      "subtask_ids": [
+        "STK021",
+        "STK026"
+      ],
+      "planning_status": "Future assignment; gates apply",
+      "priority": "P0",
+      "required_decision_gates": [
+        "D01"
+      ],
+      "execution_work_package": "WP06",
+      "execution_wp_dependencies": [
+        "WP01",
+        "WP02",
+        "WP03",
+        "WP04",
+        "WP05"
+      ],
+      "inherited_decision_ids": [
+        "D01"
+      ],
+      "execution_scope": "Before TK67 completes, only isolated pure transformation/repeat checks on approved disposable fixtures; no protected user storage/service reads or writes. Integrated user-facing use waits for TK67 authorization."
+    },
+    {
+      "wave": "W1",
+      "owner_role": "User Tester — Abt Hermann",
+      "work_kind": "verification",
+      "work_package": "WP06",
+      "canonical_wp_dependencies": [
+        "WP01",
+        "WP02",
+        "WP03",
+        "WP04",
+        "WP05"
+      ],
+      "start_gate": "Incremental check: linked implementation candidate/fixture exists, applicable decisions approved; final WP06 acceptance waits for WP01–05; fixture-only before TK67, no protected user storage/service access; integration waits for authorization",
+      "id": "STK021",
+      "level": "Subtask",
+      "title": "[Task][management]Verify repeat preparation and model isolation",
+      "order": 3301,
+      "parent_task_id": "TK19",
+      "canonical_dependencies": [],
+      "plan_prerequisites": [
+        "TK18"
+      ],
+      "decision_ids": [
+        "D01"
+      ],
+      "cus_ids": [
+        "CUS03"
+      ],
+      "sr_ids": [
+        "SR05",
+        "SR06"
+      ],
+      "feature_ids": [
+        "FEAT03"
+      ],
+      "acceptance_criteria": [
+        "Target commit/environment and repeat outputs are recorded; oracle: semantic values match under TC04."
+      ],
+      "outputs": [
+        "Candidate-specific TC04 evidence"
+      ],
+      "verification_ids": [
+        "TC04"
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/193",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9thVc",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "User Tester — Abt Hermann",
+        "dependencies_text": "WP01 #1; WP02 #2; WP03 #3; WP04 #4; WP05 #5; TK18 #124; TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      },
+      "planning_status": "Future assignment; gates apply",
+      "priority": "P0",
+      "required_decision_gates": [
+        "D01"
+      ],
+      "execution_work_package": "WP06",
+      "execution_wp_dependencies": [
+        "WP01",
+        "WP02",
+        "WP03",
+        "WP04",
+        "WP05"
+      ],
+      "inherited_decision_ids": [
+        "D01"
+      ],
+      "execution_scope": "Before TK67 completes, only isolated pure transformation/repeat checks on approved disposable fixtures; no protected user storage/service reads or writes. Integrated user-facing use waits for TK67 authorization."
+    },
+    {
+      "wave": "W1",
+      "owner_role": "User Tester — Abt Hermann",
+      "work_kind": "verification",
+      "work_package": "WP06",
+      "canonical_wp_dependencies": [
+        "WP01",
+        "WP02",
+        "WP03",
+        "WP04",
+        "WP05"
+      ],
+      "start_gate": "Incremental check: linked implementation candidate/fixture exists, applicable decisions approved; final WP06 acceptance waits for WP01–05; fixture-only before TK67, no protected user storage/service access; integration waits for authorization",
+      "id": "STK026",
+      "level": "Subtask",
+      "title": "[Task][management]Record repeat-preparation outcomes",
+      "order": 3302,
+      "parent_task_id": "TK19",
+      "canonical_dependencies": [],
+      "plan_prerequisites": [
+        "TK18"
+      ],
+      "decision_ids": [
+        "D01"
+      ],
+      "cus_ids": [
+        "CUS03"
+      ],
+      "sr_ids": [
+        "SR05",
+        "SR06"
+      ],
+      "feature_ids": [
+        "FEAT03"
+      ],
+      "acceptance_criteria": [
+        "Target commit/environment and both outputs are recorded; oracle: equality excludes only approved generated IDs and processing timestamps per TC04."
+      ],
+      "outputs": [
+        "Repeat-preparation candidate evidence"
+      ],
+      "verification_ids": [
+        "TC04"
+      ],
+      "github": {
+        "issue_url": "https://github.com/fengguode/DATARA/issues/198",
+        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9th2M",
+        "project_status": "Backlog",
+        "priority": "P0",
+        "lifecycle": "Requirements",
+        "agent": "User Tester — Abt Hermann",
+        "dependencies_text": "WP01 #1; WP02 #2; WP03 #3; WP04 #4; WP05 #5; TK18 #124; TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
+        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
+      },
+      "planning_status": "Future assignment; gates apply",
+      "priority": "P0",
+      "required_decision_gates": [
+        "D01"
+      ],
+      "execution_work_package": "WP06",
+      "execution_wp_dependencies": [
+        "WP01",
+        "WP02",
+        "WP03",
+        "WP04",
+        "WP05"
+      ],
+      "inherited_decision_ids": [
+        "D01"
+      ],
+      "execution_scope": "Before TK67 completes, only isolated pure transformation/repeat checks on approved disposable fixtures; no protected user storage/service reads or writes. Integrated user-facing use waits for TK67 authorization."
     },
     {
       "id": "TK12",
       "title": "[Task][management]Verify FIT classification and file disposition",
       "level": "Task",
       "wave": "W1",
-      "order": 3300,
+      "order": 3400,
       "owner_role": "User Tester — Abt Hermann",
       "work_kind": "verification",
       "work_package": "WP06",
@@ -4727,7 +5474,7 @@
         "lifecycle": "Requirements",
         "agent": "User Tester — Abt Hermann",
         "dependencies_text": "TK11 #117; WP01 #1; WP02 #2; WP03 #3; WP04 #4; WP05 #5; TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "subtask_ids": [
@@ -4738,25 +5485,30 @@
       "priority": "P0",
       "required_decision_gates": [
         "D01"
-      ]
-    },
-    {
-      "wave": "W1",
-      "owner_role": "User Tester — Abt Hermann",
-      "work_kind": "verification",
-      "work_package": "WP06",
-      "canonical_wp_dependencies": [
+      ],
+      "execution_work_package": "WP06",
+      "execution_wp_dependencies": [
         "WP01",
         "WP02",
         "WP03",
         "WP04",
         "WP05"
       ],
+      "inherited_decision_ids": [
+        "D01"
+      ]
+    },
+    {
+      "wave": "W1",
+      "owner_role": "User Tester — Abt Hermann",
+      "work_kind": "verification",
+      "work_package": "WP01",
+      "canonical_wp_dependencies": [],
       "start_gate": "Incremental check: linked implementation candidate/fixture exists, applicable decisions approved; final WP06 acceptance waits for WP01–05",
       "id": "STK007",
       "level": "Subtask",
       "title": "[Task][management]Run source conformance fixtures",
-      "order": 3301,
+      "order": 3401,
       "parent_task_id": "TK12",
       "canonical_dependencies": [],
       "plan_prerequisites": [
@@ -4794,12 +5546,23 @@
         "lifecycle": "Requirements",
         "agent": "User Tester — Abt Hermann",
         "dependencies_text": "TK11 #117; WP01 #1; WP02 #2; WP03 #3; WP04 #4; WP05 #5; TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
       "required_decision_gates": [
+        "D01"
+      ],
+      "execution_work_package": "WP06",
+      "execution_wp_dependencies": [
+        "WP01",
+        "WP02",
+        "WP03",
+        "WP04",
+        "WP05"
+      ],
+      "inherited_decision_ids": [
         "D01"
       ]
     },
@@ -4807,19 +5570,13 @@
       "wave": "W1",
       "owner_role": "User Tester — Abt Hermann",
       "work_kind": "verification",
-      "work_package": "WP06",
-      "canonical_wp_dependencies": [
-        "WP01",
-        "WP02",
-        "WP03",
-        "WP04",
-        "WP05"
-      ],
+      "work_package": "WP01",
+      "canonical_wp_dependencies": [],
       "start_gate": "Incremental check: linked implementation candidate/fixture exists, applicable decisions approved; final WP06 acceptance waits for WP01–05",
       "id": "STK008",
       "level": "Subtask",
       "title": "[Task][management]Inspect rendered file disposition",
-      "order": 3302,
+      "order": 3402,
       "parent_task_id": "TK12",
       "canonical_dependencies": [],
       "plan_prerequisites": [
@@ -4854,12 +5611,23 @@
         "lifecycle": "Requirements",
         "agent": "User Tester — Abt Hermann",
         "dependencies_text": "TK11 #117; WP01 #1; WP02 #2; WP03 #3; WP04 #4; WP05 #5; TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
       "required_decision_gates": [
+        "D01"
+      ],
+      "execution_work_package": "WP06",
+      "execution_wp_dependencies": [
+        "WP01",
+        "WP02",
+        "WP03",
+        "WP04",
+        "WP05"
+      ],
+      "inherited_decision_ids": [
         "D01"
       ]
     },
@@ -4868,7 +5636,7 @@
       "title": "[Task][management]Verify original preservation and history behavior",
       "level": "Task",
       "wave": "W1",
-      "order": 3400,
+      "order": 3500,
       "owner_role": "User Tester — Abt Hermann",
       "work_kind": "verification",
       "work_package": "WP06",
@@ -4920,7 +5688,7 @@
         "lifecycle": "Requirements",
         "agent": "User Tester — Abt Hermann",
         "dependencies_text": "TK15 #121; WP01 #1; WP02 #2; WP03 #3; WP04 #4; WP05 #5; TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "subtask_ids": [
@@ -4931,25 +5699,32 @@
       "priority": "P0",
       "required_decision_gates": [
         "D01"
-      ]
-    },
-    {
-      "wave": "W1",
-      "owner_role": "User Tester — Abt Hermann",
-      "work_kind": "verification",
-      "work_package": "WP06",
-      "canonical_wp_dependencies": [
+      ],
+      "execution_work_package": "WP06",
+      "execution_wp_dependencies": [
         "WP01",
         "WP02",
         "WP03",
         "WP04",
         "WP05"
       ],
+      "inherited_decision_ids": [
+        "D01"
+      ]
+    },
+    {
+      "wave": "W1",
+      "owner_role": "User Tester — Abt Hermann",
+      "work_kind": "verification",
+      "work_package": "WP02",
+      "canonical_wp_dependencies": [
+        "WP01"
+      ],
       "start_gate": "Incremental check: linked implementation candidate/fixture exists, applicable decisions approved; final WP06 acceptance waits for WP01–05",
       "id": "STK015",
       "level": "Subtask",
       "title": "[Task][management]Verify original integrity and lineage",
-      "order": 3401,
+      "order": 3501,
       "parent_task_id": "TK16",
       "canonical_dependencies": [],
       "plan_prerequisites": [
@@ -4984,12 +5759,23 @@
         "lifecycle": "Requirements",
         "agent": "User Tester — Abt Hermann",
         "dependencies_text": "WP01 #1; TK15 #121; WP02 #2; WP03 #3; WP04 #4; WP05 #5; TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
       "required_decision_gates": [
+        "D01"
+      ],
+      "execution_work_package": "WP06",
+      "execution_wp_dependencies": [
+        "WP01",
+        "WP02",
+        "WP03",
+        "WP04",
+        "WP05"
+      ],
+      "inherited_decision_ids": [
         "D01"
       ]
     },
@@ -4997,19 +5783,15 @@
       "wave": "W1",
       "owner_role": "User Tester — Abt Hermann",
       "work_kind": "verification",
-      "work_package": "WP06",
+      "work_package": "WP02",
       "canonical_wp_dependencies": [
-        "WP01",
-        "WP02",
-        "WP03",
-        "WP04",
-        "WP05"
+        "WP01"
       ],
       "start_gate": "Incremental check: linked implementation candidate/fixture exists, applicable decisions approved; final WP06 acceptance waits for WP01–05",
       "id": "STK016",
       "level": "Subtask",
       "title": "[Task][management]Verify duplicate and conflict history states",
-      "order": 3402,
+      "order": 3502,
       "parent_task_id": "TK16",
       "canonical_dependencies": [],
       "plan_prerequisites": [
@@ -5046,200 +5828,23 @@
         "lifecycle": "Requirements",
         "agent": "User Tester — Abt Hermann",
         "dependencies_text": "WP01 #1; TK15 #121; WP02 #2; WP03 #3; WP04 #4; WP05 #5; TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
       "required_decision_gates": [
         "D01"
-      ]
-    },
-    {
-      "id": "TK19",
-      "title": "[Task][management]Verify deterministic normalization",
-      "level": "Task",
-      "wave": "W1",
-      "order": 3500,
-      "owner_role": "User Tester — Abt Hermann",
-      "work_kind": "verification",
-      "work_package": "WP06",
-      "canonical_dependencies": [
-        "TK18"
       ],
-      "plan_prerequisites": [
-        "TK18"
-      ],
-      "canonical_wp_dependencies": [
+      "execution_work_package": "WP06",
+      "execution_wp_dependencies": [
         "WP01",
         "WP02",
         "WP03",
         "WP04",
         "WP05"
       ],
-      "decision_ids": [
-        "D01"
-      ],
-      "start_gate": "Incremental check: linked implementation candidate/fixture exists, applicable decisions approved; final WP06 acceptance waits for WP01–05",
-      "cus_ids": [
-        "CUS03"
-      ],
-      "sr_ids": [
-        "SR05",
-        "SR06"
-      ],
-      "feature_ids": [
-        "FEAT03"
-      ],
-      "acceptance_criteria": [
-        "On the fixed candidate, repeat preparation with inference disabled; oracle: semantic output matches excluding permitted IDs/timestamps and observed inference calls equal zero; record actual environment/results."
-      ],
-      "outputs": [
-        "Candidate-specific TC04 verification record"
-      ],
-      "verification_ids": [
-        "TC04"
-      ],
-      "github": {
-        "issue_url": "https://github.com/fengguode/DATARA/issues/125",
-        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9tNzA",
-        "project_status": "Backlog",
-        "priority": "P0",
-        "lifecycle": "Requirements",
-        "agent": "User Tester — Abt Hermann",
-        "dependencies_text": "TK18 #124; WP01 #1; WP02 #2; WP03 #3; WP04 #4; WP05 #5; TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
-        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
-      },
-      "subtask_ids": [
-        "STK021",
-        "STK026"
-      ],
-      "planning_status": "Future assignment; gates apply",
-      "priority": "P0",
-      "required_decision_gates": [
-        "D01"
-      ]
-    },
-    {
-      "wave": "W1",
-      "owner_role": "User Tester — Abt Hermann",
-      "work_kind": "verification",
-      "work_package": "WP06",
-      "canonical_wp_dependencies": [
-        "WP01",
-        "WP02",
-        "WP03",
-        "WP04",
-        "WP05"
-      ],
-      "start_gate": "Incremental check: linked implementation candidate/fixture exists, applicable decisions approved; final WP06 acceptance waits for WP01–05",
-      "id": "STK021",
-      "level": "Subtask",
-      "title": "[Task][management]Verify repeat preparation and model isolation",
-      "order": 3501,
-      "parent_task_id": "TK19",
-      "canonical_dependencies": [],
-      "plan_prerequisites": [
-        "TK18"
-      ],
-      "decision_ids": [
-        "D01"
-      ],
-      "cus_ids": [
-        "CUS03"
-      ],
-      "sr_ids": [
-        "SR05",
-        "SR06"
-      ],
-      "feature_ids": [
-        "FEAT03"
-      ],
-      "acceptance_criteria": [
-        "Target commit/environment and repeat outputs are recorded; oracle: semantic values match under TC04."
-      ],
-      "outputs": [
-        "Candidate-specific TC04 evidence"
-      ],
-      "verification_ids": [
-        "TC04"
-      ],
-      "github": {
-        "issue_url": "https://github.com/fengguode/DATARA/issues/193",
-        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9thVc",
-        "project_status": "Backlog",
-        "priority": "P0",
-        "lifecycle": "Requirements",
-        "agent": "User Tester — Abt Hermann",
-        "dependencies_text": "WP01 #1; WP02 #2; WP03 #3; WP04 #4; WP05 #5; TK18 #124; TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
-        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
-      },
-      "planning_status": "Future assignment; gates apply",
-      "priority": "P0",
-      "required_decision_gates": [
-        "D01"
-      ]
-    },
-    {
-      "wave": "W1",
-      "owner_role": "User Tester — Abt Hermann",
-      "work_kind": "verification",
-      "work_package": "WP06",
-      "canonical_wp_dependencies": [
-        "WP01",
-        "WP02",
-        "WP03",
-        "WP04",
-        "WP05"
-      ],
-      "start_gate": "Incremental check: linked implementation candidate/fixture exists, applicable decisions approved; final WP06 acceptance waits for WP01–05",
-      "id": "STK026",
-      "level": "Subtask",
-      "title": "[Task][management]Record repeat-preparation outcomes",
-      "order": 3502,
-      "parent_task_id": "TK19",
-      "canonical_dependencies": [],
-      "plan_prerequisites": [
-        "TK18"
-      ],
-      "decision_ids": [
-        "D01"
-      ],
-      "cus_ids": [
-        "CUS03"
-      ],
-      "sr_ids": [
-        "SR05",
-        "SR06"
-      ],
-      "feature_ids": [
-        "FEAT03"
-      ],
-      "acceptance_criteria": [
-        "Target commit/environment and both outputs are recorded; oracle: equality excludes only approved generated IDs and processing timestamps per TC04."
-      ],
-      "outputs": [
-        "Repeat-preparation candidate evidence"
-      ],
-      "verification_ids": [
-        "TC04"
-      ],
-      "github": {
-        "issue_url": "https://github.com/fengguode/DATARA/issues/198",
-        "project_item_id": "PVTI_lAHOEw4Lss4BlKTozg9th2M",
-        "project_status": "Backlog",
-        "priority": "P0",
-        "lifecycle": "Requirements",
-        "agent": "User Tester — Abt Hermann",
-        "dependencies_text": "WP01 #1; WP02 #2; WP03 #3; WP04 #4; WP05 #5; TK18 #124; TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
-        "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
-      },
-      "planning_status": "Future assignment; gates apply",
-      "priority": "P0",
-      "required_decision_gates": [
+      "inherited_decision_ids": [
         "D01"
       ]
     },
@@ -5319,13 +5924,18 @@
         "lifecycle": "Requirements",
         "agent": "Primary Coordinator — Yi Tang",
         "dependencies_text": "TK01 #268; TK02 #269; WP01 #1",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "subtask_ids": [],
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP02",
+      "execution_wp_dependencies": [
+        "WP01"
+      ],
+      "inherited_decision_ids": []
     },
     {
       "id": "TK21",
@@ -5383,7 +5993,7 @@
         "lifecycle": "Requirements",
         "agent": "Worker — Torsten Maier",
         "dependencies_text": "TK18 #124; WP01 #1; WP02 #2; TK03 #270",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "subtask_ids": [
@@ -5397,6 +6007,16 @@
         "D02",
         "D03",
         "D04",
+        "D05"
+      ],
+      "execution_work_package": "WP03",
+      "execution_wp_dependencies": [
+        "WP01",
+        "WP02"
+      ],
+      "inherited_decision_ids": [
+        "D01",
+        "D02",
         "D05"
       ]
     },
@@ -5455,7 +6075,7 @@
         "lifecycle": "Requirements",
         "agent": "Worker — Torsten Maier",
         "dependencies_text": "WP01 #1; WP02 #2; TK18 #124; TK03 #270",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
@@ -5465,6 +6085,16 @@
         "D02",
         "D03",
         "D04",
+        "D05"
+      ],
+      "execution_work_package": "WP03",
+      "execution_wp_dependencies": [
+        "WP01",
+        "WP02"
+      ],
+      "inherited_decision_ids": [
+        "D01",
+        "D02",
         "D05"
       ]
     },
@@ -5521,7 +6151,7 @@
         "lifecycle": "Requirements",
         "agent": "Worker — Torsten Maier",
         "dependencies_text": "WP01 #1; WP02 #2; TK18 #124; TK03 #270",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
@@ -5531,6 +6161,16 @@
         "D02",
         "D03",
         "D04",
+        "D05"
+      ],
+      "execution_work_package": "WP03",
+      "execution_wp_dependencies": [
+        "WP01",
+        "WP02"
+      ],
+      "inherited_decision_ids": [
+        "D01",
+        "D02",
         "D05"
       ]
     },
@@ -5597,7 +6237,7 @@
         "lifecycle": "Requirements",
         "agent": "Worker — Torsten Maier",
         "dependencies_text": "TK31 #130; TK32 #131; TK33 #132; WP01 #1; WP02 #2; TK03 #270",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "subtask_ids": [
@@ -5611,6 +6251,14 @@
         "D03",
         "D04",
         "D05"
+      ],
+      "execution_work_package": "WP03",
+      "execution_wp_dependencies": [
+        "WP01",
+        "WP02"
+      ],
+      "inherited_decision_ids": [
+        "D02"
       ]
     },
     {
@@ -5673,7 +6321,7 @@
         "lifecycle": "Requirements",
         "agent": "Worker — Torsten Maier",
         "dependencies_text": "WP01 #1; WP02 #2; TK31 #130; TK32 #131; TK33 #132; TK03 #270",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
@@ -5684,6 +6332,14 @@
         "D03",
         "D04",
         "D05"
+      ],
+      "execution_work_package": "WP03",
+      "execution_wp_dependencies": [
+        "WP01",
+        "WP02"
+      ],
+      "inherited_decision_ids": [
+        "D02"
       ]
     },
     {
@@ -5744,7 +6400,7 @@
         "lifecycle": "Requirements",
         "agent": "Worker — Torsten Maier",
         "dependencies_text": "TK34 #133; TK35 #134; WP01 #1; WP02 #2; TK03 #270",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "subtask_ids": [
@@ -5758,6 +6414,14 @@
         "D03",
         "D04",
         "D05"
+      ],
+      "execution_work_package": "WP03",
+      "execution_wp_dependencies": [
+        "WP01",
+        "WP02"
+      ],
+      "inherited_decision_ids": [
+        "D02"
       ]
     },
     {
@@ -5816,7 +6480,7 @@
         "lifecycle": "Requirements",
         "agent": "Worker — Torsten Maier",
         "dependencies_text": "WP01 #1; WP02 #2; TK34 #133; TK35 #134; TK03 #270",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
@@ -5827,6 +6491,14 @@
         "D03",
         "D04",
         "D05"
+      ],
+      "execution_work_package": "WP03",
+      "execution_wp_dependencies": [
+        "WP01",
+        "WP02"
+      ],
+      "inherited_decision_ids": [
+        "D02"
       ]
     },
     {
@@ -5887,7 +6559,7 @@
         "lifecycle": "Requirements",
         "agent": "User Tester — Abt Hermann",
         "dependencies_text": "TK21 #127; WP01 #1; WP02 #2; WP03 #3; WP04 #4; WP05 #5; TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "subtask_ids": [
@@ -5897,6 +6569,18 @@
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
       "required_decision_gates": [
+        "D01",
+        "D02"
+      ],
+      "execution_work_package": "WP06",
+      "execution_wp_dependencies": [
+        "WP01",
+        "WP02",
+        "WP03",
+        "WP04",
+        "WP05"
+      ],
+      "inherited_decision_ids": [
         "D01",
         "D02"
       ]
@@ -5957,12 +6641,24 @@
         "lifecycle": "Requirements",
         "agent": "User Tester — Abt Hermann",
         "dependencies_text": "WP01 #1; WP02 #2; WP03 #3; WP04 #4; WP05 #5; TK21 #127; TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
       "required_decision_gates": [
+        "D01",
+        "D02"
+      ],
+      "execution_work_package": "WP06",
+      "execution_wp_dependencies": [
+        "WP01",
+        "WP02",
+        "WP03",
+        "WP04",
+        "WP05"
+      ],
+      "inherited_decision_ids": [
         "D01",
         "D02"
       ]
@@ -6023,12 +6719,24 @@
         "lifecycle": "Requirements",
         "agent": "User Tester — Abt Hermann",
         "dependencies_text": "WP01 #1; WP02 #2; WP03 #3; WP04 #4; WP05 #5; TK21 #127; TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
       "required_decision_gates": [
+        "D01",
+        "D02"
+      ],
+      "execution_work_package": "WP06",
+      "execution_wp_dependencies": [
+        "WP01",
+        "WP02",
+        "WP03",
+        "WP04",
+        "WP05"
+      ],
+      "inherited_decision_ids": [
         "D01",
         "D02"
       ]
@@ -6091,7 +6799,7 @@
         "lifecycle": "Requirements",
         "agent": "User Tester — Abt Hermann",
         "dependencies_text": "TK42 #141; WP01 #1; WP02 #2; TK03 #270",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "subtask_ids": [
@@ -6100,6 +6808,14 @@
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
       "required_decision_gates": [
+        "D02"
+      ],
+      "execution_work_package": "WP03",
+      "execution_wp_dependencies": [
+        "WP01",
+        "WP02"
+      ],
+      "inherited_decision_ids": [
         "D02"
       ]
     },
@@ -6160,12 +6876,20 @@
         "lifecycle": "Requirements",
         "agent": "User Tester — Abt Hermann",
         "dependencies_text": "WP01 #1; WP02 #2; TK42 #141; TK03 #270",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
       "required_decision_gates": [
+        "D02"
+      ],
+      "execution_work_package": "WP03",
+      "execution_wp_dependencies": [
+        "WP01",
+        "WP02"
+      ],
+      "inherited_decision_ids": [
         "D02"
       ]
     },
@@ -6224,7 +6948,7 @@
         "lifecycle": "Requirements",
         "agent": "User Tester — Abt Hermann",
         "dependencies_text": "TK44 #143; WP01 #1; WP02 #2; TK03 #270",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "subtask_ids": [
@@ -6233,6 +6957,14 @@
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
       "required_decision_gates": [
+        "D02"
+      ],
+      "execution_work_package": "WP03",
+      "execution_wp_dependencies": [
+        "WP01",
+        "WP02"
+      ],
+      "inherited_decision_ids": [
         "D02"
       ]
     },
@@ -6290,12 +7022,20 @@
         "lifecycle": "Requirements",
         "agent": "User Tester — Abt Hermann",
         "dependencies_text": "WP01 #1; WP02 #2; TK44 #143; TK03 #270",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
       "required_decision_gates": [
+        "D02"
+      ],
+      "execution_work_package": "WP03",
+      "execution_wp_dependencies": [
+        "WP01",
+        "WP02"
+      ],
+      "inherited_decision_ids": [
         "D02"
       ]
     },
@@ -6372,13 +7112,19 @@
         "lifecycle": "Requirements",
         "agent": "Primary Coordinator — Yi Tang",
         "dependencies_text": "TK03 #270; WP01 #1; WP02 #2",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "subtask_ids": [],
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP03",
+      "execution_wp_dependencies": [
+        "WP01",
+        "WP02"
+      ],
+      "inherited_decision_ids": []
     },
     {
       "id": "TK46",
@@ -6452,7 +7198,7 @@
         "lifecycle": "Requirements",
         "agent": "Worker — Torsten Maier",
         "dependencies_text": "TK36 #135; TK38 #137; TK39 #138; TK40 #139; TK41 #140; WP03 #3; TK04 #271",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "subtask_ids": [
@@ -6466,6 +7212,13 @@
         "D03",
         "D04",
         "D05"
+      ],
+      "execution_work_package": "WP04",
+      "execution_wp_dependencies": [
+        "WP03"
+      ],
+      "inherited_decision_ids": [
+        "D03"
       ]
     },
     {
@@ -6535,7 +7288,7 @@
         "lifecycle": "Requirements",
         "agent": "Worker — Torsten Maier",
         "dependencies_text": "WP03 #3; TK36 #135; TK38 #137; TK39 #138; TK40 #139; TK41 #140; TK04 #271",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
@@ -6546,6 +7299,13 @@
         "D03",
         "D04",
         "D05"
+      ],
+      "execution_work_package": "WP04",
+      "execution_wp_dependencies": [
+        "WP03"
+      ],
+      "inherited_decision_ids": [
+        "D03"
       ]
     },
     {
@@ -6599,7 +7359,7 @@
         "lifecycle": "Requirements",
         "agent": "Worker — Torsten Maier",
         "dependencies_text": "TK50 #148; TK51 #149; WP03 #3; TK04 #271",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "subtask_ids": [
@@ -6614,6 +7374,13 @@
         "D03",
         "D04",
         "D05"
+      ],
+      "execution_work_package": "WP04",
+      "execution_wp_dependencies": [
+        "WP03"
+      ],
+      "inherited_decision_ids": [
+        "D03"
       ]
     },
     {
@@ -6665,7 +7432,7 @@
         "lifecycle": "Requirements",
         "agent": "Worker — Torsten Maier",
         "dependencies_text": "WP03 #3; TK50 #148; TK51 #149; TK04 #271",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
@@ -6676,6 +7443,13 @@
         "D03",
         "D04",
         "D05"
+      ],
+      "execution_work_package": "WP04",
+      "execution_wp_dependencies": [
+        "WP03"
+      ],
+      "inherited_decision_ids": [
+        "D03"
       ]
     },
     {
@@ -6727,7 +7501,7 @@
         "lifecycle": "Requirements",
         "agent": "Worker — Torsten Maier",
         "dependencies_text": "WP03 #3; TK50 #148; TK51 #149; TK04 #271",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
@@ -6738,6 +7512,13 @@
         "D03",
         "D04",
         "D05"
+      ],
+      "execution_work_package": "WP04",
+      "execution_wp_dependencies": [
+        "WP03"
+      ],
+      "inherited_decision_ids": [
+        "D03"
       ]
     },
     {
@@ -6793,7 +7574,7 @@
         "lifecycle": "Requirements",
         "agent": "Worker — Torsten Maier",
         "dependencies_text": "TK50 #148; TK51 #149; WP03 #3; TK04 #271",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "subtask_ids": [
@@ -6808,6 +7589,13 @@
         "D03",
         "D04",
         "D05"
+      ],
+      "execution_work_package": "WP04",
+      "execution_wp_dependencies": [
+        "WP03"
+      ],
+      "inherited_decision_ids": [
+        "D03"
       ]
     },
     {
@@ -6861,7 +7649,7 @@
         "lifecycle": "Requirements",
         "agent": "Worker — Torsten Maier",
         "dependencies_text": "WP03 #3; TK50 #148; TK51 #149; TK04 #271",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
@@ -6872,6 +7660,13 @@
         "D03",
         "D04",
         "D05"
+      ],
+      "execution_work_package": "WP04",
+      "execution_wp_dependencies": [
+        "WP03"
+      ],
+      "inherited_decision_ids": [
+        "D03"
       ]
     },
     {
@@ -6925,7 +7720,7 @@
         "lifecycle": "Requirements",
         "agent": "Worker — Torsten Maier",
         "dependencies_text": "WP03 #3; TK50 #148; TK51 #149; TK04 #271",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
@@ -6936,6 +7731,13 @@
         "D03",
         "D04",
         "D05"
+      ],
+      "execution_work_package": "WP04",
+      "execution_wp_dependencies": [
+        "WP03"
+      ],
+      "inherited_decision_ids": [
+        "D03"
       ]
     },
     {
@@ -6991,7 +7793,7 @@
         "lifecycle": "Requirements",
         "agent": "Worker — Torsten Maier",
         "dependencies_text": "TK50 #148; TK51 #149; WP03 #3; TK04 #271",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "subtask_ids": [
@@ -7006,6 +7808,14 @@
         "D03",
         "D04",
         "D05"
+      ],
+      "execution_work_package": "WP04",
+      "execution_wp_dependencies": [
+        "WP03"
+      ],
+      "inherited_decision_ids": [
+        "D02",
+        "D03"
       ]
     },
     {
@@ -7059,7 +7869,7 @@
         "lifecycle": "Requirements",
         "agent": "Worker — Torsten Maier",
         "dependencies_text": "WP03 #3; TK50 #148; TK51 #149; TK04 #271",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
@@ -7070,6 +7880,14 @@
         "D03",
         "D04",
         "D05"
+      ],
+      "execution_work_package": "WP04",
+      "execution_wp_dependencies": [
+        "WP03"
+      ],
+      "inherited_decision_ids": [
+        "D02",
+        "D03"
       ]
     },
     {
@@ -7123,7 +7941,7 @@
         "lifecycle": "Requirements",
         "agent": "Worker — Torsten Maier",
         "dependencies_text": "WP03 #3; TK50 #148; TK51 #149; TK04 #271",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
@@ -7134,6 +7952,14 @@
         "D03",
         "D04",
         "D05"
+      ],
+      "execution_work_package": "WP04",
+      "execution_wp_dependencies": [
+        "WP03"
+      ],
+      "inherited_decision_ids": [
+        "D02",
+        "D03"
       ]
     },
     {
@@ -7189,7 +8015,7 @@
         "lifecycle": "Requirements",
         "agent": "Worker — Torsten Maier",
         "dependencies_text": "TK51 #149; WP03 #3; TK04 #271",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "subtask_ids": [
@@ -7204,6 +8030,13 @@
         "D03",
         "D04",
         "D05"
+      ],
+      "execution_work_package": "WP04",
+      "execution_wp_dependencies": [
+        "WP03"
+      ],
+      "inherited_decision_ids": [
+        "D03"
       ]
     },
     {
@@ -7258,7 +8091,7 @@
         "lifecycle": "Requirements",
         "agent": "Worker — Torsten Maier",
         "dependencies_text": "WP03 #3; TK51 #149; TK04 #271",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
@@ -7269,6 +8102,13 @@
         "D03",
         "D04",
         "D05"
+      ],
+      "execution_work_package": "WP04",
+      "execution_wp_dependencies": [
+        "WP03"
+      ],
+      "inherited_decision_ids": [
+        "D03"
       ]
     },
     {
@@ -7323,7 +8163,7 @@
         "lifecycle": "Requirements",
         "agent": "Worker — Torsten Maier",
         "dependencies_text": "WP03 #3; TK51 #149; TK04 #271",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
@@ -7334,6 +8174,13 @@
         "D03",
         "D04",
         "D05"
+      ],
+      "execution_work_package": "WP04",
+      "execution_wp_dependencies": [
+        "WP03"
+      ],
+      "inherited_decision_ids": [
+        "D03"
       ]
     },
     {
@@ -7399,7 +8246,7 @@
         "lifecycle": "Requirements",
         "agent": "User Tester — Abt Hermann",
         "dependencies_text": "TK46 #146; WP03 #3; TK04 #271",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "subtask_ids": [
@@ -7408,6 +8255,13 @@
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
       "required_decision_gates": [
+        "D03"
+      ],
+      "execution_work_package": "WP04",
+      "execution_wp_dependencies": [
+        "WP03"
+      ],
+      "inherited_decision_ids": [
         "D03"
       ]
     },
@@ -7473,12 +8327,19 @@
         "lifecycle": "Requirements",
         "agent": "User Tester — Abt Hermann",
         "dependencies_text": "WP03 #3; TK46 #146; TK04 #271",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
       "required_decision_gates": [
+        "D03"
+      ],
+      "execution_work_package": "WP04",
+      "execution_wp_dependencies": [
+        "WP03"
+      ],
+      "inherited_decision_ids": [
         "D03"
       ]
     },
@@ -7544,7 +8405,7 @@
         "lifecycle": "Requirements",
         "agent": "User Tester — Abt Hermann",
         "dependencies_text": "TK52 #150; TK53 #151; TK55 #153; WP01 #1; WP02 #2; WP03 #3; WP04 #4; WP05 #5; TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "subtask_ids": [
@@ -7554,6 +8415,18 @@
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
       "required_decision_gates": [
+        "D02",
+        "D03"
+      ],
+      "execution_work_package": "WP06",
+      "execution_wp_dependencies": [
+        "WP01",
+        "WP02",
+        "WP03",
+        "WP04",
+        "WP05"
+      ],
+      "inherited_decision_ids": [
         "D02",
         "D03"
       ]
@@ -7617,12 +8490,24 @@
         "lifecycle": "Requirements",
         "agent": "User Tester — Abt Hermann",
         "dependencies_text": "WP01 #1; WP02 #2; WP03 #3; WP04 #4; WP05 #5; TK52 #150; TK53 #151; TK55 #153; TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
       "required_decision_gates": [
+        "D02",
+        "D03"
+      ],
+      "execution_work_package": "WP06",
+      "execution_wp_dependencies": [
+        "WP01",
+        "WP02",
+        "WP03",
+        "WP04",
+        "WP05"
+      ],
+      "inherited_decision_ids": [
         "D02",
         "D03"
       ]
@@ -7686,12 +8571,24 @@
         "lifecycle": "Requirements",
         "agent": "User Tester — Abt Hermann",
         "dependencies_text": "WP01 #1; WP02 #2; WP03 #3; WP04 #4; WP05 #5; TK52 #150; TK53 #151; TK55 #153; TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
       "required_decision_gates": [
+        "D02",
+        "D03"
+      ],
+      "execution_work_package": "WP06",
+      "execution_wp_dependencies": [
+        "WP01",
+        "WP02",
+        "WP03",
+        "WP04",
+        "WP05"
+      ],
+      "inherited_decision_ids": [
         "D02",
         "D03"
       ]
@@ -7752,7 +8649,7 @@
         "lifecycle": "Requirements",
         "agent": "User Tester — Abt Hermann",
         "dependencies_text": "TK70 #168; WP01 #1; WP02 #2; WP03 #3; WP04 #4; WP05 #5; TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "subtask_ids": [
@@ -7762,6 +8659,17 @@
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
       "required_decision_gates": [
+        "D03"
+      ],
+      "execution_work_package": "WP06",
+      "execution_wp_dependencies": [
+        "WP01",
+        "WP02",
+        "WP03",
+        "WP04",
+        "WP05"
+      ],
+      "inherited_decision_ids": [
         "D03"
       ]
     },
@@ -7820,12 +8728,23 @@
         "lifecycle": "Requirements",
         "agent": "User Tester — Abt Hermann",
         "dependencies_text": "WP01 #1; WP02 #2; WP03 #3; WP04 #4; WP05 #5; TK70 #168; TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
       "required_decision_gates": [
+        "D03"
+      ],
+      "execution_work_package": "WP06",
+      "execution_wp_dependencies": [
+        "WP01",
+        "WP02",
+        "WP03",
+        "WP04",
+        "WP05"
+      ],
+      "inherited_decision_ids": [
         "D03"
       ]
     },
@@ -7884,12 +8803,23 @@
         "lifecycle": "Requirements",
         "agent": "User Tester — Abt Hermann",
         "dependencies_text": "WP01 #1; WP02 #2; WP03 #3; WP04 #4; WP05 #5; TK70 #168; TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
       "required_decision_gates": [
+        "D03"
+      ],
+      "execution_work_package": "WP06",
+      "execution_wp_dependencies": [
+        "WP01",
+        "WP02",
+        "WP03",
+        "WP04",
+        "WP05"
+      ],
+      "inherited_decision_ids": [
         "D03"
       ]
     },
@@ -7968,13 +8898,18 @@
         "lifecycle": "Requirements",
         "agent": "Primary Coordinator — Yi Tang",
         "dependencies_text": "TK04 #271; WP03 #3",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "subtask_ids": [],
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP04",
+      "execution_wp_dependencies": [
+        "WP03"
+      ],
+      "inherited_decision_ids": []
     },
     {
       "id": "TK57",
@@ -8030,7 +8965,7 @@
         "lifecycle": "Requirements",
         "agent": "Worker — Torsten Maier",
         "dependencies_text": "TK56 #154; WP02 #2; WP04 #4; TK03 #270; TK05 #272",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "subtask_ids": [
@@ -8045,6 +8980,14 @@
         "D03",
         "D04",
         "D05"
+      ],
+      "execution_work_package": "WP05",
+      "execution_wp_dependencies": [
+        "WP02",
+        "WP04"
+      ],
+      "inherited_decision_ids": [
+        "D04"
       ]
     },
     {
@@ -8100,7 +9043,7 @@
         "lifecycle": "Requirements",
         "agent": "Worker — Torsten Maier",
         "dependencies_text": "WP02 #2; WP04 #4; TK56 #154; TK03 #270; TK05 #272",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
@@ -8111,6 +9054,14 @@
         "D03",
         "D04",
         "D05"
+      ],
+      "execution_work_package": "WP05",
+      "execution_wp_dependencies": [
+        "WP02",
+        "WP04"
+      ],
+      "inherited_decision_ids": [
+        "D04"
       ]
     },
     {
@@ -8166,7 +9117,7 @@
         "lifecycle": "Requirements",
         "agent": "Worker — Torsten Maier",
         "dependencies_text": "WP02 #2; WP04 #4; TK56 #154; TK03 #270; TK05 #272",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
@@ -8177,6 +9128,14 @@
         "D03",
         "D04",
         "D05"
+      ],
+      "execution_work_package": "WP05",
+      "execution_wp_dependencies": [
+        "WP02",
+        "WP04"
+      ],
+      "inherited_decision_ids": [
+        "D04"
       ]
     },
     {
@@ -8231,7 +9190,7 @@
         "lifecycle": "Requirements",
         "agent": "Worker — Torsten Maier",
         "dependencies_text": "TK56 #154; WP02 #2; WP04 #4; TK03 #270; TK05 #272",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "subtask_ids": [
@@ -8246,6 +9205,14 @@
         "D03",
         "D04",
         "D05"
+      ],
+      "execution_work_package": "WP05",
+      "execution_wp_dependencies": [
+        "WP02",
+        "WP04"
+      ],
+      "inherited_decision_ids": [
+        "D04"
       ]
     },
     {
@@ -8299,7 +9266,7 @@
         "lifecycle": "Requirements",
         "agent": "Worker — Torsten Maier",
         "dependencies_text": "WP02 #2; WP04 #4; TK56 #154; TK03 #270; TK05 #272",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
@@ -8310,6 +9277,14 @@
         "D03",
         "D04",
         "D05"
+      ],
+      "execution_work_package": "WP05",
+      "execution_wp_dependencies": [
+        "WP02",
+        "WP04"
+      ],
+      "inherited_decision_ids": [
+        "D04"
       ]
     },
     {
@@ -8363,7 +9338,7 @@
         "lifecycle": "Requirements",
         "agent": "Worker — Torsten Maier",
         "dependencies_text": "WP02 #2; WP04 #4; TK56 #154; TK03 #270; TK05 #272",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
@@ -8374,6 +9349,14 @@
         "D03",
         "D04",
         "D05"
+      ],
+      "execution_work_package": "WP05",
+      "execution_wp_dependencies": [
+        "WP02",
+        "WP04"
+      ],
+      "inherited_decision_ids": [
+        "D04"
       ]
     },
     {
@@ -8439,7 +9422,7 @@
         "lifecycle": "Requirements",
         "agent": "Worker — Torsten Maier",
         "dependencies_text": "TK60 #158; TK73 #171; WP02 #2; WP04 #4; TK03 #270; TK05 #272",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "subtask_ids": [
@@ -8452,6 +9435,15 @@
         "D01",
         "D02",
         "D03",
+        "D04",
+        "D05"
+      ],
+      "execution_work_package": "WP05",
+      "execution_wp_dependencies": [
+        "WP02",
+        "WP04"
+      ],
+      "inherited_decision_ids": [
         "D04",
         "D05"
       ]
@@ -8517,7 +9509,7 @@
         "lifecycle": "Requirements",
         "agent": "Worker — Torsten Maier",
         "dependencies_text": "WP02 #2; WP04 #4; TK60 #158; TK73 #171; TK03 #270; TK05 #272",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
@@ -8526,6 +9518,15 @@
         "D01",
         "D02",
         "D03",
+        "D04",
+        "D05"
+      ],
+      "execution_work_package": "WP05",
+      "execution_wp_dependencies": [
+        "WP02",
+        "WP04"
+      ],
+      "inherited_decision_ids": [
         "D04",
         "D05"
       ]
@@ -8591,7 +9592,7 @@
         "lifecycle": "Requirements",
         "agent": "Worker — Torsten Maier",
         "dependencies_text": "WP02 #2; WP04 #4; TK60 #158; TK73 #171; TK03 #270; TK05 #272",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
@@ -8600,6 +9601,15 @@
         "D01",
         "D02",
         "D03",
+        "D04",
+        "D05"
+      ],
+      "execution_work_package": "WP05",
+      "execution_wp_dependencies": [
+        "WP02",
+        "WP04"
+      ],
+      "inherited_decision_ids": [
         "D04",
         "D05"
       ]
@@ -8663,7 +9673,7 @@
         "lifecycle": "Requirements",
         "agent": "Worker — Torsten Maier",
         "dependencies_text": "TK63 #161; TK66 #164; WP02 #2; WP04 #4; TK03 #270; TK05 #272",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "subtask_ids": [
@@ -8678,6 +9688,14 @@
         "D03",
         "D04",
         "D05"
+      ],
+      "execution_work_package": "WP05",
+      "execution_wp_dependencies": [
+        "WP02",
+        "WP04"
+      ],
+      "inherited_decision_ids": [
+        "D04"
       ]
     },
     {
@@ -8737,7 +9755,7 @@
         "lifecycle": "Requirements",
         "agent": "Worker — Torsten Maier",
         "dependencies_text": "WP02 #2; WP04 #4; TK63 #161; TK66 #164; TK03 #270; TK05 #272",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
@@ -8748,6 +9766,14 @@
         "D03",
         "D04",
         "D05"
+      ],
+      "execution_work_package": "WP05",
+      "execution_wp_dependencies": [
+        "WP02",
+        "WP04"
+      ],
+      "inherited_decision_ids": [
+        "D04"
       ]
     },
     {
@@ -8807,7 +9833,7 @@
         "lifecycle": "Requirements",
         "agent": "Worker — Torsten Maier",
         "dependencies_text": "WP02 #2; WP04 #4; TK63 #161; TK66 #164; TK03 #270; TK05 #272",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
@@ -8818,6 +9844,14 @@
         "D03",
         "D04",
         "D05"
+      ],
+      "execution_work_package": "WP05",
+      "execution_wp_dependencies": [
+        "WP02",
+        "WP04"
+      ],
+      "inherited_decision_ids": [
+        "D04"
       ]
     },
     {
@@ -8872,7 +9906,7 @@
         "lifecycle": "Requirements",
         "agent": "Worker — Torsten Maier",
         "dependencies_text": "TK66 #164; WP02 #2; WP04 #4; TK03 #270; TK05 #272",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "subtask_ids": [
@@ -8887,6 +9921,14 @@
         "D03",
         "D04",
         "D05"
+      ],
+      "execution_work_package": "WP05",
+      "execution_wp_dependencies": [
+        "WP02",
+        "WP04"
+      ],
+      "inherited_decision_ids": [
+        "D04"
       ]
     },
     {
@@ -8940,7 +9982,7 @@
         "lifecycle": "Requirements",
         "agent": "Worker — Torsten Maier",
         "dependencies_text": "WP02 #2; WP04 #4; TK66 #164; TK03 #270; TK05 #272",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
@@ -8951,6 +9993,14 @@
         "D03",
         "D04",
         "D05"
+      ],
+      "execution_work_package": "WP05",
+      "execution_wp_dependencies": [
+        "WP02",
+        "WP04"
+      ],
+      "inherited_decision_ids": [
+        "D04"
       ]
     },
     {
@@ -9004,7 +10054,7 @@
         "lifecycle": "Requirements",
         "agent": "Worker — Torsten Maier",
         "dependencies_text": "WP02 #2; WP04 #4; TK66 #164; TK03 #270; TK05 #272",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
@@ -9015,6 +10065,14 @@
         "D03",
         "D04",
         "D05"
+      ],
+      "execution_work_package": "WP05",
+      "execution_wp_dependencies": [
+        "WP02",
+        "WP04"
+      ],
+      "inherited_decision_ids": [
+        "D04"
       ]
     },
     {
@@ -9077,7 +10135,7 @@
         "lifecycle": "Requirements",
         "agent": "User Tester — Abt Hermann",
         "dependencies_text": "TK57 #155; TK58 #156; WP01 #1; WP02 #2; WP03 #3; WP04 #4; WP05 #5; TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "subtask_ids": [
@@ -9087,6 +10145,17 @@
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
       "required_decision_gates": [
+        "D04"
+      ],
+      "execution_work_package": "WP06",
+      "execution_wp_dependencies": [
+        "WP01",
+        "WP02",
+        "WP03",
+        "WP04",
+        "WP05"
+      ],
+      "inherited_decision_ids": [
         "D04"
       ]
     },
@@ -9148,12 +10217,23 @@
         "lifecycle": "Requirements",
         "agent": "User Tester — Abt Hermann",
         "dependencies_text": "WP01 #1; WP02 #2; WP03 #3; WP04 #4; WP05 #5; TK57 #155; TK58 #156; TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
       "required_decision_gates": [
+        "D04"
+      ],
+      "execution_work_package": "WP06",
+      "execution_wp_dependencies": [
+        "WP01",
+        "WP02",
+        "WP03",
+        "WP04",
+        "WP05"
+      ],
+      "inherited_decision_ids": [
         "D04"
       ]
     },
@@ -9215,12 +10295,23 @@
         "lifecycle": "Requirements",
         "agent": "User Tester — Abt Hermann",
         "dependencies_text": "WP01 #1; WP02 #2; WP03 #3; WP04 #4; WP05 #5; TK57 #155; TK58 #156; TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
       "required_decision_gates": [
+        "D04"
+      ],
+      "execution_work_package": "WP06",
+      "execution_wp_dependencies": [
+        "WP01",
+        "WP02",
+        "WP03",
+        "WP04",
+        "WP05"
+      ],
+      "inherited_decision_ids": [
         "D04"
       ]
     },
@@ -9287,7 +10378,7 @@
         "lifecycle": "Requirements",
         "agent": "User Tester — Abt Hermann",
         "dependencies_text": "TK61 #159; WP01 #1; WP02 #2; WP03 #3; WP04 #4; WP05 #5; TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "subtask_ids": [
@@ -9297,6 +10388,18 @@
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
       "required_decision_gates": [
+        "D04",
+        "D05"
+      ],
+      "execution_work_package": "WP06",
+      "execution_wp_dependencies": [
+        "WP01",
+        "WP02",
+        "WP03",
+        "WP04",
+        "WP05"
+      ],
+      "inherited_decision_ids": [
         "D04",
         "D05"
       ]
@@ -9363,12 +10466,24 @@
         "lifecycle": "Requirements",
         "agent": "User Tester — Abt Hermann",
         "dependencies_text": "WP01 #1; WP02 #2; WP03 #3; WP04 #4; WP05 #5; TK61 #159; TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
       "required_decision_gates": [
+        "D04",
+        "D05"
+      ],
+      "execution_work_package": "WP06",
+      "execution_wp_dependencies": [
+        "WP01",
+        "WP02",
+        "WP03",
+        "WP04",
+        "WP05"
+      ],
+      "inherited_decision_ids": [
         "D04",
         "D05"
       ]
@@ -9435,12 +10550,24 @@
         "lifecycle": "Requirements",
         "agent": "User Tester — Abt Hermann",
         "dependencies_text": "WP01 #1; WP02 #2; WP03 #3; WP04 #4; WP05 #5; TK61 #159; TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
       "required_decision_gates": [
+        "D04",
+        "D05"
+      ],
+      "execution_work_package": "WP06",
+      "execution_wp_dependencies": [
+        "WP01",
+        "WP02",
+        "WP03",
+        "WP04",
+        "WP05"
+      ],
+      "inherited_decision_ids": [
         "D04",
         "D05"
       ]
@@ -9503,7 +10630,7 @@
         "lifecycle": "Requirements",
         "agent": "User Tester — Abt Hermann",
         "dependencies_text": "TK64 #162; WP01 #1; WP02 #2; WP03 #3; WP04 #4; WP05 #5; TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "subtask_ids": [
@@ -9513,6 +10640,17 @@
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
       "required_decision_gates": [
+        "D04"
+      ],
+      "execution_work_package": "WP06",
+      "execution_wp_dependencies": [
+        "WP01",
+        "WP02",
+        "WP03",
+        "WP04",
+        "WP05"
+      ],
+      "inherited_decision_ids": [
         "D04"
       ]
     },
@@ -9573,12 +10711,23 @@
         "lifecycle": "Requirements",
         "agent": "User Tester — Abt Hermann",
         "dependencies_text": "WP01 #1; WP02 #2; WP03 #3; WP04 #4; WP05 #5; TK64 #162; TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
       "required_decision_gates": [
+        "D04"
+      ],
+      "execution_work_package": "WP06",
+      "execution_wp_dependencies": [
+        "WP01",
+        "WP02",
+        "WP03",
+        "WP04",
+        "WP05"
+      ],
+      "inherited_decision_ids": [
         "D04"
       ]
     },
@@ -9639,12 +10788,23 @@
         "lifecycle": "Requirements",
         "agent": "User Tester — Abt Hermann",
         "dependencies_text": "WP01 #1; WP02 #2; WP03 #3; WP04 #4; WP05 #5; TK64 #162; TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
       "required_decision_gates": [
+        "D04"
+      ],
+      "execution_work_package": "WP06",
+      "execution_wp_dependencies": [
+        "WP01",
+        "WP02",
+        "WP03",
+        "WP04",
+        "WP05"
+      ],
+      "inherited_decision_ids": [
         "D04"
       ]
     },
@@ -9734,7 +10894,7 @@
         "lifecycle": "Requirements",
         "agent": "User Tester — Abt Hermann",
         "dependencies_text": "TK67 #165; TK68 #166; WP01 #1; WP02 #2; WP03 #3; WP04 #4; WP05 #5; TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "subtask_ids": [
@@ -9744,6 +10904,18 @@
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
       "required_decision_gates": [
+        "D03",
+        "D04"
+      ],
+      "execution_work_package": "WP06",
+      "execution_wp_dependencies": [
+        "WP01",
+        "WP02",
+        "WP03",
+        "WP04",
+        "WP05"
+      ],
+      "inherited_decision_ids": [
         "D03",
         "D04"
       ]
@@ -9830,12 +11002,24 @@
         "lifecycle": "Requirements",
         "agent": "User Tester — Abt Hermann",
         "dependencies_text": "WP01 #1; WP02 #2; WP03 #3; WP04 #4; WP05 #5; TK67 #165; TK68 #166; TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
       "required_decision_gates": [
+        "D03",
+        "D04"
+      ],
+      "execution_work_package": "WP06",
+      "execution_wp_dependencies": [
+        "WP01",
+        "WP02",
+        "WP03",
+        "WP04",
+        "WP05"
+      ],
+      "inherited_decision_ids": [
         "D03",
         "D04"
       ]
@@ -9922,12 +11106,24 @@
         "lifecycle": "Requirements",
         "agent": "User Tester — Abt Hermann",
         "dependencies_text": "WP01 #1; WP02 #2; WP03 #3; WP04 #4; WP05 #5; TK67 #165; TK68 #166; TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
       "required_decision_gates": [
+        "D03",
+        "D04"
+      ],
+      "execution_work_package": "WP06",
+      "execution_wp_dependencies": [
+        "WP01",
+        "WP02",
+        "WP03",
+        "WP04",
+        "WP05"
+      ],
+      "inherited_decision_ids": [
         "D03",
         "D04"
       ]
@@ -10006,13 +11202,19 @@
         "lifecycle": "Requirements",
         "agent": "Primary Coordinator — Yi Tang",
         "dependencies_text": "TK03 #270; TK05 #272; WP02 #2; WP04 #4",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "subtask_ids": [],
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP05",
+      "execution_wp_dependencies": [
+        "WP02",
+        "WP04"
+      ],
+      "inherited_decision_ids": []
     },
     {
       "id": "TK74",
@@ -10110,7 +11312,7 @@
         "lifecycle": "Requirements",
         "agent": "Quality Manager — Wang Xiaofeng",
         "dependencies_text": "TK54 #152; TK59 #157; TK62 #160; TK65 #163; TK69 #167; TK71 #169; TK72 #170; TK73 #171; WP01 #1; WP02 #2; WP03 #3; WP04 #4; WP05 #5; TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "subtask_ids": [
@@ -10119,6 +11321,20 @@
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
       "required_decision_gates": [
+        "D02",
+        "D03",
+        "D04",
+        "D05"
+      ],
+      "execution_work_package": "WP06",
+      "execution_wp_dependencies": [
+        "WP01",
+        "WP02",
+        "WP03",
+        "WP04",
+        "WP05"
+      ],
+      "inherited_decision_ids": [
         "D02",
         "D03",
         "D04",
@@ -10213,12 +11429,26 @@
         "lifecycle": "Requirements",
         "agent": "Quality Manager — Wang Xiaofeng",
         "dependencies_text": "WP01 #1; WP02 #2; WP03 #3; WP04 #4; WP05 #5; TK54 #152; TK59 #157; TK62 #160; TK65 #163; TK69 #167; TK71 #169; TK72 #170; TK73 #171; TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
       "required_decision_gates": [
+        "D02",
+        "D03",
+        "D04",
+        "D05"
+      ],
+      "execution_work_package": "WP06",
+      "execution_wp_dependencies": [
+        "WP01",
+        "WP02",
+        "WP03",
+        "WP04",
+        "WP05"
+      ],
+      "inherited_decision_ids": [
         "D02",
         "D03",
         "D04",
@@ -10332,16 +11562,38 @@
         "lifecycle": "Requirements",
         "agent": "Primary Coordinator — Yi Tang",
         "dependencies_text": "TK01 #268; TK02 #269; TK03 #270; TK04 #271; TK05 #272; TK06 #273; WP01 #1; WP02 #2; WP03 #3; WP04 #4; WP05 #5",
-        "snapshot_utc": "2026-09-30T21:13:42.209058Z",
+        "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
         "reporting": "Explicit coordinator synchronization; GitHub is authoritative"
       },
       "subtask_ids": [],
       "planning_status": "Future assignment; gates apply",
       "priority": "P0",
-      "required_decision_gates": []
+      "required_decision_gates": [],
+      "execution_work_package": "WP06",
+      "execution_wp_dependencies": [
+        "WP01",
+        "WP02",
+        "WP03",
+        "WP04",
+        "WP05"
+      ],
+      "inherited_decision_ids": []
     }
   ],
-  "project_publication": "pending",
+  "project_publication": {
+    "state": "Independent Quality Manager publication QA PASS; final candidate confirmation reported on issue277/pull request",
+    "snapshot_utc": "2026-09-30T22:20:03.462238+00:00",
+    "records": 238,
+    "execution_orders": 159,
+    "ready_ids": [
+      "STK001",
+      "STK002",
+      "TK09"
+    ],
+    "future_records_backlog": 235,
+    "milestone_number": 1,
+    "automatic_runtime_sync": false
+  },
   "project_fields": {
     "wave": "PVTF_lAHOEw4Lss4BlKTozhj-Rck",
     "order": "PVTF_lAHOEw4Lss4BlKTozhj-Rco",

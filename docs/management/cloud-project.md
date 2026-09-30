@@ -4,7 +4,7 @@ Target name: **DATARA**. Repository: **fengguode/DATARA**. Purpose: project mana
 
 ## Creation status
 
-Cloud environment creation is pending authenticated access. Repository configuration documents do not themselves create a Codex cloud environment, and a GitHub issue hub is not a GitHub Projects board.
+Created and verified in the Codex UI on 30 September 2026: [DATARA environment](https://chatgpt.com/codex/cloud/settings/environment/6abc9f6b878c8191bca11872a839a62a). It connects only fengguode/DATARA, uses the universal image, has no added secrets or environment variables, and keeps agent internet access disabled. Setup and maintenance both run `python3 scripts/check_requirements.py`. Runtime execution is verified separately through task results. The GitHub control hub is not a GitHub Projects board.
 
 ## Setup specification
 

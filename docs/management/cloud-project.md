@@ -24,3 +24,7 @@ Read AGENTS.md and docs/management/README.md. Work on WP01, linked from the mana
 Every task names its work package, requirements, dependencies, outputs, and acceptance evidence. Update the linked issue when blocked or ready for review. Link PRs and commit IDs in the management record. GitHub is the durable record; cloud chat history supplements it. Do not create a second project for system engineering or validation.
 
 These are coding and management environments, not production hosting for the Datara product.
+
+## First live cloud task
+
+[WP01 requirements engineering baseline](https://chatgpt.com/codex/cloud/tasks/task_e_6abca0195998832aaa109259bc4e8d6e) was launched in DATARA on 30 September 2026. The cloud setup executed the registry checker successfully: 13 product requirements, 26 system requirements, and 18 planned cases. This is management-registry integrity evidence only. The task is running; product verification and final user validation remain not run.

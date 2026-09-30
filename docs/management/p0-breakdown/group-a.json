@@ -835,7 +835,8 @@
         "STK016"
       ],
       "acceptance_criteria": [
-        "On the fixed candidate, reload originals, re-import identical bytes and submit approved conflict fixtures; oracle: integrity/source links resolve, duplicate count is unchanged, conflict remains visible, and actual results/limits are recorded."
+        "On the fixed candidate, reload originals, re-import identical bytes and submit approved conflict fixtures; oracle: integrity/source links resolve, duplicate count is unchanged, conflict remains visible, and actual results/limits are recorded.",
+        "Record a keyboard-only and semantic/text inspection of duplicate and conflict states, including whether names, status and reason are available without color; mark each check pass/fail/blocked and leave any required standard or conformance decision open under D05."
       ],
       "outputs": [
         "Candidate-specific TC02/TC03/TC22 verification record"
@@ -1172,7 +1173,8 @@
         "STK028"
       ],
       "acceptance_criteria": [
-        "On the fixed candidate, inspect narrow scope, envelope and rendered labels; oracle: included values are declared/in-scope with resolvable lineage, absent optional data is not zero, and negative secret/out-of-scope examples reject; record actual evidence."
+        "On the fixed candidate, inspect narrow scope, envelope and rendered labels; oracle: included values are declared/in-scope with resolvable lineage, absent optional data is not zero, and negative secret/out-of-scope examples reject; record actual evidence.",
+        "Record keyboard-only and semantic/text inspection of scope, provenance, readiness and unavailable-value states; mark each check pass/fail/blocked and leave any required standard or conformance decision open under D05."
       ],
       "outputs": [
         "Candidate-specific TC05/TC20/TC23 verification record"
@@ -2598,8 +2600,8 @@
           ]
         },
         "accessibility": {
-          "applicability": "applicable",
-          "rationale": "History needs distinct duplicate and unresolved-conflict states.",
+          "applicability": "unknown",
+          "rationale": "SR33 covers distinct duplicate and unresolved-conflict outcomes, but semantic, text-only and keyboard coverage has not been assessed. TK16 will record those applicability checks and any remaining D05 decision; no conformance claim is made.",
           "sr_ids": [
             "SR33"
           ],
@@ -2685,14 +2687,15 @@
           ]
         },
         "accessibility": {
-          "applicability": "applicable",
-          "rationale": "Readiness, selected scope, value class and missing data are user-facing.",
+          "applicability": "unknown",
+          "rationale": "SR34 covers scope, provenance and unavailable values, but semantic, text-only and keyboard coverage has not been assessed. TK22 will record those applicability checks and any remaining D05 decision; no conformance claim is made.",
           "sr_ids": [
             "SR34"
           ],
           "task_ids": [
             "TK18",
-            "TK19"
+            "TK19",
+            "TK22"
           ]
         },
         "operations_backup_retention_recovery": {

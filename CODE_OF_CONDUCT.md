@@ -64,11 +64,21 @@ Examples:
 
 **Model evidence.** State the model a run observed. If the run cannot observe its loaded model, state that run's configured model and keep the existing `Configuration loading:` line. If neither is verifiable, use `model-unconfirmed`. Use `harness-unconfirmed` when the runtime is not observable. Never infer a model or harness from a role label, and never present a configured value as an observed one.
 
-**Where the label applies.** Issue and pull request comments, commit attribution trailers, pull request contribution tables, and assignment and handoff records. Each of these also records a `Model used:` value, which is where the model and harness are captured when the full label is not the point being made.
+**Where the label applies.** Issue and pull request comments, commit attribution trailers, pull request contribution tables, and assignment and handoff records. Each of these also records a separate `Model used:` value, which is the machine-readable form and the one to consume programmatically.
+
+**`Model used:` structure.** Write it as explicit key/value pairs, never as a free-text token:
+
+```text
+Model used: model=<provider/model-id> variant=<token> harness=<Harness>
+Model used: model-unconfirmed
+Model used: harness-unconfirmed
+```
+
+The provider model ID is written in full, including its provider prefix, so `opencode/space-bunny-free` and `gpt-6.1-sol` are unambiguous. `variant` is the provider variant or, for Codex, the `model_reasoning_effort` value. Because the keys are explicit, this value is recoverable by splitting on `=` and then on the first `/`; the label is not. In commit trailers the same value is written with a hyphenated key, `Model-used:`, so that trailers remain valid `git interpret-trailers` metadata; the two spellings carry identical content.
 
 **Where it does not apply.** The Project **Agent** field stays the roster's `Role — Name`, because it records ownership rather than a run's model; a single-select field cannot hold one value per role, model, and harness combination. GitHub repository labels also stay `Role — Name`. Historical commits, comments, dated review records, and the `agent` and `owner_role` fields in `requirements-registry.json` are preserved exactly as written and are not restated under this rule.
 
-**The label is a display string, not a machine key.** Role and name split reliably on ` — `, and the harness is the final `_`-delimited field. The boundary between model and variant is not recoverable, because `-` occurs inside model IDs such as `space-bunny-free` and `gpt-6.1-sol`. Do not parse a model or variant out of a published label; read the `Model used:` value instead.
+**The label is a display string, not a machine key.** The separator is an em dash (U+2014) with one space on each side; an ASCII hyphen, en dash or figure dash is non-conforming. For current roster values, role and name split on the em dash, and the final `_`-delimited field is `Harness (AI agent)`. The boundary between model and variant is **not** recoverable, because `-` also occurs inside model IDs such as `space-bunny-free` and `gpt-6.1-sol`. Never parse a model or variant out of a published label; read the `Model used:` value instead.
 
 The label identifies the persona and its runtime only. It does not prove participation, native activation, independent review, acceptance or release, and it does not alter Git author and committer identities.
 

@@ -30,7 +30,7 @@ Run `python scripts/check_requirements.py` for registry changes. Run `python -X 
 
 ## Agent team
 
-Follow [pull request confirmation responsibilities](docs/team/pull-request-confirmation.md). The founder gives final confirmation for CUS-level changes; other pull requests use the dedicated role for their scope, with independent review and applicable evidence gates. Primary Coordinator — Yi Tang records the final confirmer, role/name labels, commit attribution, and Project-management changes.
+Follow [pull request confirmation responsibilities](docs/team/pull-request-confirmation.md). The founder gives final confirmation for CUS-level changes; other pull requests use the dedicated role for their scope, with independent review and applicable evidence gates. Primary Coordinator — Yi Tang records the final confirmer, the applicable label form, commit attribution, and Project-management changes.
 
 Use [the named attribution protocol](docs/team/attribution.md) for assignments, comments, commits, and pull request contribution tables. Identify each agent by the identity label defined in [the Code of Conduct](CODE_OF_CONDUCT.md#agent-identity-labels), which is the roster role and configured name plus the model used and the harness, and link actual runtime evidence when available. Distinguish contributor, integrator, and authenticated publisher. The primary maintains the Project Agent field, which records ownership only and stays in the short `Role — Name` form. Preserve existing permission limits and historical identities; do not infer a contribution from a role label alone.
 

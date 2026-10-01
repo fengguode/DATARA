@@ -12,7 +12,7 @@ GitHub's authenticated account remains the publisher of comments and pushes. The
 
 ## Identity label format
 
-Publish an agent identity in the canonical form defined in the [Code of Conduct](../CODE_OF_CONDUCT.md#agent-identity-labels), as `<Role> — <Configured name>_<model>-<variant>_<Harness> (AI agent)`. The persona, the model used, and the harness are visible in one label. That section defines the field rules, the model-evidence ladder, the applicable and non-applicable surfaces, and the limit that the label is a display string rather than a machine key. It supplements this agreement and does not replace it.
+Publish an agent identity in the canonical form defined in the [Code of Conduct](../../CODE_OF_CONDUCT.md#agent-identity-labels), as `<Role> — <Configured name>_<model>-<variant>_<Harness> (AI agent)`. The persona, the model used, and the harness are visible in one label. That section defines the field rules, the model-evidence ladder, the applicable and non-applicable surfaces, and the limit that the label is a display string rather than a machine key. It supplements this agreement and does not replace it.
 
 Worked labels for every roster role:
 
@@ -48,7 +48,7 @@ Evidence requested: <checks, files, and findings>
 Branch / pull request: <links, or pending>
 Runtime agent ID / execution: <actual ID/link, or unavailable>
 Runtime state: <assigned, running, blocked, completed, interrupted>
-Model used: <model>-<variant> (<Harness>), model-unconfirmed, or harness-unconfirmed
+Model used: model=<provider/model-id> variant=<token> harness=<Harness>  (or: model-unconfirmed / harness-unconfirmed)
 Configuration loading: <observed evidence, or unconfirmed>
 ```
 
@@ -63,7 +63,7 @@ Worker — Torsten Maier_space-bunny-free-max_OpenCode (AI agent) · Implementat
 Published by: Primary Coordinator — Yi Tang_gpt-6-luna-medium_Codex (AI agent), relaying the Worker's report
 Assignment: #<issue> / <assignment ID>
 Runtime agent ID / execution: <actual ID/link, or unavailable>
-Model used: <model>-<variant> (<Harness>), model-unconfirmed, or harness-unconfirmed
+Model used: model=<provider/model-id> variant=<token> harness=<Harness>  (or: model-unconfirmed / harness-unconfirmed)
 Outcome: <concrete result>
 Contribution: <changed paths, purpose, and commit/diff links>
 Validation: <actual commands/results and evidence links>
@@ -85,8 +85,9 @@ Describe the behavior and paths changed by this contribution.
 Implemented-by: Worker — Torsten Maier_space-bunny-free-max_OpenCode (AI agent)
 Integrated-by: Primary Coordinator — Yi Tang_gpt-6-luna-medium_Codex (AI agent)
 Assignment: #<issue> / <assignment ID>
+Work package / CUS / SR: <IDs, or no product scope changes>
 Agent-run: <actual ID/link, or unavailable>
-Model-used: <model>-<variant> (<Harness>), model-unconfirmed, or harness-unconfirmed
+Model-used: model=<provider/model-id> variant=<token> harness=<Harness>  (or: model-unconfirmed / harness-unconfirmed)
 ```
 
 Use `Contributed-by` for documentation or other non-implementation contributions. Use `Implemented-by` for actual implementation. A reviewer who supplies findings is recorded in the review table/comment, not automatically as an implementation author. These are searchable metadata trailers, not signatures or GitHub account attribution. GitHub `Co-authored-by` is reserved for real account-linked attribution with the contributor's authorized email; never invent or borrow a person's address. Preserve historical commit identities and comments. Any retrospective contribution summary must cite existing evidence and label unavailable attribution rather than rewriting history.

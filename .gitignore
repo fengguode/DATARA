@@ -11,7 +11,21 @@
 # Personal FIT telemetry. A FIT file carries device serial numbers, GPS traces,
 # physiological values and exact timestamps, so it can identify the athlete who
 # produced it. Never commit one to this public repository. Both cases are listed
-# because ignore matching is case-sensitive on Linux and macOS.
+# because ignore matching is case-sensitive on Linux and macOS; mixed case such
+# as .Fit is not covered and must not be relied on.
+#
+# Known limits, recorded rather than left as a trap:
+#   - `git add -f` overrides every rule here. This file is a guard against
+#     accident, not an access control.
+#   - A renamed or double-extension file, such as activity.fit.bak, is not
+#     matched by the extension rules.
+#   - This blocks DATARA's own future synthetic fixtures too, because no
+#     fixture is currently cleared for publication: FIX01-FIX04 in
+#     docs/management/source-evidence/fixture-provenance.md all carry
+#     unresolved rights and no acquired binary. That is the correct state
+#     today. When a fixture is cleared, this rule must be narrowed in the same
+#     change that adds the fixture, with the rights decision cited, rather than
+#     worked around with git add -f.
 *.fit
 *.FIT
 /demo_file/

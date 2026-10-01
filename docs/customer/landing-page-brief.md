@@ -66,6 +66,12 @@ These capabilities are planned; they are not released features.
 
 The [GitHub Project](https://github.com/users/fengguode/projects/3) is the live task-status source and may require access. If a visitor cannot open it, the page must still show its dated maturity summary and link to the public repository [issue list](https://github.com/fengguode/DATARA/issues). Do not describe the board as publicly accessible until access is verified. Planning completion does not mean a product feature is available.
 
+**Feature-illusion constraint on this page.** This page must never present a capability as working unless it is working, and must never imply more capability than exists. No mock, placeholder, sample output, or screenshot of non-running software may appear as a product result, and no wording, image, navigation element or workflow may lead a reasonable reader to believe a feature exists or is available when it does not. The test is what the reader would conclude after reading the page, not what the words literally say.
+
+This constrains illustration as much as claim. A placeholder screenshot, a mock dashboard, or a worked example that was not produced by the real system is prohibited on this page, because a visitor cannot distinguish it from a real one. Where a capability is planned but unbuilt, the page says so in the same place and at the same time as any related mention, rather than in a footnote.
+
+The rule is maintained at [the project wiki](https://github.com/fengguode/DATARA/wiki/Feature-Illusion-Rule), which is its source of truth. If this brief and the wiki disagree, the wiki governs and this brief is the defect.
+
 ### Data and model expectations
 
 The product direction is to keep original uploads linked to normalized records, prepare data without model calls, and isolate each user's files, credentials and results. An analysis (called a “skill” in the project records) is eligible when the selected data meets its stated input needs. For analysis, the user chooses a supported provider connection and supplies their own account/API access. Provider support, credential handling, retention period and deployment environment remain undecided.

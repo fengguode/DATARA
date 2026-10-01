@@ -5,6 +5,7 @@ The **Primary Coordinator — Yi Tang** coordinates and integrates work and owns
 | Role | Definition | Responsibility | Default edit authority |
 | --- | --- | --- | --- |
 | Primary Coordinator — Yi Tang | `.codex/config.toml` | Assignment, integration, GitHub activity/status updates, decisions, final handoff | Assigned task scope |
+| Product Manager — Yu Wang | `.codex/agents/product_manager.toml` | Product consistency, customer documentation, expectation management, landing-page product content and maintenance | Assigned product/customer documentation only |
 | System Architect — Feng Guo | `.codex/agents/system_architect.toml` | Requirements and architecture | Assigned blueprint files only |
 | Explorer — Wang Licun | `.codex/agents/explorer.toml` | Source and code investigation | Read only |
 | UI Designer — Wu Yunzhou | `.codex/agents/ui_designer.toml` | Predefined dashboard and user flows | Assigned design blueprints only |
@@ -17,7 +18,7 @@ The **Primary Coordinator — Yi Tang** coordinates and integrates work and owns
 
 The founder named the Primary Coordinator persona **Yi Tang** on 30 September 2026. Historical reports and commits may retain its former label, Codex; the runtime/client remains Codex and the authenticated GitHub publisher remains unchanged.
 
-The source team's names, model choices, reasoning settings, and specified sandbox modes are retained. Role names identify configuration personas; they do not establish that the named people participated in DATARA or reviewed its work.
+The source team's names, model choices, reasoning settings, and specified sandbox modes are retained. Role names identify configuration personas; they do not establish that the named people participated in DATARA or reviewed its work. Yu Wang requests gpt-6.1-sol at medium reasoning effort; activation through the repository native role loader has not been confirmed.
 
 The Project **Agent** options use `Role — Configured name`, for example `Worker — Torsten Maier` and `Primary Coordinator — Yi Tang`. Use these names in issue assignments and activity comments under the [attribution protocol](attribution.md). Actual runtime IDs and execution evidence are recorded separately; GitHub publishes comments under the authenticated account.
 

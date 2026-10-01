@@ -124,10 +124,17 @@ PRESERVE = {
 }
 
 # Directories whose contents are dated review records rather than live templates.
-# A blanket prefix would silently accept a new file forever with a generic
-# reason, so a file under one of these is exempt only if its own name carries an
-# ISO date. An undated or newly invented file must be added to PRESERVE above
-# with its own reason, or it is reported as a defect.
+# A blanket prefix would silently accept a new file forever, so a file under one
+# of these is exempt only if its own name carries a real ISO date.
+#
+# Stated limit, which a previous version of this comment denied: a file under
+# docs/team/reviews/ whose name carries any real date earns the exemption with the
+# generic reason "dated review record", so a newly invented file is accepted in one
+# keystroke by naming it with a date. That is weaker than the PRESERVE list above,
+# which requires a per-file reason. The residual is deliberate: these are dated
+# records of completed runs, the directory is review-only, and requiring a real
+# date still rejects the shapes that matter. Tighten it by moving each reviewed
+# file into PRESERVE with its own reason, and the prefix rule with it.
 PRESERVE_PREFIXES = ("docs/team/reviews/",)
 # A dated review record must carry a real calendar date in its own file name.
 # A bare \d{4}-\d{2}-\d{2} also matches impossible dates such as 2026-99-99 and
@@ -636,6 +643,9 @@ def main() -> int:
     print("that a role was natively loaded, that a run occurred, or that any product")
     print("behavior is verified.")
     print("Exit status: 0 pass, 1 defect found, 2 not fully checked (see --allow-skip).")
+    print("Known limits: a label carrying a forbidden '/' or '#' in the model slot, and a")
+    print("lowercase role name, are neither accepted nor reported. A file under")
+    print("docs/team/reviews/ is exempt on a real date alone, without its own reason.")
 
     if defects or wrong_dash or trailer_bad:
         return 1

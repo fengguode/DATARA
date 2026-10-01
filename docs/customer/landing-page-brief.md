@@ -98,7 +98,7 @@ Neither journey implies account signup, file upload, API access or a live servic
 - Reduced-motion preferences are respected. Current-stage and roadmap copy remains understandable without graphics or animation.
 - Screen readers can identify the page title, section headings, status labels, link purpose and any form validation/error message.
 - Customer comprehension review confirms that planning, a mock or a proposed contract cannot be mistaken for a released capability.
-- The design must define whether feedback is an outbound issue link or an in-page form. No in-page form or alternate contact is implied by this draft. External links need a clear sign-in/access notice and an unavailable/permission-denied state.
+- This brief assumes an external repository issue link, matching the currently documented feedback route. Design its sign-in, permission-denied and unavailable states; do not add an in-page form or alternate contact route unless separately approved.
 
 These measurable criteria follow the [W3C WCAG 2.2 Recommendation](https://www.w3.org/TR/WCAG22/) and [Target Size (Minimum) guidance](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum). The target requires owner approval before design acceptance.
 

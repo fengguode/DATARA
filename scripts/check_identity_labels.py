@@ -29,6 +29,7 @@ import pathlib
 import re
 import subprocess
 import sys
+from datetime import date
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 
@@ -53,8 +54,12 @@ def short_form(dash: str) -> re.Pattern:
 
 
 def canonical(dash: str) -> re.Pattern:
+    # `harness-unconfirmed` is admitted because CODE_OF_CONDUCT.md:70,75 requires
+    # a run to downgrade only what it cannot verify and never to drop a key: a
+    # run that cannot observe its harness has no other conforming label to write.
     return re.compile(
-        rf"{ROLE} {dash} {NAME}_[A-Za-z0-9.\-]+_(?:Codex|OpenCode) \(AI agent\)")
+        rf"{ROLE} {dash} {NAME}_[A-Za-z0-9.\-]+_"
+        rf"(?:Codex|OpenCode|harness-unconfirmed) \(AI agent\)")
 
 
 OLD_ANY = short_form(ANY_DASH)
@@ -64,6 +69,13 @@ NEW_EM = canonical(re.escape(ONLY_EM))
 
 # Commit trailers that must carry the canonical label.
 TRAILER_KEYS = ("Contributed-by", "Implemented-by", "Integrated-by")
+
+# The `Model used:` trailer carries a different grammar and is validated
+# separately. CODE_OF_CONDUCT.md:66-77 requires explicit key/value pairs on one
+# line and states the bare sentinels are not valid standalone values, so a value
+# must be exactly the three keyed pairs with no spaces inside any of them.
+MODEL_USED = re.compile(
+    r"model=\S+ variant=\S+ harness=\S+")
 
 # Locations where the short form is correct and must not be rewritten. Each
 # entry carries its reason. This list is explicit by file so that any new
@@ -88,7 +100,24 @@ PRESERVE = {
 # ISO date. An undated or newly invented file must be added to PRESERVE above
 # with its own reason, or it is reported as a defect.
 PRESERVE_PREFIXES = ("docs/team/reviews/",)
-DATED_NAME = re.compile(r"\d{4}-\d{2}-\d{2}")
+# A dated review record must carry a real calendar date in its own file name.
+# A bare \d{4}-\d{2}-\d{2} also matches impossible dates such as 2026-99-99 and
+# digit runs inside a longer token, which would restore the blanket exemption
+# this rule exists to prevent, so the value is parsed as a date and the match
+# is anchored to the file-name stem.
+DATED_NAME = re.compile(r"(?:^|[^0-9])(\d{4})-(\d{2})-(\d{2})(?![0-9])")
+
+
+def dated_name(rel: str) -> bool:
+    """True when rel's file name carries a real YYYY-MM-DD date."""
+    stem = pathlib.PurePosixPath(rel).name
+    for match in DATED_NAME.finditer(stem):
+        try:
+            date(int(match.group(1)), int(match.group(2)), int(match.group(3)))
+        except ValueError:
+            continue  # not a real calendar date, e.g. month 99
+        return True
+    return False
 
 
 def git(*args: str) -> str:
@@ -109,7 +138,7 @@ def preserved(rel: str) -> bool:
     if rel in PRESERVE:
         return True
     if rel.startswith(PRESERVE_PREFIXES):
-        return bool(DATED_NAME.search(rel))
+        return dated_name(rel)
     return False
 
 
@@ -151,6 +180,54 @@ def self_test() -> bool:
                    + " <Configured name>_<model>-<variant>_<Harness> (AI agent)>")
     if OLD_ANY.search(placeholder):
         fail("placeholder slot reported as a real short-form identity")
+
+    # A label value must BE the label. search() would accept any of these,
+    # which is the defect that let a relaying note pass as an attribution.
+    good = f"Worker {EM} Torsten Maier_space-bunny-free-max_OpenCode (AI agent)"
+    if not NEW_EM.fullmatch(good):
+        fail("a well-formed canonical label was rejected by fullmatch")
+    for wrap, why in (
+        (good + " (relayed by Reviewer " + EM + " Dennis Windmaier (AI agent))",
+         "label plus a relaying note"),
+        ("work done by " + good + " yesterday", "label with surrounding prose"),
+        (good + " zzz qqq", "label with trailing tokens"),
+    ):
+        if NEW_EM.search(wrap) and NEW_EM.fullmatch(wrap):
+            fail(f"fullmatch accepted a non-conforming value: {why}")
+        elif not NEW_EM.search(wrap):
+            fail(f"search failed to find the embedded label: {why}")
+
+    # A run that cannot observe its harness must still have a publishable label.
+    if not NEW_EM.fullmatch(
+            f"Worker {EM} Torsten Maier_space-bunny-free-max_harness-unconfirmed (AI agent)"):
+        fail("harness-unconfirmed sentinel is not expressible in a label")
+
+    # The Model used: trailer has its own grammar and is enforced.
+    if not MODEL_USED.fullmatch("model=opencode/space-bunny-free variant=max harness=OpenCode"):
+        fail("a conforming Model used: value was rejected")
+    for bad_value, why in (
+        ("space-bunny-free-max (OpenCode)", "free text, not keyed pairs"),
+        ("model=opencode/space-bunny-free", "missing variant and harness"),
+        ("variant=max harness=OpenCode", "missing model"),
+        ("model= variant=max harness=OpenCode", "empty model value"),
+        ("model-unconfirmed", "bare sentinel, not a keyed value"),
+    ):
+        if MODEL_USED.fullmatch(bad_value):
+            fail(f"Model used: accepted an invalid value: {why}")
+
+    # The dated-review exemption must accept a real date and reject the shapes
+    # a bare digit pattern would wave through.
+    for rel, expected, why in (
+        ("docs/team/reviews/duplicate-options-review-2026-10-01.md", True, "real date"),
+        ("docs/team/reviews/notes-2026-10-01-x.md", True, "real date with suffix"),
+        ("docs/team/reviews/x-2026-99-99-9999.md", False, "impossible month/day"),
+        ("docs/team/reviews/x-2026-13-01.md", False, "month 13"),
+        ("docs/team/reviews/x-2026-02-30.md", False, "30 February"),
+        ("docs/team/reviews/report-1234-56-78-final.md", False, "digit run mid-token"),
+        ("docs/team/reviews/undated.md", False, "no date at all"),
+    ):
+        if dated_name(rel) is not expected:
+            fail(f"dated_name({rel!r}) should be {expected} ({why})")
 
     # Exercise the reporting path, not only the patterns. A previous revision
     # validated the patterns but crashed while printing the first real defect,
@@ -246,7 +323,23 @@ def scan_trailers(ref: str) -> list[tuple[str, str]]:
             if not sep or key.strip() not in TRAILER_KEYS:
                 continue
             value = value.strip()
-            if not NEW_EM.search(value):
+            # fullmatch, not search: a value that merely *contains* a canonical
+            # label ("<label> (relayed by ...)", "work done by <label> yesterday")
+            # is not itself a canonical label and must be reported.
+            if not NEW_EM.fullmatch(value):
+                bad.append((sha.strip()[:7], line.strip()))
+    # Model-used: is a separate key with its own grammar, so it is checked in
+    # its own pass rather than through the identity-label keys.
+    for record in log.split("\x1e"):
+        record = record.strip("\n")
+        if not record:
+            continue
+        sha, _, body = record.partition("\x1f")
+        for line in body.splitlines():
+            key, sep, value = line.partition(":")
+            if not sep or key.strip() != "Model-used":
+                continue
+            if not MODEL_USED.fullmatch(value.strip()):
                 bad.append((sha.strip()[:7], line.strip()))
     return bad
 

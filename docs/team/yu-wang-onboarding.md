@@ -4,7 +4,7 @@
 **Work package:** product/customer baseline and landing-page architecture handoff
 **Affected needs:** CUS01–CUS10 for P0 expectation and workflow accuracy; CUS11–CUS13 for clear P1 boundary; applicable SR records, with no change to canonical scope.
 **Coordinator:** Primary Coordinator — Yi Tang (Codex primary).
-**Current status:** active documentation work; no product implementation or publication.
+**Current status:** in review under draft PR [#281](https://github.com/fengguode/DATARA/pull/281); no product implementation or publication.
 
 ## Role and runtime
 
@@ -68,4 +68,4 @@ The table keeps requirement IDs out of customer copy while making each major cla
 
 ## Review and candidate evidence
 
-The initial read-only customer-comprehension, UI-design, feasibility, Reviewer and QM findings are recorded in docs/team/reviews/yu-wang-onboarding-review.md; each disposition is explicit. Candidate-SHA confirmations remain pending before draft-PR creation. Project fields are reconciled and read back on issue #279. Checks are documentation/configuration checks only; product verification, athlete validation, acceptance and release remain separate and not run.
+The read-only customer-comprehension, UI-design and feasibility findings, plus the independent Reviewer and Quality Manager confirmations, are recorded in docs/team/reviews/yu-wang-onboarding-review.md. The source-document candidate is fdd856d45254805e04457fcd673f2a221eedffa1; the evidence-record clarification was reviewed on e0cb8b5f47cbe7d114798c305ec698105f8663bb. Draft PR #281 is open and Project status is In review. Checks are documentation/configuration checks only; product verification, athlete validation, acceptance and release remain separate and not run.

@@ -3,8 +3,8 @@
 **Issue:** [#279](https://github.com/fengguode/DATARA/issues/279)
 **Branch:** codex/yu-wang-onboarding
 **Baseline:** main commit ca689afccb9a6887e789b2975bd953e396b03eae
-**Candidate under initial final review:** fdd856d45254805e04457fcd673f2a221eedffa1.
-**Final record candidate:** pending evidence update commit.
+**Source-document candidate:** fdd856d45254805e04457fcd673f2a221eedffa1.
+**Evidence-record candidate:** ce4bc1ad1124be8ffdb3875510030ab376099de4; this commit adds the review outcome and Project readback evidence to the source-document candidate.
 **Scope:** role onboarding, customer/product docs, progress and landing-page architecture handoff. CUS01–CUS13 / applicable SRs; no requirements modified.
 **Final process confirmer:** Quality Manager — Wang Xiaofeng.
 **Coordinator/integrator:** Primary Coordinator — Yi Tang (Codex primary).

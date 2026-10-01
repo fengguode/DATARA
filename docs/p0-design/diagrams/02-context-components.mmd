@@ -1,0 +1,47 @@
+%% Scope: proposed logical components and contracts; stack/provider choices remain D03/D05. Requirements: CUS01-CUS10, SR01-SR21, SR27-SR31.
+%% The authorization boundary wraps every entry point and propagates server-verified owner context; arrows to internal components denote gated calls, not an auth check in the UI alone.
+flowchart LR
+  athlete[Authenticated athlete UI]
+  client[External API client]
+  subgraph core[DATARA application boundary]
+    auth[Identity and authorization]
+    upload[Upload and import coordinator]
+    parser[FIT parser and deterministic normalizer]
+    store[(Owner-scoped data home)]
+    prep[Snapshot and metric builder]
+    skills[Versioned skill catalog]
+    eligible[Deterministic eligibility]
+    exec[Manual run orchestrator]
+    adapter[Selected model adapter]
+    secrets[(Secret boundary - owner scoped)]
+    validate[Output validator and evidence resolver]
+    results[(Append-only run/result history)]
+    read[Read resource service]
+    dashboard[Predefined dashboard]
+    api[Versioned read-only API]
+    ops[Audit, health, metrics and recovery controls]
+  end
+  provider[Selected customer model API]
+  athlete --> auth
+  client --> auth
+  auth --> upload
+  auth --> prep
+  auth --> eligible
+  auth --> exec
+  auth --> secrets
+  auth --> validate
+  auth --> read
+  upload --> parser --> store
+  store --> prep --> skills --> eligible
+  eligible --> exec
+  exec --> adapter --> provider
+  secrets --> adapter
+  adapter --> validate --> results
+  store --> validate
+  results --> read
+  store --> read
+  read --> dashboard
+  read --> api
+  upload -. operational events .-> ops
+  exec -. operational events .-> ops
+  read -. access events .-> ops

@@ -1,0 +1,35 @@
+%% Scope: sensitive data, trust boundaries and proposed controls; exact deployment controls await D03/D05. Requirements: CUS02-CUS10, SR03-SR21, SR28-SR31.
+flowchart LR
+  subgraph user_zone[Customer trust boundary]
+    fit[Uploaded FIT bytes]
+    browser[Authenticated UI / API client]
+    key[Customer model credential]
+  end
+  subgraph datara_zone[DATARA trusted service boundary]
+    auth[Authenticate; derive owner; authorize every resource]
+    ingest[Validate and normalize; safe diagnostics]
+    originals[(Private immutable originals)]
+    records[(Owner-scoped normalized history)]
+    snapshot[Scope-limited deterministic snapshot]
+    secretref[Secret reference; secret store access policy]
+    adapter[Selected adapter; no provider fallback]
+    validator[Schema + evidence validation]
+    results[(Append-only results and failures)]
+    output[Redacted authorized dashboard/API]
+    audit[Sanitized audit/ops telemetry]
+  end
+  subgraph provider_zone[Selected external provider boundary]
+    api[Customer-selected model API]
+  end
+  browser --> auth
+  fit --> auth --> ingest
+  ingest --> originals
+  ingest --> records --> snapshot
+  key -. secure onboarding .-> secretref
+  secretref --> adapter
+  snapshot --> adapter --> api --> validator
+  validator --> results --> output
+  auth -. deny/allow event .-> audit
+  ingest -. safe counters only .-> audit
+  adapter -. sanitized status, no key/payload .-> audit
+  output --> browser

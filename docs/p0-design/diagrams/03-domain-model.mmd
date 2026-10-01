@@ -1,0 +1,106 @@
+%% Scope: logical domain entities and invariants, not physical tables. Requirements: CUS01-CUS10, SR03-SR17, SR20-SR21, SR28-SR31.
+classDiagram
+  class User {
+    +UserId id
+  }
+  class SourceFile {
+    +Digest sha256
+    +Bytes immutableBytes
+    +ContractVersion sourceContract
+  }
+  class Import {
+    +ImportId id
+    +Disposition status
+    +ParserVersion parser
+  }
+  class Activity {
+    +ActivityId id
+    +Instant startUtc
+    +Decimal durationSeconds
+    +Sport sport
+  }
+  class ProvenanceRef {
+    +SourceOccurrence source
+    +FieldPath field
+  }
+  class Snapshot {
+    +SnapshotId id
+    +Digest digest
+    +Scope scope
+    +PreprocessVersion version
+  }
+  class Metric {
+    +MetricId id
+    +Value value
+    +MethodVersion method
+  }
+  class SkillVersion {
+    +SkillId id
+    +Version version
+    +InputSchema inputs
+    +OutputSchema outputs
+  }
+  class Eligibility {
+    +Boolean eligible
+    +RuleVersion version
+    +UnmetRequirement[] unmet
+  }
+  class ConnectionRef {
+    +ConnectionId id
+    +Provider provider
+    +ModelId model
+  }
+  class Run {
+    +RunId id
+    +State state
+    +Instant createdAt
+  }
+  class SelectedSkillExecution {
+    +SkillExecutionId id
+    +State state
+    +RuleVersion eligibilityVersion
+    +SafeError error
+  }
+  class AssessmentResult {
+    +ResultId id
+    +SchemaVersion schema
+    +Digest snapshotDigest
+  }
+  class RunFailureArtifact {
+    +FailureId id
+    +FailureClass class
+    +SafeError detail
+  }
+  class EvidenceRef {
+    +EvidenceId id
+    +SnapshotId snapshot
+    +Reference target
+  }
+  class Attempt {
+    +Outcome outcome
+    +SafeError error
+  }
+  class Finding {
+    +Classification class
+    +EvidenceRef[] evidence
+  }
+  User "1" --> "0..*" SourceFile : owns
+  User "1" --> "0..*" Import : owns
+  SourceFile "1" --> "0..*" Import : submitted as
+  Import "1" --> "0..*" Activity : normalizes
+  Activity "1" --> "1..*" ProvenanceRef : derived from
+  Snapshot "1" --> "1..*" Activity : freezes scope
+  Snapshot "1" --> "0..*" Metric : calculates
+  Metric "1" --> "1..*" ProvenanceRef : cites
+  SkillVersion "1" --> "0..*" SelectedSkillExecution : selected
+  Snapshot "1" --> "0..*" Eligibility : for
+  Run "1" --> "1" Snapshot : pins
+  Run "1" --> "1" ConnectionRef : pins explicit choice
+  Run "1" --> "1..*" SelectedSkillExecution : contains user-selected combination
+  Eligibility "1" --> "0..1" SelectedSkillExecution : allows only if eligible
+  SelectedSkillExecution "1" --> "1..*" Attempt : has
+  SelectedSkillExecution "1" --> "0..1" AssessmentResult : produces only after validation
+  SelectedSkillExecution "1" --> "0..1" RunFailureArtifact : may fail
+  AssessmentResult "1" --> "0..*" Finding : contains
+  Finding "1" --> "1..*" EvidenceRef : cites snapshot-bound evidence
+  ProvenanceRef "1" --> "0..*" EvidenceRef : target allowed only within owner and snapshot

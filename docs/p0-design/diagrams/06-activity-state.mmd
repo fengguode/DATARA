@@ -1,0 +1,17 @@
+%% Scope: eligibility and manual run lifecycle over an existing approved snapshot. Import behavior is diagrammed in 05-sequences.mmd. Requirements: CUS03-CUS08, SR05-SR17, SR28-SR30.
+flowchart TD
+  start([Select existing data scope and skill combination]) --> owner{Authenticated owner?}
+  owner -- no --> deny[Reject unauthenticated request]
+  owner -- yes --> prep[Build versioned deterministic snapshot]
+  prep --> eligibility[Evaluate skill rules deterministically]
+  eligibility --> enough{All required inputs/coverage available?}
+  enough -- no --> explain[Ineligible + unmet rules; zero model calls]
+  enough -- yes --> choose[User confirms all eligible skills, scope, one connection/model]
+  choose --> pin[Pin Run and one child execution per selected skill]
+  pin --> invoke[Invoke selected adapter for each child]
+  invoke --> outcome{Response valid and evidence resolves?}
+  outcome -- no --> failed[Append failed child and safe failure artifact]
+  outcome -- yes --> saved[Append validated child result and lineage]
+  failed --> aggregate[Derive aggregate Run state: failed, partial, or succeeded]
+  saved --> aggregate
+  aggregate --> read[Authorized dashboard/API reads saved data]

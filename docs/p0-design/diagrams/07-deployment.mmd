@@ -1,0 +1,33 @@
+%% Scope: logical environments only. Concrete runtime, network and vendor topology are D05 open. Requirements: CUS06-CUS10, SR12-SR21, SR30-SR31.
+flowchart TB
+  subgraph local[Developer / CI environment]
+    source[Versioned application and skill contracts]
+    fixtures[Approved synthetic fixtures]
+    checks[Build, unit, contract and security checks]
+  end
+  subgraph deploy[Chosen DATARA deployment boundary - D05]
+    edge[HTTPS ingress / request limits]
+    app[Application services]
+    identity[Identity provider or approved identity service]
+    db[(Persistent owner-scoped records)]
+    blob[(Private immutable original storage)]
+    vault[(Secret store / KMS boundary)]
+    telemetry[Sanitized logs, metrics, audit and alerts]
+    backup[Encrypted backup and tested restore]
+  end
+  customer[Customer browser / external API client]
+  model[Explicitly selected customer provider]
+  operator[Authorized operations role]
+  source --> checks
+  checks -. reviewed artifact .-> app
+  customer --> edge --> app
+  app --> identity
+  app --> db
+  app --> blob
+  app --> vault
+  app --> model
+  app --> telemetry
+  db --> backup
+  blob --> backup
+  operator --> telemetry
+  operator --> backup

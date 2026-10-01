@@ -52,7 +52,7 @@ Publish an agent identity as one canonical label that shows the persona, the mod
 - `<Role>` and `<Configured name>` are the [roster](docs/team/roster.md) values, unchanged.
 - `<model>` is the provider model ID with the provider prefix removed: `opencode/space-bunny-free` becomes `space-bunny-free`. Never include `/` or `#` inside a model token.
 - `<variant>` is the run's provider variant, or for Codex the `model_reasoning_effort` token. It is joined to the model with a single `-`: `gpt-6-luna` + `medium` gives `gpt-6-luna-medium`; `opencode/space-bunny-free` + `max` gives `space-bunny-free-max`.
-- `<Harness>` is `Codex` or `OpenCode`.
+- `<Harness>` is `Codex`, `OpenCode`, or `harness-unconfirmed`. The sentinel is required, not optional: a run that cannot observe which harness it is executing under must still publish a conforming label, so it downgrades this slot exactly as the `Model used:` value does. A label that omits the slot, or substitutes anything else, is not a canonical label.
 - The ` (AI agent)` suffix is part of the label and is never omitted.
 
 Examples:

@@ -182,6 +182,127 @@ def preserved(rel: str) -> bool:
     return rel in PRESERVE
 
 
+_IN_MAIN_PROBE = False
+
+
+def _assert_main_status(fail) -> None:
+    """Run main() in-process against fixtures and assert its exit status.
+
+    The wiring between main() and verdict() cannot be checked by calling verdict()
+    directly: three separate mutations of main()'s return statement -- a bare
+    `return 0`, a hardcoding of trailer_checked, and dropping one of the four
+    finding lists -- all left the self-test green while the gate exited 0 on a
+    tree carrying a real defect. Only running main() itself observes that path.
+
+    main() calls self_test(), so the nested call is suppressed by _IN_MAIN_PROBE:
+    without it this recurses until the run is killed. The nested call therefore
+    skips the self-test and proceeds straight to the scans, which is the code path
+    whose exit status is being asserted.
+    """
+    import contextlib
+    import io
+
+    global _IN_MAIN_PROBE
+    # Every case first neutralises the short form the shared fixture plants in
+    # docs/live.md. Without that, main() returns 1 for the baseline defect in
+    # every case, so a mutation that drops one finding list from the call is
+    # masked: the status is 1 for an unrelated reason. Each case must be able to
+    # return 0 when its own defect is the only one present, otherwise it cannot
+    # distinguish "caught" from "already failing".
+    neutral = {"docs/live.md": "# no identity here\n"}
+    for desc, files, expect in (
+        ("a planted unrecognised label",
+         {**neutral, "docs/bad.md": f"Worker {EM} Torsten Maier_opencode/space-bunny-free_OpenCode (AI agent)\n"}, 1),
+        ("a planted wrong-dash label",
+         {**neutral, "docs/dash.md": f"Worker - Torsten Maier_space-bunny-free-max_OpenCode (AI agent)\n"}, 1),
+        ("a planted live short form", {**neutral, "docs/extra.md": f"Reviewer {EM} Dennis Windmaier (AI agent)\n"}, 1),
+        # The clean case must remove the short form the shared fixture plants in
+        # docs/live.md, otherwise "clean" is not clean and main() is right to
+        # return 1. A clean fixture here is one the scan should pass, not one that
+        # merely avoids committing.
+        ("a clean tree", {"docs/live.md": "# no identity here\n"}, 0),
+    ):
+        root = None
+        global ROOT
+        saved_root, saved_argv = ROOT, sys.argv
+        try:
+            root = _fixture_repo(f"status-{len(files)}")
+            if files:
+                # Each file is planted under a name the shared fixture does not
+                # already track. Writing docs/live.md with the same content the
+                # fixture committed would be a no-op, and `git commit` then exits
+                # 1 on "nothing to commit" -- a failure that has nothing to do with
+                # the exit status under test.
+                for rel, body in files.items():
+                    p = root / rel
+                    p.parent.mkdir(parents=True, exist_ok=True)
+                    p.write_text(body, encoding="utf-8")
+                _git_in(root, "add", "-A")
+                _git_in(root, "commit", "--quiet", "-m", "planted")
+            # main() shells out through git() with -C ROOT, so the shim is what
+            # makes it inspect the fixture; base_ref() then resolves "main" there.
+            ROOT = _RootShim(root)
+            sys.argv = [sys.argv[0]]
+            _IN_MAIN_PROBE = True
+            try:
+                with contextlib.redirect_stdout(io.StringIO()):
+                    got = main()
+            finally:
+                _IN_MAIN_PROBE = False
+        except SystemExit as exc:  # main() must return, not exit
+            got = exc.code if isinstance(exc.code, int) else 1
+        except Exception as exc:  # noqa: BLE001
+            fail(f"main() raised {type(exc).__name__} for {desc}: {exc}")
+            got = -1
+        finally:
+            ROOT = saved_root
+            sys.argv = saved_argv
+            if root is not None:
+                _purge(root)
+        if got != expect:
+            fail(f"main() returned {got} for {desc}, expected {expect}")
+
+    # The skip branch must be asserted too. Every fixture above has a resolvable
+    # main, so none of them reaches it, which left hardcoding trailer_checked=True
+    # at main()'s call site invisible. This fixture renames its only branch so
+    # base_ref() finds nothing, and a clean tree must then yield 2, not 0.
+    root = None
+    saved_root, saved_argv = ROOT, sys.argv
+    try:
+        root = _fixture_repo("status-noref")
+        (root / "docs" / "live.md").write_text("# no identity here\n", encoding="utf-8")
+        _git_in(root, "add", "-A")
+        _git_in(root, "commit", "--quiet", "-m", "no base ref")
+        # Rename the branches base_ref() looks for, so it resolves nothing. Only
+        # `main` exists in a freshly initialised fixture, so master is handled
+        # separately and tolerantly.
+        _git_in(root, "branch", "-m", "main", "not-main")
+        _git_in(root, "branch", "-m", "master", "not-master") if (
+            subprocess.run(["git", "-C", str(root), "rev-parse", "--verify",
+                            "--quiet", "master"], capture_output=True).returncode == 0
+        ) else None
+        ROOT = _RootShim(root)
+        sys.argv = [sys.argv[0]]
+        _IN_MAIN_PROBE = True
+        try:
+            with contextlib.redirect_stdout(io.StringIO()):
+                got = main()
+        finally:
+            _IN_MAIN_PROBE = False
+    except SystemExit as exc:
+        got = exc.code if isinstance(exc.code, int) else 1
+    except Exception as exc:  # noqa: BLE001
+        fail(f"main() raised {type(exc).__name__} with no base ref: {exc}")
+        got = -1
+    finally:
+        ROOT = saved_root
+        sys.argv = saved_argv
+        if root is not None:
+            _purge(root)
+    if got != 2:
+        fail(f"main() returned {got} with no base ref, expected 2 (not checked)")
+
+
 def self_test() -> bool:
     """Confirm the patterns detect both forms and reject wrong dashes.
 
@@ -357,6 +478,65 @@ def self_test() -> bool:
             actual = verdict(*args)
         if actual != want:
             fail(f"verdict({desc}) returned {actual}, expected {want}")
+
+    # The exit status must be asserted through main() as well as through
+    # verdict(). Asserting the callee proved nothing about the wiring: replacing
+    # main()'s return with a bare `return 0`, hardcoding trailer_checked=True, or
+    # dropping one of the four finding lists from the call all left the self-test
+    # green while the gate exited 0 on a real defect -- the exact false green the
+    # verdict() extraction was meant to remove. So main() is now run in-process
+    # against a fixture carrying a planted defect.
+    _assert_main_status(fail)
+
+    # _looks_like_identity must be pinned by behaviour, not merely exercised. All
+    # six of its narrowing guards could previously be deleted with the self-test
+    # still green, and doing so made the check report the Code of Conduct's own
+    # grammar template and the attribution prose as defective -- the precise
+    # failure its docstring says must not happen. Both directions are asserted
+    # here, against the real documentation shapes.
+    # Each negative case is held by exactly ONE guard, so deleting any single
+    # guard fails exactly one case. Overlapping cases are what let all six guards
+    # be deleted with the self-test still green.
+    for line, should_match, held_by, why in (
+        # Guard 1 alone: bracketed slots, and none of the marker words present.
+        (f"<Role> {EM} <Configured name>_x-y_z (AI agent)",
+         False, "angle brackets", "a template slot, no marker words"),
+        # Guard 2 alone: a backtick, and no marker words, no angle brackets.
+        ("Publish it as `x-y_z` and stop (AI agent)",
+         False, "backtick", "a backticked field, no marker words"),
+        # Guard 3 alone: a marker word, no backtick, no angle brackets.
+        ("Worker - Torsten Maier_x-y_z is the machine key (AI agent)",
+         False, "marker word", "prose containing a marker word"),
+        # Guard 4 alone: carries the suffix and underscore fields, but contains no
+        # dash-like character at all, so no role-then-separator shape exists.
+        ("Worker: Torsten_x y_z (AI agent)", False, "role/dash shape",
+         "no role-then-separator shape"),
+        # Guard 5 alone: a dash and underscore-delimited fields, but no suffix.
+        (f"Worker {EM} Torsten Maier_x-y_OpenCode",
+         False, "the suffix anchor", "no (AI agent) suffix"),
+        # Guard 6 alone: a suffix and an underscore, but no underscore-delimited
+        # field pair, so the tail discriminator rejects it.
+        (f"Worker {EM} Torsten Maier OpenCode (AI agent)",
+         False, "underscore field", "no underscore-delimited field"),
+        # Positive cases: these must survive every guard.
+        (f"Worker {EM} Torsten Maier_space-bunny-free-max_OpenCode (AI agent)",
+         True, "-", "a conforming canonical label shape"),
+        (f"Worker {EM} Torsten Maier_opencode/space-bunny-free_OpenCode (AI agent)",
+         True, "-", "a forbidden slash in the model slot"),
+        (f"Worker {EM} Torsten Maier_space bunny max_OpenCode (AI agent)",
+         True, "-", "a space in the model token"),
+        (f"Worker {EM} Torsten Maier__OpenCode (AI agent)",
+         True, "-", "an empty model slot"),
+        (f"worker {EM} Torsten Maier_space-bunny-free-max_OpenCode (AI agent)",
+         True, "-", "a lowercase role"),
+        (f"Worker 2 {EM} Torsten Maier_space-bunny-free-max_OpenCode (AI agent)",
+         True, "-", "a role containing a digit"),
+        (f"Worker - Torsten Maier_space-bunny-free-max_OpenCode (AI agent)",
+         True, "-", "an ASCII-hyphen separator"),
+    ):
+        if _looks_like_identity(line) is not should_match:
+            fail(f"_looks_like_identity should be {should_match} for {why} "
+                 f"(held by guard: {held_by})")
 
     # The trailer path must be exercised at its call site, not only through the
     # patterns. Each case below asserts the EXPECTED verdict, so a regression
@@ -633,24 +813,34 @@ def _looks_like_identity(line: str) -> bool:
     underscore-delimited tail. A template has angle brackets or a backticked
     slot where a value belongs; prose about the grammar names the fields instead
     of supplying them.
+
+    Each guard below is pinned by a self-test case that ONLY it holds. That is not
+    redundancy for its own sake: with overlapping guards, deleting any one of them
+    was undetectable, because another guard happened to catch the same line. The
+    six cases in self_test are chosen so that removing any single guard makes
+    exactly one of them fail.
     """
+    # Guard 1: a template slot. A line with bracketed placeholders is a template,
+    # and nothing else in this function would reject one written without the words
+    # "template" or "suffix" in it.
     if "<" in line and ">" in line:
         return False
+    # Guard 2: a backticked field. Real published identities never contain one, and
+    # the documentation that quotes the grammar always does.
     if "`" in line:
         return False
+    # Guard 3: prose about the grammar. Checked case-sensitively against the exact
+    # field words, so a real label never matches.
     for marker in ("suffix", "separator", "delimited", "non-conforming",
                    "machine key", "recoverable", "template", "field rules"):
         if marker in line:
             return False
-    # Role-like, then a separator, then the tail. The separator class accepts any
-    # dash-like character, not only the em dash, because a label written with an
-    # ASCII hyphen or an en dash is precisely a wrong-dash label and must reach
-    # the reporting stage rather than be filtered out here as "not an identity".
-    # The role shape admits digits, so a role such as "Worker 2" is still an
-    # intended identity.
-    # Role-like, then a dash-like separator with optional surrounding spaces. The
-    # spaces are optional because a label written "Name<TAB>Model" is precisely a
-    # malformed label that must be reported, not filtered out as "not an identity".
+    # Guard 4: role-like, then a dash-like separator with optional surrounding
+    # spaces. The separator class accepts any dash-like character, not only the em
+    # dash, because a label written with an ASCII hyphen or an en dash is
+    # precisely a wrong-dash label and must reach the reporting stage. The spaces
+    # are optional because a label written without them is also malformed, not
+    # something to discard. The role shape admits digits.
     if not re.search(rf"[A-Za-z0-9][A-Za-z0-9 ]*\s?[-\u2010-\u2015\u2212]\s?", line):
         return False
     # The suffix is the reliable anchor, and the underscore-delimited fields must
@@ -819,9 +1009,13 @@ def main() -> int:
         print("(--allow-skip given: a skipped trailer scan will not fail the run)")
     print()
 
-    if not self_test():
-        print("Self-test failed; patterns are not trustworthy. No results reported.")
-        return 1
+    # Skipped on the nested call made by _assert_main_status, which exists to
+    # assert this function's own exit status; re-entering self_test() there would
+    # recurse until the run is killed.
+    if not _IN_MAIN_PROBE:
+        if not self_test():
+            print("Self-test failed; patterns are not trustworthy. No results reported.")
+            return 1
     print("Self-test passed: all 11 configured names detected in both forms,")
     print("wrong-dash labels detected and rejected, placeholder slots ignored,")
     print("report_findings unpacking consistent, every trailer key exercised,")

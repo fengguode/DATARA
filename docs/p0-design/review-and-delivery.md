@@ -6,7 +6,7 @@ Status: reviewed draft candidate. Branch: `codex/p0-architecture-test-design`. C
 
 | Role requested | Bounded scope / files | Runtime identity and actual contribution | Outcome |
 |---|---|---|---|
-| Primary Coordinator (Codex) | Integrate package; README, contracts, decisions, traceability, diagrams and review log | Runtime `win-dlf0f69f65u\codexsandboxoffline`; branch created after scoped Git metadata permission. | In progress; full diff and checks pending. |
+| Primary Coordinator (Codex) | Integrate package; README, contracts, decisions, traceability, diagrams and review log | Runtime `win-dlf0f69f65u\codexsandboxoffline`; branch created after scoped Git metadata permission. | Package checks and exact-candidate reviews complete; GitHub reporting and draft PR creation pending. |
 | System Architect (Feng Guo) | WP01–WP06 architecture baseline; `architecture-baseline.md` only | Runtime `/root/architecture_baseline`; authored proposal and explicit open-decision/perspective gaps. | Complete; no tests. |
 | Explorer (Wang Licun) | Read-only official/source evidence audit; no edits | Runtime `/root/evidence_audit`; completed memo integrated into `evidence-audit.md`. | Complete; no product checks. |
 | UI Designer (Wu Yunzhou) | WP05 dashboard states/accessibility proposal; `dashboard-contract.md` only | Runtime `win-dlf0f69f65u\codexsandboxoffline`; authored proposal and A1–A9 checks. | Complete; `git diff --check` reported pass for assigned file; browser/product tests not run. |

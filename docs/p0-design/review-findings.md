@@ -1,6 +1,6 @@
 # Review findings and disposition
 
-Status: review evidence for the current uncommitted design candidate on `codex/p0-architecture-test-design` (base `33f173b`). Reviewers inspected proposal files; they did not review a final candidate commit. Product tests and runtime checks were not performed. Runtime identities are recorded separately from role labels.
+Status: review evidence for candidate commit `968b37b29716cf84741160036704b22adbfc1039` on `codex/p0-architecture-test-design` (base `33f173b`). The technical, worker and quality reviews cover the exact candidate commit; release and controller notes are proposal-scope assessments. None are product tests or runtime checks. Runtime identities are recorded separately from role labels.
 
 ## Independent technical review — Dennis Windmaier role
 
@@ -13,7 +13,7 @@ Runtime identity: `/root/technical_review`. Read-only review of diagrams and pac
 | ER diagram claimed tenant constraints but did not show owner-safe references on child/join tables. | **Corrected logically:** owner-owned records now show composite `(owner_id, resource_id)` keys and owner context on provenance, snapshots, metrics, eligibility, attempts, results, findings and evidence. | Mermaid ER syntax cannot fully express composite foreign-key enforcement. D05 must select physical schema; TC14 needs persistence-level cross-tenant reference rejection. |
 | Sequence diagram showed one run-level result instead of per-skill outcomes and aggregation. | **Corrected:** sequence 05 creates one child per selected skill, validates/persists each child result/failure, then derives the aggregate state. | Exact retry, cancellation and async/restart semantics remain open; no renderer was available. |
 
-**Re-review status:** Dennis confirmed the four corrections in a second read-only review of the uncommitted proposal (runtime `/root/technical_review`); no new finding in that scope. The final candidate commit remains to be inspected before a pull request is presented. No approval is inferred for D01–D05 or product implementation.
+**Re-review status:** Dennis confirmed the four corrections in a read-only review of exact candidate commit `968b37b29716cf84741160036704b22adbfc1039` (runtime `/root/technical_review`). He found the proposal technically consistent and suitable for a draft PR, with no product verification implied. Torsten independently confirmed the commit boundary and that all TK01–TK07 remain Blocked (runtime `/root/worker_review`). No approval is inferred for D01–D05 or product implementation.
 
 ## Worker implementability review — Torsten Maier role
 
@@ -45,4 +45,4 @@ Runtime identity: `/root/quality_audit`. Read-only audit confirmed the package k
 
 ## Review control
 
-Current correction status is `addressed in draft; awaiting reviewer recheck`, not `confirmed`. Any later edit touching diagrams, schemas, decision status, traceability or test claims requires refreshed review for affected scope. The final PR must identify the reviewed commit SHA and link this evidence. If an issue remains unresolved, disposition it explicitly and keep dependent units blocked.
+The four technical corrections are confirmed in candidate commit `968b37b29716cf84741160036704b22adbfc1039`; worker and quality reviews also checked that exact candidate. These reviews support presenting a draft documentation PR only. Any later edit touching diagrams, schemas, decision status, traceability or test claims requires refreshed review for affected scope. If an issue remains unresolved, disposition it explicitly and keep dependent units blocked.

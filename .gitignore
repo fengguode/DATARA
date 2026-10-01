@@ -8,6 +8,14 @@
 /uploads/
 /local-data/
 
+# Personal FIT telemetry. A FIT file carries device serial numbers, GPS traces,
+# physiological values and exact timestamps, so it can identify the athlete who
+# produced it. Never commit one to this public repository. Both cases are listed
+# because ignore matching is case-sensitive on Linux and macOS.
+*.fit
+*.FIT
+/demo_file/
+
 # Local editor and operating system files
 .DS_Store
 Thumbs.db

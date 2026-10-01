@@ -48,7 +48,7 @@ Assignment / issue: <links>
 Reviewed head SHA: <full SHA>
 Scope and stage: <exact review responsibility>
 Independence: <reviewer is not an author; substitution if any>
-Model used: model=<provider/model-id> variant=<token> harness=<Harness>  (or: model-unconfirmed / harness-unconfirmed)
+Model used: model=<provider/model-id> variant=<token> harness=<Harness>
 Evidence and findings: <checks/results/links/limits>
 Runtime / execution: <actual ID/link or unavailable>
 Configuration loading: <observed or unconfirmed>

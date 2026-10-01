@@ -48,7 +48,7 @@ Evidence requested: <checks, files, and findings>
 Branch / pull request: <links, or pending>
 Runtime agent ID / execution: <actual ID/link, or unavailable>
 Runtime state: <assigned, running, blocked, completed, interrupted>
-Model used: model=<provider/model-id> variant=<token> harness=<Harness>  (or: model-unconfirmed / harness-unconfirmed)
+Model used: model=<provider/model-id> variant=<token> harness=<Harness>
 Configuration loading: <observed evidence, or unconfirmed>
 ```
 
@@ -63,7 +63,7 @@ Worker — Torsten Maier_space-bunny-free-max_OpenCode (AI agent) · Implementat
 Published by: Primary Coordinator — Yi Tang_gpt-6-luna-medium_Codex (AI agent), relaying the Worker's report
 Assignment: #<issue> / <assignment ID>
 Runtime agent ID / execution: <actual ID/link, or unavailable>
-Model used: model=<provider/model-id> variant=<token> harness=<Harness>  (or: model-unconfirmed / harness-unconfirmed)
+Model used: model=<provider/model-id> variant=<token> harness=<Harness>
 Outcome: <concrete result>
 Contribution: <changed paths, purpose, and commit/diff links>
 Validation: <actual commands/results and evidence links>
@@ -85,10 +85,15 @@ Describe the behavior and paths changed by this contribution.
 Implemented-by: Worker — Torsten Maier_space-bunny-free-max_OpenCode (AI agent)
 Integrated-by: Primary Coordinator — Yi Tang_gpt-6-luna-medium_Codex (AI agent)
 Assignment: #<issue> / <assignment ID>
-Work package / CUS / SR: <IDs, or no product scope changes>
+Work-package-CUS-SR: <IDs, or no product scope changes>
 Agent-run: <actual ID/link, or unavailable>
-Model-used: model=<provider/model-id> variant=<token> harness=<Harness>  (or: model-unconfirmed / harness-unconfirmed)
+Model-used: model=<provider/model-id> variant=<token> harness=<Harness>
 ```
+
+Two Git constraints apply, both verified with `git interpret-trailers --parse`:
+
+- A trailer key must match `[A-Za-z0-9-]+`. A key containing spaces or slashes, such as `Work package / CUS / SR:`, makes Git discard the **entire** trailer block rather than that one line. Use a hyphenated key.
+- The trailer block must be the last paragraph and must be preceded by a non-trailer paragraph. A commit message consisting only of trailers is not parsed at all, so keep the summary and body above the block.
 
 Use `Contributed-by` for documentation or other non-implementation contributions. Use `Implemented-by` for actual implementation. A reviewer who supplies findings is recorded in the review table/comment, not automatically as an implementation author. These are searchable metadata trailers, not signatures or GitHub account attribution. GitHub `Co-authored-by` is reserved for real account-linked attribution with the contributor's authorized email; never invent or borrow a person's address. Preserve historical commit identities and comments. Any retrospective contribution summary must cite existing evidence and label unavailable attribution rather than rewriting history.
 
@@ -109,6 +114,8 @@ The coordinator uses the authorized GitHub CLI or connector to publish updates a
 Run `python -X utf8 scripts/check_identity_labels.py` after changing any record that publishes an agent identity, and before opening a pull request that adds or edits one. Exit status 0 means no defect was found; 1 means at least one short-form or wrong-dash label is live, or a branch trailer is not in the canonical form.
 
 The check reports which occurrences are preserved dated records and why, and refuses to report results at all if its own patterns do not behave or its finding lists are inconsistent. It scans tracked Markdown **and tracked role definitions** (`.md` and `.toml`), plus the attribution trailers on this branch relative to a base ref. It does not scan the requirements registry, does not inspect other branches or `main`, and validates label text only: it does not prove that a role was natively loaded, that a run occurred, or that any product behavior is verified. When it cannot resolve a base ref, or the range is empty, it says so rather than reporting a pass.
+
+Declared limits of what the check does **not** enforce, so a green run is not over-read: it does not verify the mandatory ` (AI agent)` suffix is present, that there is exactly one space on each side of the separator, that a variant is present rather than omitted, that a harness name is one of the two known values, or that a configured name has at most two words. Those are documented rules the check does not yet test. Untracked Markdown is not scanned at all, so a new unpublished record can carry a non-conforming identity.
 
 On a non-UTF-8 locale `-X utf8` is required, for the same reason it is required by `scripts/check_requirements.py`.
 

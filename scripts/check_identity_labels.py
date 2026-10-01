@@ -83,7 +83,12 @@ PRESERVE = {
 }
 
 # Directories whose contents are dated review records rather than live templates.
+# A blanket prefix would silently accept a new file forever with a generic
+# reason, so a file under one of these is exempt only if its own name carries an
+# ISO date. An undated or newly invented file must be added to PRESERVE above
+# with its own reason, or it is reported as a defect.
 PRESERVE_PREFIXES = ("docs/team/reviews/",)
+DATED_NAME = re.compile(r"\d{4}-\d{2}-\d{2}")
 
 
 def git(*args: str) -> str:
@@ -103,7 +108,9 @@ def git(*args: str) -> str:
 def preserved(rel: str) -> bool:
     if rel in PRESERVE:
         return True
-    return rel.startswith(PRESERVE_PREFIXES)
+    if rel.startswith(PRESERVE_PREFIXES):
+        return bool(DATED_NAME.search(rel))
+    return False
 
 
 def self_test() -> bool:
@@ -206,8 +213,13 @@ def scan_files() -> tuple[list, list, list, list]:
             for m in NEW_ANY.finditer(line):
                 if not NEW_EM.search(m.group(0)):
                     wrong_dash.append((entry, m.group(0)))
+            canonical_spans = [m.span() for m in NEW_ANY.finditer(line)]
             for m in OLD_ANY.finditer(line):
-                if NEW_ANY.search(line):
+                # A canonical label suppresses only a short form contained in its
+                # own span. Suppressing the whole line would let any prose line
+                # that names two identities hide a non-conforming one.
+                if any(start <= m.start() and m.end() <= end
+                       for start, end in canonical_spans):
                     continue
                 (allowed if preserved(rel) else defects).append(
                     (entry, m.group(0), PRESERVE.get(rel, "dated review record")))

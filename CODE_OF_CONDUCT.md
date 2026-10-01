@@ -66,15 +66,22 @@ Examples:
 
 **Where the label applies.** Issue and pull request comments, commit attribution trailers, pull request contribution tables, and assignment and handoff records. Each of these also records a separate `Model used:` value, which is the machine-readable form and the one to consume programmatically.
 
-**`Model used:` structure.** Write it as explicit key/value pairs, never as a free-text token:
+**`Model used:` structure.** Write it as explicit key/value pairs on one line, never as free text:
 
 ```text
 Model used: model=<provider/model-id> variant=<token> harness=<Harness>
-Model used: model-unconfirmed
-Model used: harness-unconfirmed
+Model used: model=model-unconfirmed variant=variant-unconfirmed harness=harness-unconfirmed
 ```
 
-The provider model ID is written in full, including its provider prefix, so `opencode/space-bunny-free` and `gpt-6.1-sol` are unambiguous. `variant` is the provider variant or, for Codex, the `model_reasoning_effort` value. Because the keys are explicit, this value is recoverable by splitting on `=` and then on the first `/`; the label is not. In commit trailers the same value is written with a hyphenated key, `Model-used:`, so that trailers remain valid `git interpret-trailers` metadata; the two spellings carry identical content.
+The provider model ID is written in full, including its provider prefix, so `opencode/space-bunny-free` and `gpt-6.1-sol` are unambiguous. `variant` is the provider variant or, for Codex, the `model_reasoning_effort` value.
+
+**Precedence.** A run reports each of the three keys to the best it can, and downgrades only what it cannot verify. Observing a model but not a runtime yields a real `model=` and `harness=harness-unconfirmed`, never the reverse and never a dropped key. The all-unconfirmed form is used only when nothing is observable.
+
+**Recovery.** Split the value on whitespace into three tokens, then split each token on its first `=`. That yields keys drawn from `{model, variant, harness}`. Values must not contain spaces. This is stated precisely because an earlier draft claimed recovery "by splitting on `=`", which does not work once several pairs share a line. The bare sentinels `model-unconfirmed` and `harness-unconfirmed` are **not** valid standalone values; use the keyed form.
+
+**Agreement.** Where a run publishes both the canonical label and a `Model used:` value, the label's model and variant must come from the same observation as the `Model used:` keys. A disagreement between the two is a defect in the record, not a formatting variation. The label is for reading and the `Model used:` value is for parsing; they are two renderings of one observation and must not diverge.
+
+In commit trailers the same value is written with a hyphenated key, `Model-used:`, so that trailers remain valid `git interpret-trailers` metadata; the two spellings carry identical content.
 
 **Where it does not apply.** The Project **Agent** field stays the roster's `Role — Name`, because it records ownership rather than a run's model; a single-select field cannot hold one value per role, model, and harness combination. GitHub repository labels also stay `Role — Name`. Historical commits, comments, dated review records, and the `agent` and `owner_role` fields in `requirements-registry.json` are preserved exactly as written and are not restated under this rule.
 

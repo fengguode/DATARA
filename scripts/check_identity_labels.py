@@ -25,6 +25,7 @@ branch's attribution trailers. It does not prove that a role was natively
 loaded, that a run occurred, or that any product behaviour is verified.
 """
 
+import os
 import pathlib
 import re
 import subprocess
@@ -191,6 +192,20 @@ def self_test() -> bool:
     ]
     ok = True
 
+    # git is a hard prerequisite: every case below, and the file scan itself,
+    # shells out to it. Probe it FIRST, so a missing or too-old git is reported
+    # as a self-test failure with an actionable message instead of escaping as
+    # a traceback from whichever call site happens to run first. That is the
+    # failure mode base_ref()'s own docstring says must never happen: a crash
+    # that discards results already computed.
+    try:
+        subprocess.run(["git", "--version"], capture_output=True, check=True)
+    except (FileNotFoundError, subprocess.CalledProcessError, OSError) as exc:
+        print(f"  SELF-TEST FAIL: git is required and did not work here "
+              f"({type(exc).__name__}: {exc}). Install git and ensure it is on "
+              f"PATH; git 2.28+ is needed for --initial-branch.")
+        return False
+
     def fail(msg: str) -> None:
         nonlocal ok
         print(f"  SELF-TEST FAIL: {msg}")
@@ -265,43 +280,55 @@ def self_test() -> bool:
         if dated_name(rel) is not expected:
             fail(f"dated_name({rel!r}) should be {expected} ({why})")
 
-    # Exercise the reporting path against the real producers, not against
-    # literals. A previous revision built three throwaway tuples here and
-    # unpacked them, which asserted nothing: reinstating the original arity bug
-    # in the report loop still printed "Self-test passed" and then raised
-    # ValueError. Literals cannot detect a change in the code that builds them,
-    # so this now drives the same unpack sites from real scan output.
-    for name, produce in (
-        ("allowed", lambda: PRESERVE_SAMPLE),
-        ("defects", lambda: defects_sample()),
-        ("wrong_dash", lambda: wrong_dash_sample()),
-    ):
-        try:
-            rows = produce()
-            if name == "allowed":
-                for entry, snippet, reason in rows:
-                    pass
-            elif name == "defects":
-                for entry, snippet, _reason in rows:
-                    pass
-            else:
-                for entry, snippet in rows:
-                    pass
-        except ValueError as exc:
-            fail(f"{name} finding-list unpacking is inconsistent: {exc}")
+    # Exercise the REAL reporting function, not a copy of its loops. Two earlier
+    # attempts failed here: literals asserted nothing, and a second copy of the
+    # unpack loops was not the copy that runs, so the historical arity bug still
+    # printed "Self-test passed" and exited 0. There is now exactly one place
+    # these lists are unpacked -- report_findings -- and the self-test calls it
+    # with every list non-empty, so a wrong arity raises for real.
+    # Every list is forced non-empty: an empty list never executes its loop body,
+    # so a wrong arity would not raise. The report is captured rather than
+    # printed, because the self-test must not emit findings of its own.
+    try:
+        import contextlib
+        import io
+        with contextlib.redirect_stdout(io.StringIO()):
+            report_findings(
+                PRESERVE_SAMPLE or [("selftest.md:1", "text", "reason")],
+                defects_sample() or [("selftest.md:2", "text", "reason")],
+                wrong_dash_sample() or [("selftest.md:3", "text")],
+                unrecognised_sample() or [("selftest.md:4", "text")],
+            )
+    except ValueError as exc:
+        fail(f"report_findings unpacking is inconsistent: {exc}")
 
     # The trailer path must be exercised at its call site, not only through the
     # patterns. Each case below asserts the EXPECTED verdict, so a regression
     # that makes the check accept a bad value, or reject a good one, fails here.
     good_label = (f"Worker {EM} Torsten Maier_space-bunny-free-max_OpenCode (AI agent)")
     good_model = "model=opencode/space-bunny-free variant=max harness=OpenCode"
+    # The trailer and file-scan cases below need git, already probed above.
+
+    # Every key in TRAILER_KEYS is exercised, not just Contributed-by. Dropping
+    # a single key from that tuple was previously invisible because every case
+    # used the same key, so the tuple could be shortened without failing here.
+    for key in TRAILER_KEYS:
+        for body, expect_defect, why in (
+            (f"{key}: {good_label}", False, f"a conforming {key} label"),
+            (f"{key}: {good_label} (relayed by Reviewer {EM} Dennis Windmaier (AI agent))",
+             True, f"a {key} label plus a relaying note"),
+            (f"{key}: work done by {good_label} yesterday",
+             True, f"a {key} label wrapped in prose"),
+            (f"{key}: {good_label} zzz qqq",
+             True, f"a {key} label plus trailing tokens"),
+        ):
+            found = _trailer_probe(why.replace(" ", "-").replace(":", ""), body)
+            if bool(found) is not expect_defect:
+                fail(f"trailer scan verdict wrong for {why}: "
+                     f"expected {'defect' if expect_defect else 'clean'}, "
+                     f"got {len(found)} finding(s)")
+
     for body, expect_defect, why in (
-        (f"Contributed-by: {good_label}", False, "a conforming label"),
-        (f"Contributed-by: {good_label} (relayed by Reviewer {EM} Dennis Windmaier (AI agent))",
-         True, "a label plus a relaying note"),
-        (f"Contributed-by: work done by {good_label} yesterday",
-         True, "a label wrapped in prose"),
-        (f"Contributed-by: {good_label} zzz qqq", True, "a label plus trailing tokens"),
         (f"Model-used: {good_model}", False, "a conforming Model used: value"),
         (f"Model-used: space-bunny-free-max (OpenCode)", True, "free-text Model used:"),
         (f"Model-used: model-unconfirmed", True, "a bare sentinel, not keyed pairs"),
@@ -351,6 +378,32 @@ def base_ref() -> str | None:
     return None
 
 
+def _purge(root: pathlib.Path) -> None:
+    """Remove a fixture repo completely.
+
+    `shutil.rmtree(ignore_errors=True)` silently fails here: git marks its
+    object files read-only, so Windows refuses the delete and the directory
+    survives. Ten fixture repos per run leaked on every invocation, including
+    clean passing ones, until this was caught. Clear the read-only bit first and
+    report rather than swallow a failure, because a leaked repo is a silent
+    failure that accumulates.
+    """
+    import shutil
+    import stat
+
+    def _force(func, path, _exc):
+        os.chmod(path, stat.S_IWRITE)
+        func(path)
+
+    if not root.exists():
+        return
+    try:
+        shutil.rmtree(root, onerror=_force)
+    except OSError:
+        # Last resort: leave it, but do not pretend it was removed.
+        print(f"  WARNING: could not remove fixture repo {root}; delete it manually")
+
+
 def _fixture_repo(tag: str) -> pathlib.Path:
     """A throwaway repo with a known short form, used to drive the real scans.
 
@@ -361,27 +414,33 @@ def _fixture_repo(tag: str) -> pathlib.Path:
     """
     import tempfile
     root = pathlib.Path(tempfile.mkdtemp(prefix=f"labelchk-{tag}-"))
-    (root / "scripts").mkdir(parents=True, exist_ok=True)
-    (root / "docs" / "team" / "reviews").mkdir(parents=True, exist_ok=True)
-    (root / "scripts" / "check_identity_labels.py").write_text(
-        pathlib.Path(__file__).read_text(encoding="utf-8"), encoding="utf-8")
-    for cmd in (["init", "--quiet", "--initial-branch=main", "."],
-                ["config", "user.email", "selftest@example.invalid"],
-                ["config", "user.name", "SelfTest"]):
-        subprocess.run(["git", "-C", str(root), *cmd], capture_output=True, check=True)
-    (root / "README.md").write_text("# fixture\n", encoding="utf-8")
-    (root / "docs" / "live.md").write_text(
-        f"Worker {EM} Torsten Maier (AI agent)\n", encoding="utf-8")
-    (root / "docs" / "team" / "reviews" / "r-2026-10-01.md").write_text(
-        f"Reviewer {EM} Dennis Windmaier (AI agent)\n", encoding="utf-8")
-    subprocess.run(["git", "-C", str(root), "add", "-A"], capture_output=True, check=True)
-    subprocess.run(["git", "-C", str(root), "commit", "--quiet", "-m", "fixture"],
-                   capture_output=True, check=True)
-    # A second commit, so main..HEAD is non-empty and the trailer scan runs.
-    subprocess.run(["git", "-C", str(root), "branch", "base"], capture_output=True)
-    subprocess.run(["git", "-C", str(root), "checkout", "--quiet", "-b", "probe"],
-                   capture_output=True, check=True)
-    return root
+    try:
+        (root / "scripts").mkdir(parents=True, exist_ok=True)
+        (root / "docs" / "team" / "reviews").mkdir(parents=True, exist_ok=True)
+        (root / "scripts" / "check_identity_labels.py").write_text(
+            pathlib.Path(__file__).read_text(encoding="utf-8"), encoding="utf-8")
+        for cmd in (["init", "--quiet", "--initial-branch=main", "."],
+                    ["config", "user.email", "selftest@example.invalid"],
+                    ["config", "user.name", "SelfTest"]):
+            subprocess.run(["git", "-C", str(root), *cmd], capture_output=True, check=True)
+        (root / "README.md").write_text("# fixture\n", encoding="utf-8")
+        (root / "docs" / "live.md").write_text(
+            f"Worker {EM} Torsten Maier (AI agent)\n", encoding="utf-8")
+        (root / "docs" / "team" / "reviews" / "r-2026-10-01.md").write_text(
+            f"Reviewer {EM} Dennis Windmaier (AI agent)\n", encoding="utf-8")
+        subprocess.run(["git", "-C", str(root), "add", "-A"], capture_output=True, check=True)
+        subprocess.run(["git", "-C", str(root), "commit", "--quiet", "-m", "fixture"],
+                       capture_output=True, check=True)
+        # A second commit, so main..HEAD is non-empty and the trailer scan runs.
+        subprocess.run(["git", "-C", str(root), "branch", "base"], capture_output=True)
+        subprocess.run(["git", "-C", str(root), "checkout", "--quiet", "-b", "probe"],
+                       capture_output=True, check=True)
+        return root
+    except BaseException:
+        # A missing or too-old git must not strand a directory, and must not
+        # escape as a traceback that discards the file results already computed.
+        _purge(root)
+        raise
 
 
 def _git_in(root: pathlib.Path, *args: str) -> None:
@@ -389,21 +448,27 @@ def _git_in(root: pathlib.Path, *args: str) -> None:
 
 
 def defects_sample() -> list:
-    """Real defects from the real scan, on a throwaway repo."""
+    """Real defects from the production scan_files, on a throwaway repo."""
     root = _fixture_repo("defects")
     try:
         (root / "docs" / "defect.md").write_text(
             f"Worker {EM} Torsten Maier (AI agent)\n", encoding="utf-8")
         _git_in(root, "add", "-A")
         _git_in(root, "commit", "--quiet", "-m", "live short form")
-        return _scan_files_in(root)[1]
+        _git_in(root, "commit", "--allow-empty", "--quiet", "-m", "probe")
+        global ROOT
+        saved = ROOT
+        try:
+            ROOT = _RootShim(root)
+            return scan_files()[2]
+        finally:
+            ROOT = saved
     finally:
-        import shutil
-        shutil.rmtree(root, ignore_errors=True)
+        _purge(root)
 
 
 def wrong_dash_sample() -> list:
-    """Real wrong-dash findings from the real scan."""
+    """Real wrong-dash findings from the production scan_files."""
     root = _fixture_repo("dash")
     try:
         (root / "docs" / "dash.md").write_text(
@@ -411,38 +476,59 @@ def wrong_dash_sample() -> list:
             encoding="utf-8")
         _git_in(root, "add", "-A")
         _git_in(root, "commit", "--quiet", "-m", "ascii dash")
-        return _scan_files_in(root)[3]
+        _git_in(root, "commit", "--allow-empty", "--quiet", "-m", "probe")
+        global ROOT
+        saved = ROOT
+        try:
+            ROOT = _RootShim(root)
+            return scan_files()[3]
+        finally:
+            ROOT = saved
     finally:
-        import shutil
-        shutil.rmtree(root, ignore_errors=True)
+        _purge(root)
 
 
-def _scan_files_in(root: pathlib.Path) -> tuple[list, list, list, list]:
-    """scan_files() against an arbitrary repo root."""
-    paths = [p for p in subprocess.run(
-        ["git", "-C", str(root), "ls-files", "*.md", "*.toml"],
-        capture_output=True, text=True, encoding="utf-8", errors="replace",
-    ).stdout.split() if p]
-    allowed: list[tuple[str, str, str]] = []
-    defects: list[tuple[str, str, str]] = []
-    wrong: list[tuple[str, str]] = []
-    for rel in paths:
-        text = (root / rel).read_text(encoding="utf-8")
-        for number, line in enumerate(text.splitlines(), 1):
-            if "(AI agent)" not in line:
-                continue
-            entry = f"{rel}:{number}"
-            for m in NEW_ANY.finditer(line):
-                if not NEW_EM.search(m.group(0)):
-                    wrong.append((entry, m.group(0)))
-            spans = [m.span() for m in NEW_ANY.finditer(line)]
-            for m in OLD_ANY.finditer(line):
-                if any(s <= m.start() and m.end() <= e for s, e in spans):
-                    continue
-                dated = "reviews" in rel and dated_name(rel)
-                (allowed if dated else defects).append(
-                    (entry, m.group(0), "dated review record" if dated else ""))
-    return paths, allowed, defects, wrong
+def unrecognised_sample() -> list:
+    """Real 'unrecognised identity text' findings from the production scan."""
+    root = _fixture_repo("unrec")
+    try:
+        (root / "docs" / "bad.md").write_text(
+            f"Worker {EM} Torsten Maier_opencode/space-bunny-free_OpenCode (AI agent)\n",
+            encoding="utf-8")
+        _git_in(root, "add", "-A")
+        _git_in(root, "commit", "--quiet", "-m", "malformed label")
+        _git_in(root, "commit", "--allow-empty", "--quiet", "-m", "probe")
+        global ROOT
+        saved = ROOT
+        try:
+            ROOT = _RootShim(root)
+            return scan_files()[4]
+        finally:
+            ROOT = saved
+    finally:
+        _purge(root)
+
+
+def _files_sample(tag: str, index: int) -> list:
+    """Call the REAL scan_files against a throwaway repo and return one of its
+    finding lists.
+
+    A private copy of scan_files used to live here, which is why a mutation in
+    scan_files itself -- suppressing wrong-dash detection, say -- was invisible
+    to the self-test, and why defects_sample() could silently return the wrong
+    list. The production function is now called directly, via the same ROOT swap
+    _trailer_probe uses.
+    """
+    root = _fixture_repo(tag)
+    global ROOT
+    saved = ROOT
+    try:
+        _git_in(root, "commit", "--allow-empty", "--quiet", "-m", "probe")
+        ROOT = _RootShim(root)
+        return scan_files()[index]
+    finally:
+        ROOT = saved
+        _purge(root)
 
 
 def _trailer_probe(tag: str, body: str) -> list:
@@ -463,8 +549,7 @@ def _trailer_probe(tag: str, body: str) -> list:
         return scan_trailers("main")
     finally:
         ROOT = saved
-        import shutil
-        shutil.rmtree(root, ignore_errors=True)
+        _purge(root)
 
 
 class _RootShim:
@@ -483,7 +568,36 @@ class _RootShim:
 PRESERVE_SAMPLE = [("f.md:1", "text", "reason")]
 
 
-def scan_files() -> tuple[list, list, list, list]:
+def _looks_like_identity(line: str) -> bool:
+    """True when a line appears to intend an identity rather than describe one.
+
+    The unrecognised-identity check must not fire on the documentation that
+    defines the grammar. A template such as
+    `<Role> <Configured name>_<model>-<variant>_<Harness> (AI agent)` and a
+    sentence explaining the ` (AI agent)` suffix both contain the suffix, and
+    reporting them would flag the very documents that specify the rule.
+
+    An intended instance carries a role-like word, a separator, and an
+    underscore-delimited tail. A template has angle brackets or a backticked
+    slot where a value belongs; prose about the grammar names the fields instead
+    of supplying them.
+    """
+    if "<" in line and ">" in line:
+        return False
+    if "`" in line:
+        return False
+    for marker in ("suffix", "separator", "delimited", "non-conforming",
+                   "machine key", "recoverable", "template", "field rules"):
+        if marker in line:
+            return False
+    # The underscore-delimited tail is the discriminator: an instance always has
+    # model-variant_harness, a template slot is bracketed, and prose has neither.
+    if not re.search(r"_[A-Za-z0-9][^_\s]*_[A-Za-z]", line):
+        return False
+    return bool(re.search(rf"[A-Za-z][A-Za-z ]*\s{re.escape(EM)}\s", line))
+
+
+def scan_files() -> tuple[list, list, list, list, list]:
     """Scan tracked Markdown AND tracked role definitions.
 
     Role definitions are what actually generate published identities. A previous
@@ -494,6 +608,7 @@ def scan_files() -> tuple[list, list, list, list]:
     allowed: list[tuple[str, str, str]] = []
     defects: list[tuple[str, str, str]] = []
     wrong_dash: list[tuple[str, str]] = []
+    unrecognised: list[tuple[str, str]] = []
 
     for rel in paths:
         text = (ROOT / rel).read_text(encoding="utf-8")
@@ -506,6 +621,7 @@ def scan_files() -> tuple[list, list, list, list]:
                 if not NEW_EM.search(m.group(0)):
                     wrong_dash.append((entry, m.group(0)))
             canonical_spans = [m.span() for m in NEW_ANY.finditer(line)]
+            matched = bool(canonical_spans)
             for m in OLD_ANY.finditer(line):
                 # A canonical label suppresses only a short form contained in its
                 # own span. Suppressing the whole line would let any prose line
@@ -513,9 +629,26 @@ def scan_files() -> tuple[list, list, list, list]:
                 if any(start <= m.start() and m.end() <= end
                        for start, end in canonical_spans):
                     continue
+                matched = True
                 (allowed if preserved(rel) else defects).append(
                     (entry, m.group(0), PRESERVE.get(rel, "dated review record")))
-    return paths, allowed, defects, wrong_dash
+            # A line that claims to carry an identity but matches neither form is
+            # reported rather than passed over. Previously a forbidden '/' or '#'
+            # in the model slot, a lowercase role, or a space in the model token
+            # made the label match nothing at all, so the line was never examined
+            # and the run was green. A malformed label is still a published
+            # identity; ignoring it is the same defect as accepting it.
+            #
+            # A template slot or prose about the grammar is not an identity, and
+            # reporting those would make the check unusable: the Code of Conduct
+            # documents the form with `<Role>` placeholders and explains the
+            # fields, and neither is a published identity. So a line is only
+            # reported when it looks like an intended instance -- it carries the
+            # suffix and a plausible role/name shape -- rather than a template or
+            # an explanation.
+            if not matched and _looks_like_identity(line):
+                unrecognised.append((entry, line.strip()))
+    return paths, allowed, defects, wrong_dash, unrecognised
 
 
 def scan_trailers(ref: str) -> list[tuple[str, str]]:
@@ -568,6 +701,42 @@ def scan_trailers(ref: str) -> list[tuple[str, str]]:
     return bad
 
 
+def report_findings(allowed, defects, wrong_dash, unrecognised) -> None:
+    """Print the file-scan findings.
+
+    This is the ONLY place these four lists are unpacked. A previous revision
+    unpacked them here and again, independently, inside self_test(): reinstating
+    the wrong arity in main()'s copy still printed "Self-test passed" and exited
+    0, because the copy the self-test exercised was not the copy that ran. A
+    duplicated loop cannot guard the original, so the self-test now calls this
+    function and any arity mismatch here fails the self-test for real.
+    """
+    print(f"Short-form identities in preserved records: {len(allowed)}")
+    for entry, snippet, reason in allowed:
+        print(f"  OK      {entry}")
+        print(f"          reason: {reason}")
+        print(f"          text:   {snippet}")
+    print()
+    print(f"Short-form identities in live locations (must be zero): {len(defects)}")
+    for entry, snippet, _reason in defects:
+        print(f"  DEFECT  {entry}  {snippet}")
+        print("          Live records must use the canonical label. Add a dated record to")
+        print("          PRESERVE with a reason only if it is genuinely historical.")
+    print()
+    print(f"Canonical labels using a dash other than U+2014 (must be zero): {len(wrong_dash)}")
+    for entry, snippet in wrong_dash:
+        print(f"  DEFECT  {entry}  {snippet}")
+    print()
+    print(f"Identity text matching neither the canonical nor the short form "
+          f"(must be zero): {len(unrecognised)}")
+    for entry, snippet in unrecognised:
+        print(f"  DEFECT  {entry}  {snippet}")
+        print("          A line carrying '(AI agent)' must be a recognised identity.")
+        print("          A forbidden '/' or '#' in the model slot, a lowercase role, or a")
+        print("          space in the model token makes the label match nothing, which is")
+        print("          why this is checked rather than inferred from a missing match.")
+
+
 def main() -> int:
     # --allow-skip is the only way to accept a trailer scan that could not run.
     # It is a flag rather than a default because "not checked" and "passed" must
@@ -587,28 +756,15 @@ def main() -> int:
         return 1
     print("Self-test passed: all 11 configured names detected in both forms,")
     print("wrong-dash labels detected and rejected, placeholder slots ignored,")
-    print("finding-list unpacking consistent.")
+    print("report_findings unpacking consistent, every trailer key exercised,")
+    print("date and sentinel rules checked, git prerequisite confirmed.")
     print()
 
-    paths, allowed, defects, wrong_dash = scan_files()
+    paths, allowed, defects, wrong_dash, unrecognised = scan_files()
 
     print(f"Tracked Markdown and role-definition files scanned: {len(paths)}")
     print()
-    print(f"Short-form identities in preserved records: {len(allowed)}")
-    for entry, snippet, reason in allowed:
-        print(f"  OK      {entry}")
-        print(f"          reason: {reason}")
-        print(f"          text:   {snippet}")
-    print()
-    print(f"Short-form identities in live locations (must be zero): {len(defects)}")
-    for entry, snippet, _reason in defects:
-        print(f"  DEFECT  {entry}  {snippet}")
-        print("          Live records must use the canonical label. Add a dated record to")
-        print("          PRESERVE with a reason only if it is genuinely historical.")
-    print()
-    print(f"Canonical labels using a dash other than U+2014 (must be zero): {len(wrong_dash)}")
-    for entry, snippet in wrong_dash:
-        print(f"  DEFECT  {entry}  {snippet}")
+    report_findings(allowed, defects, wrong_dash, unrecognised)
 
     ref = base_ref()
     # A skip is not a pass. Exit 0 for a trailer scan that never ran would let a
@@ -643,11 +799,11 @@ def main() -> int:
     print("that a role was natively loaded, that a run occurred, or that any product")
     print("behavior is verified.")
     print("Exit status: 0 pass, 1 defect found, 2 not fully checked (see --allow-skip).")
-    print("Known limits: a label carrying a forbidden '/' or '#' in the model slot, and a")
-    print("lowercase role name, are neither accepted nor reported. A file under")
-    print("docs/team/reviews/ is exempt on a real date alone, without its own reason.")
+    print("Known limit: a file under docs/team/reviews/ is exempt on a real date alone,")
+    print("without its own reason. Requires git on PATH, 2.28+ for --initial-branch.")
+    print("Untracked Markdown is not scanned, so a new unpublished record is not checked.")
 
-    if defects or wrong_dash or trailer_bad:
+    if defects or wrong_dash or unrecognised or trailer_bad:
         return 1
     if not trailer_checked and not allow_skip:
         print()

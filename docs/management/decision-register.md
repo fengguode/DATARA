@@ -19,7 +19,7 @@ The founder defined Customer-User-Story (CUS) as the top level of all requiremen
 | D03 | Providers, credential boundary, capabilities, retention and failures | WP01 / WP04 | OpenAI and DeepSeek founder-selected; key/run policy selected under delegation; exact models, capability/retention/access evidence pending |
 | D04 | Recorded-volume/data-readiness dashboard and authorized read API | WP01 / WP05 | Outcome, resources and pagination/access/retention direction selected under delegation; exact schemas, UI/accessibility and operational evidence pending |
 | D05 | Stack, reference topology, operations and estimates | WP01 | Django/Python, PostgreSQL and local browser pilot in China selected; dependency pins, runtime/operator setup/recovery evidence and measured estimates pending |
-| D06 | Meaning of owned or saved skills in the free trial | WP07 | Open |
+| D06 | Meaning of owned or saved skills in the free trial | WP07 | **Closed for P0 (1 October 2026):** P0 has no ownership, purchase, saving, or authoring concept; all three baseline skills are Datara-created, free, and available when eligible. The substantive marketplace question remains open and is deferred to WP07 |
 | D07 | Source rights and source-to-skill workflow | Later | Deferred |
 
 For each resolution record: decision, rationale, alternatives, affected requirement IDs, date, and linked PR. Changes to agreed product scope or priorities are proposals until the founder accepts them. Routine derived engineering details may progress within scope. A change request must identify affected skills, data contracts, APIs, verification, and existing results before the baseline is updated.

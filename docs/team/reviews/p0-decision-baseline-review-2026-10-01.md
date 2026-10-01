@@ -19,3 +19,7 @@ Yi owns the baseline, register, index, implementation-plan synchronization and t
 Independent technical refresh and QM final documentation confirmation are requested on the resulting exact candidate. Final SHA, review verdicts and limitations are recorded on the linked issue and pull request after actual handoffs; this record does not predeclare those results. Later edits require refreshed affected confirmation.
 
 Product tests, live integrations, running-system checks, rendered UI, athlete validation and deployment have not run. Documentation review does not satisfy G0, verify SRs, establish founder acceptance or authorize release/merge/deployment.
+
+## Founder local-pilot clarification
+
+The historical d6f293fabb491b4a5250fe7a155bc7d09af175d3 candidate received Dennis technical PASS and QM final documentation PASS, published in [the final handoff](https://github.com/fengguode/DATARA/issues/1#issuecomment-5924841639). PR284 remains a draft. The founder then resolved user/location/interface: personal use in China, initially local with a browser web UI. Yi updates only the baseline/register/this evidence record under [the bounded follow-up assignment](https://github.com/fengguode/DATARA/issues/1#issuecomment-5924895687). Earlier pending audience/country statements are historical. This candidate needs refreshed Dennis technical review and QM exact-head confirmation; results will be published on the issue/PR after actual handoffs. No previous confirmation is reused for the changed candidate, and no product setup or tests are claimed.

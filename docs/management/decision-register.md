@@ -18,7 +18,7 @@ The founder defined Customer-User-Story (CUS) as the top level of all requiremen
 | D02 | Elemental skills, coverage/trend rules and evaluation thresholds | WP01 / WP03 | Three skills and descriptive/evaluation policy selected under delegation; schemas, fixture/rubric review and live evaluation pending |
 | D03 | Providers, credential boundary, capabilities, retention and failures | WP01 / WP04 | OpenAI and DeepSeek founder-selected; key/run policy selected under delegation; exact models, capability/retention/access evidence pending |
 | D04 | Recorded-volume/data-readiness dashboard and authorized read API | WP01 / WP05 | Outcome, resources and pagination/access/retention direction selected under delegation; exact schemas, UI/accessibility and operational evidence pending |
-| D05 | Stack, reference topology, operations and estimates | WP01 | Django/Python, PostgreSQL and private container topology selected under delegation; pilot facts, dependency pins, setup/recovery evidence and measured estimates pending |
+| D05 | Stack, reference topology, operations and estimates | WP01 | Django/Python, PostgreSQL and local browser pilot in China selected; dependency pins, runtime/operator setup/recovery evidence and measured estimates pending |
 | D06 | Meaning of owned or saved skills in the free trial | WP07 | Open |
 | D07 | Source rights and source-to-skill workflow | Later | Deferred |
 
@@ -31,3 +31,5 @@ Concrete options, impacts, and approval gates for D01–D05 are in the [WP01 req
 The founder selected FIT SDK 21.217.0, delegated remaining D01–D05 choice work to Yi Tang with Yu Wang, then explicitly selected OpenAI and DeepSeek as the first providers. The [dated decision record](p0-decision-baseline-2026-10-01.md) contains selected options, rationale, affected CUS/SR/tasks, official sources, remaining evidence and founder support inputs. Its authority and GitHub links are recorded there.
 
 Selected direction is distinct from completed contracts or satisfied G0. Earlier WP01/design packages remain historical proposals; their open-option wording is superseded only by explicit selections in the dated record. Preserve historical results. No SR/case, product implementation, founder athlete acceptance, merge or deployment is asserted by these selections.
+
+Pilot clarification: the founder selected personal use in China, first running locally with a web UI. See [the live clarification](https://github.com/fengguode/DATARA/issues/1#issuecomment-5924895687) and the dated baseline. Runtime/setup and both provider capability gates remain pending.

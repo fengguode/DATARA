@@ -1,4 +1,4 @@
-# Open decisions and change management
+# Decisions and change management
 
 ## Team confirmation decision (30 September 2026)
 
@@ -14,14 +14,20 @@ The founder defined Customer-User-Story (CUS) as the top level of all requiremen
 
 | ID | Decision needed | Package | Status |
 | --- | --- | --- | --- |
-| D01 | Approve official FIT evidence/version, accepted mappings and variants, limits, exact/tolerant conflict policy, and fixture provenance/redistribution | WP01 | Proposed options; open |
-| D02 | Approve the elemental-skill shortlist, coverage/trend rules, evaluation rubric and per-connection release threshold | WP01 / WP03 | Proposed options; open |
-| D03 | Choose capability-spike/one-provider or multi-provider connection sequencing and approve credential boundary, capabilities, retention and error mapping from official provider evidence | WP01 / WP04 | Proposed options; open |
-| D04 | Approve the training-volume/readiness dashboard outcome, read-only resources, evidence representation, pagination and authorization details, or choose a reduced/different outcome | WP01 / WP05 | Proposed options; open |
-| D05 | Application stack, deployment topology, and delivery estimates | WP01 | Open |
+| D01 | Official FIT version, mappings/variants, limits, conflicts and fixture provenance | WP01 | SDK and intake policy selected under founder direction/delegation; source matrix, rights and conformance evidence pending |
+| D02 | Elemental skills, coverage/trend rules and evaluation thresholds | WP01 / WP03 | Three skills and descriptive/evaluation policy selected under delegation; schemas, fixture/rubric review and live evaluation pending |
+| D03 | Providers, credential boundary, capabilities, retention and failures | WP01 / WP04 | OpenAI and DeepSeek founder-selected; key/run policy selected under delegation; exact models, capability/retention/access evidence pending |
+| D04 | Recorded-volume/data-readiness dashboard and authorized read API | WP01 / WP05 | Outcome, resources and pagination/access/retention direction selected under delegation; exact schemas, UI/accessibility and operational evidence pending |
+| D05 | Stack, reference topology, operations and estimates | WP01 | Django/Python, PostgreSQL and private container topology selected under delegation; pilot facts, dependency pins, setup/recovery evidence and measured estimates pending |
 | D06 | Meaning of owned or saved skills in the free trial | WP07 | Open |
 | D07 | Source rights and source-to-skill workflow | Later | Deferred |
 
 For each resolution record: decision, rationale, alternatives, affected requirement IDs, date, and linked PR. Changes to agreed product scope or priorities are proposals until the founder accepts them. Routine derived engineering details may progress within scope. A change request must identify affected skills, data contracts, APIs, verification, and existing results before the baseline is updated.
 
 Concrete options, impacts, and approval gates for D01–D05 are in the [WP01 requirements package](wp01-requirements-package.md). Nothing in that proposal records founder approval.
+
+## D01–D05 delegated selections (1 October 2026)
+
+The founder selected FIT SDK 21.217.0, delegated remaining D01–D05 choice work to Yi Tang with Yu Wang, then explicitly selected OpenAI and DeepSeek as the first providers. The [dated decision record](p0-decision-baseline-2026-10-01.md) contains selected options, rationale, affected CUS/SR/tasks, official sources, remaining evidence and founder support inputs. Its authority and GitHub links are recorded there.
+
+Selected direction is distinct from completed contracts or satisfied G0. Earlier WP01/design packages remain historical proposals; their open-option wording is superseded only by explicit selections in the dated record. Preserve historical results. No SR/case, product implementation, founder athlete acceptance, merge or deployment is asserted by these selections.

@@ -17,6 +17,7 @@ This is the single management entry point for Datara. [Project control issue](ht
 - [Traceability](traceability.md)
 - [Verification and final validation plan](validation-plan.md)
 - [Decisions and change management](decision-register.md)
+- [D01-D05 delegated selections and remaining evidence (1 October 2026)](p0-decision-baseline-2026-10-01.md)
 - [WP01 proposed requirements baseline](wp01-requirements-package.md)
 - [WP01 issue-update handoff](wp01-issue-handoff.md)
 - [Cloud project setup and first task](cloud-project.md)

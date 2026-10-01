@@ -15,7 +15,7 @@ If sources conflict, identify the discrepancy, preserve newer founder changes, a
 - Start from defined, supported source data; ingest, validate, normalize and preprocess deterministically using conventional software.
 - Preserve data and result history. P0 provides a dashboard/database experience and an authorized read-only output API.
 - Keep elemental skills provider independent. Customers own the API access used for analysis.
-- Check eligibility deterministically before execution and explain unsupported inputs and demands.
+- Check eligibility deterministically before recommendation and execution and explain unsupported inputs and demands.
 - Users select skill combinations and supported models. Never silently replace a provider, model, skill or routine.
 - DATARA's own recommendation model, automatic routines and recommendations belong to P1. Commercial mechanisms and source-to-skill automation are deferred.
 - Preserve user isolation and reproducible provenance throughout the workflow.
@@ -50,7 +50,7 @@ Roles without GitHub access receive a fresh, bounded coordinator relay, labeled 
 
 Use one backlog. PR means **pull request only**. CUS states the top-level customer/user outcome; Features group capability scope; SR derives obligations across applicable legal, engineering, runtime, architecture, security and other perspectives. Use stable CUS/SR IDs and affected Feature/Task links. Titles follow `[Type][area]content_of_title`; priority belongs in dedicated metadata, never titles.
 
-Follow current dependencies and start gates: W0 evidence/contracts/UI/test design; W1 persistent data/preparation/authorization; W2 skills/eligibility; W3 model access/manual execution; W4 history/dashboard/API; W5 candidate verification, acceptance and release. Dates are indicative. Aggregate package completion must not incorrectly prevent its own authorized preparation children.
+Follow current dependencies and start gates: W0 evidence/contracts/UI/test design; W1 persistent data/preparation/authorization; W2 skills/eligibility; W3 model access/manual execution; W4 history/dashboard/API; W5 candidate verification, acceptance and release. Waves group the delivery sequence; they are not calendar commitments or a forced serial schedule. Aggregate package completion must not incorrectly prevent its own authorized preparation children.
 
 Before product coding, finalize and review applicable architecture and test design, record necessary decisions and satisfy G0 or its approved replacement. A merged proposal or selected D01–D05 direction alone does not authorize coding.
 

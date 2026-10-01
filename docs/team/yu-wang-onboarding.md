@@ -40,7 +40,7 @@ These remain open in the decision register. Product documents must not choose an
 3. Customer documentation did not provide a single current-status explanation, public-safe progress format, or complete landing-page content/handoff. New drafts fill that gap.
 4. The registry checker and planning review are easy to confuse with product verification. The new drafts explicitly separate planning evidence from implementation, verification, founder acceptance and release.
 5. FIT/provider support, credential handling, retention, deployment environment, legal duties, supported models and evaluation thresholds are not settled. Public drafts identify these as undecided and avoid invented assurances.
-6. The GitHub board is the status authority. Issue #279 is in the DATARA Project with In progress, P0, Requirements, and Primary Coordinator — Yi Tang. The coordinator read the fields back through the board UI and recorded the change on the issue.
+6. The GitHub board is the status authority. Issue #279 is in the DATARA Project with In review, P0, Requirements, and Primary Coordinator — Yi Tang. The coordinator read the fields back through the board UI and recorded the In progress → In review change in issue comment [5923689340](https://github.com/fengguode/DATARA/issues/279#issuecomment-5923689340); the current issue body also says In review.
 
 ## Proposals and approval boundary
 

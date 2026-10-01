@@ -78,8 +78,6 @@ TRAILER_KEYS = ("Contributed-by", "Implemented-by", "Integrated-by")
 # from {model, variant, harness}. Bare sentinels are not valid standalone values.
 # That rule is implemented as a parser below rather than as one regex, because
 # the key order is unconstrained and the documented recovery is the contract.
-MODEL_USED = re.compile(
-    r"model=\S+ variant=\S+ harness=\S+")
 MODEL_KEYS = ("model", "variant", "harness")
 HARNESS_VALUES = ("Codex", "OpenCode", "harness-unconfirmed")
 
@@ -125,23 +123,25 @@ PRESERVE = {
 }
 
 # Directories whose contents are dated review records rather than live templates.
-# A blanket prefix would silently accept a new file forever, so a file under one
-# of these is exempt only if its own name carries a real ISO date.
+# There is no longer an exemption by directory or filename; see the note below.
+## A-7 closed: there is no prefix rule. A file under docs/team/reviews/ earned the
+# exemption on a real date in its name alone, with the generic reason "dated
+# review record", so any newly invented file was accepted in one keystroke by
+# naming it with a date. Auditing this branch showed that rule protected nothing:
+# of the thirteen files in that directory, the seven the date rule exempted
+# contained ZERO short-form identities, and the only file that does contain them,
+# docs/team/reviews/p0-requirements-review.md, is already exempt through PRESERVE
+# above with its own stated reason.
 #
-# Stated limit, which a previous version of this comment denied: a file under
-# docs/team/reviews/ whose name carries any real date earns the exemption with the
-# generic reason "dated review record", so a newly invented file is accepted in one
-# keystroke by naming it with a date. That is weaker than the PRESERVE list above,
-# which requires a per-file reason. The residual is deliberate: these are dated
-# records of completed runs, the directory is review-only, and requiring a real
-# date still rejects the shapes that matter. Tighten it by moving each reviewed
-# file into PRESERVE with its own reason, and the prefix rule with it.
-PRESERVE_PREFIXES = ("docs/team/reviews/",)
-# A dated review record must carry a real calendar date in its own file name.
-# A bare \d{4}-\d{2}-\d{2} also matches impossible dates such as 2026-99-99 and
-# digit runs inside a longer token, which would restore the blanket exemption
-# this rule exists to prevent, so the value is parsed as a date and the match
-# is anchored to the file-name stem.
+# So the prefix rule was pure attack surface. It is removed rather than
+# tightened: a dated review record that genuinely needs the exemption is added to
+# PRESERVE with the reason it deserves, which is a visible, reviewable decision
+# rather than a filename convention. A new dated review file containing a short
+# form is now reported, and the fix is to add it deliberately.
+#
+# dated_name is retained because the date-in-a-filename pattern is still
+# informative when reviewing a PRESERVE entry, and the self-test still exercises
+# it. It grants nothing.
 DATED_NAME = re.compile(r"(?:^|[^0-9])(\d{4})-(\d{2})-(\d{2})(?![0-9])")
 
 
@@ -172,11 +172,14 @@ def git(*args: str) -> str:
 
 
 def preserved(rel: str) -> bool:
-    if rel in PRESERVE:
-        return True
-    if rel.startswith(PRESERVE_PREFIXES):
-        return dated_name(rel)
-    return False
+    """True only for a file listed in PRESERVE with its own stated reason.
+
+    There is deliberately no directory or filename convention here. See the note
+    above DATED_NAME: the prefix rule that was removed exempted seven files that
+    contained no short form at all, so it granted nothing while letting any newly
+    named file bypass the check.
+    """
+    return rel in PRESERVE
 
 
 def self_test() -> bool:
@@ -253,8 +256,11 @@ def self_test() -> bool:
             f"Worker {EM} Torsten Maier_space-bunny-free-max_harness-unconfirmed (AI agent)"):
         fail("harness-unconfirmed sentinel is not expressible in a label")
 
-    # The Model used: trailer has its own grammar and is enforced.
-    if not MODEL_USED.fullmatch("model=opencode/space-bunny-free variant=max harness=OpenCode"):
+    # The Model used: grammar is enforced through model_used_ok, which is what
+    # production calls. A previous revision asserted a separate MODEL_USED regex
+    # here, so the self-test appeared to guard the grammar while guarding a
+    # pattern no code path depended on. These cases now drive the real function.
+    if not model_used_ok("model=opencode/space-bunny-free variant=max harness=OpenCode"):
         fail("a conforming Model used: value was rejected")
     for bad_value, why in (
         ("space-bunny-free-max (OpenCode)", "free text, not keyed pairs"),
@@ -263,7 +269,7 @@ def self_test() -> bool:
         ("model= variant=max harness=OpenCode", "empty model value"),
         ("model-unconfirmed", "bare sentinel, not a keyed value"),
     ):
-        if MODEL_USED.fullmatch(bad_value):
+        if model_used_ok(bad_value):
             fail(f"Model used: accepted an invalid value: {why}")
 
     # The dated-review exemption must accept a real date and reject the shapes
@@ -286,21 +292,71 @@ def self_test() -> bool:
     # printed "Self-test passed" and exited 0. There is now exactly one place
     # these lists are unpacked -- report_findings -- and the self-test calls it
     # with every list non-empty, so a wrong arity raises for real.
-    # Every list is forced non-empty: an empty list never executes its loop body,
-    # so a wrong arity would not raise. The report is captured rather than
-    # printed, because the self-test must not emit findings of its own.
+    # Every producer must return a NON-EMPTY list of the right kind, and its
+    # CONTENT is asserted before use. A previous version substituted a literal
+    # when a producer returned nothing (`x or [placeholder]`), which made the
+    # arity exercise pass while the producer itself was unguarded: reinstating
+    # the index bug so defects_sample() returned the PRESERVED list still passed,
+    # because both are 3-tuples of (entry, snippet, reason) and arity alone cannot
+    # tell them apart. Asserting the content is what guards the producer; the
+    # arity exercise below only proves report_findings can unpack them.
+    samples = {
+        "allowed": PRESERVE_SAMPLE,
+        "defects": defects_sample(),
+        "wrong_dash": wrong_dash_sample(),
+        "unrecognised": unrecognised_sample(),
+    }
+    for _name, _rows in samples.items():
+        if not _rows:
+            fail(f"{_name} sample is empty, so this self-test would be asserting "
+                 f"nothing about that producer")
+    if samples["defects"] and not any("defect.md" in str(r[0]) for r in samples["defects"]):
+        fail("defects sample does not contain the planted docs/defect.md entry, "
+             "so it is not the defects list")
+    if samples["defects"] and any("reviews/" in str(r[0]) for r in samples["defects"]):
+        fail("defects sample contains a preserved dated record; defects_sample() "
+             "is returning the preserved list")
+    if samples["wrong_dash"] and not any("dash.md" in str(r[0]) for r in samples["wrong_dash"]):
+        fail("wrong_dash sample does not contain the planted docs/dash.md entry")
+    if samples["unrecognised"] and not any("bad.md" in str(r[0]) for r in samples["unrecognised"]):
+        fail("unrecognised sample does not contain the planted docs/bad.md entry")
+
+    # The report is captured rather than printed, because the self-test must not
+    # emit findings of its own.
     try:
         import contextlib
         import io
         with contextlib.redirect_stdout(io.StringIO()):
             report_findings(
-                PRESERVE_SAMPLE or [("selftest.md:1", "text", "reason")],
-                defects_sample() or [("selftest.md:2", "text", "reason")],
-                wrong_dash_sample() or [("selftest.md:3", "text")],
-                unrecognised_sample() or [("selftest.md:4", "text")],
+                samples["allowed"] or [("selftest.md:1", "text", "reason")],
+                samples["defects"] or [("selftest.md:2", "text", "reason")],
+                samples["wrong_dash"] or [("selftest.md:3", "text")],
+                samples["unrecognised"] or [("selftest.md:4", "text")],
             )
     except ValueError as exc:
         fail(f"report_findings unpacking is inconsistent: {exc}")
+
+    # The exit-status decision must be asserted in both directions. It used to be
+    # inline in main(), which nothing could observe: deleting the defect branch
+    # entirely still exited 0 on a tree carrying a real defect.
+    two = [("x", "y")]
+    three = [("x", "y", "z")]
+    import contextlib as _ctx
+    import io as _io
+    for desc, args, want in (
+        ("a defect set yields 1", (two, [], [], [], True, False), 1),
+        ("a wrong_dash set yields 1", ([], two, [], [], True, False), 1),
+        ("an unrecognised set yields 1", ([], [], two, [], True, False), 1),
+        ("a trailer defect yields 1", ([], [], [], two, True, False), 1),
+        ("an empty set yields 0", ([], [], [], [], True, False), 0),
+        ("a skip without the flag yields 2", ([], [], [], [], False, False), 2),
+        ("a skip with the flag yields 0", ([], [], [], [], False, True), 0),
+        ("a defect outranks a skip with the flag", (three, [], [], two, False, True), 1),
+    ):
+        with _ctx.redirect_stdout(_io.StringIO()):
+            actual = verdict(*args)
+        if actual != want:
+            fail(f"verdict({desc}) returned {actual}, expected {want}")
 
     # The trailer path must be exercised at its call site, not only through the
     # patterns. Each case below asserts the EXPECTED verdict, so a regression
@@ -424,10 +480,13 @@ def _fixture_repo(tag: str) -> pathlib.Path:
                     ["config", "user.name", "SelfTest"]):
             subprocess.run(["git", "-C", str(root), *cmd], capture_output=True, check=True)
         (root / "README.md").write_text("# fixture\n", encoding="utf-8")
+        # A live short form, which must be reported. A dated file under
+        # docs/team/reviews/ is deliberately NOT planted here: the blanket
+        # exemption by directory and date has been removed, so such a file is a
+        # defect like any other and would pollute the defects sample this
+        # self-test asserts against.
         (root / "docs" / "live.md").write_text(
             f"Worker {EM} Torsten Maier (AI agent)\n", encoding="utf-8")
-        (root / "docs" / "team" / "reviews" / "r-2026-10-01.md").write_text(
-            f"Reviewer {EM} Dennis Windmaier (AI agent)\n", encoding="utf-8")
         subprocess.run(["git", "-C", str(root), "add", "-A"], capture_output=True, check=True)
         subprocess.run(["git", "-C", str(root), "commit", "--quiet", "-m", "fixture"],
                        capture_output=True, check=True)
@@ -509,28 +568,6 @@ def unrecognised_sample() -> list:
         _purge(root)
 
 
-def _files_sample(tag: str, index: int) -> list:
-    """Call the REAL scan_files against a throwaway repo and return one of its
-    finding lists.
-
-    A private copy of scan_files used to live here, which is why a mutation in
-    scan_files itself -- suppressing wrong-dash detection, say -- was invisible
-    to the self-test, and why defects_sample() could silently return the wrong
-    list. The production function is now called directly, via the same ROOT swap
-    _trailer_probe uses.
-    """
-    root = _fixture_repo(tag)
-    global ROOT
-    saved = ROOT
-    try:
-        _git_in(root, "commit", "--allow-empty", "--quiet", "-m", "probe")
-        ROOT = _RootShim(root)
-        return scan_files()[index]
-    finally:
-        ROOT = saved
-        _purge(root)
-
-
 def _trailer_probe(tag: str, body: str) -> list:
     """Call the REAL scan_trailers over a throwaway repo whose HEAD carries `body`.
 
@@ -540,20 +577,35 @@ def _trailer_probe(tag: str, body: str) -> list:
     production function itself. A regression in scan_trailers therefore fails
     here, which is the entire point.
     """
-    root = _fixture_repo(tag)
+    # root must be bound INSIDE the try. A previous version called
+    # _fixture_repo() before it, so a failure after mkdtemp -- a git error, a
+    # read-only filesystem, a concurrent cleanup -- stranded a half-built
+    # repository with a .git in it, which is exactly the leak that survived
+    # three controlled clean runs and was reported as unattributable.
+    root = None
     global ROOT
     saved = ROOT
     try:
+        root = _fixture_repo(tag)
         _git_in(root, "commit", "--allow-empty", "--quiet", "-m", f"probe\n\n{body}")
         ROOT = _RootShim(root)
         return scan_trailers("main")
     finally:
         ROOT = saved
-        _purge(root)
+        if root is not None:
+            _purge(root)
 
 
 class _RootShim:
-    """Minimal stand-in so git("-C", str(ROOT), ...) targets the fixture repo."""
+    """Stands in for ROOT so both git("-C", str(ROOT)) and (ROOT / rel) reach a
+    fixture repository.
+
+    Both operations are needed. git() stringifies ROOT, and scan_files reads
+    fixture content through ROOT / rel. Removing __truediv__ as apparently dead
+    was wrong: the file-scan self-test cases swap ROOT too, and the resulting
+    TypeError was caught only because the boundary now reports unexpected
+    failures instead of printing a traceback.
+    """
 
     def __init__(self, real: pathlib.Path):
         self._real = real
@@ -590,11 +642,25 @@ def _looks_like_identity(line: str) -> bool:
                    "machine key", "recoverable", "template", "field rules"):
         if marker in line:
             return False
-    # The underscore-delimited tail is the discriminator: an instance always has
-    # model-variant_harness, a template slot is bracketed, and prose has neither.
-    if not re.search(r"_[A-Za-z0-9][^_\s]*_[A-Za-z]", line):
+    # Role-like, then a separator, then the tail. The separator class accepts any
+    # dash-like character, not only the em dash, because a label written with an
+    # ASCII hyphen or an en dash is precisely a wrong-dash label and must reach
+    # the reporting stage rather than be filtered out here as "not an identity".
+    # The role shape admits digits, so a role such as "Worker 2" is still an
+    # intended identity.
+    # Role-like, then a dash-like separator with optional surrounding spaces. The
+    # spaces are optional because a label written "Name<TAB>Model" is precisely a
+    # malformed label that must be reported, not filtered out as "not an identity".
+    if not re.search(rf"[A-Za-z0-9][A-Za-z0-9 ]*\s?[-\u2010-\u2015\u2212]\s?", line):
         return False
-    return bool(re.search(rf"[A-Za-z][A-Za-z ]*\s{re.escape(EM)}\s", line))
+    # The suffix is the reliable anchor, and the underscore-delimited fields must
+    # be present somewhere before it. Matching on the tail alone missed a label
+    # whose model slot is empty, because "__OpenCode" supplies no second
+    # underscore to anchor on; requiring at least one underscore-delimited field
+    # catches that while still rejecting prose and grammar templates.
+    if "(AI agent)" not in line:
+        return False
+    return bool(re.search(r"_[^_\s]", line))
 
 
 def scan_files() -> tuple[list, list, list, list, list]:
@@ -630,8 +696,10 @@ def scan_files() -> tuple[list, list, list, list, list]:
                        for start, end in canonical_spans):
                     continue
                 matched = True
+                # A defect carries no reason: it is not exempt, and saying
+                # "dated review record" for a live file would be a false claim.
                 (allowed if preserved(rel) else defects).append(
-                    (entry, m.group(0), PRESERVE.get(rel, "dated review record")))
+                    (entry, m.group(0), PRESERVE.get(rel, "")))
             # A line that claims to carry an identity but matches neither form is
             # reported rather than passed over. Previously a forbidden '/' or '#'
             # in the model slot, a lowercase role, or a space in the model token
@@ -799,10 +867,23 @@ def main() -> int:
     print("that a role was natively loaded, that a run occurred, or that any product")
     print("behavior is verified.")
     print("Exit status: 0 pass, 1 defect found, 2 not fully checked (see --allow-skip).")
-    print("Known limit: a file under docs/team/reviews/ is exempt on a real date alone,")
-    print("without its own reason. Requires git on PATH, 2.28+ for --initial-branch.")
-    print("Untracked Markdown is not scanned, so a new unpublished record is not checked.")
+    print("Requires git on PATH, 2.28+ for --initial-branch. Untracked Markdown is not")
+    print("scanned, so a new unpublished record is not checked.")
 
+    return verdict(defects, wrong_dash, unrecognised, trailer_bad,
+                   trailer_checked, allow_skip)
+
+
+def verdict(defects, wrong_dash, unrecognised, trailer_bad,
+            trailer_checked: bool, allow_skip: bool) -> int:
+    """The exit-status decision, isolated so the self-test can call it.
+
+    The status logic used to be inline in main(), which meant nothing could
+    observe it: deleting the defect branch entirely still exited 0 on a tree
+    carrying a real defect, and the self-test passed because it never called
+    main(). It is a separate function now, and self_test() asserts both
+    directions -- a defect set yields 1, an empty one yields 0.
+    """
     if defects or wrong_dash or unrecognised or trailer_bad:
         return 1
     if not trailer_checked and not allow_skip:
@@ -815,4 +896,19 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    # An unexpected exception must not print a traceback and discard results: a
+    # crash is indistinguishable from a content defect to whoever runs the gate,
+    # and it throws away the file results already computed. Report the failure and
+    # the type instead. Re-raise under DATARA_STRICT for debugging.
+    if os.environ.get("DATARA_STRICT"):
+        sys.exit(main())
+    try:
+        sys.exit(main())
+    except SystemExit:
+        raise
+    except BaseException as exc:  # noqa: BLE001 - deliberate catch-all at the boundary
+        print()
+        print(f"UNEXPECTED FAILURE: {type(exc).__name__}: {exc}")
+        print("This is a defect in the check itself, not a reported finding. No results")
+        print("are trustworthy. Re-run with DATARA_STRICT=1 for the full traceback.")
+        sys.exit(1)

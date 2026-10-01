@@ -2,6 +2,10 @@
 
 Status: planning proposal; independent content review PASS, all238 Project records published with fresh authenticated readback PASS; independent publication QA PASS. Final candidate confirmation is reported on issue #277 and the linked pull request. Tracking: [issue #277](https://github.com/fengguode/DATARA/issues/277); Project: https://github.com/users/fengguode/projects/3. Baseline: merged main `cd6bbe807a539337b50b96fa02a883172a56bc3e`. Planning branch: `codex/p0-implementation-plan`. Coordinator: Yi Tang; planning contributor: Architect Feng Guo; quality lead/final process confirmer: Wang Xiaofeng; independent technical reviewer: Dennis Windmaier. All names identify AI roles. Founder owns CUS/material choices and final athlete acceptance.
 
+## Decision update - 1 October 2026
+
+D01-D05 directions are now selected in [the dated decision baseline](p0-decision-baseline-2026-10-01.md), using the explicit founder FIT SDK/provider choices and delegation to Yi with Yu. Earlier option-preparation and nonapproval wording below describes the original planning task; it does not override these selections. W0 now turns selected directions into evidence-backed contracts. The numbered decision criteria remain closure requirements: exact mappings, schemas, rights, runtime/fixtures, capability and operational evidence are still pending. G0 remains unsatisfied; downstream product coding stays gated.
+
 ## Target and readiness
 
 The first milestone is the **complete P0 first usable athlete release**, the existing GitHub milestone #1: manual supported Garmin FIT uploads, persistent history, deterministic preparation, provider-independent evaluated baseline skills, deterministic eligibility, customer-selected model access/manual execution, saved result history, predefined dashboard, authorized read-only API and user isolation. It spans CUS01–CUS10 and WP01–WP06. W1 below is an intermediate data-home gate; it does not replace the complete milestone. P1, recommendations/routines, commercial mechanisms and source-to-skill automation remain excluded.
@@ -238,4 +242,4 @@ Task acceptance, detailed outputs and verification IDs are copied without semant
 
 ## Review and current limitations
 
-Review evidence is recorded in [the implementation-plan review](../team/reviews/implementation-plan-review.md). Native automatic role loading is unconfirmed (#18); actual explicit role runs are identified in that record. D01–D05 stay open. An ordered planning artifact and successful registry checks do not establish coding readiness, product verification, founder acceptance or release readiness. The bounded TK09 evidence assignment can begin first; coding waits for G0.
+Review evidence is recorded in [the implementation-plan review](../team/reviews/implementation-plan-review.md). Native automatic role loading is unconfirmed (#18); actual explicit role runs are identified in that record. D01-D05 directions are selected in the linked 1 October baseline; detailed contracts and evidence remain open. An ordered planning artifact and successful registry checks do not establish coding readiness, product verification, founder acceptance or release readiness. The bounded TK09 evidence assignment can begin first; coding waits for G0.

@@ -229,22 +229,53 @@ def self_test() -> bool:
         if dated_name(rel) is not expected:
             fail(f"dated_name({rel!r}) should be {expected} ({why})")
 
-    # Exercise the reporting path, not only the patterns. A previous revision
-    # validated the patterns but crashed while printing the first real defect,
-    # because the defect list held 3-tuples and the report loop unpacked 2.
-    # Every finding list below is unpacked here exactly as main() unpacks it.
-    try:
-        sample_allowed = [("f.md:1", "text", "reason")]
-        sample_defects = [("f.md:2", "text", "reason")]
-        sample_wrong = [("f.md:3", "text")]
-        for entry, snippet, reason in sample_allowed:
-            pass
-        for entry, snippet, _reason in sample_defects:
-            pass
-        for entry, snippet in sample_wrong:
-            pass
-    except ValueError as exc:
-        fail(f"finding-list unpacking is inconsistent: {exc}")
+    # Exercise the reporting path against the real producers, not against
+    # literals. A previous revision built three throwaway tuples here and
+    # unpacked them, which asserted nothing: reinstating the original arity bug
+    # in the report loop still printed "Self-test passed" and then raised
+    # ValueError. Literals cannot detect a change in the code that builds them,
+    # so this now drives the same unpack sites from real scan output.
+    for name, produce in (
+        ("allowed", lambda: PRESERVE_SAMPLE),
+        ("defects", lambda: defects_sample()),
+        ("wrong_dash", lambda: wrong_dash_sample()),
+    ):
+        try:
+            rows = produce()
+            if name == "allowed":
+                for entry, snippet, reason in rows:
+                    pass
+            elif name == "defects":
+                for entry, snippet, _reason in rows:
+                    pass
+            else:
+                for entry, snippet in rows:
+                    pass
+        except ValueError as exc:
+            fail(f"{name} finding-list unpacking is inconsistent: {exc}")
+
+    # The trailer path must be exercised at its call site, not only through the
+    # patterns. Each case below asserts the EXPECTED verdict, so a regression
+    # that makes the check accept a bad value, or reject a good one, fails here.
+    good_label = (f"Worker {EM} Torsten Maier_space-bunny-free-max_OpenCode (AI agent)")
+    good_model = "model=opencode/space-bunny-free variant=max harness=OpenCode"
+    for body, expect_defect, why in (
+        (f"Contributed-by: {good_label}", False, "a conforming label"),
+        (f"Contributed-by: {good_label} (relayed by Reviewer {EM} Dennis Windmaier (AI agent))",
+         True, "a label plus a relaying note"),
+        (f"Contributed-by: work done by {good_label} yesterday",
+         True, "a label wrapped in prose"),
+        (f"Contributed-by: {good_label} zzz qqq", True, "a label plus trailing tokens"),
+        (f"Model-used: {good_model}", False, "a conforming Model used: value"),
+        (f"Model-used: space-bunny-free-max (OpenCode)", True, "free-text Model used:"),
+        (f"Model-used: model-unconfirmed", True, "a bare sentinel, not keyed pairs"),
+        (f"Model-used: model=opencode/space-bunny-free", True, "missing keys"),
+    ):
+        found = _trailer_probe(why.replace(" ", "-").replace(":", ""), body)
+        if bool(found) is not expect_defect:
+            fail(f"trailer scan verdict wrong for {why}: "
+                 f"expected {'defect' if expect_defect else 'clean'}, "
+                 f"got {len(found)} finding(s)")
 
     return ok
 
@@ -266,6 +297,138 @@ def base_ref() -> str | None:
         if probe.returncode == 0:
             return candidate
     return None
+
+
+def _fixture_repo(tag: str) -> pathlib.Path:
+    """A throwaway repo with a known short form, used to drive the real scans.
+
+    The self-test must exercise the call sites, because the defects it is meant
+    to catch live in the call sites: reinstating the M-1 regression, making the
+    Model-used key unreachable, or loosening the date anchor all leave every
+    compiled pattern untouched and pass a pattern-only test.
+    """
+    import tempfile
+    root = pathlib.Path(tempfile.mkdtemp(prefix=f"labelchk-{tag}-"))
+    (root / "scripts").mkdir(parents=True, exist_ok=True)
+    (root / "docs" / "team" / "reviews").mkdir(parents=True, exist_ok=True)
+    (root / "scripts" / "check_identity_labels.py").write_text(
+        pathlib.Path(__file__).read_text(encoding="utf-8"), encoding="utf-8")
+    for cmd in (["init", "--quiet", "--initial-branch=main", "."],
+                ["config", "user.email", "selftest@example.invalid"],
+                ["config", "user.name", "SelfTest"]):
+        subprocess.run(["git", "-C", str(root), *cmd], capture_output=True, check=True)
+    (root / "README.md").write_text("# fixture\n", encoding="utf-8")
+    (root / "docs" / "live.md").write_text(
+        f"Worker {EM} Torsten Maier (AI agent)\n", encoding="utf-8")
+    (root / "docs" / "team" / "reviews" / "r-2026-10-01.md").write_text(
+        f"Reviewer {EM} Dennis Windmaier (AI agent)\n", encoding="utf-8")
+    subprocess.run(["git", "-C", str(root), "add", "-A"], capture_output=True, check=True)
+    subprocess.run(["git", "-C", str(root), "commit", "--quiet", "-m", "fixture"],
+                   capture_output=True, check=True)
+    # A second commit, so main..HEAD is non-empty and the trailer scan runs.
+    subprocess.run(["git", "-C", str(root), "branch", "base"], capture_output=True)
+    subprocess.run(["git", "-C", str(root), "checkout", "--quiet", "-b", "probe"],
+                   capture_output=True, check=True)
+    return root
+
+
+def _git_in(root: pathlib.Path, *args: str) -> None:
+    subprocess.run(["git", "-C", str(root), *args], capture_output=True, check=True)
+
+
+def defects_sample() -> list:
+    """Real defects from the real scan, on a throwaway repo."""
+    root = _fixture_repo("defects")
+    try:
+        (root / "docs" / "defect.md").write_text(
+            f"Worker {EM} Torsten Maier (AI agent)\n", encoding="utf-8")
+        _git_in(root, "add", "-A")
+        _git_in(root, "commit", "--quiet", "-m", "live short form")
+        return _scan_files_in(root)[1]
+    finally:
+        import shutil
+        shutil.rmtree(root, ignore_errors=True)
+
+
+def wrong_dash_sample() -> list:
+    """Real wrong-dash findings from the real scan."""
+    root = _fixture_repo("dash")
+    try:
+        (root / "docs" / "dash.md").write_text(
+            f"Worker - Torsten Maier_space-bunny-free-max_OpenCode (AI agent)\n",
+            encoding="utf-8")
+        _git_in(root, "add", "-A")
+        _git_in(root, "commit", "--quiet", "-m", "ascii dash")
+        return _scan_files_in(root)[3]
+    finally:
+        import shutil
+        shutil.rmtree(root, ignore_errors=True)
+
+
+def _scan_files_in(root: pathlib.Path) -> tuple[list, list, list, list]:
+    """scan_files() against an arbitrary repo root."""
+    paths = [p for p in subprocess.run(
+        ["git", "-C", str(root), "ls-files", "*.md", "*.toml"],
+        capture_output=True, text=True, encoding="utf-8", errors="replace",
+    ).stdout.split() if p]
+    allowed: list[tuple[str, str, str]] = []
+    defects: list[tuple[str, str, str]] = []
+    wrong: list[tuple[str, str]] = []
+    for rel in paths:
+        text = (root / rel).read_text(encoding="utf-8")
+        for number, line in enumerate(text.splitlines(), 1):
+            if "(AI agent)" not in line:
+                continue
+            entry = f"{rel}:{number}"
+            for m in NEW_ANY.finditer(line):
+                if not NEW_EM.search(m.group(0)):
+                    wrong.append((entry, m.group(0)))
+            spans = [m.span() for m in NEW_ANY.finditer(line)]
+            for m in OLD_ANY.finditer(line):
+                if any(s <= m.start() and m.end() <= e for s, e in spans):
+                    continue
+                dated = "reviews" in rel and dated_name(rel)
+                (allowed if dated else defects).append(
+                    (entry, m.group(0), "dated review record" if dated else ""))
+    return paths, allowed, defects, wrong
+
+
+def _trailer_probe(tag: str, body: str) -> list:
+    """Call the REAL scan_trailers over a throwaway repo whose HEAD carries `body`.
+
+    The M-1 and M-2 defects live inside scan_trailers, not in the compiled
+    patterns. A self-test that re-implements the scan cannot detect a change to
+    the scan, so this temporarily points ROOT at the fixture and calls the
+    production function itself. A regression in scan_trailers therefore fails
+    here, which is the entire point.
+    """
+    root = _fixture_repo(tag)
+    global ROOT
+    saved = ROOT
+    try:
+        _git_in(root, "commit", "--allow-empty", "--quiet", "-m", f"probe\n\n{body}")
+        ROOT = _RootShim(root)
+        return scan_trailers("main")
+    finally:
+        ROOT = saved
+        import shutil
+        shutil.rmtree(root, ignore_errors=True)
+
+
+class _RootShim:
+    """Minimal stand-in so git("-C", str(ROOT), ...) targets the fixture repo."""
+
+    def __init__(self, real: pathlib.Path):
+        self._real = real
+
+    def __str__(self) -> str:
+        return str(self._real)
+
+    def __truediv__(self, other):
+        return self._real / other
+
+
+PRESERVE_SAMPLE = [("f.md:1", "text", "reason")]
 
 
 def scan_files() -> tuple[list, list, list, list]:
@@ -345,7 +508,17 @@ def scan_trailers(ref: str) -> list[tuple[str, str]]:
 
 
 def main() -> int:
+    # --allow-skip is the only way to accept a trailer scan that could not run.
+    # It is a flag rather than a default because "not checked" and "passed" must
+    # not share an exit status, and because accepting the gap should be a
+    # visible decision by whoever runs the check.
+    allow_skip = "--allow-skip" in sys.argv[1:]
+    if any(a not in ("--allow-skip",) for a in sys.argv[1:]):
+        print(f"Unknown argument. Usage: {pathlib.Path(__file__).name} [--allow-skip]")
+        return 1
     print("Identity label check")
+    if allow_skip:
+        print("(--allow-skip given: a skipped trailer scan will not fail the run)")
     print()
 
     if not self_test():
@@ -377,11 +550,17 @@ def main() -> int:
         print(f"  DEFECT  {entry}  {snippet}")
 
     ref = base_ref()
+    # A skip is not a pass. Exit 0 for a trailer scan that never ran would let a
+    # green status stand for a check that did not execute, which is how four
+    # negative controls once passed vacuously. Distinct status 2, overridable
+    # only by an explicit --allow-skip, so the exemption is a decision.
+    trailer_checked = True
     if ref is None:
         print()
         print("Trailer check SKIPPED: no base ref found (tried origin/main, main,")
         print("origin/master, master). This is a tooling limitation, not a pass.")
         trailer_bad: list[tuple[str, str]] = []
+        trailer_checked = False
     else:
         trailer_bad = scan_trailers(ref)
         ahead = git("rev-list", "--count", f"{ref}..HEAD").strip()
@@ -389,6 +568,7 @@ def main() -> int:
         if ahead in ("", "0"):
             print(f"Trailer check inspected nothing: HEAD is {ref}, or has no commits")
             print("beyond it. Report this as not checked, not as a pass.")
+            trailer_checked = False
         else:
             print(f"Attribution trailers not in em-dash form (must be zero), "
                   f"{ahead} commit(s) against {ref}: {len(trailer_bad)}")
@@ -401,8 +581,17 @@ def main() -> int:
     print("trailers only. It does not scan the requirements registry, does not prove")
     print("that a role was natively loaded, that a run occurred, or that any product")
     print("behavior is verified.")
+    print("Exit status: 0 pass, 1 defect found, 2 not fully checked (see --allow-skip).")
 
-    return 1 if (defects or wrong_dash or trailer_bad) else 0
+    if defects or wrong_dash or trailer_bad:
+        return 1
+    if not trailer_checked and not allow_skip:
+        print()
+        print("NOT CHECKED: the trailer scan did not run, so this is not a pass.")
+        print("Re-run against a full clone with a base ref, or pass --allow-skip to")
+        print("accept the gap deliberately.")
+        return 2
+    return 0
 
 
 if __name__ == "__main__":

@@ -4,7 +4,9 @@ import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-r = json.loads((ROOT / "docs/management/requirements-registry.json").read_text())
+r = json.loads(
+    (ROOT / "docs/management/requirements-registry.json").read_text(encoding="utf-8")
+)
 errors = []
 if r.get("schema_version") != "2.0":
     errors.append("Expected CUS/SR registry schema version 2.0")

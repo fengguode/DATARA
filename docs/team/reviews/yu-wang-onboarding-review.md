@@ -44,7 +44,7 @@
 
 ## Open gates and limits
 
-- Reviewer and Quality Manager confirmations passed for evidence-record head e0cb8b5f47cbe7d114798c305ec698105f8663bb. The following review-record clarification updates task status to match draft PR #281 and the Project's In review status; final confirmation for that status-only update is being collected before the handoff is complete.
+- Reviewer and Quality Manager confirmations passed for evidence-record head e0cb8b5f47cbe7d114798c305ec698105f8663bb. Reviewer and Quality Manager reconfirmed the status-only update on 474b4dd2d673b45c030e8b1618019d9a091feba9. The issue body and Project now show draft PR #281 / In review; their confirmations are candidate-bound to that status/evidence update.
 - GitHub Project board readback and named issue comment 5923577088 record the field changes; future status mutations must follow the same pattern.
 - The project board's visitor access and ability for intended athletes to file feedback must be checked before any external publication. An alternate contact route requires approval.
 - The proposed WCAG 2.2 AA target requires owner approval before design acceptance.

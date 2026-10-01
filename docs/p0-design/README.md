@@ -14,6 +14,7 @@ This package does not authorize product implementation. It supplies a proposed c
 
 ## Contents
 
+- [Interactive architecture explorer](architecture-explorer.html) — a guided HTML viewer for all eight diagrams with explanations, search, keyboard navigation, zoom, and source inspection. It loads Mermaid from jsDelivr, so rendered diagrams require an internet connection; the source text remains embedded in the file.
 - [Architecture baseline](architecture-baseline.md) — system boundaries, components, flows, security and operational questions.
 - [Implementation contracts and handoff](implementation-contracts.md) — ordered WP/TK contracts, status and start blockers.
 - [Test design](test-design.md) — test cases mapped to requirements, fixtures, oracles, retained evidence and gates.

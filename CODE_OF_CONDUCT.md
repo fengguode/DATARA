@@ -23,7 +23,7 @@ If sources conflict, identify the discrepancy, preserve newer founder changes, a
 
 The [CUS and requirement records](docs/management/product-requirements.md) govern scope. Selected direction, approved contract, implementation and verified behavior are distinct.
 
-The feature-illusion rule above is maintained at [the project wiki](https://github.com/fengguode/DATARA/wiki/Feature-Illusion-Rule), which is its source of truth for customers and the public. This section mirrors it. If the two disagree, the wiki governs and this copy is the defect.
+The feature-illusion rule above is maintained at [the project wiki](https://github.com/fengguode/DATARA/wiki/Feature-Illusion-Rule), which is its source of truth for customers and the public. This section mirrors it. If the two disagree, the wiki governs and this copy is the defect. That precedence covers the wording of the rule only: it does not govern product scope, requirements, contracts, traceability, evidence or process, which this Code of Conduct and the [requirement records](docs/management/product-requirements.md) continue to govern.
 
 ## 3. Communication and conduct
 

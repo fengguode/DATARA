@@ -12,7 +12,7 @@ We are building a persistent personal data home that turns supported data into u
 
 This is a constraint on the vision, not only on the release. DATARA's value proposition is that a number is traceable to evidence and that a user knows what produced it; a product that oversells its own capability contradicts the property it exists to provide, and the contradiction is worst in exactly the place a user is asked to trust it. The rule therefore applies most strictly to claims about data handling, provenance and analysis, and it applies from the first public page onward rather than after launch.
 
-The rule is maintained at [the project wiki](https://github.com/fengguode/DATARA/wiki/Feature-Illusion-Rule), which is its source of truth. If this brief and the wiki disagree, the wiki governs and this brief is the defect.
+The rule is maintained at [the project wiki](https://github.com/fengguode/DATARA/wiki/Feature-Illusion-Rule), which is its source of truth. If this brief and the wiki disagree, the wiki governs and this brief is the defect. That precedence covers the wording of the rule only. This brief remains authoritative for product scope, and the [requirement records](management/product-requirements.md) remain authoritative for what is required: the wiki cannot widen the roadmap, and where a roadmap stage and this rule appear to conflict the stage governs.
 
 ### First product
 

@@ -70,7 +70,7 @@ The [GitHub Project](https://github.com/users/fengguode/projects/3) is the live 
 
 This constrains illustration as much as claim. A placeholder screenshot, a mock dashboard, or a worked example that was not produced by the real system is prohibited on this page, because a visitor cannot distinguish it from a real one. Where a capability is planned but unbuilt, the page says so in the same place and at the same time as any related mention, rather than in a footnote.
 
-The rule is maintained at [the project wiki](https://github.com/fengguode/DATARA/wiki/Feature-Illusion-Rule), which is its source of truth. If this brief and the wiki disagree, the wiki governs and this brief is the defect.
+The rule is maintained at [the project wiki](https://github.com/fengguode/DATARA/wiki/Feature-Illusion-Rule), which is its source of truth. If this brief and the wiki disagree, the wiki governs and this brief is the defect. That precedence covers the wording of the rule only. It does not decide what the product may claim: the [requirement records](../management/product-requirements.md) and the [dated decision baseline](../management/p0-decision-baseline-2026-10-01.md) remain authoritative, and this brief may not present a capability those records do not support.
 
 ### Data and model expectations
 

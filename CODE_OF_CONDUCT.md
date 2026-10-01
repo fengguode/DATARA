@@ -41,6 +41,37 @@ Reuse one dedicated session per role. Preserve configured models, reasoning and 
 
 Every bounded assignment names the role, issue, WP/CUS/Feature/SR/Task IDs, objective, dependencies/decision gates, acceptance criteria, exclusive writable paths, read-only references, base commit/branch/PR, available execution evidence, required checks, reviewers/final confirmer, current live-read timestamp and next handoff. Avoid concurrent edits to the same files. A sandbox's technical write access does not grant ownership. Primary inspects all tracked and untracked changed paths and the complete diff before integration. Preserve unrelated changes.
 
+### Agent identity labels
+
+Publish an agent identity as one canonical label that shows the persona, the model used, and the harness, so the two runtimes are distinguishable at a glance. This supplements the [issue #23](https://github.com/fengguode/DATARA/issues/23) attribution agreement; it does not replace it.
+
+```text
+<Role> — <Configured name>_<model>-<variant>_<Harness> (AI agent)
+```
+
+- `<Role>` and `<Configured name>` are the [roster](docs/team/roster.md) values, unchanged.
+- `<model>` is the provider model ID with the provider prefix removed: `opencode/space-bunny-free` becomes `space-bunny-free`. Never include `/` or `#` inside a model token.
+- `<variant>` is the run's provider variant, or for Codex the `model_reasoning_effort` token. It is joined to the model with a single `-`: `gpt-6-luna` + `medium` gives `gpt-6-luna-medium`; `opencode/space-bunny-free` + `max` gives `space-bunny-free-max`.
+- `<Harness>` is `Codex` or `OpenCode`.
+- The ` (AI agent)` suffix is part of the label and is never omitted.
+
+Examples:
+
+- `Primary Coordinator — Yi Tang_gpt-6-luna-medium_Codex (AI agent)`
+- `Worker — Torsten Maier_gpt-6-luna-medium_Codex (AI agent)`
+- `Product Manager — Yu Wang_gpt-6.1-sol-medium_Codex (AI agent)`
+- `Worker — Torsten Maier_space-bunny-free-max_OpenCode (AI agent)`
+
+**Model evidence.** State the model a run observed. If the run cannot observe its loaded model, state that run's configured model and keep the existing `Configuration loading:` line. If neither is verifiable, use `model-unconfirmed`. Use `harness-unconfirmed` when the runtime is not observable. Never infer a model or harness from a role label, and never present a configured value as an observed one.
+
+**Where the label applies.** Issue and pull request comments, commit attribution trailers, pull request contribution tables, and assignment and handoff records. Each of these also records a `Model used:` value, which is where the model and harness are captured when the full label is not the point being made.
+
+**Where it does not apply.** The Project **Agent** field stays the roster's `Role — Name`, because it records ownership rather than a run's model; a single-select field cannot hold one value per role, model, and harness combination. GitHub repository labels also stay `Role — Name`. Historical commits, comments, dated review records, and the `agent` and `owner_role` fields in `requirements-registry.json` are preserved exactly as written and are not restated under this rule.
+
+**The label is a display string, not a machine key.** Role and name split reliably on ` — `, and the harness is the final `_`-delimited field. The boundary between model and variant is not recoverable, because `-` occurs inside model IDs such as `space-bunny-free` and `gpt-6.1-sol`. Do not parse a model or variant out of a published label; read the `Model used:` value instead.
+
+The label identifies the persona and its runtime only. It does not prove participation, native activation, independent review, acceptance or release, and it does not alter Git author and committer identities.
+
 ## 5. Live GitHub coordination
 
 Refresh affected Project fields and linked issue/PR descriptions, comments, reviews and founder decisions before assignment, dependent actions, status reports, mutations, review conclusions and handoffs. Refresh after founder interactions, resumed sessions and scope changes, and at least every 15 minutes during sustained work. Read current status, owner, priority, lifecycle, prerequisites and start gates; record UTC timestamps and source links.

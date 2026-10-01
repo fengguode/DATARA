@@ -43,11 +43,12 @@ Use only applicable roles and checks for each change. Documentation checks may u
 Each confirmation binds to the reviewed full head SHA and exact scope. After later edits, renew affected reviews/checks and confirmation against the new SHA; preserve prior reports as historical evidence. Refresh the final confirmation to the current head SHA, identifying unchanged supporting evidence and the affected checks rerun. Resolve required findings before final confirmation.
 
 ```text
-<Role — Name> (AI agent) · <Confirmed / Changes requested / Blocked>
+<Role> — <Configured name>_<model>-<variant>_<Harness> (AI agent)> · <Confirmed / Changes requested / Blocked>
 Assignment / issue: <links>
 Reviewed head SHA: <full SHA>
 Scope and stage: <exact review responsibility>
 Independence: <reviewer is not an author; substitution if any>
+Model used: <model>-<variant> (<Harness>), model-unconfirmed, or harness-unconfirmed
 Evidence and findings: <checks/results/links/limits>
 Runtime / execution: <actual ID/link or unavailable>
 Configuration loading: <observed or unconfirmed>
@@ -58,8 +59,8 @@ For CUS-level final confirmation, retain the founder's explicit decision and its
 
 ## GitHub labels and change attribution
 
-Use repository labels exactly matching `Role — Name` in the [roster](roster.md), including `Primary Coordinator — Yi Tang`, on issues and pull requests for assigned or evidenced participating roles. Identify planned assignments versus actual contributions in the body and named comments. Labels are role tags; the Project **Agent** field identifies the single current owner. Record the final confirmer explicitly in the issue/pull request body. Neither a label nor a Project field proves a run or a confirmation.
+Use repository labels exactly matching `Role — Name` in the [roster](roster.md), including `Primary Coordinator — Yi Tang`, on issues and pull requests for assigned or evidenced participating roles. Repository labels stay in the short `Role — Name` form; the longer identity label that appends the model and harness is a comment, trailer, and contribution-table form, not a repository label. Identify planned assignments versus actual contributions in the body and named comments. Labels are role tags; the Project **Agent** field identifies the single current owner and also stays in the short `Role — Name` form. Record the final confirmer explicitly in the issue/pull request body. Neither a label nor a Project field proves a run or a confirmation.
 
-Commits use evidenced `Contributed-by` or `Implemented-by` and `Integrated-by` trailers with role/name, plus assignment and available execution evidence. Keep actual Git author/committer identities and the linked pull request contribution table. GitHub issue-style labels are attached to issues/pull requests, so commit attribution is recorded through trailers and linked contribution records. Preserve historical labels in old commits and comments.
+Commits use evidenced `Contributed-by` or `Implemented-by` and `Integrated-by` trailers carrying the full identity label, plus a `Model-used:` trailer, the assignment, and available execution evidence. Keep actual Git author/committer identities and the linked pull request contribution table. GitHub issue-style labels are attached to issues/pull requests, so commit attribution is recorded through trailers and linked contribution records. Preserve historical labels in old commits and comments; they are not restated under the identity label format.
 
 Every Project-management change is reported in a named activity comment with the actor role/name, item link, changed fields and old/new values, evidence of readback, and authenticated publisher. Primary Coordinator — Yi Tang publishes its own changes and relayed agent reports. GitHub status reporting is explicit; failures require a locally retained pending update and an out-of-sync report under the attribution protocol. AI persona names are distinct from GitHub account identity and native GitHub review approvals.

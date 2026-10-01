@@ -20,7 +20,7 @@ The founder named the Primary Coordinator persona **Yi Tang** on 30 September 20
 
 The source team's names, model choices, reasoning settings, and specified sandbox modes are retained. Role names identify configuration personas; they do not establish that the named people participated in DATARA or reviewed its work. Yu Wang requests gpt-6.1-sol at medium reasoning effort; activation through the repository native role loader has not been confirmed.
 
-The Project **Agent** options use `Role — Configured name`, for example `Worker — Torsten Maier` and `Primary Coordinator — Yi Tang`. Use these names in issue assignments and activity comments under the [attribution protocol](attribution.md). Actual runtime IDs and execution evidence are recorded separately; GitHub publishes comments under the authenticated account.
+The Project **Agent** options identify the responsible role only, as `Role — Configured name`, for example `Worker — Torsten Maier` and `Primary Coordinator — Yi Tang`. That field records ownership, so it does not carry a model or harness. Issue assignments, activity comments, commit trailers, and pull request contribution tables use the fuller [identity label format](attribution.md#identity-label-format) defined in the Code of Conduct, which appends the model and harness. Actual runtime IDs and execution evidence are recorded separately; GitHub publishes comments under the authenticated account.
 
 ## Design skill inventory for later evaluation
 

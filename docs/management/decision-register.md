@@ -26,6 +26,22 @@ For each resolution record: decision, rationale, alternatives, affected requirem
 
 Concrete options, impacts, and approval gates for D01–D05 are in the [WP01 requirements package](wp01-requirements-package.md). Nothing in that proposal records founder approval.
 
+## G0 replacement for Milestone A (1 October 2026)
+
+The founder authorised a G0 replacement under the Code of Conduct rule that coding requires G0 "or its approved replacement", which had never been pulled. The round table's Architect, Product Manager, and Controller reached the same conclusion independently: the binding constraint is **decision closure rather than decision absence**. The operative contracts largely exist in the dated decision baseline, while approximately 95 individually gated subtasks stand between the project and its first line of code, and the TK02 gate cannot close as scheduled because all eight of its children are written to forbid selecting a behaviour while G0 requires approved contracts.
+
+**Authorised scope — Milestone A.** Source acceptance per D01; immutable original storage with SHA-256; exact-duplicate idempotence and logical-tuple quarantine; deterministic normalisation of the four P0 required inputs with no imputation; a deterministic, pure eligibility function that explains unmet requirements and makes no model call; saved history with a read surface; two-identity isolation; and a read-only API returning the same saved values as the page. Milestone A is authorised to proceed to implementation **without G0**.
+
+**Not waived.** G0 continues to gate, unchanged: provider and model integration, skill execution, the TC15 athlete journey, and the release gate. Also unchanged and not tradeable: user isolation, immutable originals, determinism, provenance on every number, the no-silent-fallback rule, rights and privacy handling, and the release gate.
+
+**Binding architectural condition.** Milestone A must create only `Import → SourceObject → Activity/Session → Metric/QualityFinding → Snapshot`, and must **not** create `Run`, `Assessment`, or any "latest result" column. SR14 currently specifies a single run, and encoding that shape into persisted history would make multi-skill support a migration of history, colliding with the append-only rule and with the selected deletion-ledger and reapply-on-restore semantics. The absence of those entities is the contract.
+
+**Language discipline.** Milestone A is **not** the P0 first milestone, **not** a first usable release, and **not** an MVP. It is a trust outcome. Nothing produced under it may be described as Done, Verified, Accepted, or released. The first customer-recognisable utility outcome remains the first live baseline-skill run on the athlete's own model, retrievable unchanged from both dashboard and API.
+
+**Evidence basis.** The pinned FIT decoder reads a real founder-supplied export end to end with CRC verification and no compressed-timestamp definitions. Per the dated baseline, local import, preparation, and saved-history viewing require no provider call, so Milestone A is immune to the open provider-reachability question.
+
+This decision authorises one bounded implementation increment to begin. It approves no product candidate, accepts no requirement, authorises no release, and changes no CUS, SR, priority, contract, or evidence state. Full attribution and the Architect's binding condition: [round table](https://github.com/fengguode/DATARA/discussions/296). Decode spike: [discussion #297](https://github.com/fengguode/DATARA/discussions/297). Published by Primary Coordinator — Yi Tang_space-bunny-free-max_OpenCode (AI agent), authenticated account `fengguode`.
+
 ## D01–D05 delegated selections (1 October 2026)
 
 The founder selected FIT SDK 21.217.0, delegated remaining D01–D05 choice work to Yi Tang with Yu Wang, then explicitly selected OpenAI and DeepSeek as the first providers. The [dated decision record](p0-decision-baseline-2026-10-01.md) contains selected options, rationale, affected CUS/SR/tasks, official sources, remaining evidence and founder support inputs. Its authority and GitHub links are recorded there.

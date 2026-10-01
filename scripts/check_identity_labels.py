@@ -72,10 +72,39 @@ TRAILER_KEYS = ("Contributed-by", "Implemented-by", "Integrated-by")
 
 # The `Model used:` trailer carries a different grammar and is validated
 # separately. CODE_OF_CONDUCT.md:66-77 requires explicit key/value pairs on one
-# line and states the bare sentinels are not valid standalone values, so a value
-# must be exactly the three keyed pairs with no spaces inside any of them.
+# line, and its stated recovery rule is precise: split the value on whitespace
+# into three tokens, then split each token on its first `=`, yielding keys drawn
+# from {model, variant, harness}. Bare sentinels are not valid standalone values.
+# That rule is implemented as a parser below rather than as one regex, because
+# the key order is unconstrained and the documented recovery is the contract.
 MODEL_USED = re.compile(
     r"model=\S+ variant=\S+ harness=\S+")
+MODEL_KEYS = ("model", "variant", "harness")
+HARNESS_VALUES = ("Codex", "OpenCode", "harness-unconfirmed")
+
+
+def model_used_ok(value: str) -> bool:
+    """Validate a `Model used:` value by the documented recovery rule.
+
+    Three whitespace-separated tokens, each `key=value` split on its FIRST `=`,
+    keys exactly {model, variant, harness} with no duplicates, no empty values,
+    and a harness drawn from the documented set. Key order is not constrained,
+    because the document does not constrain it.
+    """
+    tokens = value.split()
+    if len(tokens) != 3:
+        return False
+    seen: dict[str, str] = {}
+    for token in tokens:
+        key, sep, val = token.partition("=")
+        if not sep or key not in MODEL_KEYS or not val:
+            return False
+        if key in seen:
+            return False
+        seen[key] = val
+    if set(seen) != set(MODEL_KEYS):
+        return False
+    return seen["harness"] in HARNESS_VALUES
 
 # Locations where the short form is correct and must not be rewritten. Each
 # entry carries its reason. This list is explicit by file so that any new
@@ -270,6 +299,22 @@ def self_test() -> bool:
         (f"Model-used: space-bunny-free-max (OpenCode)", True, "free-text Model used:"),
         (f"Model-used: model-unconfirmed", True, "a bare sentinel, not keyed pairs"),
         (f"Model-used: model=opencode/space-bunny-free", True, "missing keys"),
+        # A-5: the documented recovery rule, not a loose regex.
+        (f"Model-used: variant=max model=opencode/space-bunny-free harness=OpenCode",
+         False, "key order is unconstrained and must be accepted"),
+        ("Model-used: model=opencode/space-bunny-free variant=max harness=banana",
+         True, "harness outside the documented set"),
+        ("Model-used: model=x variant=max harness=OpenCode extra=1",
+         True, "a fourth key"),
+        ("Model-used: model=x model=y variant=max harness=OpenCode",
+         True, "a duplicated key"),
+        ("Model-used: model= variant=max harness=OpenCode",
+         True, "an empty model value"),
+        ("Model-used: model=model-unconfirmed variant=variant-unconfirmed"
+         " harness=harness-unconfirmed", False, "the all-unconfirmed keyed form"),
+        # A-6: the prose spelling in a commit body is a defect, not an
+        # alternative form, because the trailer grammar never sees it.
+        (f"Model used: {good_model}", True, "the prose spelling in a commit body"),
     ):
         found = _trailer_probe(why.replace(" ", "-").replace(":", ""), body)
         if bool(found) is not expect_defect:
@@ -500,9 +545,18 @@ def scan_trailers(ref: str) -> list[tuple[str, str]]:
         sha, _, body = record.partition("\x1f")
         for line in body.splitlines():
             key, sep, value = line.partition(":")
-            if not sep or key.strip() != "Model-used":
+            if not sep:
                 continue
-            if not MODEL_USED.fullmatch(value.strip()):
+            key = key.strip()
+            if key == "Model-used":
+                if not model_used_ok(value.strip()):
+                    bad.append((sha.strip()[:7], line.strip()))
+            elif re.fullmatch(r"Model\s+used", key, re.IGNORECASE):
+                # CODE_OF_CONDUCT.md:81 requires the hyphenated key inside a
+                # trailer so `git interpret-trailers` accepts it. The prose
+                # spelling appearing in a commit body is therefore a defect, not
+                # an alternative form: it is unchecked by the trailer grammar
+                # and would otherwise pass in silence.
                 bad.append((sha.strip()[:7], line.strip()))
     return bad
 

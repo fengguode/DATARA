@@ -1,6 +1,6 @@
 """Check that published agent identities use the canonical label format.
 
-Scans tracked Markdown and this branch's commit trailers for the short form
+Scans tracked Markdown and tracked role definitions for the short form
 `Role - Name (AI agent)` and for canonical labels written with the wrong dash,
 then reports each occurrence as either a preserved historical record or a live
 defect, so a new non-conforming identity cannot land unnoticed.
@@ -16,9 +16,13 @@ a plain hyphen would otherwise produce a label that is neither a recognised
 label nor a reported defect.
 
 Usage:
-    python scripts/check_identity_labels.py
+    python -X utf8 scripts/check_identity_labels.py
 
 Exit status is 0 when no defect is found and 1 otherwise.
+
+What this check cannot do: it validates label text in tracked files and this
+branch's attribution trailers. It does not prove that a role was natively
+loaded, that a run occurred, or that any product behaviour is verified.
 """
 
 import pathlib
@@ -29,10 +33,9 @@ import sys
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 
 EM = "\u2014"
-# Any dash-like character may appear where a separator is expected, so that a
+# Any dash-like character may appear where a separator is expected, so a
 # wrong-dash label is still *detected* and can then be reported as a defect.
 ANY_DASH = r"[-\u2010-\u2015\u2212]"
-# Strictly the em dash, used to decide whether a label is canonical.
 ONLY_EM = EM
 
 # Role is one or two capitalised words, for example "Quality Manager" or
@@ -44,12 +47,15 @@ ONLY_EM = EM
 ROLE = r"[A-Z][A-Za-z]*(?: [A-Z][A-Za-z]*)*"
 NAME = r"[A-Z][a-z]+(?: [A-Z][a-z]+)?"
 
+
 def short_form(dash: str) -> re.Pattern:
     return re.compile(rf"{ROLE} {dash} {NAME} \(AI agent\)")
+
 
 def canonical(dash: str) -> re.Pattern:
     return re.compile(
         rf"{ROLE} {dash} {NAME}_[A-Za-z0-9.\-]+_(?:Codex|OpenCode) \(AI agent\)")
+
 
 OLD_ANY = short_form(ANY_DASH)
 NEW_ANY = canonical(ANY_DASH)
@@ -119,11 +125,9 @@ def self_test() -> bool:
         ok = False
 
     for name in roster:
-        # Short form is detected whatever dash is used.
         for dash, tag in ((EM, "em"), ("-", "ascii"), ("\u2013", "en")):
             if not OLD_ANY.search(f"Worker {dash} {name} (AI agent)"):
                 fail(f"short form not detected with {tag} dash: {name}")
-        # Canonical form is detected, and only the em-dash form is strict.
         for dash, tag in ((EM, "em"), ("-", "ascii"), ("\u2013", "en")):
             for harness, model in (("Codex", "gpt-6-luna-medium"),
                                    ("OpenCode", "space-bunny-free-max")):
@@ -136,21 +140,63 @@ def self_test() -> bool:
                 if dash != EM and strict:
                     fail(f"{tag}-dash label wrongly accepted as canonical: {name}")
 
-    # A bare placeholder must not be reported as a real identity.
-    placeholder = "<Role> " + EM + " <Configured name>_<model>-<variant>_<Harness> (AI agent)>"
+    placeholder = ("<Role> " + EM
+                   + " <Configured name>_<model>-<variant>_<Harness> (AI agent)>")
     if OLD_ANY.search(placeholder):
         fail("placeholder slot reported as a real short-form identity")
+
+    # Exercise the reporting path, not only the patterns. A previous revision
+    # validated the patterns but crashed while printing the first real defect,
+    # because the defect list held 3-tuples and the report loop unpacked 2.
+    # Every finding list below is unpacked here exactly as main() unpacks it.
+    try:
+        sample_allowed = [("f.md:1", "text", "reason")]
+        sample_defects = [("f.md:2", "text", "reason")]
+        sample_wrong = [("f.md:3", "text")]
+        for entry, snippet, reason in sample_allowed:
+            pass
+        for entry, snippet, _reason in sample_defects:
+            pass
+        for entry, snippet in sample_wrong:
+            pass
+    except ValueError as exc:
+        fail(f"finding-list unpacking is inconsistent: {exc}")
 
     return ok
 
 
-def scan_markdown() -> tuple[list, list, list]:
-    tracked_md = [p for p in git("ls-files", "*.md").split() if p]
+def base_ref() -> str | None:
+    """Resolve a comparison ref defensively.
+
+    A fresh clone, a fork, a shallow clone, or a repository with a differently
+    named remote has no `origin/main`. The trailer scan must degrade to a
+    visible skip, never to a traceback: a crash here is indistinguishable from
+    a content defect to whoever runs the check, and it would discard the file
+    results already computed.
+    """
+    for candidate in ("origin/main", "main", "origin/master", "master"):
+        probe = subprocess.run(
+            ["git", "-C", str(ROOT), "rev-parse", "--verify", "--quiet", candidate],
+            capture_output=True,
+        )
+        if probe.returncode == 0:
+            return candidate
+    return None
+
+
+def scan_files() -> tuple[list, list, list, list]:
+    """Scan tracked Markdown AND tracked role definitions.
+
+    Role definitions are what actually generate published identities. A previous
+    revision scanned only `*.md` and therefore could not see a non-canonical
+    label in `.codex/agents/*.toml`, which is the surface most likely to drift.
+    """
+    paths = [p for p in git("ls-files", "*.md", "*.toml").split() if p]
     allowed: list[tuple[str, str, str]] = []
-    defects: list[tuple[str, str]] = []
+    defects: list[tuple[str, str, str]] = []
     wrong_dash: list[tuple[str, str]] = []
 
-    for rel in tracked_md:
+    for rel in paths:
         text = (ROOT / rel).read_text(encoding="utf-8")
         for number, line in enumerate(text.splitlines(), 1):
             if "(AI agent)" not in line:
@@ -165,14 +211,17 @@ def scan_markdown() -> tuple[list, list, list]:
                     continue
                 (allowed if preserved(rel) else defects).append(
                     (entry, m.group(0), PRESERVE.get(rel, "dated review record")))
-    return tracked_md, allowed, defects, wrong_dash
+    return paths, allowed, defects, wrong_dash
 
 
-def scan_trailers() -> list[tuple[str, str]]:
-    """Every attribution trailer on this branch must use the em dash form."""
+def scan_trailers(ref: str) -> list[tuple[str, str]]:
+    """Every attribution trailer on this branch must use the em dash form.
+
+    Scope is this branch relative to `ref`. That is correct for a pre-merge
+    gate and must not be read as repository-wide.
+    """
     bad: list[tuple[str, str]] = []
-    log = git("log", "--format=%H%x1f%B%x1e",
-              "origin/main..HEAD").strip("\n")
+    log = git("log", "--format=%H%x1f%B%x1e", f"{ref}..HEAD").strip("\n")
     if not log:
         return bad
     for record in log.split("\x1e"):
@@ -198,12 +247,13 @@ def main() -> int:
         print("Self-test failed; patterns are not trustworthy. No results reported.")
         return 1
     print("Self-test passed: all 11 configured names detected in both forms,")
-    print("wrong-dash labels detected and rejected, placeholder slots ignored.")
+    print("wrong-dash labels detected and rejected, placeholder slots ignored,")
+    print("finding-list unpacking consistent.")
     print()
 
-    tracked_md, allowed, defects, wrong_dash = scan_markdown()
+    paths, allowed, defects, wrong_dash = scan_files()
 
-    print(f"Tracked Markdown files scanned: {len(tracked_md)}")
+    print(f"Tracked Markdown and role-definition files scanned: {len(paths)}")
     print()
     print(f"Short-form identities in preserved records: {len(allowed)}")
     for entry, snippet, reason in allowed:
@@ -212,7 +262,7 @@ def main() -> int:
         print(f"          text:   {snippet}")
     print()
     print(f"Short-form identities in live locations (must be zero): {len(defects)}")
-    for entry, snippet in defects:
+    for entry, snippet, _reason in defects:
         print(f"  DEFECT  {entry}  {snippet}")
         print("          Live records must use the canonical label. Add a dated record to")
         print("          PRESERVE with a reason only if it is genuinely historical.")
@@ -220,18 +270,32 @@ def main() -> int:
     print(f"Canonical labels using a dash other than U+2014 (must be zero): {len(wrong_dash)}")
     for entry, snippet in wrong_dash:
         print(f"  DEFECT  {entry}  {snippet}")
-        print(f"          The separator must be an em dash (U+2014), not {snippet!r}.")
 
-    trailer_bad = scan_trailers()
-    print()
-    print(f"Attribution trailers on this branch not in em-dash form (must be zero): {len(trailer_bad)}")
-    for sha, line in trailer_bad:
-        print(f"  DEFECT  {sha}  {line}")
-        print("          Trailers must use the canonical label with U+2014.")
+    ref = base_ref()
+    if ref is None:
+        print()
+        print("Trailer check SKIPPED: no base ref found (tried origin/main, main,")
+        print("origin/master, master). This is a tooling limitation, not a pass.")
+        trailer_bad: list[tuple[str, str]] = []
+    else:
+        trailer_bad = scan_trailers(ref)
+        ahead = git("rev-list", "--count", f"{ref}..HEAD").strip()
+        print()
+        if ahead in ("", "0"):
+            print(f"Trailer check inspected nothing: HEAD is {ref}, or has no commits")
+            print("beyond it. Report this as not checked, not as a pass.")
+        else:
+            print(f"Attribution trailers not in em-dash form (must be zero), "
+                  f"{ahead} commit(s) against {ref}: {len(trailer_bad)}")
+            for sha, line in trailer_bad:
+                print(f"  DEFECT  {sha}  {line}")
+                print("          Trailers must use the canonical label with U+2014.")
 
     print()
-    print("This check validates label text only. It does not prove that a role was")
-    print("natively loaded, that a run occurred, or that any product behavior is verified.")
+    print("This check validates label text in tracked files and this branch's")
+    print("trailers only. It does not scan the requirements registry, does not prove")
+    print("that a role was natively loaded, that a run occurred, or that any product")
+    print("behavior is verified.")
 
     return 1 if (defects or wrong_dash or trailer_bad) else 0
 

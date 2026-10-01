@@ -30,7 +30,7 @@ Worked labels for every roster role:
 | Release Manager | Wang Bingshan | `Release Manager — Wang Bingshan_gpt-6-luna-medium_Codex (AI agent)` | `Release Manager — Wang Bingshan_space-bunny-free-max_OpenCode (AI agent)` |
 | Controller | Nils Traeger | `Controller — Nils Traeger_gpt-6-luna-medium_Codex (AI agent)` | `Controller — Nils Traeger_space-bunny-free-max_OpenCode (AI agent)` |
 
-The Codex model tokens are the configured values in `.codex/config.toml` and `.codex/agents/*.toml`, which are tracked. There is no tracked OpenCode role definition in this baseline, so an OpenCode run's `Model used:` value is self-reported by that run and has no baseline provenance; it is not verifiable from a fresh clone until such a definition is tracked. Neither set proves that a role was natively loaded. A run that cannot observe its own model publishes `model-unconfirmed`, and one that cannot observe its runtime publishes `harness-unconfirmed`.
+The Codex model tokens are the configured values in `.codex/agents/*.toml`, which are tracked. `.codex/config.toml` also carries `model` and `model_reasoning_effort` but has no `developer_instructions`, so **the eleventh roster role, Primary Coordinator — Yi Tang, has no tracked Codex role definition instructing a label**; its Codex label in the table above derives from the coordinator configuration and is not emitted by a role file. There is no tracked OpenCode role definition in this baseline either, so an OpenCode run's `Model used:` value is self-reported by that run and has no baseline provenance; it is not verifiable from a fresh clone until such a definition is tracked. Neither case proves that a role was natively loaded. A run that cannot observe its own model publishes `model-unconfirmed`, and one that cannot observe its runtime publishes `harness-unconfirmed`.
 
 ## Assignment record
 
@@ -108,7 +108,7 @@ The coordinator uses the authorized GitHub CLI or connector to publish updates a
 
 Run `python -X utf8 scripts/check_identity_labels.py` after changing any record that publishes an agent identity, and before opening a pull request that adds or edits one. Exit status 0 means no defect was found; 1 means at least one short-form or wrong-dash label is live, or a branch trailer is not in the canonical form.
 
-The check reports which occurrences are preserved dated records and why, and refuses to report results at all if its own patterns do not behave. It scans tracked Markdown and this branch's attribution trailers. It does not scan the requirements registry, does not check role-definition files, and validates label text only: it does not prove that a role was natively loaded, that a run occurred, or that any product behavior is verified.
+The check reports which occurrences are preserved dated records and why, and refuses to report results at all if its own patterns do not behave or its finding lists are inconsistent. It scans tracked Markdown **and tracked role definitions** (`.md` and `.toml`), plus the attribution trailers on this branch relative to a base ref. It does not scan the requirements registry, does not inspect other branches or `main`, and validates label text only: it does not prove that a role was natively loaded, that a run occurred, or that any product behavior is verified. When it cannot resolve a base ref, or the range is empty, it says so rather than reporting a pass.
 
 On a non-UTF-8 locale `-X utf8` is required, for the same reason it is required by `scripts/check_requirements.py`.
 

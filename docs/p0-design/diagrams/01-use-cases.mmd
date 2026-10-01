@@ -1,0 +1,30 @@
+%% Scope: P0 user goals and alternate/failure paths. Requirements: CUS01-CUS10, SR01-SR21.
+flowchart LR
+  athlete([Athlete])
+  external([External client])
+  provider([Explicitly selected customer model])
+  subgraph datara[DATARA P0 boundary]
+    upload([Upload supported FIT])
+    history([Inspect retained history and quality])
+    eligibility([Inspect eligible skills and unmet inputs])
+    select([Select skill, scope, connection and model])
+    run([Manually run eligible analysis])
+    saved([Review saved result, evidence or failure])
+    api([Retrieve saved data through read-only API])
+    reject([See unsupported / malformed / conflicting file reason])
+    blocked([See insufficient-data explanation])
+    failed([See model / schema / timeout failure])
+  end
+  athlete --> upload
+  athlete --> history
+  athlete --> eligibility
+  athlete --> select
+  athlete --> run
+  athlete --> saved
+  external --> api
+  upload -. rejected or conflict .-> reject
+  eligibility -. unmet rules .-> blocked
+  run --> provider
+  provider -. failure .-> failed
+  run --> saved
+  api --> saved

@@ -1,0 +1,142 @@
+%% Scope: proposed logical persistence relationships. Every owner-owned table uses a composite (owner_id, resource_id) key/FK invariant; physical syntax awaits D05. Requirements: CUS02, CUS06-CUS10; SR03-SR04, SR13, SR16-SR21, SR31.
+erDiagram
+  USER ||--o{ SOURCE_OBJECT : owns
+  USER ||--o{ IMPORT : owns
+  SOURCE_OBJECT ||--o{ IMPORT : submitted_as
+  IMPORT ||--o{ NORMALIZED_RECORD : creates
+  NORMALIZED_RECORD ||--o{ PROVENANCE : has
+  USER ||--o{ SNAPSHOT : owns
+  SNAPSHOT ||--o{ SNAPSHOT_RECORD : freezes
+  NORMALIZED_RECORD ||--o{ SNAPSHOT_RECORD : included_in
+  SNAPSHOT ||--o{ METRIC : calculates
+  METRIC ||--o{ PROVENANCE : cites
+  USER ||--o{ CONNECTION_REF : owns
+  USER ||--o{ RUN : owns
+  SNAPSHOT ||--o{ RUN : input_for
+  CONNECTION_REF ||--o{ RUN : explicitly_selected
+  RUN ||--|{ SELECTED_SKILL_EXECUTION : contains
+  SKILL_VERSION ||--o{ SELECTED_SKILL_EXECUTION : selected
+  SNAPSHOT ||--o{ ELIGIBILITY_RESULT : evaluated_against
+  SKILL_VERSION ||--o{ ELIGIBILITY_RESULT : rules_for
+  ELIGIBILITY_RESULT ||--o| SELECTED_SKILL_EXECUTION : permits
+  SELECTED_SKILL_EXECUTION ||--o{ ATTEMPT : has
+  SELECTED_SKILL_EXECUTION ||--o| VALIDATED_RESULT : may_produce
+  SELECTED_SKILL_EXECUTION ||--o| FAILURE_ARTIFACT : may_fail
+  VALIDATED_RESULT ||--o{ FINDING : contains
+  FINDING ||--|{ RESULT_EVIDENCE : cites
+  PROVENANCE ||--o{ RESULT_EVIDENCE : resolves_to
+  USER ||--o{ ELIGIBILITY_RESULT : owns_context
+  USER ||--o{ PROVENANCE : owns_context
+  USER ||--o{ ATTEMPT : owns_context
+  USER ||--o{ FINDING : owns_context
+  USER ||--o{ RESULT_EVIDENCE : owns_context
+  USER ||--o{ FAILURE_ARTIFACT : owns_context
+  USER ||--o{ SNAPSHOT_RECORD : owns_context
+  USER {
+    string user_id PK
+  }
+  SOURCE_OBJECT {
+    string owner_id PK, FK
+    string source_id PK
+    string sha256
+    string immutable_location
+  }
+  IMPORT {
+    string owner_id PK, FK
+    string import_id PK
+    string source_id FK
+    string disposition
+    string source_contract_version
+  }
+  NORMALIZED_RECORD {
+    string owner_id PK, FK
+    string record_id PK
+    string import_id FK
+    string record_kind
+    string source_reference
+  }
+  PROVENANCE {
+    string owner_id PK, FK
+    string provenance_id PK
+    string record_id FK
+    string source_occurrence
+    string field_path
+  }
+  SNAPSHOT {
+    string owner_id PK, FK
+    string snapshot_id PK
+    string digest
+    string preprocessing_version
+  }
+  SNAPSHOT_RECORD {
+    string owner_id PK, FK
+    string snapshot_id PK, FK
+    string record_id PK, FK
+  }
+  METRIC {
+    string owner_id PK, FK
+    string metric_id PK
+    string snapshot_id FK
+    string method_version
+    string unit
+  }
+  CONNECTION_REF {
+    string owner_id PK, FK
+    string connection_id PK
+    string secret_reference
+  }
+  RUN {
+    string owner_id PK, FK
+    string run_id PK
+    string snapshot_id FK
+    string connection_id FK
+    string state
+  }
+  SELECTED_SKILL_EXECUTION {
+    string owner_id PK, FK
+    string skill_execution_id PK
+    string run_id FK
+    string skill_version_id FK
+    string eligibility_result_id FK
+    string state
+  }
+  ELIGIBILITY_RESULT {
+    string owner_id PK, FK
+    string eligibility_result_id PK
+    string snapshot_id FK
+    string skill_version_id FK
+    boolean eligible
+    string rule_version
+  }
+  ATTEMPT {
+    string owner_id PK, FK
+    string attempt_id PK
+    string skill_execution_id FK
+    string outcome
+  }
+  FAILURE_ARTIFACT {
+    string owner_id PK, FK
+    string failure_id PK
+    string skill_execution_id FK
+    string failure_class
+    string safe_detail
+  }
+  VALIDATED_RESULT {
+    string owner_id PK, FK
+    string result_id PK
+    string skill_execution_id FK
+    string schema_version
+  }
+  FINDING {
+    string owner_id PK, FK
+    string finding_id PK
+    string result_id FK
+    string classification
+  }
+  RESULT_EVIDENCE {
+    string owner_id PK, FK
+    string finding_id PK, FK
+    string evidence_id PK
+    string snapshot_id FK
+    string provenance_id FK
+  }

@@ -1,0 +1,66 @@
+%% Scope: key paths are separated below. Retry and async policy remain D03/D05 gates. Requirements: CUS01-CUS10, SR01-SR21, SR27-SR31.
+sequenceDiagram
+  autonumber
+  actor A as Athlete
+  participant I as Identity and authorization
+  participant U as Upload/import
+  participant P as Parser/normalizer
+  participant D as Owner-scoped data home
+  A->>I: Upload bytes
+  I->>I: Authenticate and bind owner
+  I->>U: Authorized upload(owner, bytes)
+  U->>D: Check same-owner digest
+  alt exact duplicate
+    D-->>U: Existing import reference
+    U-->>A: Idempotent duplicate outcome
+  else new or logical match
+    U->>P: Validate against approved contract
+    P-->>U: Accepted / rejected + safe reason
+    alt valid and no conflict
+      U->>D: Atomic original + normalized records + provenance
+      D-->>U: Persisted import reference
+      U-->>A: Accepted + counts/warnings
+    else malformed, unsupported, or conflicting
+      U->>D: Persist safe rejection/conflict record only
+      U-->>A: Explicit reason and next step
+    end
+  end
+
+  participant E as Eligibility
+  participant R as Run orchestrator
+  participant C as Secret boundary
+  participant M as Selected model adapter
+  participant V as Output validator
+  participant H as Result history
+  A->>I: Select period, skills, connection/model
+  I->>E: Check owner + deterministic eligibility
+  E-->>A: Eligible and unmet rules
+  A->>R: Confirm eligible skill combination
+  R->>E: Recheck eligibility and freeze snapshot
+  alt ineligible or stale snapshot
+    E-->>R: Block with reason
+    R-->>A: No provider call; refresh selection
+  else eligible
+    R->>H: Create Run and one child execution per selected skill
+    loop Each selected skill execution (dispatch ordering/concurrency remains open)
+      R->>C: Resolve selected owner's secret reference for this call
+      C-->>M: Secret within adapter boundary
+      R->>M: Pinned model + scoped envelope + this skill's schema
+      alt provider failure or timeout
+        M-->>R: Normalized safe failure
+        R->>H: Append this child failure/attempt
+      else response
+        M-->>V: Raw response inside trusted boundary
+        V->>V: Validate this skill's schema, versions, scope and evidence refs
+        alt invalid response
+          V-->>R: Invalid result reason
+          R->>H: Append child failure evidence, not assessment
+        else valid response
+          V-->>R: Validated child result
+          R->>H: Append this skill result and lineage
+        end
+      end
+    end
+    R->>H: Derive aggregate state: succeeded / failed / partial
+    H-->>A: Persisted run and child states for read/polling
+  end

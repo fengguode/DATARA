@@ -33,3 +33,9 @@
 # Local editor and operating system files
 .DS_Store
 Thumbs.db
+
+# Python bytecode. Importing a repository script for inspection writes a
+# __pycache__ directory next to it, so a stray git add could commit a compiled
+# artifact that nothing reviews and that differs per interpreter version.
+__pycache__/
+*.py[cod]

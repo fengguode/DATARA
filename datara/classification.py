@@ -48,6 +48,12 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any, Mapping
 
+from datara.canonical import (
+    CANONICAL_DURATION_UNIT,
+    LogicalIdentity,
+    require_elapsed_duration_ms,
+)
+
 # ---------------------------------------------------------------------------
 # Rule version.  Every classification carries it, so a stored disposition can be
 # re-derived or invalidated when the rules change.  Pure function of file bytes.
@@ -252,39 +258,152 @@ def _load_pinned_profile() -> dict[str, Any]:
 
 
 class DecoderUnavailable(RuntimeError):
-    """Raised when the pinned SDK is not importable."""
+    """Raised when the pinned SDK is not importable.
+
+    **Absence**, not disagreement. A missing decoder and a decoder that does not
+    match the contract are different facts and are never reported as the same
+    one: absence means nothing can be claimed, disagreement means the pinned
+    artifact changed and the contract would silently re-base.
+    """
 
 
-try:  # pragma: no cover - environment dependent
-    _PINNED_PROFILE: Mapping[str, Any] | None = _load_pinned_profile()
-    # Fail loudly if the pinned artifact ever stops matching the TK10 matrix,
-    # rather than silently re-basing the contract on a different profile.
-    assert _PINNED_PROFILE["version"] == {
-        "major": 21,
-        "minor": 217,
-        "patch": 0,
-        "type": "Release",
-    }, "pinned profile is not 21.217.0 Release"
-    assert _PINNED_PROFILE["file"][4] == "activity"
-    assert _PINNED_PROFILE["sport"][1] == "running"
-    assert _PINNED_PROFILE["sport"][2] == "cycling"
-    assert _PINNED_PROFILE["date_time"] == {DATE_TIME_MIN: "min"}
-    assert _PINNED_PROFILE["activity"][1] == "auto_multi_sport"
-    _PINNED_AVAILABLE = True
-except Exception:  # pragma: no cover - environment dependent
-    _PINNED_PROFILE = None
-    _PINNED_AVAILABLE = False
+class PinnedProfileMismatch(RuntimeError):
+    """The pinned decoder is importable but does not match the TK10 matrix.
+
+    Distinct from `DecoderUnavailable` on purpose. The old code asserted the
+    profile inside ``try/except Exception``, so a mismatch was indistinguishable
+    from "not installed" *and* vanished entirely under ``python -O``, which
+    strips every ``assert``: the contract would then re-base silently on whatever
+    profile the installed SDK happened to carry. A mismatch now raises, and it
+    raises a different exception from absence.
+    """
+
+
+#: The profile facts section 6 / the TK10 matrix fixes, as literals. Kept apart
+#: from the loader so `verify_pinned_profile` is a pure function that a test can
+#: feed a deliberately wrong profile to.
+EXPECTED_PROFILE_VERSION: Mapping[str, Any] = {
+    "major": 21,
+    "minor": 217,
+    "patch": 0,
+    "type": "Release",
+}
+EXPECTED_FILE_TYPE_ACTIVITY = 4
+EXPECTED_SPORT_NAMES: Mapping[int, str] = {1: "running", 2: "cycling"}
+EXPECTED_ACTIVITY_AUTO_MULTI_SPORT = 1
+
+
+def verify_pinned_profile(profile: Mapping[str, Any] | None) -> None:
+    """Raise `PinnedProfileMismatch` unless ``profile`` is the pinned one.
+
+    A pure function, deliberately: the facts are compared here with explicit
+    ``!=`` tests rather than ``assert`` statements, so the check survives
+    ``python -O`` and can be exercised against a wrong profile directly.
+
+    Mutation that fails: replace any explicit comparison below with an ``assert``
+    -- under ``PYTHONOPTIMIZE=1`` the check disappears, this stops raising, and
+    `test_a_profile_mismatch_is_raised_not_absorbed` fails.
+    """
+
+    if profile is None:
+        raise PinnedProfileMismatch("the pinned profile could not be read at all")
+    mismatches: list[str] = []
+    version = profile.get("version")
+    if dict(version or {}) != EXPECTED_PROFILE_VERSION:
+        mismatches.append(
+            f"version {dict(version or {})!r} != pinned {EXPECTED_PROFILE_VERSION!r}"
+        )
+    file_types = profile.get("file") or {}
+    if file_types.get(EXPECTED_FILE_TYPE_ACTIVITY) != "activity":
+        mismatches.append(
+            f"file_id.type[{EXPECTED_FILE_TYPE_ACTIVITY}] "
+            f"{file_types.get(EXPECTED_FILE_TYPE_ACTIVITY)!r} != 'activity'"
+        )
+    sport = profile.get("sport") or {}
+    for code, name in EXPECTED_SPORT_NAMES.items():
+        if sport.get(code) != name:
+            mismatches.append(f"sport[{code}] {sport.get(code)!r} != {name!r}")
+    date_time = profile.get("date_time") or {}
+    if date_time != {DATE_TIME_MIN: "min"}:
+        mismatches.append(f"date_time {dict(date_time)!r} != {{{DATE_TIME_MIN!r}: 'min'}}")
+    activity = profile.get("activity") or {}
+    if activity.get(EXPECTED_ACTIVITY_AUTO_MULTI_SPORT) != "auto_multi_sport":
+        mismatches.append(
+            f"activity[{EXPECTED_ACTIVITY_AUTO_MULTI_SPORT}] "
+            f"{activity.get(EXPECTED_ACTIVITY_AUTO_MULTI_SPORT)!r} != 'auto_multi_sport'"
+        )
+    if mismatches:
+        raise PinnedProfileMismatch(
+            "the pinned garmin-fit-sdk profile does not match the TK10 matrix, so "
+            "the classification contract would silently re-base: "
+            + "; ".join(mismatches)
+        )
+
+
+def _load_pinned_state() -> tuple[str, Mapping[str, Any] | None, str | None]:
+    """Return ``(state, profile, detail)`` without raising.
+
+    ``state`` is ``"available"``, ``"absent"`` (the SDK cannot be imported) or
+    ``"mismatch"`` (it can, and it disagrees with the matrix).
+    """
+
+    try:
+        profile = _load_pinned_profile()
+    except Exception as exc:  # noqa: BLE001 - absence is reported, not raised
+        return "absent", None, f"{exc.__class__.__name__}: {exc}"
+    try:
+        verify_pinned_profile(profile)
+    except PinnedProfileMismatch as exc:
+        return "mismatch", profile, str(exc)
+    return "available", profile, None
+
+
+_PINNED_STATE, _PINNED_PROFILE, _PINNED_DETAIL = _load_pinned_state()
+
+#: The single boolean the guards below read. It is *derived* from
+#: `_PINNED_STATE`, so a mismatch reads False exactly as absence does, and the
+#: distinction between the two survives in `pinned_state()` /
+#: `pinned_state_detail()` and in which exception `pinned_profile()` raises.
+_PINNED_AVAILABLE: bool = _PINNED_STATE == "available"
+
+
+def pinned_state() -> str:
+    """``"available"``, ``"absent"`` (SDK not importable) or ``"mismatch"``.
+
+    One of the three is always reported. Absence is never reported as a
+    mismatch, and a mismatch is never reported as absence.
+    """
+
+    return _PINNED_STATE
+
+
+def pinned_state_detail() -> str | None:
+    """Why the state is ``"absent"`` or ``"mismatch"``; ``None`` when available."""
+
+    return _PINNED_DETAIL
 
 
 def pinned_profile() -> Mapping[str, Any]:
-    """Return the pinned profile snapshot, or raise ``DecoderUnavailable``."""
+    """The pinned profile snapshot.
+
+    Raises `DecoderUnavailable` when the SDK is absent and
+    `PinnedProfileMismatch` when it is present but disagrees with the matrix.
+    """
+
+    if _PINNED_STATE == "mismatch":
+        raise PinnedProfileMismatch(_PINNED_DETAIL or "pinned profile mismatch")
     if not _PINNED_AVAILABLE or _PINNED_PROFILE is None:
         raise DecoderUnavailable(REASON_DECODER_UNAVAILABLE)
     return _PINNED_PROFILE
 
 
 def decoder_available() -> bool:
-    """Whether the pinned SDK profile and CRC implementation are importable."""
+    """Whether the pinned SDK is importable *and* matches the TK10 matrix.
+
+    A mismatch is not availability: a decoder that would re-base the contract
+    cannot decode against it.
+    """
+
     return _PINNED_AVAILABLE
 
 
@@ -425,6 +544,21 @@ class FileClassification:
     elapsed_duration_seconds: str | None = None
     timer_duration_seconds: str | None = None
     total_distance_metres: str | None = None
+    #: The same elapsed duration in the **canonical comparison unit**: integer
+    #: milliseconds (``datara.canonical.CANONICAL_DURATION_UNIT``). FIT's
+    #: ``session.total_elapsed_time`` is a scaled integer whose scale is 1000,
+    #: so the raw value already *is* the millisecond count and no rounding or
+    #: rescaling is involved.
+    #:
+    #: This field exists because ``elapsed_duration_seconds`` above is an exact
+    #: decimal *string* ("1800", or "1800.5" when the file's own resolution is
+    #: finer than a second), and a string cannot be compared with the integer
+    #: logical tuple the persistence layer uses. Three representations of one
+    #: quantity -- integer seconds, integer milliseconds and decimal string --
+    #: is how one activity came to be written as 1800 by one path, 1800000 by the
+    #: next, and accepted twice. ``None`` whenever the seconds form is ``None``,
+    #: i.e. on every rejection.
+    elapsed_duration_ms: int | None = None
     warnings: tuple[str, ...] = ()
     decoder_verified: bool = False
     #: Why the pinned-decoder cross-check did or did not agree.  Carried so an
@@ -436,24 +570,42 @@ class FileClassification:
         return self.disposition == "accepted"
 
     @property
-    def logical_tuple(self) -> tuple[str, str, str, str] | None:
-        """D01 quarantine key: ``(sport, UTC start, elapsed duration)``.
+    def logical_tuple(self) -> LogicalIdentity | None:
+        """The D01 quarantine key, as the one canonical definition.
 
-        The owner component is applied by the caller, which owns identity.  D01
-        uses *exact* tuple equality; this is a conservative application heuristic
-        and not comprehensive duplicate detection.
+        D01's key is ``(sport, UTC start, elapsed duration)``. It used to be a
+        three-**string** tuple built here, while ``datara.dedup`` compared an
+        integer four-tuple and the same column was written in two units, so the
+        two definitions could not be compared with each other at all. It is now
+        `datara.canonical.LogicalIdentity`: three exact **integers**, in the
+        canonical unit, checked by ``datara.canonical`` on the way in.
+
+        The owner component is applied by the caller, which owns identity, so the
+        identity half is returned rather than the full `LogicalTuple`.
+        D01 uses *exact* tuple equality; this is a conservative application
+        heuristic and not comprehensive duplicate detection.
+
+        ``None`` on any rejection, so a rejected file cannot contribute a tuple.
         """
+
         if not self.accepted:
             return None
-        return (
-            self.sport_name or "",
-            self.start_time_utc or "",
-            self.elapsed_duration_seconds or "",
+        if self.elapsed_duration_ms is None or self.start_time_utc is None:
+            return None
+        return LogicalIdentity.from_values(
+            sport_code=self.sport_name or "",
+            session_start_utc=self.start_time_utc,
+            elapsed_duration_ms=self.elapsed_duration_ms,
+            origin="FileClassification.logical_tuple",
         )
 
 
 def _reject(code: str, detail: str, **kwargs: Any) -> FileClassification:
-    assert code in REJECTION_REASONS, f"unstable reason code: {code}"
+    # An explicit raise, not an assert: `python -O` strips asserts, and a reason
+    # code that quietly stopped being checked would let an unrecognised code into
+    # the stable vocabulary this module's whole contract rests on.
+    if code not in REJECTION_REASONS:
+        raise ValueError(f"unstable reason code: {code!r}")
     return FileClassification(
         disposition="rejected", reason_code=code, reason_detail=detail, **kwargs
     )
@@ -842,7 +994,11 @@ def classify_bytes(
     scan, failure = _integrity_and_structure(data)
     if failure is not None:
         return failure
-    assert scan is not None
+    if scan is None:  # explicit, not an assert: survives python -O
+        raise RuntimeError(
+            "internal contract violation: _integrity_and_structure returned "
+            "neither a scan nor a rejection, so no disposition can be claimed"
+        )
     header = scan.header
     protocol_label = f"{header.protocol_major}.{header.protocol_minor_tenths}"
     common = {
@@ -1117,6 +1273,16 @@ def classify_bytes(
             activity_type_name(activity_type.raw) if activity_type.usable else None
         ),
         start_time_utc=_utc_from_fit_date_time(start.raw),
+        # The canonical comparison value, in the canonical unit. The raw field is
+        # already an integer millisecond count (scale 1000), so this is the raw
+        # value passed through `datara.canonical`, which refuses a non-integer and
+        # enforces the millisecond domain. It is never derived from the seconds
+        # string, so no decimal rescaling is possible.
+        elapsed_duration_ms=require_elapsed_duration_ms(
+            elapsed.raw,
+            origin="classification.session.total_elapsed_time",
+            unit=CANONICAL_DURATION_UNIT,
+        ),
         elapsed_duration_seconds=_exact_scaled(elapsed.raw, 1000),
         timer_duration_seconds=(_exact_scaled(timer.raw, 1000) if timer.usable else None),
         total_distance_metres=(

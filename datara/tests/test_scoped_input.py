@@ -1868,38 +1868,46 @@ class BindingConditionTests(TestCase):
                         f"the guard did not catch {name!r} through {facts.table_names}",
                     )
 
-    def test_the_current_guard_does_not_yet_know_the_reported_widening(self) -> None:
-        """Records the gap the Architect is closing, as a checkable fact.
+    def test_the_widened_guard_knows_the_reported_skill_execution_names(self) -> None:
+        """The guard now covers the skill-execution names, and TK21 collides with none.
 
-        The founder's binding condition is semantic, and ``datara.db`` currently
-        lists eight entity names. ``SkillInput``, ``Prompt``, ``Completion``,
-        ``Result`` and ``Recommendation`` are reported as being added when
-        ``SR32`` is widened; they are **not** in the guard yet, so a fact set
-        naming one of them produces no violation today.
-
-        This test states that gap rather than asserting it away, so the widening
-        cannot land without this file being reconciled. It also re-states the
-        property TK21 relies on: the modules in this assignment name nothing in
-        either set, so widening the guard does not create a false positive.
+        This test previously recorded a gap rather than asserting it away:
+        `datara.db` listed eight entity names while the semantic class named in
+        the TK21 brief -- SkillInput, Prompt, Completion, Result, Recommendation --
+        was not covered. The gap was stated here so the widening could not land
+        without this file being reconciled. It has now landed, so this test states
+        the reconciled property, and it fails loudly if the widening is reverted.
         """
 
         from datara.db import FORBIDDEN_ENTITY_NAMES
 
-        reported_widening = {"SkillInput", "Prompt", "Completion", "Result", "Recommendation"}
+        reported_widening = {
+            "SkillInput",
+            "Prompt",
+            "Completion",
+            "Result",
+            "Recommendation",
+        }
         current = set(FORBIDDEN_ENTITY_NAMES)
         self.assertTrue(
-            reported_widening - current,
-            "the widening has landed; reconcile this test with datara.db's list",
+            reported_widening.issubset(current),
+            "the guard must know every reported skill-execution name; missing "
+            + repr(sorted(reported_widening - current)),
         )
-        uncaught = SchemaFacts(
-            table_names=("datara_skill_input",),
-            columns=(),
-            model_names=(),
-            field_names=(),
-            module_symbols=(),
-        )
-        self.assertEqual(find_forbidden_schema_entities(uncaught), ())
 
+        # The modules in this assignment collide with neither the original eight
+        # nor the widened set, so widening the guard causes no false positive here.
+        for symbol in (
+            "ActivityScope",
+            "InputFieldSpec",
+            "ScopedRecord",
+            "ScopedExclusion",
+            "ScopedField",
+            "FieldProvenance",
+            "ProvenanceLedger",
+            "ProvenanceDisplay",
+        ):
+            self.assertNotIn(symbol, current)
 
 # ===========================================================================
 # 8. No model or network call is reachable

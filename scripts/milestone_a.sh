@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# DATARA Milestone A -- the single pinned install / migrate / run / test command.
+# DATARA Milestone A -- legacy Bash SQLite deviation and explicit phase wrapper.
 #
 # RUN IT WITH:  bash scripts/milestone_a.sh
 # This is a POSIX shell script, not a Python program. `python scripts/milestone_a.sh`
@@ -12,7 +12,7 @@
 #
 # Contract of this script:
 #
-#   * It is the only supported way to install, migrate and test this unit.
+#   * Native Windows phases use scripts/milestone_a.ps1; see the command contract.
 #   * It prints the resolved environment identity -- Python version, Django
 #     version, PostgreSQL version, pinned dependency lock hash, commit SHA --
 #     BEFORE any test result is printed. Evidence that cannot be reproduced from
@@ -43,6 +43,25 @@ set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$REPO_ROOT"
+
+# Explicit phases share the reviewed runner. Each invocation is one process/role.
+# The original combined flow remains only as a declared SQLite deviation.
+if [ "$#" -gt 0 ]; then
+  [ "$#" -eq 1 ] || { echo "one phase required" >&2; exit 1; }
+  case "$1" in inspect|install|migrate|test|app-check) ;; *) echo "unsupported phase" >&2; exit 1 ;; esac
+  [ -n "${DATARA_PYTHON:-}" ] && [ -n "${DATARA_VENV:-}" ] || { echo "explicit interpreter and venv required" >&2; exit 1; }
+  case "$(uname -s)" in MINGW*|MSYS*|CYGWIN*) phase_python="$DATARA_VENV/Scripts/python.exe" ;; *) phase_python="$DATARA_VENV/bin/python" ;; esac
+  if [ "$1" = install ] && [ ! -x "$phase_python" ]; then
+    "$DATARA_PYTHON" -c 'import sys; sys.exit(0 if sys.version_info[:3] == (3,12,14) and not sys.flags.optimize else 1)'
+    "$DATARA_PYTHON" -m venv "$DATARA_VENV" >/dev/null 2>&1 || { echo "venv preparation failed; diagnostics suppressed" >&2; exit 1; }
+  fi
+  echo "shell_version=$BASH_VERSION"
+  exec "$phase_python" -X utf8 scripts/milestone_a_runner.py "$1"
+fi
+if [ "${DATARA_ALLOW_SQLITE:-0}" != 1 ]; then
+  echo "explicit phase required; native Windows uses scripts/milestone_a.ps1" >&2
+  exit 1
+fi
 
 # --------------------------------------------------------------------------
 # 0. Locate an interpreter and a virtualenv, outside the working tree so that
@@ -91,8 +110,12 @@ PY="$VENV_PY"
 # --------------------------------------------------------------------------
 LOCK_FILE="requirements-milestone-a.txt"
 echo "== installing pinned dependencies from $LOCK_FILE"
-"$PY" -m pip install --disable-pip-version-check --quiet --upgrade pip >/dev/null
-"$PY" -m pip install --disable-pip-version-check --quiet -r "$LOCK_FILE"
+"$PY" -m pip --version
+# Use the existing installer; no unpinned installer upgrade.
+"$PY" -m pip install --disable-pip-version-check --quiet -r "$LOCK_FILE" >/dev/null 2>&1 || {
+  echo "dependency installation failed; diagnostics suppressed" >&2
+  exit 1
+}
 
 # --------------------------------------------------------------------------
 # 1b. Refuse an inherited optimisation level, do not silently inherit one.
@@ -185,13 +208,15 @@ try:
             number = int(cursor.fetchone()[0])
     print(f"AVAILABLE {version} major={number // 10000} version_num={number}")
 except Exception as exc:
-    print(f"UNAVAILABLE connect-failed: {exc.__class__.__name__}: {exc}")
+    print(f"UNAVAILABLE connect-failed: {exc.__class__.__name__}; diagnostics suppressed")
 PY
 )"
 
 echo "postgres_probe            : $PG_STATE"
 case "$PG_STATE" in
   AVAILABLE*)
+    echo "combined PostgreSQL migrate/test refused; select separate phases" >&2
+    exit 1
     PG_MAJOR="$(printf '%s' "$PG_STATE" | sed -n 's/.*major=\([0-9]*\).*/\1/p')"
     echo "postgres_version          : $(printf '%s' "$PG_STATE" | cut -d' ' -f2)"
     echo "postgres_major            : $PG_MAJOR (D05 pins 17)"

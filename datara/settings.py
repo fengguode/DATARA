@@ -120,6 +120,14 @@ def _database() -> dict:
 
 DATABASES = {"default": _database()}
 
+# The Windows test phase opts into the fresh-only runner. Default Django and
+# the separately declared Bash SQLite deviation retain their existing interface.
+_requested_test_runner = os.environ.get("DATARA_TEST_RUNNER")
+if _requested_test_runner:
+    if _requested_test_runner != "scripts.milestone_a_runner.FreshDatabaseRunner":
+        raise RuntimeError("Unsupported DATARA_TEST_RUNNER override")
+    TEST_RUNNER = _requested_test_runner
+
 # Safety posture for a local pilot holding personal activity data.
 SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_SAMESITE = "Lax"

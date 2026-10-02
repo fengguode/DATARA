@@ -1584,26 +1584,29 @@ class MilestoneAInputStore:
         Idempotent by content: an identical version is recognised by its digest
         and its complete lineage is checked before returning ``created=False``. That is what
         proves a re-version never mutates a prior version -- the second call does
-        not write at all, and there is no code path that could write a second row
-        for the same content in a serial retry. Concurrent identity exclusion is
-        a separate schema contract. A *different* version gets its own row and leaves
-        the earlier one untouched, because nothing here updates.
+        not write at all. Cooperative scoped appends serialize on the owner row
+        before lookup; generic writers do not provide universal uniqueness.
+        A different version gets its own row and leaves the earlier one untouched.
+        A returned handle inside a caller transaction remains subject to that
+        transaction's outermost commit or rollback.
         """
 
         from datara import models as m
 
         self.schema_binding()
-        atomic = getattr(self._store, "atomic", None)
-        if not callable(atomic):
-            raise ScopedInputError("the persistence store must supply an atomic write context")
-        with atomic():
+        serialized = getattr(self._store, "_owner_serialized_write", None)
+        if not callable(serialized):
+            raise ScopedInputError("the persistence store must supply an owner-serialized write context")
+        with serialized():
             owner_id = self.owner_id
-            existing = (
+            matches = list(
                 m.Snapshot.objects.for_owner(owner_id)
                 .filter(snapshot_digest=version.input_digest)
-                .order_by("snapshot_id")
-                .first()
+                .order_by("snapshot_id")[:2]
             )
+            if len(matches) > 1:
+                raise ScopedInputError("the stored version identity is ambiguous")
+            existing = matches[0] if matches else None
             if existing is not None:
                 stored = self.get_version(existing.snapshot_id)
                 if (

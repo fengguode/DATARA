@@ -24,12 +24,15 @@ from __future__ import annotations
 
 import ast
 import re
+from contextlib import contextmanager
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Iterable, Sequence
 
 from django.apps import apps
-from django.db import connection, transaction
+from django.conf import settings
+from django.contrib.auth import get_user_model
+from django.db import DatabaseError, connection, connections, transaction
 
 from datara import models as m
 from datara.canonical import (
@@ -148,6 +151,43 @@ class OwnerScopedStore:
     def atomic(self) -> Any:
         """Group store writes, nesting safely in a caller's transaction."""
         return transaction.atomic()
+
+    @contextmanager
+    def _owner_serialized_write(self) -> Any:
+        """Serialize cooperative scoped appends on the trusted owner's row.
+
+        Only default PostgreSQL READ COMMITTED without routers is supported.
+        The lock survives a successful nested savepoint until the caller's
+        outermost commit/rollback. Generic snapshot writers do not participate;
+        scoped envelopes must be written through the scoped append service.
+        """
+        from datara.scoped_input import ScopedInputError
+
+        if settings.DATABASE_ROUTERS or connections["default"].vendor != "postgresql":
+            raise ScopedInputError("scoped persistence requires default PostgreSQL without routers")
+        try:
+            with transaction.atomic(using="default"):
+                with connections["default"].cursor() as cursor:
+                    cursor.execute("SHOW transaction_isolation")
+                    isolation = cursor.fetchone()
+                if isolation != ("read committed",):
+                    raise ScopedInputError("scoped persistence requires READ COMMITTED isolation")
+                owner_model = get_user_model()
+                owner_pk = (
+                    owner_model._base_manager.using("default")
+                    .filter(pk=self._scope.owner_id)
+                    .select_for_update()
+                    .values_list("pk", flat=True)
+                    .order_by("pk")
+                    .first()
+                )
+                if owner_pk is None:
+                    raise ScopedInputError("scoped persistence owner is unavailable")
+                yield
+        except DatabaseError:
+            # Translate only after atomic unwinds; never continue SQL in a
+            # transaction broken by isolation inspection or lock permissions.
+            raise ScopedInputError("scoped persistence transaction is unavailable") from None
 
     # -- writes -------------------------------------------------------------
 

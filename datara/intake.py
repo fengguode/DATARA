@@ -45,6 +45,8 @@ import hashlib
 from dataclasses import dataclass
 from typing import Iterable, Sequence
 
+from datara.canonical import LogicalIdentity
+
 from .classification import (
     REASON_BATCH_FILE_COUNT_EXCEEDED,
     REASON_BATCH_SIZE_LIMIT_EXCEEDED,
@@ -109,7 +111,7 @@ class QuarantineRecord:
     conflicting_digest: str
     candidate_digest: str
     existing_reference: str
-    logical_tuple: tuple[str, str, str]
+    logical_tuple: "LogicalIdentity"
     rule_version: str = RULE_VERSION
     reason_detail: str = ""
 
@@ -210,7 +212,11 @@ def _limit_outcome(
     """
     from .classification import REJECTION_REASONS  # noqa: PLC0415
 
-    assert reason in REJECTION_REASONS, f"unstable reason code: {reason}"
+    # An explicit raise, not an assert: `python -O` strips asserts, and a limit
+    # reason code that quietly stopped being checked could reach the stable
+    # vocabulary as an unrecognised code.
+    if reason not in REJECTION_REASONS:
+        raise ValueError(f"unstable reason code: {reason!r}")
     classification = FileClassification(
         disposition="rejected",
         reason_code=reason,
@@ -235,7 +241,7 @@ def plan_import(
     files: Sequence[tuple[str, bytes]],
     *,
     accepted_digests: Iterable[str] = (),
-    known_tuples: Iterable[tuple[str, str, str, str]] = (),
+    known_tuples: Iterable[LogicalIdentity] = (),
     max_file_bytes: int = MAX_FILE_BYTES,
     max_batch_files: int = MAX_BATCH_FILES,
     max_batch_bytes: int = MAX_BATCH_BYTES,
@@ -245,9 +251,18 @@ def plan_import(
     """Plan the intake of one batch of files for one owner.
 
     ``accepted_digests`` are digests already stored as accepted originals for this
-    owner.  ``known_tuples`` are already-accepted logical tuples, given as
-    ``(sport, start_time_utc, elapsed_duration_seconds)``; the owner component is
-    ``owner_key``, so two different owners never collide here.
+    owner.  ``known_tuples`` are already-accepted logical tuples, as
+    ``datara.canonical.LogicalIdentity`` values -- the *same* type a candidate's
+    key is, so an existing activity and a new candidate are compared by exact
+    integer equality rather than by two unrelated string shapes.  The owner
+    component is ``owner_key``, so two different owners never collide here.
+
+    Previously ``known_tuples`` were ``(sport, start_time_utc,
+    elapsed_duration_seconds)`` string triples while the candidate key was a
+    ``LogicalIdentity``: the two could never be equal, so a caller-supplied
+    existing tuple was silently ignored and its file was accepted rather than
+    quarantined.  The parameter type and this docstring now agree with the
+    comparison that is actually performed.
 
     Pure: no I/O, no database, no model call, no clock.  The same inputs always
     produce an equal plan.
@@ -257,10 +272,21 @@ def plan_import(
 
     seen_digests: dict[str, str] = {}
     known_digest_set = set(accepted_digests)
-    known_tuple_map: dict[tuple[str, str, str], str] = {
-        (sport, start, elapsed): reference
-        for reference, sport, start, elapsed in known_tuples
-    }
+    # Keyed by the same type the candidate key is, so a caller-supplied existing
+    # tuple is actually comparable. A type mismatch here is refused rather than
+    # ignored: silently dropping the caller's existing tuples would accept a
+    # duplicate that should have been quarantined.
+    known_tuple_map: dict[LogicalIdentity, str] = {}
+    for reference, identity in known_tuples:
+        if not isinstance(identity, LogicalIdentity):
+            raise TypeError(
+                "known_tuples must carry datara.canonical.LogicalIdentity values, "
+                f"the same type a candidate's logical_tuple is; got "
+                f"{type(identity).__name__} for reference {reference!r}. A "
+                "differently-shaped key can never equal a candidate, so it would "
+                "be ignored and a duplicate accepted."
+            )
+        known_tuple_map[identity] = reference
 
     outcomes: list[ImportOutcome] = []
     total_bytes = 0
@@ -372,8 +398,17 @@ def plan_import(
             continue
 
         # Precedence 5: different bytes, same exact logical tuple -> quarantine.
-        assert classification.logical_tuple is not None
+        # Explicit, not an assert: under python -O the assert vanished, `key`
+        # became None, and every distinct-byte file was keyed on None -- so a
+        # file with a genuinely new activity could be quarantined against an
+        # unrelated one, or accepted as new when it was the same activity.
         key = classification.logical_tuple
+        if key is None:  # pragma: no cover - an accepted classification has one
+            raise RuntimeError(
+                f"{filename!r} reached the duplicate decision with no logical "
+                "tuple, so no exact comparison is possible and no disposition "
+                "can be claimed"
+            )
         reference = known_tuple_map.get(key)
         if reference is not None:
             record = QuarantineRecord(

@@ -37,7 +37,7 @@ Raise process discrepancies through the [control issue #8](https://github.com/fe
 
 Yi Tang coordinates assignments, scheduling, integration and GitHub reporting. Yu Wang owns product interpretation and customer communication; Feng Guo owns requirements/architecture/contracts; Wang Licun investigates; Wu Yunzhou designs UI; Torsten Maier implements; Dennis Windmaier independently reviews; Abt Hermann tests; Wang Xiaofeng audits requirement quality and evidence; Wang Bingshan manages release readiness; Nils Traeger advises on usage, cost and efficiency. Detailed authorities remain in the [roster](docs/team/roster.md).
 
-Reuse one dedicated session per role. Preserve configured models, reasoning and permissions; Yu uses the configured gpt-6.1-sol/medium setting. Record actual availability and configuration loading limitations. Role names, labels and prompts do not establish native activation or participation. Respect supported concurrency limits.
+Reuse one dedicated session per role when it supports the current model instruction. The founder instructed all agents on 2 October 2026 to use `gpt-6.1-sol` with `medium` reasoning for now; the tracked Codex coordinator and ten role defaults implement that selection. Preserve each role's permissions. New Codex delegations explicitly request this model and reasoning; replace a session that cannot apply them rather than silently continuing on its prior model. Saved configuration does not switch an existing session or prove native loading. Record actual availability and configuration loading limitations. OpenCode application requires its runtime's acknowledgement; no alternate model is authorized by this instruction. Role names, labels and prompts do not establish native activation or participation. Respect supported concurrency limits.
 
 Every bounded assignment names the role, issue, WP/CUS/Feature/SR/Task IDs, objective, dependencies/decision gates, acceptance criteria, exclusive writable paths, read-only references, base commit/branch/PR, available execution evidence, required checks, reviewers/final confirmer, current live-read timestamp and next handoff. Avoid concurrent edits to the same files. A sandbox's technical write access does not grant ownership. Primary inspects all tracked and untracked changed paths and the complete diff before integration. Preserve unrelated changes.
 
@@ -51,14 +51,14 @@ Publish an agent identity as one canonical label that shows the persona, the mod
 
 - `<Role>` and `<Configured name>` are the [roster](docs/team/roster.md) values, unchanged.
 - `<model>` is the provider model ID with the provider prefix removed: `opencode/space-bunny-free` becomes `space-bunny-free`. Never include `/` or `#` inside a model token.
-- `<variant>` is the run's provider variant, or for Codex the `model_reasoning_effort` token. It is joined to the model with a single `-`: `gpt-6-luna` + `medium` gives `gpt-6-luna-medium`; `opencode/space-bunny-free` + `max` gives `space-bunny-free-max`.
+- `<variant>` is the run's provider variant, or for Codex the `model_reasoning_effort` token. It is joined to the model with a single `-`: `gpt-6.1-sol` + `medium` gives `gpt-6.1-sol-medium`; `opencode/space-bunny-free` + `max` gives `space-bunny-free-max`.
 - `<Harness>` is `Codex`, `OpenCode`, or `harness-unconfirmed`. The sentinel is required, not optional: a run that cannot observe which harness it is executing under must still publish a conforming label, so it downgrades this slot exactly as the `Model used:` value does. A label that omits the slot, or substitutes anything else, is not a canonical label.
 - The ` (AI agent)` suffix is part of the label and is never omitted.
 
 Examples:
 
-- `Primary Coordinator — Yi Tang_gpt-6-luna-medium_Codex (AI agent)`
-- `Worker — Torsten Maier_gpt-6-luna-medium_Codex (AI agent)`
+- `Primary Coordinator — Yi Tang_gpt-6.1-sol-medium_Codex (AI agent)`
+- `Worker — Torsten Maier_gpt-6.1-sol-medium_Codex (AI agent)`
 - `Product Manager — Yu Wang_gpt-6.1-sol-medium_Codex (AI agent)`
 - `Worker — Torsten Maier_space-bunny-free-max_OpenCode (AI agent)`
 

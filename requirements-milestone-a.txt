@@ -13,15 +13,30 @@
 # changes that value.
 #
 # D05 selects Django 5.2 LTS and PostgreSQL 17. `psycopg[binary]` is the
-# PostgreSQL 17 driver. No model-provider SDK is pinned: Milestone A makes no
-# provider call (SR06), and G0 criterion 3 is explicitly not waived for a
-# provider. Nothing here may be read as evidence that a provider is usable from
-# China.
+# PostgreSQL 17 driver.
+#
+# No *model-provider* SDK is pinned: Milestone A makes no provider call (SR06),
+# and G0 criterion 3 is explicitly not waived for a provider. Nothing here may be
+# read as evidence that a provider is usable from China.
+#
+# `garmin-fit-sdk` IS pinned, and the distinction matters -- do not "tidy" it out
+# on the strength of the paragraph above. A model-provider SDK is a *remote model
+# service client*: calling one is a network call to a third party and is exactly
+# what G0 criterion 3 withholds. `garmin-fit-sdk` is a **file-format decoder**:
+# a pure-Python local library that parses the FIT container, supplies the
+# profile constants and computes the FIT CRC. It contacts nothing. D01 selects the
+# official FIT decoder as the conformance basis, TK10's matrix is recorded
+# against profile 21.217.0, and `datara/classification.py` reads its profile
+# constants and cross-checks its CRC. Without the pin, every TK11 case fails
+# `decoder_unavailable` and the suite reports a *rejection* where a *decode* was
+# required -- a green run that proved nothing. An absent decoder must be a
+# declared deviation, not a silently skipped capability.
 #
 # Attribution: Worker — Torsten Maier_space-bunny-free-max_OpenCode (AI agent)
 
 asgiref==3.12.1
 django==5.2.17
+garmin-fit-sdk==21.217.0
 psycopg==3.2.10
 psycopg-binary==3.2.10
 sqlparse==0.6.0

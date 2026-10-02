@@ -44,6 +44,7 @@ from django.conf import settings
 from django.db import models
 
 from datara import CONTRACT_VERSION, NORMALIZER_VERSION, SCHEMA_VERSION
+from datara.canonical import MAX_ELAPSED_DURATION_MS, MIN_ELAPSED_DURATION_MS
 
 
 class OwnerScopeNotBound(Exception):
@@ -332,6 +333,23 @@ class Session(OwnerScopedModel):
     Elapsed and timer are separate columns and are never written from one
     another. Duration-based P0 volume means recorded elapsed activity duration
     (SR/D01); switching silently between elapsed and timer time is forbidden.
+
+    **Unit.** ``elapsed_duration_ms`` is integer *milliseconds*, which is the
+    canonical comparison unit of ``datara.canonical`` (section 6 of the
+    duplicate/conflict contract; the P1-P7 precedence table is built on it). The
+    column was previously named ``elapsed_duration_seconds`` while two modules
+    wrote to it -- one in seconds, one in milliseconds -- and the exact tuple
+    comparison compared the seconds value against a millisecond candidate, so the
+    same 30-minute activity was stored as both ``1800`` and ``1800000`` and the
+    second copy was accepted again. ``PositiveBigIntegerField`` cannot detect
+    that: both are valid positive integers. The name now states the unit and
+    :attr:`Meta.constraints` bounds the value to the millisecond domain, so a
+    future writer that stores an unconverted seconds count is refused by the
+    database as well as by ``datara.canonical.require_elapsed_duration_ms``.
+
+    ``timer_duration_seconds`` deliberately keeps its own name and unit: it is a
+    different metric (official timer time, not recorded elapsed time) and is not
+    a tuple component.
     """
 
     activity = models.OneToOneField(
@@ -342,7 +360,7 @@ class Session(OwnerScopedModel):
 
     sport = models.CharField(max_length=64)
     session_start_utc = models.DateTimeField()
-    elapsed_duration_seconds = models.PositiveBigIntegerField()
+    elapsed_duration_ms = models.PositiveBigIntegerField()
     timer_duration_seconds = models.PositiveBigIntegerField(null=True, blank=True)
 
     class Meta:
@@ -351,6 +369,20 @@ class Session(OwnerScopedModel):
             models.Index(
                 fields=["owner", "session_start_utc"], name="datara_session_owner_start"
             )
+        ]
+        constraints = [
+            # Schema-level half of the unit guard. See the class docstring: without
+            # this, a seconds count stored in the millisecond column is an
+            # indistinguishable valid integer, which is how one activity was
+            # accepted twice. Bounds are the canonical millisecond domain from
+            # `datara.canonical`.
+            models.CheckConstraint(
+                condition=models.Q(
+                    elapsed_duration_ms__gte=MIN_ELAPSED_DURATION_MS,
+                    elapsed_duration_ms__lte=MAX_ELAPSED_DURATION_MS,
+                ),
+                name="datara_session_elapsed_ms_domain",
+            ),
         ]
 
 

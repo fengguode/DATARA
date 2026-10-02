@@ -33,3 +33,92 @@ Full comparison, precedence table, invariants and presentation contract: [duplic
 The Controller review found no DATARA usage, billing, runtime or product telemetry. Actual provider spend and DATARA infrastructure cost are therefore **unmeasured**. Do not make an estimate until each model attempt can retain sanitized usage units, provider/model/API version, request ID, currency and price schedule date. A scenario estimate should state assumptions for run frequency, selected skill count, input/output size, retries/failed attempts, provider/model and dated rates, with low/base/high bounds. Customer-owned provider charges and DATARA infrastructure/operations costs must be reported separately.
 
 Before each live-model call, pause if the provider/model/API version, data class and fixture provenance, customer credential owner authorization, bounded request size, approved usage ceiling, or evidence fields are missing. Pause on unexpected retention terms, authentication behavior, fallback/retry ambiguity, secret exposure, or a ceiling breach. The operator stops calls; Controller monitors usage evidence; the security/operations owner handles data/secret events; founder approves provider/scope changes. Resume only after a named owner records corrected configuration/limit/authorization; preserve prior blocked/failed results and rerun only affected cases on the fixed candidate. This is a proposed gate, not a change to any token or spending budget.
+
+## Routed requirement changes — 3 October 2026 (System Architect — Feng Guo)
+
+**Status: decided at the architecture level, not yet synchronized. Nothing here is Done, Verified, Accepted or released.**
+
+These close the requirement gap that `source-evidence/duplicate-conflict-options.md:190-191` and the earlier note at this document's line 27 routed to the Primary Coordinator, and that review finding #329 raised against TK11. The exact text is below because **the registry edit is not mine**: `docs/management/requirements-registry.json`, `docs/management/system-requirements.md` and `docs/management/p0-breakdown.md` are the registry owner's files and this document proposes the change without making it.
+
+### R1 — `SR32`: correct statement (all five dispositions)
+
+**Why the current text is a verified defect.** The registry statement is *"For each submitted file, the system shall present its accepted or rejected disposition as text associated with that file and include the applicable approved rejection reason."* The implementation produces **five** dispositions — verified at `datara/dedup.py:206-213`, whose docstring reads "The five per-file dispositions of section 5 / section 10" and which enumerates `accepted`, `rejected`, `duplicate_of_existing`, `duplicate_of_quarantined`, `quarantined_conflict`. `duplicate_of_existing` and `duplicate_of_quarantined` are neither accepted nor rejected, and `quarantined_conflict` is a third thing again. Collapsing three of them into "accepted" or "rejected" is exactly what `docs/management/p0-ui-requirements-review.md:21` forbids — never imply a file was imported when it was not.
+
+**Proposed `statement`:**
+
+> For each submitted file, the system shall present exactly one of the five approved per-file dispositions as text associated with that file — `accepted`, `rejected`, `duplicate_of_existing`, `duplicate_of_quarantined` or `quarantined_conflict` — and shall include the applicable approved reason code for every disposition other than `accepted`.
+
+**Proposed `acceptance_criteria`:**
+
+1. Given each approved fixture for **every one of the five dispositions**, the interface identifies the file and its disposition as text; oracle: rendered result matches TC21 and is understandable without colour or icon alone.
+2. Given a rejected fixture, the displayed reason matches the approved contract reason; oracle: compare displayed reason/code to the approved matrix.
+3. Given a `duplicate_of_existing` or `duplicate_of_quarantined` fixture, the text names the referenced original or quarantine and does not present the file as a newly imported activity; oracle: compare against the approved duplicate-reference wording in `duplicate-conflict-options.md` §9.
+4. Given a `quarantined_conflict` fixture, the text states that an unresolved candidate exists, identifies both affected records, and does not imply that a merge, overwrite or resolution has occurred; oracle: compare against the approved conflict wording in `duplicate-conflict-options.md` §9.
+
+**Unchanged and must stay:** `title`, `cus_ids` (`CUS01`), `feature_ids` (`FEAT01`), `priority` (`P0`), `work_package` (`WP01`), `decision_ids` (`D01`), `verification_ids` (`TC21`), `perspective_tags`, `github`. Priority never moves into the title.
+
+### R2 — `SR33`: one added clause, and the `SR32`/`SR33` boundary
+
+**The relationship, decided.** `SR32` and `SR33` are not redundant and must not be merged. `SR32` is **per submission** and is obligatory for *every* file, including rejected ones that leave no trace in history. `SR33` is the **history view** and applies only to dispositions that persist. The mapping:
+
+| `SR32` per-file disposition | `SR33` history representation |
+| --- | --- |
+| `accepted` | a persisted activity |
+| `duplicate_of_existing` | a duplicate reference attached to the existing activity, never its own activity-shaped row |
+| `duplicate_of_quarantined` | a duplicate candidate reference inside the conflicts area, naming the existing quarantined candidate |
+| `quarantined_conflict` | an unresolved conflict naming both affected records |
+| `rejected` | **no history row at all** — a rejection is not a history record, and D01 discards rejected raw bytes promptly |
+
+**Proposed added clause to the `SR33` statement** (appended to the existing sentence, which is otherwise correct):
+
+> …and shall represent a rejected submission by no history entry. A repeated submission of the bytes of a quarantined candidate shall appear as a reference to that existing candidate within the conflicts area, and shall not create a second candidate for the same logical tuple.
+
+**Proposed added acceptance criterion for `SR33`:**
+
+3. Given a repeated submission of the bytes of a quarantined candidate, history shows one candidate for that logical tuple and identifies the repeat as a reference; oracle: TC22 candidate count for the tuple is one.
+
+**The gap this closes:** `SR33` as written names three states — persisted activities, exact duplicate imports, unresolved conflicts — and never says what a *rejected* submission looks like, nor what a repeat of a *quarantined* candidate looks like. Both are now covered. `duplicate_of_quarantined` was previously unassignable to any of the three.
+
+### R3 — Where each change must land
+
+| File | Location | Change |
+| --- | --- | --- |
+| `docs/management/requirements-registry.json` | `system_requirements[31]` (`SR32`) | replace `statement`; append criteria 3 and 4 to `acceptance_criteria` |
+| `docs/management/requirements-registry.json` | `system_requirements[32]` (`SR33`) | append the clause to `statement`; append criterion 3 to `acceptance_criteria` |
+| `docs/management/system-requirements.md` | lines 49–50 | mirror both rows |
+| `docs/management/p0-breakdown.md` | lines 311–312 | mirror both rows |
+| `docs/management/traceability.md` | `CUS01`/`CUS02` rows | **no change** — `SR32`/`SR33` links are already correct; only their text changes |
+| `docs/management/requirements-registry.json` | `verification_cases` `TC21`, `TC22` | **review needed**: `TC21`'s fixtures must now cover five dispositions, not two. Not proposed here — test design is not mine. |
+
+**Sequencing.** Until R1 and R2 land, `TC21` cannot pass and `SR32`'s text disagrees with the implementation. This is recorded as a defect against `SR32`, **not** as a failure of TK11, whose implementation is correct against the frozen contract.
+
+### R4 — The canonical payload key: `_ms` is required, and it is a version bump plus a digest migration, not a rename
+
+**Verified facts.** `datara/normalization.py:627` builds the canonical payload with the key `required.elapsed_duration_seconds` and the value `str(elapsed)` — a **seconds** value rendered as an exact decimal string. `datara/normalization.py:653` computes `normalization_digest=sha256_digest(text)` over exactly that text. So the key name, the value's unit and the digest are bound together. `CONTRACT_VERSION` is `"datara-milestone-a/normalization/1"` (`datara/__init__.py:26`).
+
+**The question: must the key become `_ms`?** **Yes — and the honest framing is that this is a contract version bump with a digest migration, not a rename.** Renaming the key, or changing the value to the millisecond integer, changes the canonical JSON and therefore changes the SHA-256 for **every** activity ever normalized. That digest is not cosmetic: it is the identity used by `Activity.normalization_digest` (`datara/models.py:307`), by `Snapshot.included_digests`, and by the dedup conflict comparison. `SR05` forbids silently re-basing a stored digest, and `datara/canonical.py` already documents this exact reasoning for why the *seconds* normalization contract was left alone.
+
+**Why the change is nonetheless required rather than optional.** The FIT source field `session` 18/7 is declared `uint32`, scale 1000, unit `s` — the raw value is *already* an integer millisecond count, and the pinned profile is the evidence for that. The pipeline currently converts that native integer into a seconds decimal string (`datara/classification.py:1286`, `_exact_scaled(elapsed.raw, 1000)`), hashes the string, and then converts the seconds back to milliseconds at the persistence boundary (`datara/db.py:231-244`). The conversion is now exact and asserted at both ends, so this is **not** a live correctness defect. It is that a *hashed* artifact carries a key name and a value that both disagree with the canonical unit ratified for this project, and the value is a derived decimal rather than the native integer. Fixing it removes a derived representation from a hashed payload and makes the payload self-describing.
+
+**The exact change, and its cost, stated for the Coordinator:**
+
+1. Bump `CONTRACT_VERSION` at `datara/__init__.py:26` from `"datara-milestone-a/normalization/1"` to `…/2`.
+2. In the canonical payload only (`datara/normalization.py:627`), change the key to `required.elapsed_duration_ms` and the value to the **integer** millisecond count, asserted through `datara.canonical.require_elapsed_duration_ms` with `unit=CANONICAL_DURATION_UNIT`. No division, no decimal, no float.
+3. **Migrate stored digests.** `Activity.normalization_digest` values written under `/1` are stale after this change. The good news, verified: `Activity` already carries `contract_version` (`datara/models.py:308`), so every stored digest is **self-describing** and old and new digests can coexist without ambiguity. The migration must therefore either (a) recompute each `/1` digest from its stored inputs, or (b) leave `/1` digests in place and treat digest comparison as version-scoped. **(b) is the lower-risk option and is my recommendation**, because recomputing a digest from stored inputs re-runs a hash over data that was normalized under different policy bounds, and a re-derived digest is not provably the digest that was actually observed at import.
+4. `Snapshot.included_digests` (`datara/normalization.py:729`) is a sorted tuple of digests and must be migrated or version-scoped on the same basis. A snapshot whose member digests are stale would otherwise fail every future consistency check at `datara/db.py:261-263`.
+5. `dedup`'s candidate digests (`datara/dedup.py:983`, `:1079`) are compared against `Activity.normalization_digest`, so the same version-scoping applies.
+
+**Sequencing and ownership.** This is a change to `datara/**` and to the normalization contract, and it is **not** mine to make. It is routed to the code owner and the Coordinator as a bounded increment with a named migration option. It must not be bundled into a sub-sport or cardinality change, because it re-bases every stored digest and a bundled change would make a digest regression untraceable.
+
+**What must not happen:** a bare rename of the key with no version bump. That produces exactly the silent digest re-basing `SR05` forbids, and it would make every previously reported `normalization_digest` unverifiable against its source.
+
+### R5 — Items confirmed from #325
+
+Both are now decided; details and evidence are in [`fit-support-matrix.md`](fit-support-matrix.md) §12.6 and [`fit-profile-enum-derivation.md`](../management/source-evidence/fit-profile-enum-derivation.md).
+
+- **Wellness mapping — confirmed in principle, and the implementation is incomplete.** Verified: 21.217.0 has no `wellness` value in the `file` enum; wellness/monitoring data is carried under **five** categories — `9 weight`, `14 blood_pressure`, `15 monitoring_a`, `28 monitoring_daily`, `32 monitoring_b`. `datara/classification.py:446-457` maps only three of them, so `monitoring_a` and `monitoring_b` fall through to a generic "unsupported" reason instead of the named wellness exclusion. **Correction: all five map to the wellness reason.** `goals` (11) and `activity_summary` (20) remain **open** — neither is a wellness value and D01 names neither, so assigning them a reason would invent a D01 clause.
+- **Chained-file flag position — the existing decision is correct and is confirmed unchanged.** `datara/classification.py:641-653` declines to use the protocol's header flag and detects a chain from trailing bytes. This is right: the protocol prose was never captured (`fit-source-inventory.md:19`, SRC05), so the flag's position and width are unknown to this repository and asserting them from memory would be an invented protocol rule. **The flag position is not required by the contract and must not be asserted.** The trailing-bytes rule is the mechanism and is labelled *derived, not protocol-evidenced*; its residual limit — it detects a chain only by the bytes that follow the first segment — is recorded, not solved, and closes only with the protocol document under TK09.
+
+### R6 — Still requiring a founder decision, unchanged
+
+`OQ-1` (does a "retain both" resolution suppress future quarantines for that tuple — recommendation: no) and `OQ-2` through `OQ-5` in `duplicate-conflict-options.md` §11 remain open and are not addressed by this increment. The R4 digest-migration option in particular is a **product-data** decision about stored history, not a technical preference, and is routed to the founder via the Primary Coordinator.

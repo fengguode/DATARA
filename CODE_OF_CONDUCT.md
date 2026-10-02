@@ -41,6 +41,54 @@ Reuse one dedicated session per role. Preserve configured models, reasoning and 
 
 Every bounded assignment names the role, issue, WP/CUS/Feature/SR/Task IDs, objective, dependencies/decision gates, acceptance criteria, exclusive writable paths, read-only references, base commit/branch/PR, available execution evidence, required checks, reviewers/final confirmer, current live-read timestamp and next handoff. Avoid concurrent edits to the same files. A sandbox's technical write access does not grant ownership. Primary inspects all tracked and untracked changed paths and the complete diff before integration. Preserve unrelated changes.
 
+### Agent identity labels
+
+Publish an agent identity as one canonical label that shows the persona, the model used, and the harness, so the two runtimes are distinguishable at a glance. This supplements the [issue #23](https://github.com/fengguode/DATARA/issues/23) attribution agreement; it does not replace it.
+
+```text
+<Role> — <Configured name>_<model>-<variant>_<Harness> (AI agent)
+```
+
+- `<Role>` and `<Configured name>` are the [roster](docs/team/roster.md) values, unchanged.
+- `<model>` is the provider model ID with the provider prefix removed: `opencode/space-bunny-free` becomes `space-bunny-free`. Never include `/` or `#` inside a model token.
+- `<variant>` is the run's provider variant, or for Codex the `model_reasoning_effort` token. It is joined to the model with a single `-`: `gpt-6-luna` + `medium` gives `gpt-6-luna-medium`; `opencode/space-bunny-free` + `max` gives `space-bunny-free-max`.
+- `<Harness>` is `Codex`, `OpenCode`, or `harness-unconfirmed`. The sentinel is required, not optional: a run that cannot observe which harness it is executing under must still publish a conforming label, so it downgrades this slot exactly as the `Model used:` value does. A label that omits the slot, or substitutes anything else, is not a canonical label.
+- The ` (AI agent)` suffix is part of the label and is never omitted.
+
+Examples:
+
+- `Primary Coordinator — Yi Tang_gpt-6-luna-medium_Codex (AI agent)`
+- `Worker — Torsten Maier_gpt-6-luna-medium_Codex (AI agent)`
+- `Product Manager — Yu Wang_gpt-6.1-sol-medium_Codex (AI agent)`
+- `Worker — Torsten Maier_space-bunny-free-max_OpenCode (AI agent)`
+
+**Model evidence.** State the model a run observed. If the run cannot observe its loaded model, state that run's configured model and keep the existing `Configuration loading:` line. If neither is verifiable, use `model-unconfirmed`. Use `harness-unconfirmed` when the runtime is not observable. Never infer a model or harness from a role label, and never present a configured value as an observed one.
+
+**Where the label applies.** Issue and pull request comments, commit attribution trailers, pull request contribution tables, and assignment and handoff records. Each of these also records a separate `Model used:` value, which is the machine-readable form and the one to consume programmatically.
+
+**`Model used:` structure.** Write it as explicit key/value pairs on one line, never as free text:
+
+```text
+Model used: model=<provider/model-id> variant=<token> harness=<Harness>
+Model used: model=model-unconfirmed variant=variant-unconfirmed harness=harness-unconfirmed
+```
+
+The provider model ID is written in full, including its provider prefix, so `opencode/space-bunny-free` and `gpt-6.1-sol` are unambiguous. `variant` is the provider variant or, for Codex, the `model_reasoning_effort` value.
+
+**Precedence.** A run reports each of the three keys to the best it can, and downgrades only what it cannot verify. Observing a model but not a runtime yields a real `model=` and `harness=harness-unconfirmed`, never the reverse and never a dropped key. The all-unconfirmed form is used only when nothing is observable.
+
+**Recovery.** Split the value on whitespace into three tokens, then split each token on its first `=`. That yields keys drawn from `{model, variant, harness}`. Values must not contain spaces. This is stated precisely because an earlier draft claimed recovery "by splitting on `=`", which does not work once several pairs share a line. The bare sentinels `model-unconfirmed` and `harness-unconfirmed` are **not** valid standalone values; use the keyed form.
+
+**Agreement.** Where a run publishes both the canonical label and a `Model used:` value, the label's model and variant must come from the same observation as the `Model used:` keys. A disagreement between the two is a defect in the record, not a formatting variation. The label is for reading and the `Model used:` value is for parsing; they are two renderings of one observation and must not diverge.
+
+In commit trailers the same value is written with a hyphenated key, `Model-used:`, so that trailers remain valid `git interpret-trailers` metadata; the two spellings carry identical content.
+
+**Where it does not apply.** The Project **Agent** field stays the roster's `Role — Name`, because it records ownership rather than a run's model; a single-select field cannot hold one value per role, model, and harness combination. GitHub repository labels also stay `Role — Name`. Historical commits, comments, dated review records, and the `agent` and `owner_role` fields in `requirements-registry.json` are preserved exactly as written and are not restated under this rule.
+
+**The label is a display string, not a machine key.** The separator is an em dash (U+2014) with one space on each side; an ASCII hyphen, en dash or figure dash is non-conforming. For current roster values, role and name split on the em dash, and the final `_`-delimited field is `Harness (AI agent)`. The boundary between model and variant is **not** recoverable, because `-` also occurs inside model IDs such as `space-bunny-free` and `gpt-6.1-sol`. Never parse a model or variant out of a published label; read the `Model used:` value instead.
+
+The label identifies the persona and its runtime only. It does not prove participation, native activation, independent review, acceptance or release, and it does not alter Git author and committer identities.
+
 ## 5. Live GitHub coordination
 
 Refresh affected Project fields and linked issue/PR descriptions, comments, reviews and founder decisions before assignment, dependent actions, status reports, mutations, review conclusions and handoffs. Refresh after founder interactions, resumed sessions and scope changes, and at least every 15 minutes during sustained work. Read current status, owner, priority, lifecycle, prerequisites and start gates; record UTC timestamps and source links.

@@ -26,6 +26,18 @@ For each resolution record: decision, rationale, alternatives, affected requirem
 
 Concrete options, impacts, and approval gates for D01–D05 are in the [WP01 requirements package](wp01-requirements-package.md). Nothing in that proposal records founder approval.
 
+## Agent identity label decision (1 October 2026)
+
+The founder directed that every published agent identity carry the persona, the model used, and the harness in one label, so that runs from the Codex and OpenCode harnesses are distinguishable at a glance. The [Code of Conduct](../../CODE_OF_CONDUCT.md#agent-identity-labels) records the canonical form, the model-evidence ladder, the applicable and non-applicable surfaces, and the limit that the label is a display string rather than a machine key. The [attribution protocol](../team/attribution.md#identity-label-format) carries worked labels for all eleven roster roles and updates the assignment, activity-comment, commit-trailer, and contribution-table templates.
+
+This supplements the founder-approved attribution agreement in [issue #23](https://github.com/fengguode/DATARA/issues/23); it does not replace it. The clauses of that agreement remain in force, including the Project **Agent** field as an ownership value, GitHub repository labels as `Role — Name`, accurate Git author and committer identities, and the absence of agent publishing authority.
+
+Scope limits agreed with the founder on the same date: the Project **Agent** field and GitHub repository labels keep the short `Role — Name` form because they record ownership rather than a run's model, and a single-select field cannot hold one value per role, model, and harness combination. Historical commits, comments, dated review records, and registry owner fields are preserved as written. The ten tracked Codex role definitions in `.codex/agents/*.toml` were updated in the same change so Codex runs emit a conforming label.
+
+An OpenCode role-definition harness exists as a trial artifact for the parallel Codex/OpenCode comparison. It is **not part of this baseline and is not tracked by this change**. Until it is tracked under its own review, no tracked document treats it as the configuration source of record, and no compliance is claimed for it. The `Model used:` value published from an OpenCode run is therefore self-reported by that run and carries no baseline provenance.
+
+A label records a persona and its runtime only. It does not prove participation, native role activation, independent review, acceptance, or release, and it creates no GitHub account or independent runtime identity. This decision changes no product contract, requirement, priority, or evidence state.
+
 ## D01–D05 delegated selections (1 October 2026)
 
 The founder selected FIT SDK 21.217.0, delegated remaining D01–D05 choice work to Yi Tang with Yu Wang, then explicitly selected OpenAI and DeepSeek as the first providers. The [dated decision record](p0-decision-baseline-2026-10-01.md) contains selected options, rationale, affected CUS/SR/tasks, official sources, remaining evidence and founder support inputs. Its authority and GitHub links are recorded there.

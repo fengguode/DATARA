@@ -46,3 +46,164 @@ Owner identity comes from authenticated server context. Conflict reads, resoluti
 [SR04 and system requirements](../system-requirements.md) require owner-scoped repeat import without duplicate accepted activity and visible conflicts without silent overwrite. TC03's historical undecided-choice oracle needs reconciliation against the selected D01 behavior before implementation/verification, including changed bytes/equal tuple, changed tuple, separate users, explicit resolutions and races. Conceptual examples above are not frozen fixture oracles. TC03 and SR04 remain **Not run / unverified**.
 
 Next contract work must settle mapping precision, staged/concurrent imports, authorized atomic resolution, supersession lineage, snapshot/result references, cleanup/crash/retry and deletion/backup behavior. Follow the existing backlog and [implementation plan](../p0-implementation-plan.md); this research output does not clear G0 or authorize coding. [Review record](../../team/reviews/duplicate-options-review-2026-10-01.md) holds documentation evidence separately from product checks.
+
+---
+
+## 2 October 2026 increment — options comparison, precedence and athlete presentation
+
+Status: proposed architecture for the reopened TK14/STK011/STK012 increment under the founder's parallel working mode. It **extends** the 1 October comparison above; where the two differ, the section below governs. Line numbers in the section above are deliberately unchanged, because `decision-register.md:66` cites this file at lines 37 and 48. The document's 1 October header line is therefore dated-incomplete; refreshing it is a Primary Coordinator action because any inserted line breaks those citations.
+
+Nothing here is a product selection, a schema freeze, a test result, an acceptance or a release. `TC03`, `SR04`, `TC22` and `SR33` remain **Not run / unverified**. D01's selected policy is not reopened: the founder selected it at `p0-decision-baseline-2026-10-01.md:48`, and this increment specifies the parts of it that were left open — *precedence*, *cost*, and *presentation* — so that TK15 can implement without inventing them.
+
+Trace: WP01, TK14 (#120), STK011 (#183), STK012 (#184), CUS02, FEAT02, SR04, SR33, D01, TC03, TC22; downstream TK15 (#121), TK16 (#122).
+
+### 1. The actual decision being made
+
+D01 already selected the *shape* of the policy: owner-scoped exact-byte idempotence, exact-tuple quarantine, explicit resolution, no silent merge, no tolerance, no overwrite. What D01 did **not** select, and what TK15 would otherwise have to invent, is:
+
+1. which of four candidate policy structures actually delivers that shape, and what each rejected structure costs;
+2. the **precedence order** when several rules match the same submission;
+3. what happens under concurrency and after a lost response;
+4. how a conflict is presented to the athlete in words (TC22 / SR33 / UI-SR02, owned by User Tester).
+
+Those four are answered below. The following are explicitly **not** answered here and remain open: any deletion/retention period, any tolerance, any automatic resolution, any aggregate deduplication claim.
+
+### 2. The four options compared
+
+Each option is described by what it decides, what an athlete observes, what it structurally cannot do, and what choosing it costs. X and Y are otherwise valid distinct file bytes; A and B are authenticated owners.
+
+| Option | What it decides | Observable outcome for A | What it structurally cannot do | Cost if chosen alone | Verdict |
+| --- | --- | --- | --- | --- | --- |
+| **A. Content-digest-only dedup** (owner-scoped SHA-256) | Only "are these the same bytes?" | Submitting X twice returns the existing activity and a `duplicate_of_existing` file outcome. Submitting Y — the same activity re-exported — creates a second activity. | Cannot ever raise a conflict, so SR33's "unresolved conflict" state, SR32's per-file conflict outcome, UI-SR02/UI-ST06 and TC22's conflict oracle are all unimplementable. It answers *file identity*, not *activity identity*. | Silent double counting of volume, driven by an export behaviour nobody has measured: this repository holds **no evidence** that a Garmin Connect re-export of one activity is byte-stable. The athlete sees two activities from one session and nothing anywhere says otherwise. | Necessary but insufficient. Rejected as a complete policy. |
+| **B. Logical-tuple quarantine** — different bytes, exact `(owner, sport, UTC start instant, elapsed duration)` | Only "might these be the same activity?" | Submitting Y equal-tuple with X gives A a quarantined candidate. Submitting Y with a differing tuple silently accepts it as a second activity. | A classifier, not a policy. It cannot release its own output. Any automatic exit is either "keep existing" (the new export is silently discarded — lossy) or "keep new" (overwrite — prohibited) or "keep both" (which is not automatic deduplication at all). Without C, quarantine is a permanent dead end the athlete cannot leave. | Locks the athlete out of their own data with no exit. Worse than A: A at least shows the duplicate; B hides both records until an exit exists. | Rejected as a complete policy. Retained as the classifier layer inside D. |
+| **C. Explicit user resolution** — keep existing / replace via auditable supersession / retain both | Only "who decides, and what is recorded?" | Nothing, until something detects a conflict. It never triggers on its own. | Requires the full state machine, owner authorization, atomicity, interrupted-resolution recovery, supersession lineage and a UI state (UI-ST06). That surface is exactly what TK15 must not invent. It also carries D04's deletion-ledger and reapply-on-restore interaction, which `implementation-contracts.md:58-63` still heads *not yet implementable*. | Large contract surface built on an empty trigger set; every one of its state transitions would be unverified until B exists. | Necessary but insufficient. Retained as the exit layer inside D. |
+| **D. Hybrid precedence** — A detects replay, B classifies, C resolves, in that order, with explicit precedence | All three questions, with one defined winner per submission | See the precedence table in §4. One outcome per file, every outcome textual and stable. | It does not claim comprehensive deduplication. Tuple mismatch still admits a genuine duplicate; tuple equality can still raise a false conflict. Both limits are stated to the athlete rather than hidden. | Costs the implementation of B **and** C, and requires accepting a deliberate residual: a false conflict is possible and costs the athlete one explicit decision. | **Recommended.** See §3. |
+
+### 3. Options explicitly rejected, and what each rejection costs
+
+| Rejected option | Why rejected | What the rejection costs |
+| --- | --- | --- |
+| **Tolerance / fuzzy tuple matching** (e.g. "within 5 seconds and 1%") | Prohibited by `p0-decision-baseline-2026-10-01.md:48` and by the product rule against silent merging. Independently: no threshold value is evidenced anywhere in this repository, so any number would be invention, and an approximate match that is wrong **destroys information** — it merges two real activities or discards one. Every other failure mode in this document is recoverable by an explicit user action; an incorrect automatic merge is not. | A permanent, unrequested blind spot: distinct activities inside any chosen tolerance are never surfaced, so the athlete is never told their two sessions may have been conflated. Retaining this cost is the point. |
+| **No logical detection at all** (strict A) | Recorded historically at line 15 above. It is option A restated. | Silent double counting, per A's cost. |
+| **Automatic resolution** (quarantine auto-releases to "keep both" after N days, or resolves on a score) | Would require a similarity judgement with no evidence behind it, and "keep both" is not deduplication. | The athlete's history silently grows a value they never chose, and the "unresolved" state that TC22 asserts would never be observable. |
+| **Suppressing future quarantines after a "retain both" resolution** | A recorded resolution is a statement about two specific originals, not a standing waiver. Suppressing would create a permanent blind spot for that tuple. | Retaining it costs the athlete a repeated explicit decision for each *newly exported* variant of the same activity. That is the visible, correct cost of never guessing. Flagged as open product question **OQ-1** below. |
+
+### 4. Recommendation and rationale
+
+**Recommend Option D, hybrid precedence, in the order A → B → C.**
+
+Rationale, in the order the arguments actually hold:
+
+1. **The three options answer three different questions and no single one answers all of them.** A answers "same file?"; B answers "same activity, maybe?"; C answers "who decides?". Collapsing them into one option either loses a question or invents an answer. The product requires all three answers, so the structure must carry all three layers.
+2. **Only D can fail safely.** A's failure is invisible (a duplicate the athlete never sees). B's failure is a dead end. C's failure is undefined behaviour. D's failures — a missed duplicate and a false conflict — are both **visible and explicitly resolved by a human**, which is the only failure posture consistent with "never silently merge, never overwrite".
+3. **D is what D01 already selected**, so recommending it does not reopen a founder decision; §4 supplies the precedence the selection omitted. Recommending a different structure would be a scope change requiring the founder, which is not mine to make.
+4. **D's residual cost is bounded and honest.** Two known limits (tuple mismatch admits a duplicate; tuple equality can raise a false conflict) are stated in §7 and shown to the athlete in words, rather than engineered away with an invented threshold.
+
+**Options B and C are not rejected; they are demoted from *policies* to *layers*.** That is the whole substance of the recommendation: the earlier comparison presented B and C as alternatives, which invited the question "which one?", when the correct answer is "B without C is unusable and C without B never fires".
+
+### 5. Authoritative precedence table
+
+For one submission from an authenticated owner, exactly one outcome applies. The first matching rule wins. This is the rule set TK15 implements; it is not a description of what a reasonable implementation might do.
+
+| # | Precondition | Outcome | Effect on persisted state |
+| --- | --- | --- | --- |
+| P1 | SHA-256 equals an **accepted** original owned by this owner | `duplicate_of_existing`, referencing the existing original | **No** new `SourceObject`, **no** new `Activity`. A new `Import` row records the attempt and the reference. Idempotent. |
+| P2 | SHA-256 equals a **quarantined** original owned by this owner | `duplicate_of_quarantined` | No new original; the candidate stays quarantined. A retry cannot flip a quarantine into acceptance. |
+| P3 | Bytes differ; tuple equals that of an **accepted** activity of this owner | `quarantined_conflict` | New valid original + normalised candidate retained in quarantined owner scope (`implementation-contracts.md:62`). **Excluded from normal history and from every snapshot** (D01:48). |
+| P4 | Bytes differ; tuple equals that of an **already quarantined** candidate of this owner | `quarantined_conflict`, linked to the existing candidate | A second candidate is **not** created for the same tuple. Prevents unbounded candidate fan-out from repeated re-exports. |
+| P5 | Bytes differ; tuple differs | `accepted`, **if and only if** every other conformance and eligibility check passes | New original + activity. No deduplication claim is made and none is implied to the athlete. |
+| P6 | Bytes equal a **previously rejected** submission | `rejected`, re-evaluated from scratch | D01:50 discards rejected raw bytes promptly, so no digest entry exists to match and P1 cannot apply. A rejection is not a history record. The same bytes may legitimately succeed later if the rejection was a resource limit. |
+| P7 | Bytes equal an existing original that has since been superseded or deleted | Outcome text reports the referenced original as **unavailable** | Nothing is resurrected; D04's evidence-unavailable semantics apply. |
+
+Two consequences worth stating because Worker will otherwise have to choose:
+
+- **P3 fires against an accepted activity even after a "retain both" resolution.** See OQ-1.
+- **P5 is where the false negative lives.** A re-export that changes `sport`, `start_time` or `total_elapsed_time` in any component produces a different tuple and is accepted as a separate activity. This is not a defect to be fixed inside this policy; it is the stated limit of an exact heuristic.
+
+### 6. Canonical comparison values
+
+The tuple is compared on **canonical normalized integers**, never on display strings, floats or raw file fields. This binds TK14 to the TK10 matrix (`fit-support-matrix.md`, 2 October section) and satisfies D02's canonical-fixed-precision rule at `p0-decision-baseline-2026-10-01.md:60`.
+
+| Tuple component | Canonical value used for comparison | Basis |
+| --- | --- | --- |
+| `owner` | Server-derived authenticated owner id. Never client-supplied. | `implementation-contracts.md:7`; CUS10, SR20 |
+| `sport` | The required normalised enum integer (approved set `{1 running, 2 cycling}`) | Profile `session` 18/5; D01 scope |
+| `UTC start instant` | Exact integer seconds since the Unix epoch, `raw + 631065600` | MAP04 (`util.py` UTC offset 631065600) |
+| `elapsed duration` | Exact integer **milliseconds**, equal to the raw `session` 18/7 value (scale 1000, unit s) | Profile `session` 18/7; exact integer arithmetic, no float |
+
+Because elapsed duration is compared in integer milliseconds and start time in integer seconds, **equality is exact and no tolerance, epsilon or fuzzy comparison exists anywhere in the path.** A worker looking for a threshold to configure will not find one, and must not add one.
+
+`sub_sport` is deliberately **not** a tuple component. A re-export that changed only the sub-sport classification therefore still conflicts, which is the conservative direction.
+
+### 7. Hard prohibitions as testable invariants
+
+These are not cautions. Each is a property of the state machine or a testable assertion; "we were careful" is not a passing state.
+
+| Prohibition | Enforcement form |
+| --- | --- |
+| Never silently merge | **Merge is not an outcome of the state machine at all.** No transition combines fields from two distinct originals. This is stronger than a prohibition and is preferred, because a prohibition can still be violated by a new transition. |
+| Never tolerance / fuzzy matching | Tuple comparison is integer equality on the §6 values. There is no configurable threshold parameter anywhere in the intake contract, so there is nothing to set incorrectly. |
+| Never overwrite | Originals are immutable. Supersession is an append-only lineage record; the superseded original and its normalised records are retained, never mutated. |
+| Never partial acceptance | A file contributes no partial accepted activity. Any decode, integrity, limit or required-field failure rejects the whole file. |
+| No cross-owner disclosure | P1 is owner-scoped. An identical digest belonging to another owner is **not** a duplicate and must produce no hit, no count, no timing signal and no distinct error. |
+
+### 8. Concurrency, staging and lost responses
+
+STK011's recorded open items, decided here so that TK15 does not invent them.
+
+1. **Idempotence under concurrency is enforced by a database unique constraint** over `(owner_id, sha256)` on non-rejected originals, not by application read-then-write. Application-level checking is not sufficient; two concurrent identical submissions must not both insert. This is a routine derived engineering detail within selected scope, not a new product decision.
+2. **Conflict detection happens inside the same transaction that would insert the `Activity`.** Two concurrent differing-byte submissions with an equal tuple must not both reach an accepted state; one accepts and the other quarantines, deterministically.
+3. **Uncertain commit is resolved by lookup, not by retry.** After any lost response or ambiguous outcome, the intake path re-queries `(owner_id, sha256)` and reports P1/P2/P3 rather than resubmitting.
+4. **File store and database are not one transaction.** A durable staging marker plus owner-scoped reconciliation follows `implementation-contracts.md:61`. While a submission is unreconciled it is not visible in normal history and cannot be counted.
+5. **Only an authenticated, authorized owner action may change conflict state** (keep existing / replace / retain both). Interruption mid-resolution must leave a recoverable state, never a silently lost resolution.
+6. **Supersession is append-only and lineage-preserving.** Any snapshot that previously included the superseded activity retains its historical reference; nothing rewrites history.
+
+### 9. How a conflict is presented to the athlete
+
+This answers SR33, UI-SR02 and the presentation half of TC22. It states the required information and the required and prohibited wording; it does not specify layout, component structure or test steps, which remain with UI Designer and User Tester.
+
+**Three distinct textual states, never merged into one visual treatment:**
+
+| State | Where it appears | Required content |
+| --- | --- | --- |
+| `activity` | The history list | The activity as normally presented |
+| `duplicate_of_existing` | **Attached to the existing activity**, never as its own activity-shaped row | That another submission referenced this same original, when it was submitted, the submitted file name, and a link to the activity it references. It must not increment any count, total, or date scope. |
+| `quarantined_conflict` | A **separate conflicts area**, never inside the activity list | That an unresolved candidate exists; both affected records identified; that it *may* be the same activity; the three resolution options offered; and that it is excluded from volume until resolved |
+
+**Required wording rules:**
+
+1. The conflict text must say the candidate **may** be the same activity. The tuple is a heuristic (`p0-decision-baseline-2026-10-01.md:48`), and asserting identity would be a claim the system cannot support.
+2. State the resolution options by their effect: keep the existing activity, replace it with an auditable supersession, or keep both. Each must state what happens to the other original.
+3. A quarantined candidate must never be counted, totalled, or included in a date scope anywhere in the product.
+4. The duplicate reference must read as a reference to an existing activity, not as an additional activity.
+
+**Prohibited wording** (these imply a merge, an overwrite, or a certainty the system does not have): "merged", "replaced automatically", "overwritten", "duplicate activity", "double counted", or any phrasing that states the two files are certainly the same session.
+
+**Accessibility:** the three states must be distinguishable by text alone, never by colour or icon alone, and must be keyboard reachable — consistent with the selected WCAG 2.2 AA target at `p0-decision-baseline-2026-10-01.md:104` and TC21/TC22's "not by colour or icon alone".
+
+**Privacy:** the presentation must never reveal whether another owner holds the same bytes, nor anything about another owner's conflicts. Identical wording and timing apply whether or not a foreign duplicate exists.
+
+### 10. Disposition vocabulary, and a required change I cannot make
+
+The per-file outcomes in §5 are **`accepted`, `rejected`, `duplicate_of_existing`, `duplicate_of_quarantined`, `quarantined_conflict`** — five states. Two record-level gaps follow, and I am not permitted to edit the registry:
+
+1. **`SR32` currently admits only two outcomes.** Its text reads "present its accepted or rejected disposition". A duplicate reference and a quarantine are neither accepted nor rejected, and collapsing them into one of those two words would be actively misleading — exactly what `p0-ui-requirements-review.md:21` forbids ("never imply unsupported files were imported"). **Required change to SR32**: admit the duplicate-reference and quarantine dispositions explicitly. Registry edit is not mine.
+2. **`SR33` covers the history view but not the per-file upload outcome.** A conflict discovered during upload needs its own SR or an extension of SR32 so that TK11 (per-file diagnostics) and TK15 (history) are covered by the same vocabulary.
+
+Both are proposals for the Primary Coordinator to route through the synchronized registry process. Until then, this section is the architecture's proposed vocabulary and the SR text and the implementation will disagree.
+
+### 11. Open items and the residual costs I am accepting
+
+| ID | Open item | Owner |
+| --- | --- | --- |
+| OQ-1 | Should a "retain both" resolution suppress future quarantines for that tuple? **Recommendation: no.** Suppression converts one visible decision into a permanent blind spot, and the athlete never chose it. Cost of the recommendation: a repeated explicit decision per newly exported variant. | Product decision — founder via Primary Coordinator |
+| OQ-2 | False-positive frequency. A tuple collision requires two genuinely different activities of the same owner and sport sharing an exact UTC start second and an exact elapsed millisecond. Device clock reset/rollback is the plausible mechanism. **This repository holds no frequency evidence, and none is claimed.** The founder's decode spike is the natural place to observe whether it occurs in real data. | Observed evidence — pending spike |
+| OQ-3 | Byte-stability of a Garmin Connect re-export. Option A's residual double counting depends entirely on this, and it is unmeasured. | Observed evidence — pending spike |
+| OQ-4 | Deletion, quarantine retention and backup interaction with supersession lineage remain **unselected** (`decision-register.md:66`). This section assigns no retention period. | TK17 / D04 — open |
+| OQ-5 | `Metric` schema does not exist (`decision-register.md:64`). Any metric persisted before that contract is provisional. | D02 / WP02 — open |
+
+**Binding architectural condition, restated.** The quarantined original and its normalised candidate are a **disposition state on the source chain**, not a finding and not an assessment (`decision-register.md:60`). No entity created by this policy may store the outcome of executing a skill against a model, under any name, and no mutable latest-result pointer may exist on any of them. That is why §5's outcomes are states of `Import` and `SourceObject`, not new analytical records.
+
+### 12. Trace and evidence boundary
+
+TK14/STK011/STK012, CUS02, FEAT02, SR04, SR33, D01, TC03, TC22; downstream TK15, TK16. Every option and precedence rule above is **proposed architecture**, not an observed result. All examples remain conceptual and are not telemetry, fixtures or test oracles. No conflict fixture exists in this repository; `fit-source-inventory.md:36` records that lawful fixtures are still an open gate. `TC03` and `TC22` are Not run. Nothing here is Done, Verified, Accepted or released.

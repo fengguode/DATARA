@@ -18,17 +18,17 @@ Worked labels for every roster role:
 
 | Role | Configured name | Codex label | OpenCode label |
 | --- | --- | --- | --- |
-| Primary Coordinator | Yi Tang | `Primary Coordinator — Yi Tang_gpt-6.1-sol-medium_Codex (AI agent)` | `Primary Coordinator — Yi Tang_space-bunny-free-max_OpenCode (AI agent)` |
-| Product Manager | Yu Wang | `Product Manager — Yu Wang_gpt-6.1-sol-medium_Codex (AI agent)` | `Product Manager — Yu Wang_space-bunny-free-max_OpenCode (AI agent)` |
-| System Architect | Feng Guo | `System Architect — Feng Guo_gpt-6.1-sol-medium_Codex (AI agent)` | `System Architect — Feng Guo_space-bunny-free-max_OpenCode (AI agent)` |
-| Explorer | Wang Licun | `Explorer — Wang Licun_gpt-6.1-sol-medium_Codex (AI agent)` | `Explorer — Wang Licun_space-bunny-free-max_OpenCode (AI agent)` |
-| UI Designer | Wu Yunzhou | `UI Designer — Wu Yunzhou_gpt-6.1-sol-medium_Codex (AI agent)` | `UI Designer — Wu Yunzhou_space-bunny-free-max_OpenCode (AI agent)` |
-| Worker | Torsten Maier | `Worker — Torsten Maier_gpt-6.1-sol-medium_Codex (AI agent)` | `Worker — Torsten Maier_space-bunny-free-max_OpenCode (AI agent)` |
-| Reviewer | Dennis Windmaier | `Reviewer — Dennis Windmaier_gpt-6.1-sol-medium_Codex (AI agent)` | `Reviewer — Dennis Windmaier_space-bunny-free-max_OpenCode (AI agent)` |
-| User Tester | Abt Hermann | `User Tester — Abt Hermann_gpt-6.1-sol-medium_Codex (AI agent)` | `User Tester — Abt Hermann_space-bunny-free-max_OpenCode (AI agent)` |
-| Quality Manager | Wang Xiaofeng | `Quality Manager — Wang Xiaofeng_gpt-6.1-sol-medium_Codex (AI agent)` | `Quality Manager — Wang Xiaofeng_space-bunny-free-max_OpenCode (AI agent)` |
-| Release Manager | Wang Bingshan | `Release Manager — Wang Bingshan_gpt-6.1-sol-medium_Codex (AI agent)` | `Release Manager — Wang Bingshan_space-bunny-free-max_OpenCode (AI agent)` |
-| Controller | Nils Traeger | `Controller — Nils Traeger_gpt-6.1-sol-medium_Codex (AI agent)` | `Controller — Nils Traeger_space-bunny-free-max_OpenCode (AI agent)` |
+| Primary Coordinator | Yi Tang | `Primary Coordinator — Yi Tang_gpt-6.1-sol-low_Codex (AI agent)` | `Primary Coordinator — Yi Tang_space-bunny-free-max_OpenCode (AI agent)` |
+| Product Manager | Yu Wang | `Product Manager — Yu Wang_gpt-6.1-sol-low_Codex (AI agent)` | `Product Manager — Yu Wang_space-bunny-free-max_OpenCode (AI agent)` |
+| System Architect | Feng Guo | `System Architect — Feng Guo_gpt-6.1-sol-low_Codex (AI agent)` | `System Architect — Feng Guo_space-bunny-free-max_OpenCode (AI agent)` |
+| Explorer | Wang Licun | `Explorer — Wang Licun_gpt-6.1-sol-low_Codex (AI agent)` | `Explorer — Wang Licun_space-bunny-free-max_OpenCode (AI agent)` |
+| UI Designer | Wu Yunzhou | `UI Designer — Wu Yunzhou_gpt-6.1-sol-low_Codex (AI agent)` | `UI Designer — Wu Yunzhou_space-bunny-free-max_OpenCode (AI agent)` |
+| Worker | Torsten Maier | `Worker — Torsten Maier_gpt-6.1-sol-low_Codex (AI agent)` | `Worker — Torsten Maier_space-bunny-free-max_OpenCode (AI agent)` |
+| Reviewer | Dennis Windmaier | `Reviewer — Dennis Windmaier_gpt-6.1-sol-low_Codex (AI agent)` | `Reviewer — Dennis Windmaier_space-bunny-free-max_OpenCode (AI agent)` |
+| User Tester | Abt Hermann | `User Tester — Abt Hermann_gpt-6.1-sol-low_Codex (AI agent)` | `User Tester — Abt Hermann_space-bunny-free-max_OpenCode (AI agent)` |
+| Quality Manager | Wang Xiaofeng | `Quality Manager — Wang Xiaofeng_gpt-6.1-sol-low_Codex (AI agent)` | `Quality Manager — Wang Xiaofeng_space-bunny-free-max_OpenCode (AI agent)` |
+| Release Manager | Wang Bingshan | `Release Manager — Wang Bingshan_gpt-6.1-sol-low_Codex (AI agent)` | `Release Manager — Wang Bingshan_space-bunny-free-max_OpenCode (AI agent)` |
+| Controller | Nils Traeger | `Controller — Nils Traeger_gpt-6.1-sol-low_Codex (AI agent)` | `Controller — Nils Traeger_space-bunny-free-max_OpenCode (AI agent)` |
 
 The Codex model tokens are the configured values in `.codex/agents/*.toml`, which are tracked. `.codex/config.toml` also carries `model` and `model_reasoning_effort` but has no `developer_instructions`, so **the eleventh roster role, Primary Coordinator — Yi Tang, has no tracked Codex role definition instructing a label**; its Codex label in the table above derives from the coordinator configuration and is not emitted by a role file. There is no tracked OpenCode role definition in this baseline either, so an OpenCode run's `Model used:` value is self-reported by that run and has no baseline provenance; it is not verifiable from a fresh clone until such a definition is tracked. Neither case proves that a role was natively loaded. A run that cannot observe its own model publishes `model-unconfirmed`, and one that cannot observe its runtime publishes `harness-unconfirmed`.
 
@@ -38,7 +38,7 @@ Before delegation, record the following in the linked issue. The primary owns in
 
 ```text
 Assigned agent: Worker — Torsten Maier_space-bunny-free-max_OpenCode (AI agent)
-Coordinator: Primary Coordinator — Yi Tang_gpt-6.1-sol-medium_Codex (AI agent)
+Coordinator: Primary Coordinator — Yi Tang_gpt-6.1-sol-low_Codex (AI agent)
 Assignment: #<issue> / <bounded assignment ID>
 Work package / CUS / SR: <IDs, or no product scope changes>
 Scope and exclusive files: <outcome and exact paths>
@@ -60,7 +60,7 @@ Prefix each issue or pull request comment with the role/name that produced the o
 
 ```text
 Worker — Torsten Maier_space-bunny-free-max_OpenCode (AI agent) · Implementation completed
-Published by: Primary Coordinator — Yi Tang_gpt-6.1-sol-medium_Codex (AI agent), relaying the Worker's report
+Published by: Primary Coordinator — Yi Tang_gpt-6.1-sol-low_Codex (AI agent), relaying the Worker's report
 Assignment: #<issue> / <assignment ID>
 Runtime agent ID / execution: <actual ID/link, or unavailable>
 Model used: model=<provider/model-id> variant=<token> harness=<Harness>
@@ -83,7 +83,7 @@ Add duplicate detection
 Describe the behavior and paths changed by this contribution.
 
 Implemented-by: Worker — Torsten Maier_space-bunny-free-max_OpenCode (AI agent)
-Integrated-by: Primary Coordinator — Yi Tang_gpt-6.1-sol-medium_Codex (AI agent)
+Integrated-by: Primary Coordinator — Yi Tang_gpt-6.1-sol-low_Codex (AI agent)
 Assignment: #<issue> / <assignment ID>
 Work-package-CUS-SR: <IDs, or no product scope changes>
 Agent-run: <actual ID/link, or unavailable>

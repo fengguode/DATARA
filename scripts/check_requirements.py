@@ -56,6 +56,13 @@ for wid, x in w.items():
         if dep not in w:
             errors.append(f"{wid}: unknown dependency {dep}")
 for kid, x in k.items():
+    # No priority, no start (CODE_OF_CONDUCT.md section 6): a record with no
+    # recorded priority is a defect, not a blank to be filled in later. Nothing
+    # else in this script asserted that a task HAS a priority -- the subtask check
+    # only compares a priority that is already present to its CUS parent -- so
+    # eight top-level P0 tasks carried none and this script still exited 0.
+    if not x.get("priority"):
+        errors.append(f"{kid}: no priority recorded; work must not start without one")
     if x["work_package"] not in w:
         errors.append(f"{kid}: unknown work package")
     if not x["requirement_ids"]:

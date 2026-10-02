@@ -19,8 +19,11 @@ If sources conflict, identify the discrepancy, preserve newer founder changes, a
 - Users select skill combinations and supported models. Never silently replace a provider, model, skill or routine.
 - DATARA's own recommendation model, automatic routines and recommendations belong to P1. Commercial mechanisms and source-to-skill automation are deferred.
 - Preserve user isolation and reproducible provenance throughout the workflow.
+- **Never present a capability to a customer as working unless it is working, and never let the presentation imply more capability than exists.** A mock, stub, placeholder, hard-coded value, screenshot of non-running software or hand-written example output must never be shown as though the product produced it. Separately, copy, imagery, navigation or workflow must not lead a reasonable reader to believe a feature exists or works when it does not; the test is what the reader would conclude, not what the words literally say. This applies to every customer-facing and public statement, including demos, documentation and agent-authored text.
 
 The [CUS and requirement records](docs/management/product-requirements.md) govern scope. Selected direction, approved contract, implementation and verified behavior are distinct.
+
+The feature-illusion rule above is maintained at [the project wiki](https://github.com/fengguode/DATARA/wiki/Feature-Illusion-Rule), which is its source of truth for customers and the public. This section mirrors it. If the two disagree, the wiki governs and this copy is the defect. That precedence covers the wording of the rule only: it does not govern product scope, requirements, contracts, traceability, evidence or process, which this Code of Conduct and the [requirement records](docs/management/product-requirements.md) continue to govern.
 
 ## 3. Communication and conduct
 

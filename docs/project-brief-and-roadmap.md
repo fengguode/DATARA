@@ -8,6 +8,12 @@ Datara — A universe of expertise. Working for you.
 
 We are building a persistent personal data home that turns supported data into useful outcomes through reusable expertise. Users choose their own AI model, retain a history of results, and connect those results to other applications. The long-term goal is to make Datara a valuable part of everyday data usage across multiple domains.
 
+**How this goal must be pursued.** A long-term goal is not a licence to imply present capability. Datara never presents a capability to a customer as working unless it is working, and never lets a presentation imply more capability than exists. No mock, stub, placeholder, hard-coded value, sample output or screenshot of non-running software may be shown as a product result, and no wording, imagery or workflow may lead a reasonable reader to believe a feature exists or works when it does not.
+
+This is a constraint on the vision, not only on the release. DATARA's value proposition is that a number is traceable to evidence and that a user knows what produced it; a product that oversells its own capability contradicts the property it exists to provide, and the contradiction is worst in exactly the place a user is asked to trust it. The rule therefore applies most strictly to claims about data handling, provenance and analysis, and it applies from the first public page onward rather than after launch.
+
+The rule is maintained at [the project wiki](https://github.com/fengguode/DATARA/wiki/Feature-Illusion-Rule), which is its source of truth. If this brief and the wiki disagree, the wiki governs and this brief is the defect. That precedence covers the wording of the rule only. This brief remains authoritative for product scope, and the [requirement records](management/product-requirements.md) remain authoritative for what is required: the wiki cannot widen the roadmap, and where a roadmap stage and this rule appear to conflict the stage governs.
+
 ### First product
 
 The first release serves athletes who manually upload supported Garmin .fit files. It provides validated training history, a small Datara-created skill library, manual analysis using personal model API access, a predefined dashboard, and a read-only output API.

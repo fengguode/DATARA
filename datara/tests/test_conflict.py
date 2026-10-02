@@ -28,9 +28,11 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 from django.contrib.auth.models import User
-from django.test import TestCase
+from django.db import IntegrityError, transaction
+from django.test import SimpleTestCase, TestCase
 
 from datara import dedup
+from datara.canonical import SECONDS_UNIT, require_elapsed_duration_ms
 from datara.dedup import (
     Disposition,
     LogicalTuple,
@@ -45,6 +47,7 @@ from datara.dedup import (
     history,
     ingest,
     open_conflicts,
+    ordering_comparisons,
     outcome_text,
     resolve_uncertain,
     tolerance_parameters,
@@ -404,7 +407,7 @@ class ConflictTestCase(TestCase):
             """The rejected option, reproduced only to prove it is detectable."""
             window = 5  # seconds -- invented here on purpose, never in the product
             for session in Session.objects.for_owner(owner_id):
-                if canonical_sport_code(session.sport) != candidate.sport_code:
+                if canonical_sport_code(session.sport, origin="test.fuzzy_match") != candidate.sport_code:
                     continue
                 drift = abs(int(session.session_start_utc.timestamp()) - candidate.start_epoch_seconds)
                 if drift <= window:
@@ -474,7 +477,7 @@ class ConflictTestCase(TestCase):
         with self.assertRaises(TypeError):
             base_facts(elapsed_duration_ms=3_723_000.0)  # type: ignore[arg-type]
         with self.assertRaises(ValueError):
-            canonical_sport_code(99)
+            canonical_sport_code(99, origin="test")
 
     def test_sub_sport_is_not_a_tuple_component(self) -> None:
         """Section 6: a re-export changing only sub-sport still conflicts.
@@ -618,7 +621,7 @@ class ConflictTestCase(TestCase):
 
         included = list(history(self.owner))
         self.assertEqual(len(included), 1)
-        total_ms = sum(item.elapsed_duration_seconds for item in included)
+        total_ms = sum(item.elapsed_duration_ms for item in included)
         self.assertEqual(
             total_ms, 3_723_000, "a quarantined candidate was counted toward volume"
         )
@@ -702,3 +705,208 @@ class ConflictTestCase(TestCase):
                 name.startswith("latest_") or name.startswith("current_"),
                 f"dedup exposes a latest-value pointer: {name}",
             )
+
+
+# ---------------------------------------------------------------------------
+# B3: one column, one unit, and a comparison that cannot silently miss.
+#
+# The harm the review identified is a *silent duplicate accept*, not a false
+# conflict: ``Session.elapsed_duration_seconds`` was written in seconds by TK18
+# and in milliseconds by TK15, and ``find_exact_tuple_matches`` compared the
+# seconds column against a millisecond candidate. A 30-minute run was stored as
+# 1800 by one path and 1800000 by the other, so the exact comparison reported two
+# different activities and the same activity was accepted again.
+# ``PositiveBigIntegerField`` accepts both values, so nothing objected.
+# ---------------------------------------------------------------------------
+
+
+class CanonicalUnitTests(ConflictTestCase):
+    """The column, its name and its two write sites now agree."""
+
+    def test_the_persisted_duration_is_milliseconds(self) -> None:
+        """The write site stores the canonical unit under a name that states it.
+
+        Mutation that fails: write the seconds value into ``elapsed_duration_ms``
+        -- this assertion fails.
+        """
+
+        self.submit(self.owner, 1)
+        session = Session.objects.for_owner(self.owner.pk).get()
+        self.assertEqual(session.elapsed_duration_ms, 3_723_000)
+
+    def test_the_same_activity_is_never_accepted_twice(self) -> None:
+        """The regression itself, exercised through the precedence table.
+
+        With one column in one unit, a second submission carrying different bytes
+        but the same logical activity reaches P3 and is quarantined. Before the
+        fix the comparison compared 3723 against 3_723_000, found no match, and
+        P5 accepted a second *published* copy of the same run.
+
+        P3 keeps the candidate as a valid original in quarantined scope, so a
+        ``Session`` row exists for it by design -- that is the ratified P3/P4
+        deviation and this test does not touch it. What must not exist is a
+        second *published* activity, and the candidate must not count toward
+        history.
+
+        Mutation that fails: store seconds in ``elapsed_duration_ms`` -- the
+        second submission is then ACCEPTED under P5, two activities are PUBLISHED
+        and history counts two.
+        """
+
+        first = self.submit(self.owner, 1)
+        self.assertIs(first.disposition, Disposition.ACCEPTED)
+        self.assertEqual(first.rule, "P5")
+
+        again = self.submit(self.owner, 2)
+        self.assertIs(again.disposition, Disposition.QUARANTINED_CONFLICT)
+        self.assertEqual(again.rule, "P3")
+        self.assertEqual(
+            Activity.objects.for_owner(self.owner.pk)
+            .filter(disposition=Activity.PUBLISHED)
+            .count(),
+            1,
+            "the same activity was published a second time",
+        )
+        self.assertEqual(len(list(history(self.owner))), 1)
+        self.assertFalse(again.counts_toward_volume())
+
+    def test_the_write_site_refuses_a_unit_it_was_not_declared_with(self) -> None:
+        """The unit guard is code at this write site too, not only on TK18's.
+
+        Mutation that fails: pass ``unit=SECONDS_UNIT``, or drop the
+        ``require_elapsed_duration_ms`` call -- nothing is raised.
+        """
+
+        with self.assertRaises(TypeError) as caught:
+            require_elapsed_duration_ms(3_723_000, origin="test", unit=SECONDS_UNIT)
+        self.assertIn("elapsed_duration_ms_from_seconds", str(caught.exception))
+
+    def test_the_facts_refuse_the_representations_that_caused_the_defect(self) -> None:
+        """`SessionFacts` declares the unit, so a float or an out-of-domain count
+        never reaches the column.
+
+        Note what is *not* asserted here: ``base_facts(elapsed_duration_ms=3723)``
+        is accepted, because 3723 ms is a legitimate 3.7 second duration. A bare
+        integer carries no unit, so no check can tell 3723 intended as
+        milliseconds from 3723 intended as seconds -- claiming otherwise would be
+        a fake control. What is enforced is the declared unit at the write site
+        (the previous test), the type, and the domain.
+
+        Mutation that fails: drop the ``require_elapsed_duration_ms`` call from
+        ``SessionFacts.__post_init__`` -- neither assertion below raises.
+        """
+
+        with self.assertRaises(TypeError):
+            base_facts(elapsed_duration_ms=3_723_000.0)  # type: ignore[arg-type]
+        with self.assertRaises(TypeError):
+            base_facts(elapsed_duration_ms="3723000")  # type: ignore[arg-type]
+        with self.assertRaises(ValueError):
+            base_facts(elapsed_duration_ms=0)
+        with self.assertRaises(ValueError):
+            base_facts(elapsed_duration_ms=86_400_001)
+        # A legal value in the canonical unit is accepted, so the guard is not
+        # simply refusing everything.
+        self.assertEqual(base_facts().elapsed_duration_ms, 3_723_000)
+
+    def test_the_database_refuses_a_seconds_count_in_the_column(self) -> None:
+        """The schema guard, so a future writer bypassing the helpers is caught.
+
+        Mutation that fails: drop the ``CheckConstraint`` on ``Session`` -- the
+        insert below succeeds and no ``IntegrityError`` is raised.
+        """
+
+        activity = self.submit(self.owner, 1).activity
+        with self.assertRaises(IntegrityError):
+            with transaction.atomic():
+                Session.objects.create(
+                    owner_id=self.owner.pk,
+                    activity=activity,
+                    session_index=1,
+                    session_count=1,
+                    sport="running",
+                    session_start_utc=BASE_START,
+                    elapsed_duration_ms=3723,  # seconds, not milliseconds
+                )
+
+
+class ToleranceOperatorTests(SimpleTestCase):
+    """The comparison operator is checked, not only the parameter name."""
+
+    def test_the_name_check_says_it_is_only_a_name_check(self) -> None:
+        """It is a token check and the code now says so.
+
+        Mutation that fails: restore the old claim in the docstring -- the
+        ``assertIn`` below is what fails, which is how the overstatement about
+        ``delta_ms`` / ``precision_s`` / ``bucket_s`` stops being invisible.
+        """
+
+        self.assertNotIn("delta_ms", dedup.TOLERANCE_PARAMETER_TOKENS)
+        self.assertIn("name", (dedup.tolerance_parameters.__doc__ or "").lower())
+        self.assertEqual(
+            dedup.ordering_comparisons(),
+            {},
+            "the real module source must contain no ordering comparison of a "
+            "tuple component",
+        )
+
+    def test_an_unnamed_tolerance_operator_is_detected(self) -> None:
+        """The check the name check cannot do.
+
+        ``delta_ms`` carries no tolerance token, and ``abs(a - b) <= 5`` names no
+        parameter at all. Both are refused, because both compare a value that
+        must match exactly with an operator other than ``==`` / ``!=``.
+
+        Mutation that fails: change ``ordering_comparisons`` to look only at
+        parameter names -- all three planted sources report zero findings.
+        """
+
+        planted = {
+            "unnamed_window": (
+                "def match(a, b, delta_ms):\n"
+                "    return abs(a - b) <= delta_ms\n"
+            ),
+            "ordering_on_a_component": (
+                "def near(session, candidate):\n"
+                "    return session.elapsed_duration_ms <= candidate.elapsed_duration_ms\n"
+            ),
+            "bucketing": (
+                "def bucket(duration):\n"
+                "    return round(duration / 1000)\n"
+            ),
+        }
+        for label, source in planted.items():
+            with self.subTest(planted=label):
+                self.assertTrue(
+                    dedup.ordering_comparisons(source),
+                    f"{label} is a tolerance and was not detected",
+                )
+
+    def test_exact_equality_is_not_flagged(self) -> None:
+        """The check is not vacuous in the other direction.
+
+        Mutation that fails: flag every comparison -- this fails.
+        """
+
+        exact = (
+            "def same(session, candidate):\n"
+            "    return session.elapsed_duration_ms == candidate.elapsed_duration_ms\n"
+        )
+        self.assertEqual(dedup.ordering_comparisons(exact), {})
+
+    def test_assert_no_tolerance_parameters_runs_the_operator_check(self) -> None:
+        """Wiring: the two checks are not independent decorations.
+
+        Mutation that fails: drop the ``ordering_comparisons()`` call from
+        ``assert_no_tolerance_parameters`` -- the poisoned source below then
+        raises nothing.
+        """
+
+        original = dedup.ordering_comparisons
+        dedup.ordering_comparisons = lambda *a, **k: {"line 1: x": ["planted"]}
+        try:
+            with self.assertRaises(AssertionError) as caught:
+                dedup.assert_no_tolerance_parameters()
+            self.assertIn("non-exact comparison", str(caught.exception))
+        finally:
+            dedup.ordering_comparisons = original
+        dedup.assert_no_tolerance_parameters()

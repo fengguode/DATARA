@@ -145,6 +145,10 @@ class OwnerScopedStore:
             .order_by("rule_set_version", "eligibility_id")
         )
 
+    def atomic(self) -> Any:
+        """Group store writes, nesting safely in a caller's transaction."""
+        return transaction.atomic()
+
     # -- writes -------------------------------------------------------------
 
     def record_source_object(

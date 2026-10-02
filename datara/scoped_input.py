@@ -1582,44 +1582,60 @@ class MilestoneAInputStore:
         """Persist a version by creating one row plus its provenance rows.
 
         Idempotent by content: an identical version is recognised by its digest
-        and the existing row is returned with ``created=False``. That is what
+        and its complete lineage is checked before returning ``created=False``. That is what
         proves a re-version never mutates a prior version -- the second call does
         not write at all, and there is no code path that could write a second row
-        for the same content. A *different* version gets its own row and leaves
+        for the same content in a serial retry. Concurrent identity exclusion is
+        a separate schema contract. A *different* version gets its own row and leaves
         the earlier one untouched, because nothing here updates.
         """
 
         from datara import models as m
 
         self.schema_binding()
-        owner_id = self.owner_id
-        existing = (
-            m.Snapshot.objects.for_owner(owner_id)
-            .filter(snapshot_digest=version.input_digest)
-            .order_by("snapshot_id")
-            .first()
-        )
-        if existing is not None:
-            return VersionedInputHandle(
-                version_ref=str(existing.snapshot_id),
-                input_digest=existing.snapshot_digest,
-                record_count=existing.included_count,
-                excluded_count=existing.excluded_count,
-                created=False,
+        atomic = getattr(self._store, "atomic", None)
+        if not callable(atomic):
+            raise ScopedInputError("the persistence store must supply an atomic write context")
+        with atomic():
+            owner_id = self.owner_id
+            existing = (
+                m.Snapshot.objects.for_owner(owner_id)
+                .filter(snapshot_digest=version.input_digest)
+                .order_by("snapshot_id")
+                .first()
             )
+            if existing is not None:
+                stored = self.get_version(existing.snapshot_id)
+                if (
+                    stored.canonical_payload != version.canonical_payload
+                    or existing.included_count != version.included_count
+                    or existing.excluded_count != version.excluded_count
+                ):
+                    raise ScopedInputError(
+                        "the existing version does not match the requested immutable version"
+                    )
+                # Refuse historical partial writes; never repair immutable history.
+                self.provenance_rows(existing.snapshot_id)
+                return VersionedInputHandle(
+                    version_ref=str(existing.snapshot_id),
+                    input_digest=existing.snapshot_digest,
+                    record_count=existing.included_count,
+                    excluded_count=existing.excluded_count,
+                    created=False,
+                )
 
-        activity_ids = self.resolve_activity_ids(
-            tuple(record.canonical_identity for record in version.records)
-        )
-        snapshot = self._store.record_snapshot(version, activity_ids)
-        self._write_provenance(snapshot, version)
-        return VersionedInputHandle(
-            version_ref=str(snapshot.snapshot_id),
-            input_digest=snapshot.snapshot_digest,
-            record_count=snapshot.included_count,
-            excluded_count=snapshot.excluded_count,
-            created=True,
-        )
+            activity_ids = self.resolve_activity_ids(
+                tuple(record.canonical_identity for record in version.records)
+            )
+            snapshot = self._store.record_snapshot(version, activity_ids)
+            self._write_provenance(snapshot, version)
+            return VersionedInputHandle(
+                version_ref=str(snapshot.snapshot_id),
+                input_digest=snapshot.snapshot_digest,
+                record_count=snapshot.included_count,
+                excluded_count=snapshot.excluded_count,
+                created=True,
+            )
 
     def resolve_activity_ids(self, canonical_identities: Sequence[str]) -> tuple[Any, ...]:
         """Resolve canonical identities to this owner's stored records.
@@ -1770,7 +1786,7 @@ class MilestoneAInputStore:
 
         snapshot = self._store.get_snapshot(version_ref)
         version = self.get_version(version_ref)
-        rows = _evidence_rows_for_snapshot(self._store, snapshot)
+        rows = _evidence_rows_for_snapshot(self._store, snapshot, include_kind=True)
         stored_paths = {str(row["field_path"]) for row in rows}
         expected = set(version.all_field_paths())
         missing = sorted(expected - stored_paths)
@@ -1794,7 +1810,37 @@ class MilestoneAInputStore:
                 "present; a reference that does not carry the value it references is not "
                 "reconstructible"
             )
-        return tuple(rows)
+        from datara import models as m
+
+        activity_refs = dict(
+            zip(
+                version.included_digests,
+                (str(value) for value in self.resolve_activity_ids(version.included_digests)),
+            )
+        )
+        source_refs = self._source_object_refs(version)
+        by_path: dict[str, list[dict[str, Any]]] = {}
+        for row in rows:
+            by_path.setdefault(str(row["field_path"]), []).append(row)
+        invalid = []
+        for entry in version.ledger.entries:
+            matches = by_path[entry.field_path]
+            if len(matches) != 1:
+                invalid.append(entry.field_path)
+                continue
+            row = matches[0]
+            if (
+                row["kind"] != m.Evidence.KIND_SOURCE_RECORD
+                or row["activity_ref"] != activity_refs[entry.canonical_identity]
+                or row["source_object_ref"] != source_refs[entry.canonical_identity]
+                or row["value_canonical"] != entry.value_canonical
+            ):
+                invalid.append(entry.field_path)
+        if invalid:
+            raise ProvenanceError(
+                f"provenance row(s) {sorted(invalid)} do not match the complete expected lineage"
+            )
+        return tuple({key: value for key, value in row.items() if key != "kind"} for row in rows)
 
     # -- introspection used by the tests -------------------------------------
 
@@ -1836,13 +1882,16 @@ class MilestoneAInputStore:
         return sorted(set(found))
 
 
-def _evidence_rows_for_snapshot(store: Any, snapshot: Any) -> list[dict[str, Any]]:
+def _evidence_rows_for_snapshot(
+    store: Any, snapshot: Any, *, include_kind: bool = False
+) -> list[dict[str, Any]]:
     """Owner-scoped read of the evidence rows of one snapshot."""
 
     from datara import models as m
 
     return [
         {
+            **({"kind": row.kind} if include_kind else {}),
             "field_path": row.field_path,
             "activity_ref": row.activity_ref,
             "source_object_ref": row.source_object_ref,

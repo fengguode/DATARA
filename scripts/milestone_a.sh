@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 # DATARA Milestone A -- the single pinned install / migrate / run / test command.
 #
+# RUN IT WITH:  bash scripts/milestone_a.sh
+# This is a POSIX shell script, not a Python program. `python scripts/milestone_a.sh`
+# (as written in #305) cannot work and is not supported; the file carries mode
+# 100755 so `./scripts/milestone_a.sh` and `bash scripts/milestone_a.sh` both run.
+#
 # Authorised by the founder's G0 replacement, G0 criterion 5: "Pinned
 # install/run/test commands are added to Milestone A scope and must exist before
 # any Milestone A result is offered as evidence."
@@ -90,6 +95,20 @@ echo "== installing pinned dependencies from $LOCK_FILE"
 "$PY" -m pip install --disable-pip-version-check --quiet -r "$LOCK_FILE"
 
 # --------------------------------------------------------------------------
+# 1b. Refuse an inherited optimisation level, do not silently inherit one.
+#     `PYTHONOPTIMIZE=1` (or `python -O`) strips every `assert` statement from the
+#     code being tested. It is silently inherited from the caller's environment,
+#     and a stripped run of this unit is not a run of this unit. The pinned
+#     command therefore clears it and says so.
+# --------------------------------------------------------------------------
+if [ -n "${PYTHONOPTIMIZE:-}" ]; then
+  echo "milestone_a_opt_level    : clearing inherited PYTHONOPTIMIZE='${PYTHONOPTIMIZE}'"
+fi
+# Unconditionally, so an exported-but-empty value cannot re-assert itself.
+unset PYTHONOPTIMIZE
+echo "milestone_a_opt_level    : not optimised (python -O not in effect)"
+
+# --------------------------------------------------------------------------
 # 2. Environment identity. Printed before any test result, by design.
 # --------------------------------------------------------------------------
 LOCK_SHA="$("$PY" -X utf8 - "$LOCK_FILE" <<'PY'
@@ -110,10 +129,26 @@ echo "python_version            : $("$PY" -c 'import platform; print(platform.py
 echo "python_implementation     : $("$PY" -c 'import platform; print(platform.python_implementation())')"
 echo "platform                  : $("$PY" -c 'import platform; print(platform.platform())')"
 echo "django_version            : $("$PY" -c 'import django; print(django.get_version())')"
+echo "pinned_fit_decoder        : $("$PY" -c '
+import importlib
+try:
+    import garmin_fit_sdk
+except Exception as exc:
+    print(f"ABSENT ({exc.__class__.__name__})")
+else:
+    from garmin_fit_sdk import Profile
+    v = dict(Profile["version"])
+    print("garmin-fit-sdk {}.{}.{} {}".format(v["major"], v["minor"], v["patch"], v["type"]))
+')"
 echo "pinned_dependency_lock    : $LOCK_FILE"
 echo "pinned_dependency_lock_sha256: $LOCK_SHA"
 echo "resolved_dependencies     :"
-"$PY" -m pip freeze --disable-pip-version-check 2>/dev/null | grep -Ei '^(asgiref|django|psycopg|psycopg-binary|sqlparse|tzdata)==' | sed 's/^/  - /'
+# The evidence list must name every distribution in the lock file. `garmin_fit_sdk`
+# is included because it is the pinned FIT decoder; leaving it out let an
+# environment without it look identical to a resolved one.
+"$PY" -m pip freeze --disable-pip-version-check 2>/dev/null \
+  | grep -Ei '^(asgiref|django|garmin-fit-sdk|psycopg|psycopg-binary|sqlparse|tzdata)==' \
+  | sed 's/^/  - /'
 echo "commit_sha                : $COMMIT_SHA"
 echo "commit_dirty_owned_paths  : ${COMMIT_DIRTY:-none}"
 
@@ -209,6 +244,15 @@ echo "== migrate (--run-syncdb: this unit has no migrations directory)"
 
 echo "== test datara.tests"
 set +e
+# Belt and braces for 1b: if the interpreter is nonetheless optimised, every
+# `assert` in the unit is gone. Refuse rather than report a stripped run.
+if [ "$("$PY" -c 'import sys; print(int(not __debug__))')" != "0" ]; then
+  echo "MILESTONE_A_RESULT=ERROR" >&2
+  echo "the interpreter is running with asserts disabled (-O). This unit's" >&2
+  echo "contract checks are executable code, not asserts, but a stripped run is" >&2
+  echo "not the pinned command and is not reported as one." >&2
+  exit 1
+fi
 "$PY" -X utf8 -m django test datara.tests --verbosity 2
 TEST_EXIT=$?
 set -e

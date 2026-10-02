@@ -93,6 +93,8 @@ ENUM, UINT8, UINT16, UINT32, SINT32 = 0x00, 0x02, 0x04, 0x06, 0x05
 #: raw 1142497800 == 2026-03-15T08:30:00Z.
 FIT_TIME_BASE = 1142497800
 EXPECTED_START_UTC = "2026-03-15T08:30:00Z"
+#: The same instant as whole seconds since the Unix epoch, as the canonical tuple carries it.
+EXPECTED_START_EPOCH_SECONDS = 1773563400
 INVALID_UINT8 = 0xFF
 INVALID_UINT16 = 0xFFFF
 INVALID_UINT32 = 0xFFFFFFFF
@@ -951,7 +953,20 @@ class DuplicateAndConflictTest(unittest.TestCase):
         assert record is not None
         self.assertEqual(record.owner_key, "o")
         self.assertNotEqual(record.conflicting_digest, record.candidate_digest)
-        self.assertEqual(len(record.logical_tuple), 3)
+        # The logical tuple is the canonical B3 type: an identity-independent
+        # value object of exactly three integers, in milliseconds. Asserting the
+        # components rather than len() is stronger, and it is what distinguishes a
+        # genuine quarantine from an accidental mismatch.
+        identity = record.logical_tuple
+        self.assertEqual(
+            (
+                identity.sport_code,
+                identity.start_epoch_seconds,
+                identity.elapsed_duration_ms,
+            ),
+            (1, EXPECTED_START_EPOCH_SECONDS, 1800000),
+            'the quarantined candidate must carry the exact canonical tuple',
+        )
 
     def test_conflict_is_not_resolved_silently(self):
         # Mutation: auto-resolving to 'accepted' would fail this.

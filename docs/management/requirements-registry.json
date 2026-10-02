@@ -1335,10 +1335,13 @@
         "FEAT01"
       ],
       "priority": "P0",
-      "statement": "For each submitted file, the system shall present its accepted or rejected disposition as text associated with that file and include the applicable approved rejection reason.",
+      "statement": "For each submitted file, the system shall present exactly one of the five approved per-file dispositions as text associated with that file — accepted, rejected, duplicate_of_existing, duplicate_of_quarantined or quarantined_conflict — and shall include the applicable approved reason code for every disposition other than accepted.",
       "acceptance_criteria": [
-        "Given each approved accepted/rejected fixture, the interface identifies file and textual disposition; oracle: rendered result matches TC21 and is understandable without color/icon alone.",
-        "Given a rejected fixture, displayed reason matches the approved contract reason; oracle: compare displayed reason/code to the approved matrix."
+        "Given each approved fixture for every one of the five dispositions, the interface identifies the file and its disposition as text; oracle: rendered result matches TC21 and is understandable without colour or icon alone.",
+        "Given a rejected fixture, the displayed reason matches the approved contract reason; oracle: compare the displayed reason or code to the approved matrix.",
+        "Given a duplicate_of_existing or duplicate_of_quarantined fixture, the text names the referenced original or quarantine and does not present the file as a newly imported activity; oracle: compare against the approved duplicate-reference wording in duplicate-conflict-options.md section 9.",
+        "Given a quarantined_conflict fixture, the text states that an unresolved candidate exists, identifies both affected records, and does not imply that a merge, overwrite or resolution has occurred; oracle: compare against the approved conflict wording in duplicate-conflict-options.md.",
+        "Given any fixture, no disposition is reported that is not one of the five; oracle: the set of displayed dispositions is a subset of the approved vocabulary."
       ],
       "source": [
         "docs/management/p0-ui-requirements-review.md"

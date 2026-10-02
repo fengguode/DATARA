@@ -8,7 +8,7 @@ must separately establish owner-scoped retrieval and persisted provenance.
 from __future__ import annotations
 
 from collections import Counter
-from dataclasses import dataclass
+from dataclasses import dataclass, fields, is_dataclass
 from datetime import datetime, timedelta, timezone
 from fractions import Fraction
 import hashlib
@@ -16,11 +16,11 @@ import json
 import re
 
 from datara import NORMALIZER_VERSION
-from datara.canonical import canonical_sport_code, require_elapsed_duration_ms
+from datara.canonical import CANONICAL_DURATION_UNIT, canonical_sport_code, require_elapsed_duration_ms
 from datara.normalization import QualityWarning, canonical_json, sha256_digest, _validate_policy
 from datara.provenance import build_ledger, VALUE_CLASS_SCOPE_MEMBER
 from datara.scoped_input import (
-    EXCLUSION_REASON_SET, HEADER_FIELDS, MILESTONE_A_FIELD_SOURCES, SCOPED_INPUT_CONTRACT_VERSION,
+    HEADER_FIELDS, MILESTONE_A_FIELD_SOURCES, SCOPED_INPUT_CONTRACT_VERSION,
     SCOPED_INPUT_VERSION, ScopedInputVersion, assert_no_prohibited_content,
     require_declared,
 )
@@ -111,7 +111,12 @@ class RecordedMetricInput:
     end_epoch_seconds: int
     members: tuple[RecordedMember, ...]
     exclusions: tuple[RecordedExclusion, ...]
+    # Internal validation carrier only; optional content is not exported as operands.
+    source_canonical_content: bytes
     adapter_version: str = ADAPTER_VERSION
+
+    def __post_init__(self) -> None:
+        _input_required(self)
 
 
 @dataclass(frozen=True)
@@ -173,6 +178,10 @@ class PreparedSummary:
     unmet_reasons: tuple[str, ...]
     groups: tuple[SportSummary, ...]
     canonical_content: bytes
+    source: RecordedMetricInput
+
+    def __post_init__(self) -> None:
+        _result_required(self)
 
 
 @dataclass(frozen=True)
@@ -188,6 +197,10 @@ class PreparedTrend:
     percentage: ExactValue
     classification: str | None
     canonical_content: bytes
+    source: RecordedMetricInput
+
+    def __post_init__(self) -> None:
+        _result_required(self)
 
 
 def _integer(text: str, *, positive: bool = False) -> int:
@@ -248,18 +261,16 @@ def prepare_recorded_input(version: ScopedInputVersion) -> RecordedMetricInput:
     original scoped input digest remains the binding, including optional data.
     """
     try:
-        return _prepare_recorded_input(version)
-    except RecordedInputRefusal:
-        raise
-    except (ValueError, TypeError, KeyError, AttributeError, OverflowError) as exc:
-        raise RecordedInputRefusal("invalid_scoped_input") from exc
-    except Exception as exc:
+        return RecordedMetricInput(*_prepare_recorded_input(version))
+    except RecordedInputRefusal as exc:
+        raise RecordedInputRefusal(exc.reason_code) from None
+    except Exception:
         # Existing scoped/provenance contract exceptions do not inherit ValueError.
         # Do not include untrusted source values or diagnostics in the safe reason.
-        raise RecordedInputRefusal("invalid_scoped_input") from exc
+        raise RecordedInputRefusal("invalid_scoped_input") from None
 
 
-def _prepare_recorded_input(version: ScopedInputVersion) -> RecordedMetricInput:
+def _prepare_recorded_input(version: ScopedInputVersion) -> tuple:
     if type(version) is not ScopedInputVersion:
         raise RecordedInputRefusal("unsupported_input_type")
     if (version.contract_version != SCOPED_INPUT_CONTRACT_VERSION
@@ -296,7 +307,6 @@ def _prepare_recorded_input(version: ScopedInputVersion) -> RecordedMetricInput:
     if _utc(scope.start_epoch_seconds) != scope.start_utc or _utc(scope.end_epoch_seconds) != scope.end_utc:
         raise RecordedInputRefusal("noncanonical_scope_utc")
     members = []
-    logical_identities = set()
     for record in reconstructed.records:
         if (record.preparation_version != scope.preparation_version
                 or record.mapping_reference != scope.mapping_reference
@@ -351,12 +361,8 @@ def _prepare_recorded_input(version: ScopedInputVersion) -> RecordedMetricInput:
             raise RecordedInputRefusal("unsupported_sport")
         start = _integer(start_field.value_canonical)
         elapsed = _integer(elapsed_field.value_canonical, positive=True)
-        require_elapsed_duration_ms(elapsed, origin="recorded metric source")
+        require_elapsed_duration_ms(elapsed, origin="recorded metric source", unit=CANONICAL_DURATION_UNIT)
         identity = record.logical_tuple
-        logical_key = (identity.sport_code, identity.start_epoch_seconds, identity.elapsed_duration_ms)
-        if logical_key in logical_identities:
-            raise RecordedInputRefusal("ambiguous_logical_identity")
-        logical_identities.add(logical_key)
         if (canonical_sport_code(sport, origin="recorded metric source") != identity.sport_code
                 or start != identity.start_epoch_seconds or elapsed != identity.elapsed_duration_ms
                 or not scope.contains_start(start) or not scope.selects_sport(identity.sport_code)
@@ -371,11 +377,12 @@ def _prepare_recorded_input(version: ScopedInputVersion) -> RecordedMetricInput:
         members.append(RecordedMember(record.canonical_identity, record.source_digest,
                                       start, sport, elapsed, operands))
     exclusions = Counter((e.canonical_identity, e.reason_code) for e in reconstructed.exclusions)
-    return RecordedMetricInput(version.input_digest, _codec(_portable_scope(scope.as_record())),
+    return (version.input_digest, _codec(_portable_scope(scope.as_record())),
         scope.start_epoch_seconds, scope.end_epoch_seconds,
         tuple(sorted(members, key=lambda m: (m.start_epoch_seconds, m.normalization_digest))),
         tuple(RecordedExclusion(identity, reason, count)
-              for (identity, reason), count in sorted(exclusions.items())))
+              for (identity, reason), count in sorted(exclusions.items())),
+        version.canonical_payload.encode("utf-8"))
 
 
 def _portable_scope(scope: dict) -> dict:
@@ -384,66 +391,66 @@ def _portable_scope(scope: dict) -> dict:
     return result
 
 
+def _strict_equal(actual, expected) -> bool:
+    """Equality that does not treat bool/int or mutable/immutable containers alike."""
+    if type(actual) is not type(expected):
+        return False
+    if is_dataclass(expected):
+        return all(_strict_equal(getattr(actual, f.name), getattr(expected, f.name))
+                   for f in fields(expected))
+    if isinstance(expected, tuple):
+        return len(actual) == len(expected) and all(_strict_equal(a, b) for a, b in zip(actual, expected))
+    return actual == expected
+
+
 def _input_required(data: RecordedMetricInput) -> None:
+    """Replay the supported source validation and compare the exact projection.
+
+    Ordinary construction and dataclass replacement have the same source binding
+    checks as preparation. This is content integrity, not database authorization.
+    Future negative checks should replace only the digest, a member, an operand,
+    source bytes or scope, and attempt a minimal fabricated source envelope.
+    Each must refuse; distinct canonical members with equal logical tuples remain.
+    """
     try:
-        _validate_metric_input(data)
-    except RecordedInputRefusal:
-        raise
-    except (ValueError, TypeError, KeyError, AttributeError, OverflowError) as exc:
-        raise RecordedInputRefusal("incomplete_metric_input") from exc
+        if type(data) is not RecordedMetricInput or data.adapter_version != ADAPTER_VERSION:
+            raise RecordedInputRefusal("unsupported_metric_input")
+        if type(data.source_canonical_content) is not bytes:
+            raise RecordedInputRefusal("source_content_missing")
+        version = ScopedInputVersion.from_canonical_payload(data.source_canonical_content.decode("utf-8"))
+        expected = _prepare_recorded_input(version) + (ADAPTER_VERSION,)
+        actual = tuple(getattr(data, f.name) for f in fields(RecordedMetricInput))
+        if not _strict_equal(actual, expected):
+            raise RecordedInputRefusal("source_projection_mismatch")
+    except RecordedInputRefusal as exc:
+        raise RecordedInputRefusal(exc.reason_code) from None
+    except Exception:
+        raise RecordedInputRefusal("invalid_metric_input") from None
 
 
-def _validate_metric_input(data: RecordedMetricInput) -> None:
-    if type(data) is not RecordedMetricInput or data.adapter_version != ADAPTER_VERSION:
-        raise RecordedInputRefusal("unsupported_metric_input")
-    if (type(data.members) is not tuple or type(data.exclusions) is not tuple
-            or type(data.selected_scope_content) is not bytes
-            or type(data.start_epoch_seconds) is not int or type(data.end_epoch_seconds) is not int
-            or data.start_epoch_seconds < 0 or data.end_epoch_seconds <= data.start_epoch_seconds
-            or not re.fullmatch(r"sha256:[0-9a-f]{64}", data.input_content_digest)):
-        raise RecordedInputRefusal("incomplete_metric_input")
-    scope = json.loads(data.selected_scope_content)
-    if (_codec(scope) != data.selected_scope_content
-            or scope.get("start_utc") != _utc(data.start_epoch_seconds)
-            or scope.get("end_utc") != _utc(data.end_epoch_seconds)):
-        raise RecordedInputRefusal("metric_scope_mismatch")
-    seen = set()
-    for member in data.members:
-        if (type(member) is not RecordedMember or type(member.operands) is not tuple
-                or member.normalization_digest in seen or member.sport not in ("running", "cycling")
-                or type(member.start_epoch_seconds) is not int or type(member.elapsed_ms) is not int
-                or member.elapsed_ms <= 0
-                or not data.start_epoch_seconds <= member.start_epoch_seconds < data.end_epoch_seconds):
-            raise RecordedInputRefusal("invalid_metric_member")
-        seen.add(member.normalization_digest)
-        for digest in (member.normalization_digest, member.source_digest):
-            if not isinstance(digest, str) or not re.fullmatch(r"sha256:[0-9a-f]{64}", digest):
-                raise RecordedInputRefusal("invalid_metric_identity")
-        expected = {"sport": member.sport, "start_epoch_seconds": str(member.start_epoch_seconds),
-                    "elapsed_duration_ms": str(member.elapsed_ms)}
-        if len(member.operands) != len(expected):
-            raise RecordedInputRefusal("incomplete_metric_operands")
-        for operand in member.operands:
-            if type(operand) is not SourceOperand:
-                raise RecordedInputRefusal("invalid_metric_operand")
-            name = operand.source_field_path.rsplit(".", 1)[-1]
-            if (name not in expected or operand.value != expected.pop(name)
-                    or operand.source_field_path != f"{member.normalization_digest}.{name}"
-                    or operand.source_digest != member.source_digest
-                    or operand.normalization_digest != member.normalization_digest
-                    or operand.preparation_version != scope.get("preparation_version")
-                    or operand.mapping_reference != scope.get("mapping_reference")):
-                raise RecordedInputRefusal("metric_operand_mismatch")
-    if data.members != tuple(sorted(data.members, key=lambda m: (m.start_epoch_seconds, m.normalization_digest))):
-        raise RecordedInputRefusal("noncanonical_metric_members")
-    for exclusion in data.exclusions:
-        if (type(exclusion) is not RecordedExclusion or type(exclusion.multiplicity) is not int
-                or exclusion.multiplicity <= 0 or exclusion.reason_code not in EXCLUSION_REASON_SET
-                or not re.fullmatch(r"sha256:[0-9a-f]{64}", exclusion.normalization_digest)):
-            raise RecordedInputRefusal("invalid_metric_exclusion")
-    keys = tuple((e.normalization_digest, e.reason_code) for e in data.exclusions)
-    if keys != tuple(sorted(set(keys))):
-        raise RecordedInputRefusal("noncanonical_metric_exclusions")
+def _result_required(metric: PreparedSummary | PreparedTrend) -> bytes:
+    """Recompute from the supported immutable source; never trust export bytes.
+
+    Future negative checks should construct or replace eligibility, groups,
+    weeks, totals, classification or bytes independently of their source.
+    Noncanonical/arbitrary bytes and every mismatched typed value must refuse.
+    These are described cases, not executed evidence.
+    """
+    try:
+        if type(metric) is PreparedSummary:
+            expected = _summary_fields(metric.source) + (metric.source,)
+        elif type(metric) is PreparedTrend:
+            expected = _trend_fields(metric.source) + (metric.source,)
+        else:
+            raise RecordedInputRefusal("unsupported_metric_result")
+        actual = tuple(getattr(metric, f.name) for f in fields(metric))
+        if not _strict_equal(actual, expected):
+            raise RecordedInputRefusal("prepared_result_mismatch")
+        return expected[-2]
+    except RecordedInputRefusal as exc:
+        raise RecordedInputRefusal(exc.reason_code) from None
+    except Exception:
+        raise RecordedInputRefusal("invalid_metric_result") from None
 
 
 def _duration(value: int) -> ExactValue:
@@ -472,10 +479,23 @@ def _base(data: RecordedMetricInput, code: str, effective: dict, buckets: list) 
             "input_content_digest": data.input_content_digest, "selected_scope": selected,
             "effective_scope": effective, "codec_version": CODEC_VERSION,
             "manifest": manifest, "operands": sorted(operands, key=lambda o: o["role"]),
-            "limitations": list(_LIMITATIONS), "quality_records": []}
+            "limitations": list(_LIMITATIONS),
+            # Empty means no projected metric-quality records. Source optional
+            # warnings remain in source_canonical_content/full input digest;
+            # this is not a declaration that the source has no warnings.
+            "quality_records": []}
 
 
 def summarize_recorded(data: RecordedMetricInput) -> PreparedSummary:
+    try:
+        return PreparedSummary(*_summary_fields(data), source=data)
+    except RecordedInputRefusal as exc:
+        raise RecordedInputRefusal(exc.reason_code) from None
+    except Exception:
+        raise RecordedInputRefusal("invalid_metric_input") from None
+
+
+def _summary_fields(data: RecordedMetricInput) -> tuple:
     _input_required(data)
     groups = tuple(SportSummary(sport, tuple(m.normalization_digest for m in data.members if m.sport == sport),
                 _count(sum(m.sport == sport for m in data.members)),
@@ -490,10 +510,19 @@ def summarize_recorded(data: RecordedMetricInput) -> PreparedSummary:
         eligibility={"eligible": not reasons, "unmet_reasons": list(reasons)},
         values=[{"sport": group.sport, "activity_count": group.activity_count.as_record(),
                  "elapsed_ms": group.elapsed_ms.as_record()} for group in groups])
-    return PreparedSummary(not reasons, reasons, groups, _codec(content))
+    return (not reasons, reasons, groups, _codec(content))
 
 
 def prepare_overall_trend(data: RecordedMetricInput) -> PreparedTrend:
+    try:
+        return PreparedTrend(*_trend_fields(data), source=data)
+    except RecordedInputRefusal as exc:
+        raise RecordedInputRefusal(exc.reason_code) from None
+    except Exception:
+        raise RecordedInputRefusal("invalid_metric_input") from None
+
+
+def _trend_fields(data: RecordedMetricInput) -> tuple:
     _input_required(data)
     end = _EPOCH + timedelta(seconds=data.end_epoch_seconds)
     monday = end - timedelta(days=end.weekday(), hours=end.hour, minutes=end.minute,
@@ -544,18 +573,13 @@ def prepare_overall_trend(data: RecordedMetricInput) -> PreparedTrend:
             ("earlier_total", "later_total", "signed_difference", "magnitude", "percentage"), values)})
     if classification is not None:
         content["classification"] = classification
-    return PreparedTrend(not reasons, tuple(reasons), weeks, outside, *values, classification, _codec(content))
+    return (not reasons, tuple(reasons), weeks, outside, *values, classification, _codec(content))
 
 
 def canonical_metric_content(metric: PreparedSummary | PreparedTrend) -> bytes:
-    if type(metric) not in (PreparedSummary, PreparedTrend):
-        raise TypeError("prepared internal recorded metric required")
-    return metric.canonical_content
+    return _result_required(metric)
 
 
 def metric_content_digest(metric: PreparedSummary | PreparedTrend) -> str:
     return "sha256:" + hashlib.sha256(canonical_metric_content(metric)).hexdigest()
-
-
-
 

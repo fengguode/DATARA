@@ -60,6 +60,7 @@ from datara import (
     NORMALIZER_VERSION,
     PREPARATION_VERSION,
 )
+from datara.canonical import elapsed_duration_ms_from_seconds
 
 # ---------------------------------------------------------------------------
 # Stable vocabularies
@@ -401,6 +402,24 @@ class NormalizedActivity:
     quality_warnings: tuple[QualityWarning, ...]
     canonical_payload: str
     normalization_digest: str
+
+    @property
+    def elapsed_duration_ms(self) -> int:
+        """Elapsed duration in the canonical comparison unit (integer ms).
+
+        ``elapsed_duration_seconds`` is this contract's own field and is not
+        renamed: it is part of the canonical payload whose SHA-256 is the
+        published ``normalization_digest``, and SR05 forbids silently re-basing a
+        stored digest. The millisecond value is therefore *derived* here, exactly
+        and once, by ``datara.canonical`` -- the single definition the classifier,
+        this module, the persistence layer and the conflict state machine share.
+        The write site in ``datara.db`` asserts it again before persisting.
+        """
+
+        return elapsed_duration_ms_from_seconds(
+            self.elapsed_duration_seconds,
+            origin="NormalizedActivity.elapsed_duration_ms",
+        )
 
     @property
     def optional_keys(self) -> dict[str, str | None]:

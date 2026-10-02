@@ -32,6 +32,11 @@ from django.apps import apps
 from django.db import connection, transaction
 
 from datara import models as m
+from datara.canonical import (
+    CANONICAL_DURATION_UNIT,
+    elapsed_duration_ms_from_seconds,
+    require_elapsed_duration_ms,
+)
 from datara.models import (
     Activity,
     Eligibility,
@@ -219,7 +224,24 @@ class OwnerScopedStore:
                 session_count=session_count,
                 sport=normalized.sport,
                 session_start_utc=normalized.session_start_utc,
-                elapsed_duration_seconds=normalized.elapsed_duration_seconds,
+                # Write-site unit guard. `normalized` carries the TK18
+                # normalization contract, which is integer seconds by contract;
+                # the column is the canonical millisecond unit. The conversion is
+                # exact and asserted here rather than left to a reader.
+                elapsed_duration_ms=require_elapsed_duration_ms(
+                    elapsed_duration_ms_from_seconds(
+                        normalized.elapsed_duration_seconds,
+                        origin=(
+                            "OwnerScopedStore.record_normalized_activity"
+                            ".elapsed_duration_seconds"
+                        ),
+                    ),
+                    origin=(
+                        "OwnerScopedStore.record_normalized_activity"
+                        ".elapsed_duration_ms"
+                    ),
+                    unit=CANONICAL_DURATION_UNIT,
+                ),
                 timer_duration_seconds=normalized.timer_duration_seconds,
             )
             return activity
@@ -338,11 +360,41 @@ FORBIDDEN_ENTITY_NAMES: tuple[str, ...] = (
 )
 
 #: "No mutable 'latest result' or current-value pointer may exist on any entity."
+#:
+#: The patterns are anchored on the whole *family*, not on three literals. The
+#: previous `run_pointer` pattern was `^(latest|current)_run$`, which let
+#: `last_run`, `last_run_id`, `current_run_id`, `last_run_at` and `most_recent_run`
+#: through while catching `latest_run` and `current_run` -- the guard was
+#: satisfied by the two names its own test exercised and blind to the rest of the
+#: family it exists to forbid. Every "newest value" adjective is therefore
+#: accepted, and a trailing qualifier (`_id`, `_at`, `_digest`, ...) is allowed,
+#: because a pointer to the newest run *by id* or *at an instant* is the same
+#: mutable pointer with a different suffix.
+#:
+#: #318 reported the missing `last_run` case and it did not land. It is covered by
+#: `datara/tests/test_isolation.py::test_mutable_pointer_names_are_refused_even_
+#: without_a_forbidden_entity`, which now exercises every member of the family.
+_NEWEST_ADJECTIVES = "latest|last|current|most_recent|newest"
+_POINTER_QUALIFIER = r"(?:_[a-z0-9]+)*"
+
 FORBIDDEN_COLUMN_PATTERNS: tuple[tuple[str, re.Pattern[str]], ...] = (
+    # The two specific families first, so a violation is reported under the name
+    # that says what it is rather than under the generic `latest_` catch-all.
+    (
+        "run_pointer",
+        re.compile(
+            rf"^(?:{_NEWEST_ADJECTIVES})_?run{_POINTER_QUALIFIER}$", re.IGNORECASE
+        ),
+    ),
+    (
+        "result_pointer",
+        re.compile(
+            rf"^(?:{_NEWEST_ADJECTIVES})_?result{_POINTER_QUALIFIER}$",
+            re.IGNORECASE,
+        ),
+    ),
     ("latest_pointer", re.compile(r"^latest_", re.IGNORECASE)),
     ("current_value_pointer", re.compile(r"^current_value", re.IGNORECASE)),
-    ("result_pointer", re.compile(r"^(latest|last|current)_result$", re.IGNORECASE)),
-    ("run_pointer", re.compile(r"^(latest|current)_run$", re.IGNORECASE)),
     ("mutable_pointer_suffix", re.compile(r"_pointer$", re.IGNORECASE)),
 )
 
@@ -425,17 +477,46 @@ def introspect_persisted_schema(connection_obj: Any = None) -> SchemaFacts:
     )
 
 
+def _folded(name: str) -> str:
+    """Fold a name for entity comparison: lower case, underscores removed.
+
+    The comparison used to be ``name.lower() == entity.lower()``, which caught
+    ``datara_skilldefinition`` but missed ``datara_skill_definition``. Every model
+    in this package sets a snake_case ``db_table`` (the house style), so a
+    multi-word forbidden entity written in house style escaped the table-level
+    check entirely -- as did ``selected_skill_execution`` and
+    ``assessment_result``. Removing ``_`` from *both* sides closes that without
+    inventing any new name: it makes ``skill_definition``, ``SkillDefinition``
+    and ``SKILL_DEFINITION`` one comparison rather than three.
+    """
+
+    return name.replace("_", "").lower()
+
+
+#: The forbidden entities, pre-folded, so each comparison is one set lookup and
+#: every path (table, column, field, model, module symbol) folds identically.
+_FORBIDDEN_FOLDED: dict[str, str] = {
+    _folded(entity): entity for entity in FORBIDDEN_ENTITY_NAMES
+}
+
+
 def _name_is_forbidden(name: str) -> tuple[str, str] | None:
-    for entity in FORBIDDEN_ENTITY_NAMES:
-        if name == entity:
-            return entity, "forbidden_entity_name"
-    lowered = name.lower()
-    for entity in FORBIDDEN_ENTITY_NAMES:
-        if lowered == entity.lower():
-            return entity, "forbidden_entity_name_case_insensitive"
+    """Whether ``name`` is a forbidden entity name or a mutable pointer name.
+
+    Returns ``(entity_or_label, reason_kind)`` or ``None``. The mutable-pointer
+    patterns are applied to the name *as written*, because they are anchored on
+    underscores (``^latest_``, ``_pointer$``); folding first would silently
+    change what they match.
+    """
+
     for label, pattern in FORBIDDEN_COLUMN_PATTERNS:
         if pattern.search(name):
             return label, "mutable_pointer_name"
+    entity = _FORBIDDEN_FOLDED.get(_folded(name))
+    if entity is not None:
+        if name == entity:
+            return entity, "forbidden_entity_name"
+        return entity, "forbidden_entity_name_normalised"
     return None
 
 
@@ -446,10 +527,15 @@ def find_forbidden_schema_entities(facts: SchemaFacts) -> tuple[SchemaViolation,
     a boolean so a failure names the offending entity, table and column.
     """
     violations: list[SchemaViolation] = []
-    forbidden = set(FORBIDDEN_ENTITY_NAMES)
 
     for name in facts.model_names:
-        if name in forbidden:
+        # Case-insensitive and underscore-insensitive, exactly like the table
+        # path. The registry check used to be exact set membership, so a model
+        # registered as `run` produced no violation here while the table it
+        # created was still caught by the table path: the guard's verdict
+        # depended on how the table happened to be named rather than on what the
+        # entity *is*.
+        if _FORBIDDEN_FOLDED.get(_folded(name)) is not None:
             violations.append(SchemaViolation("model", name, "django model registry"))
 
     for table in facts.table_names:
@@ -475,7 +561,7 @@ def find_forbidden_schema_entities(facts: SchemaFacts) -> tuple[SchemaViolation,
             )
 
     for symbol in facts.module_symbols:
-        if symbol in forbidden:
+        if _FORBIDDEN_FOLDED.get(_folded(symbol)) is not None:
             violations.append(SchemaViolation("module_symbol", symbol, "datara package source"))
 
     return tuple(sorted(violations, key=lambda v: (v.kind, v.name, v.location)))

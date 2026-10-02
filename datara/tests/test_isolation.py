@@ -23,6 +23,12 @@ from django.contrib.auth import get_user_model
 from django.db import connection
 from django.test import TestCase
 
+from datara.canonical import (
+    CANONICAL_DURATION_UNIT,
+    LogicalIdentity,
+    elapsed_duration_ms_from_seconds,
+    require_elapsed_duration_ms,
+)
 from datara.db import (
     FORBIDDEN_ENTITY_NAMES,
     OwnerScope,
@@ -38,6 +44,7 @@ from datara.models import (
     ImmutabilityViolation,
     OwnerScopeNotBound,
     ResourceNotVisible,
+    Session,
     SourceObject,
 )
 from datara.normalization import (
@@ -84,8 +91,8 @@ def _seed(owner, digest_tail: str, sport: str):
         kind=Evidence.KIND_SOURCE_RECORD,
         source_object_ref=str(source.source_object_id),
         activity_ref=str(activity.activity_id),
-        field_path="session.elapsed_duration_seconds",
-        value_canonical="3600",
+        field_path="session.elapsed_duration_ms",
+        value_canonical="3600000",
     )
     return store, activity, snapshot, evidence
 
@@ -285,7 +292,42 @@ class BindingConditionTests(TestCase):
         self.assertEqual(find_forbidden_schema_entities(introspect_persisted_schema()), ())
 
     def test_mutable_pointer_names_are_refused_even_without_a_forbidden_entity(self) -> None:
-        for column in ("latest_result", "latest_run", "current_value", "current_run", "snapshot_pointer"):
+        """Every member of the "newest value" family, not the three literals.
+
+        The previous version of this test listed ``latest_run`` and
+        ``current_run`` and nothing else, so the ``run_pointer`` pattern could be
+        narrowed to ``^(latest|current)_run$`` without a single test turning red --
+        which is what happened: ``last_run``, ``last_run_id``, ``current_run_id``,
+        ``last_run_at`` and ``most_recent_run`` all escaped. #318 reported it. The
+        family is listed exhaustively here so the pattern cannot be narrowed
+        again without failing.
+
+        Mutation that fails: change ``run_pointer`` back to
+        ``^(latest|current)_run$`` -- ``last_run``, ``last_run_id``,
+        ``current_run_id``, ``last_run_at`` and ``most_recent_run`` then report
+        zero violations.
+        """
+
+        family = (
+            "latest_result",
+            "last_result",
+            "current_result",
+            "most_recent_result",
+            "latest_result_id",
+            "latest_run",
+            "last_run",
+            "current_run",
+            "most_recent_run",
+            "newest_run",
+            "last_run_id",
+            "current_run_id",
+            "last_run_at",
+            "most_recent_run_at",
+            "latest_run_digest",
+            "current_value",
+            "snapshot_pointer",
+        )
+        for column in family:
             facts = SchemaFacts(
                 table_names=(),
                 columns=(("datara_snapshot", column),),
@@ -295,6 +337,258 @@ class BindingConditionTests(TestCase):
             )
             with self.subTest(column=column):
                 self.assertEqual(len(find_forbidden_schema_entities(facts)), 1)
+
+    def test_a_multi_word_forbidden_entity_is_refused_in_house_snake_case(self) -> None:
+        """M2: ``datara_skill_definition`` is the same breach as ``SkillDefinition``.
+
+        Every model in this package sets a snake_case ``db_table``, so the
+        multi-word forbidden entities were caught only in their concatenated
+        spelling. Underscores are now removed from both sides before comparison.
+
+        Mutation that fails: compare ``name.lower() == entity.lower()`` instead of
+        the folded form -- every table below then reports zero violations.
+        """
+
+        for bare in (
+            "skill_definition",
+            "selected_skill_execution",
+            "assessment_result",
+            "SkillDefinition",
+            "SELECTED_SKILL_EXECUTION",
+        ):
+            facts = SchemaFacts(
+                table_names=(f"datara_{bare}".lower(),),
+                columns=(),
+                model_names=(),
+                field_names=(),
+                module_symbols=(),
+            )
+            with self.subTest(table=bare):
+                violations = find_forbidden_schema_entities(facts)
+                self.assertEqual(len(violations), 1, violations)
+                self.assertEqual(violations[0].kind, "table")
+
+    def test_a_forbidden_model_name_is_refused_regardless_of_case(self) -> None:
+        """M3: the registry path was exact-match only; the table path was not.
+
+        Mutation that fails: use ``name in set(FORBIDDEN_ENTITY_NAMES)`` -- the
+        lowercase model names below then report zero violations.
+        """
+
+        for name in ("run", "Run", "RUN", "finding", "Finding", "assessment", "assessment_result"):
+            facts = SchemaFacts(
+                table_names=(),
+                columns=(),
+                model_names=(name,),
+                field_names=(),
+                module_symbols=(),
+            )
+            with self.subTest(model=name):
+                violations = find_forbidden_schema_entities(facts)
+                self.assertEqual([v.kind for v in violations], ["model"])
+
+    def test_the_folding_does_not_invent_entities_that_are_not_forbidden(self) -> None:
+        """The other direction: folding must not make the guard cry wolf.
+
+        Mutation that fails: fold a name that merely contains a forbidden entity
+        as a substring, e.g. drop the ``ruins``/``runner`` guard below.
+        """
+
+        for bare in (
+            "activity",
+            "source_object",
+            "session",
+            "eligibility",
+            "evidence",
+            "quarantine",
+            "import",
+            "snapshot",
+            "session_run_count",
+            "runner_notes",
+            "assessment_of_policy_version",
+        ):
+            facts = SchemaFacts(
+                table_names=(f"datara_{bare}",),
+                columns=(),
+                model_names=(),
+                field_names=(),
+                module_symbols=(),
+            )
+            with self.subTest(table=bare):
+                self.assertEqual(find_forbidden_schema_entities(facts), ())
+
+
+class CanonicalDurationUnitTests(TestCase):
+    """B3: one column, one unit. Integer milliseconds, everywhere.
+
+    The defect this closes: ``Session.elapsed_duration_seconds`` was written in
+    seconds by ``datara.db`` and in milliseconds by ``datara.dedup``, and
+    ``datara.dedup`` compared the seconds column against a millisecond
+    candidate. A 30-minute run was stored as ``1800`` by one path and
+    ``1800000`` by the other, the exact comparison called them different
+    activities, and the same activity was accepted a second time --
+    ``PositiveBigIntegerField`` cannot detect that.
+    """
+
+    def setUp(self) -> None:
+        owner = get_user_model().objects.create_user(username="tk18-units", password="x")
+        self.owner = owner
+        self.store = OwnerScopedStore.for_user(owner)
+
+    def _write(self, elapsed_seconds: int, tail: str):
+        raw = RawActivityInput(
+            source_digest="sha256:" + tail * 32,
+            sport="running",
+            session_start_utc="2026-10-01T06:30:00Z",
+            elapsed_duration_seconds=elapsed_seconds,
+        )
+        normalized = normalize(raw, SYNTHETIC_POLICY)
+        source = self.store.record_source_object(
+            digest=raw.source_digest,
+            byte_length=2048,
+            storage_reference=f"synthetic/units/{tail}",
+            media_type="application/vnd.datara.synthetic",
+        )
+        import_record = self.store.record_import(
+            source_digest=raw.source_digest, status="accepted"
+        )
+        return self.store.record_normalized_activity(
+            source_object=source, import_record=import_record, normalized=normalized
+        )
+
+    def test_a_30_minute_run_is_stored_in_milliseconds(self) -> None:
+        """The stored value is the canonical unit, not the normalization contract's.
+
+        Mutation that fails: write ``normalized.elapsed_duration_seconds``
+        unchanged -- the assertion becomes 1800 == 1800000's counterpart 3600 and
+        this fails, and the duplicate accept below returns.
+        """
+
+        activity = self._write(1800, "a1")
+        session = activity.session_record
+        self.assertEqual(session.elapsed_duration_ms, 1_800_000)
+        self.assertNotEqual(session.elapsed_duration_ms, 1800)
+
+    def test_the_two_write_paths_agree_to_the_millisecond(self) -> None:
+        """The regression the review called a *silent duplicate accept*.
+
+        ``datara.dedup.find_exact_tuple_matches`` reads this column and compares
+        it with the candidate tuple in milliseconds. With one column in one unit,
+        an activity persisted by TK18 and the same activity submitted again are
+        the same tuple. The test writes through the store and compares against the
+        canonical tuple a second write would produce.
+
+        Mutation that fails: reintroduce the seconds write in
+        ``OwnerScopedStore.record_normalized_activity`` -- the persisted value
+        becomes 1800, the millisecond candidate becomes 1_800_000, and
+        ``LogicalTuple`` equality -- which is exact integer equality -- reports
+        them as different activities.
+        """
+
+        activity = self._write(1800, "b1")
+        session = activity.session_record
+        first = LogicalIdentity.from_values(
+            sport_code=session.sport,
+            session_start_utc=session.session_start_utc,
+            elapsed_duration_ms=session.elapsed_duration_ms,
+            origin="test.persisted",
+        ).with_owner(self.owner.pk)
+        # What `datara.dedup` builds for the same activity on a second submission.
+        second = LogicalIdentity.from_values(
+            sport_code="running",
+            session_start_utc="2026-10-01T06:30:00Z",
+            elapsed_duration_ms=1_800_000,
+            origin="test.candidate",
+        ).with_owner(self.owner.pk)
+        self.assertEqual(first, second)
+        self.assertEqual(first.elapsed_duration_ms, 1_800_000)
+
+    def test_the_write_site_refuses_a_unit_it_was_not_given(self) -> None:
+        """The assertion is code, not a comment.
+
+        Mutation that fails: delete the ``require_elapsed_duration_ms`` call at the
+        write site -- this raises nothing and fails.
+        """
+
+        with self.assertRaises(TypeError) as caught:
+            require_elapsed_duration_ms(1_800_000, origin="test", unit="integer_seconds")
+        self.assertIn("integer_milliseconds", str(caught.exception))
+
+    def test_the_write_site_refuses_the_representations_that_caused_the_defect(self) -> None:
+        """float, str and bool are refused, and the millisecond domain is enforced.
+
+        Mutation that fails: accept ``isinstance(value, int)`` without excluding
+        ``bool``, or drop the domain bounds -- then 1.8e6 as a float, ``True`` and
+        999 ms all pass.
+        """
+
+        for bad in (1_800_000.0, "1800000", True, None):
+            with self.subTest(value=bad):
+                with self.assertRaises(TypeError):
+                    require_elapsed_duration_ms(
+                        bad, origin="test", unit=CANONICAL_DURATION_UNIT
+                    )
+        for out_of_domain in (999, 86_400_001):
+            with self.subTest(value=out_of_domain):
+                with self.assertRaises(ValueError):
+                    require_elapsed_duration_ms(
+                        out_of_domain, origin="test", unit=CANONICAL_DURATION_UNIT
+                    )
+
+    def test_a_bare_integer_is_not_mistaken_for_a_unit_declaration(self) -> None:
+        """Why the guard declares the unit instead of inferring it.
+
+        ``1800`` is a perfectly legal 1.8 second duration in milliseconds, so no
+        function can detect that it *meant* seconds. Claiming otherwise would be a
+        fake control. What is enforceable is that a caller holding seconds must
+        say so, and that the only sanctioned crossing converts exactly:
+
+        Mutation that fails: make ``unit`` default to the canonical unit instead of
+        being mandatory -- a caller passing a seconds value with no unit then
+        writes 1800 into the millisecond column undetected, which is the defect.
+        """
+
+        # Declaring seconds at a millisecond site is refused.
+        with self.assertRaises(TypeError) as caught:
+            require_elapsed_duration_ms(1800, origin="test", unit="integer_seconds")
+        self.assertIn("elapsed_duration_ms_from_seconds", str(caught.exception))
+        # The sanctioned crossing is exact and is the way seconds reach the column.
+        self.assertEqual(
+            elapsed_duration_ms_from_seconds(1800, origin="test"), 1_800_000
+        )
+        self.assertEqual(
+            elapsed_duration_ms_from_seconds(3600, origin="test"), 3_600_000
+        )
+        # `unit` is mandatory: omitting it is a TypeError, not a default.
+        with self.assertRaises(TypeError):
+            require_elapsed_duration_ms(1_800_000, origin="test")  # type: ignore[call-arg]
+        # And the converter itself refuses the representations it cannot convert.
+        for bad in (1800.0, "1800", True):
+            with self.subTest(value=bad):
+                with self.assertRaises(TypeError):
+                    elapsed_duration_ms_from_seconds(bad, origin="test")
+
+    def test_the_database_refuses_an_unconverted_seconds_count(self) -> None:
+        """The schema-level half: a future writer bypassing the helpers is caught.
+
+        Mutation that fails: drop ``Meta.constraints`` on ``Session`` -- the insert
+        below succeeds and this test fails on the missing ``IntegrityError``.
+        """
+
+        from django.db import IntegrityError, transaction
+
+        activity = self._write(1800, "c1")
+        with self.assertRaises(IntegrityError):
+            with transaction.atomic():
+                Session.objects.create(
+                    owner_id=self.owner.pk,
+                    activity=activity,
+                    session_index=1,
+                    session_count=1,
+                    sport="running",
+                    session_start_utc="2026-10-01T07:30:00Z",
+                    elapsed_duration_ms=1800,
+                )
 
 
 class PersistedRecordTests(TestCase):

@@ -121,12 +121,16 @@ def FreshDatabaseRunner(*args, **kwargs):
             validate_target(name, self.connection.settings_dict["NAME"])
             require(not keepdb, "database reuse refused")
             self._created_identity = None
+            self._attempted_creation_target = None
             with self._nodb_cursor() as cursor:
                 cursor.execute("SELECT oid FROM pg_database WHERE datname=%s", [name])
                 require(cursor.fetchone() is None, "test database collision refused")
                 # No exception handler that offers DROP/retry. CREATE itself handles
                 # a race after the preflight lookup by failing without deleting it.
                 from psycopg import sql
+                # Record intent before CREATE: its success may precede a failed
+                # identity lookup or an interruption. Intent never permits DROP.
+                self._attempted_creation_target = name
                 cursor.execute(sql.SQL("CREATE DATABASE {} ENCODING 'UTF8' TEMPLATE template0").format(sql.Identifier(name)))
                 cursor.execute("SELECT oid, datdba FROM pg_database WHERE datname=%s", [name])
                 self._created_identity = (name, *cursor.fetchone())
@@ -143,6 +147,7 @@ def FreshDatabaseRunner(*args, **kwargs):
                 cursor.execute(sql.SQL("DROP DATABASE {}").format(sql.Identifier(test_database_name)))
             print("test_database_cleanup=completed")
             self._created_identity = None
+            self._attempted_creation_target = None
 
     class FreshDatabaseRunnerImpl(DiscoverRunner):
         def __init__(self, *args, **kwargs):
@@ -167,12 +172,31 @@ def FreshDatabaseRunner(*args, **kwargs):
             validate_target(config["TEST"]["NAME"], config["NAME"])
             connection.creation = FreshDatabaseCreation(connection)
             connection.creation._created_identity = None
+            connection.creation._attempted_creation_target = None
             try:
                 return super().setup_databases(**kwargs)
             except BaseException:
-                if connection.creation._created_identity is not None:
-                    print("test_database_cleanup=not_completed; residual_target=" +
-                          connection.creation._created_identity[0])
+                self._report_residual(connection.creation)
+                raise
+
+        def _report_residual(self, creation):
+            identity = getattr(creation, "_created_identity", None)
+            attempted = getattr(creation, "_attempted_creation_target", None)
+            if identity is not None:
+                print("test_database_cleanup=not_completed; residual_target=" +
+                      identity[0] + "; identity=recorded")
+            elif attempted is not None:
+                print("test_database_cleanup=not_completed; possible_residual_target=" +
+                      attempted + "; identity=unverified")
+
+        def teardown_databases(self, old_config, **kwargs):
+            try:
+                return super().teardown_databases(old_config, **kwargs)
+            except BaseException:
+                from django.db import connections
+                # Report here, before Django can suppress a teardown exception
+                # while preserving an earlier suite failure.
+                self._report_residual(connections["default"].creation)
                 raise
     return FreshDatabaseRunnerImpl(*args, **kwargs)
 

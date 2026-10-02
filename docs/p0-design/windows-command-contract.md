@@ -75,9 +75,17 @@ path; the settings default remains unchanged outside this explicit override.
 Normal Django teardown can drop only the exact target created by this runner after
 checking its recorded PostgreSQL OID and owner. No prefix cleanup, forced disconnect,
 existing-database reset or automatic recovery is implemented. Creation/setup failures
-and interruptions can leave a residual target, which is reported for private run
-records; later cleanup requires a separately authorized disposition. A teardown error
-is a failure rather than a claim of successful cleanup.
+and catchable interruptions can leave a residual target. Both setup and teardown
+failure handlers report the residual state before rethrowing, including when Django
+later suppresses a teardown exception to preserve an earlier suite failure. The
+runner records the attempted target immediately before CREATE and reports a possible residual target
+if creation/setup fails before its OID and owner are recorded. This report explicitly
+labels the identity unverified; an attempted name never authorizes an automatic DROP.
+A failed CREATE may therefore report a possible residual even when it created none.
+Hard process termination cannot guarantee a report, so the declared run target must
+also be retained privately before execution. Later cleanup requires a separately
+authorized disposition. A teardown error is a failure rather than a claim of
+successful cleanup.
 
 Maintenance connection permission is currently unknown and remains a later authorized
 evidence gate. The command uses `postgres` explicitly with the test role and does not

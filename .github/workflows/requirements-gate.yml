@@ -1,0 +1,110 @@
+# Makes the founder's traceability gate an actual gate.
+#
+# The Quality Manager audit of 2 October 2026 (issue #307, TK74) found that the
+# repository had zero Actions workflows and that `main` carried no branch
+# protection. The consequence was that every rule in AGENTS.md and
+# CODE_OF_CONDUCT.md -- including "no priority, no start" -- was enforced by
+# prose alone: a check that nothing invokes is a script, not a control. An agent
+# could merge work that fails the gate simply by not running it.
+#
+# This workflow runs that check on every pull request and push to main, so a
+# violation is reported by the platform rather than remembered.
+#
+# Expected state today: this job FAILS on main. Eight tasks (TK01-TK08) carry no
+# recorded priority, which is the real condition of the record. The job is
+# deliberately not weakened to hide that. It is made green by recording the
+# eight priorities, which is the founder's decision, not by editing this file.
+
+name: requirements-gate
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  traceability:
+    name: Traceability gate
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      # Ubuntu defaults to a UTF-8 locale, so the gate needs no encoding flag
+      # here. It is set anyway so the run is reproducible on any host and does
+      # not silently depend on the runner's default.
+      - name: Enforce the traceability gate
+        env:
+          PYTHONUTF8: '1'
+        run: python -X utf8 scripts/check_requirements.py
+
+      # A no-op gate that always passes is the failure mode this workflow
+      # exists to prevent. This step proves the gate can actually fail, so the
+      # green tick above it means something.
+      #
+      # Verified locally in both directions before this file was committed:
+      #   against the PR #308 gate, stripping a priority makes it exit 1 (control passes);
+      #   against main's gate, which has no priority check yet, it exits 0 (control fails).
+      # The second case is expected until PR #308 merges, and the message below says so
+      # rather than leaving a bare failure that looks like a broken workflow.
+      - name: Prove the gate can fail
+        env:
+          PYTHONUTF8: '1'
+        run: |
+          python -X utf8 - <<'PY'
+          import json, pathlib, subprocess, sys, tempfile, shutil, os
+
+          registry = pathlib.Path('docs/management/requirements-registry.json')
+          original = registry.read_bytes()
+
+          # Find a task that does carry a priority, then strip it in a
+          # temporary copy. If the gate does not notice, it is not a gate.
+          data = json.loads(original.decode('utf-8'))
+          victim = next(t['id'] for t in data['tasks'] if t.get('priority'))
+          for t in data['tasks']:
+              if t['id'] == victim:
+                  del t['priority']
+
+          tmpdir = tempfile.mkdtemp()
+          try:
+              shutil.copytree('.', os.path.join(tmpdir, 'repo'),
+                              ignore=shutil.ignore_patterns('.git', '__pycache__'))
+              target = pathlib.Path(tmpdir, 'repo', 'docs/management/requirements-registry.json')
+              target.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding='utf-8')
+
+              result = subprocess.run(
+                  [sys.executable, '-X', 'utf8', 'scripts/check_requirements.py'],
+                  cwd=os.path.join(tmpdir, 'repo'),
+                  capture_output=True, text=True, encoding='utf-8', errors='replace')
+
+              print(f'control task stripped of priority: {victim}')
+              print(f'gate exit code on the stripped copy: {result.returncode}')
+              print((result.stdout or '') + (result.stderr or ''))
+
+              if result.returncode == 0:
+                  sys.exit(
+                      'THE GATE DID NOT FAIL on a task with no recorded priority.\n'
+                      '\n'
+                      'This is expected on exactly one condition: the gate does not yet\n'
+                      'contain the missing-priority check. That check is added by PR #308\n'
+                      '(opencode/enforce-priority-gate). Once that pull request merges,\n'
+                      'this control must PASS, and if it does not, the gate is inert and\n'
+                      'must not be trusted.\n'
+                      '\n'
+                      'Do not "fix" this by weakening the control or the gate.'
+                  )
+              print(f'OK: the gate fails on a missing priority. It is a real control.')
+          finally:
+              shutil.rmtree(tmpdir, ignore_errors=True)
+              registry.write_bytes(original)
+              print('registry restored byte-for-byte')
+          PY

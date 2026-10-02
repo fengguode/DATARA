@@ -67,17 +67,30 @@ Attribution: Worker — Torsten Maier_space-bunny-free-max_OpenCode (AI agent)
 
 from __future__ import annotations
 
+import ast
 import hashlib
 import inspect
 import json
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from enum import Enum
+from pathlib import Path
 from typing import Any, Iterable, Mapping, Sequence
 
 from django.db import IntegrityError, transaction
 
 from datara import CONTRACT_VERSION, IDENTITY_LABEL, NORMALIZER_VERSION
+from datara.canonical import (
+    CANONICAL_DURATION_UNIT,
+    IDENTITY_COMPONENTS,
+    LogicalIdentity,
+    LogicalTuple,
+    SPORT_CODES,
+    TUPLE_COMPONENTS,
+    canonical_sport_code,
+    require_elapsed_duration_ms,
+    sport_name as canonical_sport_name,
+)
 from datara.models import (
     Activity,
     Import,
@@ -99,21 +112,18 @@ from datara.storage import (
 # Section 6 -- canonical comparison values
 # --------------------------------------------------------------------------
 
-#: The approved normalised sport enum. Section 6 fixes the canonical comparison
-#: value as the *integer*; the string form is the display name of the same
-#: approved pair and is what `Session.sport` stores. This is a closed two-value
-#: vocabulary taken verbatim from section 6, not an invented mapping.
-SPORT_CODES: dict[int, str] = {1: "running", 2: "cycling"}
+#: The approved normalised sport enum, the canonical comparison unit and the
+#: logical tuple are **defined once**, in `datara.canonical`, and imported above.
+#: They used to be defined here as well, and `datara.classification` defined a
+#: third, string-shaped copy of the tuple. Three definitions of one contract key
+#: is how one activity came to be written as 1800 by one path, 1800000 by the
+#: next, and compared as different -- so the definitions are collapsed here and
+#: `assert_no_tolerance_parameters` re-checks the imported key against
+#: `TUPLE_COMPONENTS`, which is what stops a future edit from widening it.
 
 #: `sub_sport` is deliberately NOT a tuple component (section 6): a re-export
 #: that changed only the sub-sport classification therefore still conflicts,
 #: which is the conservative direction.
-TUPLE_COMPONENTS: tuple[str, ...] = (
-    "owner_id",
-    "sport_code",
-    "start_epoch_seconds",
-    "elapsed_duration_ms",
-)
 
 #: Documented boundary rather than a policy. `ingest` is called only after the
 #: submitter's bytes decoded and normalized successfully; a decode, integrity,
@@ -125,35 +135,10 @@ REJECTION_BOUNDARY = (
 )
 
 
-def canonical_sport_code(value: Any) -> int:
-    """Return the canonical integer sport code for a normalised value.
+def sport_name(code: Any) -> str:
+    """The display name of a canonical integer sport code (section 6)."""
 
-    Section 6 fixes the comparison value as the integer enum code. An
-    unrecognised value is refused rather than coerced, because coercing it would
-    invent a sport and therefore invent a tuple.
-    """
-
-    if isinstance(value, bool):
-        raise ValueError("sport must be a sport code, not a bool")
-    if isinstance(value, int):
-        if value not in SPORT_CODES:
-            raise ValueError(
-                f"sport code {value!r} is outside the approved set {sorted(SPORT_CODES)}"
-            )
-        return value
-    if isinstance(value, str):
-        folded = value.strip().lower()
-        for code, name in SPORT_CODES.items():
-            if folded == name:
-                return code
-        raise ValueError(
-            f"sport {value!r} is not in the approved normalised set {sorted(SPORT_CODES)}"
-        )
-    raise ValueError(f"cannot canonicalise sport of type {type(value).__name__}")
-
-
-def sport_name(code: int) -> str:
-    return SPORT_CODES[canonical_sport_code(code)]
+    return canonical_sport_name(code, origin="dedup.sport_name")
 
 
 @dataclass(frozen=True)
@@ -173,16 +158,15 @@ class SessionFacts:
     timer_duration_seconds: int | None = None
 
     def __post_init__(self) -> None:
-        canonical_sport_code(self.sport_code)
-        if not isinstance(self.elapsed_duration_ms, int) or isinstance(
-            self.elapsed_duration_ms, bool
-        ):
-            raise TypeError(
-                "elapsed duration must be an exact integer, never a float: a "
-                "float would reintroduce an approximate comparison"
-            )
-        if self.elapsed_duration_ms < 0:
-            raise ValueError("elapsed duration must not be negative")
+        canonical_sport_code(self.sport_code, origin="SessionFacts.sport_code")
+        # The unit is declared here, not inferred: a seconds count reaching this
+        # field is refused even though it is an integer, and a float -- which
+        # would reintroduce an approximate comparison -- is refused as a type.
+        require_elapsed_duration_ms(
+            self.elapsed_duration_ms,
+            origin="SessionFacts.elapsed_duration_ms",
+            unit=CANONICAL_DURATION_UNIT,
+        )
         start = self.session_start_utc
         if start.tzinfo is None:
             raise ValueError("session start must be an aware UTC datetime")
@@ -202,51 +186,16 @@ class SessionFacts:
 
         return int(self.session_start_utc.timestamp())
 
+    @property
+    def logical_identity(self) -> LogicalIdentity:
+        """The identity-independent half of the canonical tuple."""
 
-@dataclass(frozen=True)
-class LogicalTuple:
-    """The exact logical tuple of section 6, and the only conflict key.
-
-    Equality is integer equality on the four canonical values. There is no
-    tolerance, epsilon, rounding or normalisation step, because there is
-    nothing to configure: `TOLERANCE_PARAMETERS` is empty and
-    `assert_no_tolerance_parameters` keeps it that way.
-    """
-
-    owner_id: int
-    sport_code: int
-    start_epoch_seconds: int
-    elapsed_duration_ms: int
-
-    @classmethod
-    def from_session(cls, owner_id: int, facts: SessionFacts) -> "LogicalTuple":
-        return cls(
-            owner_id=owner_id,
-            sport_code=canonical_sport_code(facts.sport_code),
-            start_epoch_seconds=facts.start_epoch_seconds,
-            elapsed_duration_ms=facts.elapsed_duration_ms,
+        return LogicalIdentity.from_values(
+            sport_code=self.sport_code,
+            session_start_utc=self.session_start_utc,
+            elapsed_duration_ms=self.elapsed_duration_ms,
+            origin="SessionFacts.logical_identity",
         )
-
-    def as_dict(self) -> dict[str, Any]:
-        """The persisted form, carrying the unit of every component.
-
-        The units are written into the record rather than assumed by a reader,
-        so `elapsed_duration_ms` cannot later be compared as if it were seconds.
-        """
-
-        return {
-            "owner_id": self.owner_id,
-            "sport_code": self.sport_code,
-            "sport_name": sport_name(self.sport_code),
-            "start_epoch_seconds": self.start_epoch_seconds,
-            "elapsed_duration_ms": self.elapsed_duration_ms,
-            "start_unit": "integer_seconds_since_unix_epoch",
-            "elapsed_unit": "integer_milliseconds",
-            "comparison": "exact_integer_equality",
-            "tolerance": None,
-            "sub_sport_is_a_component": False,
-            "contract": "duplicate-conflict-options section 6",
-        }
 
 
 # --------------------------------------------------------------------------
@@ -372,6 +321,12 @@ class DispositionOutcome:
 # --------------------------------------------------------------------------
 
 #: Any public parameter containing one of these tokens would be a tolerance.
+#:
+#: This is a **name** check, and it is only a name check. It would not detect a
+#: parameter called ``delta_ms``, ``precision_s`` or ``bucket_s``, and it does not
+#: claim to: a tolerance is expressed in the *comparison*, not only in a name.
+#: :func:`ordering_comparisons` is the check that reads the code itself, and
+#: :func:`assert_no_tolerance_parameters` runs both.
 TOLERANCE_PARAMETER_TOKENS: tuple[str, ...] = (
     "tolerance",
     "epsilon",
@@ -386,12 +341,115 @@ TOLERANCE_PARAMETER_TOKENS: tuple[str, ...] = (
     "window",
 )
 
+#: Comparison operators that make two values "close" rather than equal. `Eq` and
+#: `NotEq` are exact integer equality and are the only permitted ones.
+_ORDERING_OPERATORS: dict[type, str] = {
+    ast.Lt: "<",
+    ast.LtE: "<=",
+    ast.Gt: ">",
+    ast.GtE: ">=",
+    ast.In: "in",
+    ast.NotIn: "not in",
+    ast.Is: "is",
+    ast.IsNot: "is not",
+}
+
+#: Names whose value must only ever be compared for exact equality. A duration
+#: matched with `<=` is a tolerance whether or not the threshold is named.
+_EXACT_ONLY_NAMES: tuple[str, ...] = (
+    "elapsed_duration_ms",
+    "start_epoch_seconds",
+    "sport_code",
+    "duration",
+    "elapsed",
+    "delta_ms",
+    "precision_s",
+    "bucket_s",
+)
+
+#: Builtins that make a set of durations "close" to one another.
+_APPROXIMATION_CALLS: dict[str, str] = {
+    "round": "rounding",
+    "min": "nearest-match selection",
+    "max": "nearest-match selection",
+    "isclose": "approximate comparison",
+    "float": "float coercion",
+}
+
+
+def _names_in(node: ast.AST) -> set[str]:
+    """Every identifier the node reads: bare names *and* attribute names.
+
+    Attribute names matter as much as bare ones. The comparison that caused the
+    defect reads ``session.elapsed_duration_ms``, where the component is an
+    ``ast.Attribute.attr`` and never a ``ast.Name``. A checker that only collected
+    bare names would not have seen the real line at all.
+    """
+
+    names: set[str] = set()
+    for child in ast.walk(node):
+        if isinstance(child, ast.Name):
+            names.add(child.id)
+        elif isinstance(child, ast.Attribute):
+            names.add(child.attr)
+    return names
+
+
+def ordering_comparisons(source: str | None = None) -> dict[str, list[str]]:
+    """Read this module's own source for a comparison that is not exact equality.
+
+    Returns a mapping of ``"line:construct"`` to the reasons it is a tolerance.
+    It is empty by construction; it is written so that it stays empty.
+
+    This is the check that catches a tolerance the name check cannot see:
+    ``delta_ms``, ``precision_s`` and ``bucket_s`` carry no tolerance token, and
+    neither does ``abs(a - b) <= 5``. What they all have in common is a
+    **comparison operator other than ``==``/``!=`` applied to a value that must
+    match exactly**, so that is what is looked for.
+
+    Mutation that fails: replace ``!=`` with ``>=`` (or ``abs(...) <= 5``) in
+    `find_exact_tuple_matches` -- this returns a non-empty mapping and
+    `assert_no_tolerance_parameters` raises.
+    """
+
+    text = source if source is not None else Path(__file__).read_text(encoding="utf-8")
+    found: dict[str, list[str]] = {}
+    tree = ast.parse(text, filename=__file__)
+    exact_only = set(_EXACT_ONLY_NAMES)
+    for node in ast.walk(tree):
+        reasons: list[str] = []
+        if isinstance(node, ast.Compare):
+            touched = _names_in(node)
+            operators = {type(op) for op in node.ops}
+            ordering = sorted(
+                _ORDERING_OPERATORS[op] for op in operators if op in _ORDERING_OPERATORS
+            )
+            if ordering and (touched & exact_only):
+                reasons.append(
+                    f"ordering comparison {', '.join(ordering)} on "
+                    f"{sorted(touched & exact_only)}"
+                )
+        elif isinstance(node, ast.Call):
+            func = node.func
+            name = getattr(func, "id", None) or getattr(func, "attr", None)
+            if name in _APPROXIMATION_CALLS and (_names_in(node) & exact_only):
+                reasons.append(f"{_APPROXIMATION_CALLS[name]} applied to a tuple component")
+        if reasons:
+            found[f"line {node.lineno}: {ast.dump(node, annotate_fields=False)[:60]}"] = reasons
+    return found
+
 
 def tolerance_parameters() -> dict[str, list[str]]:
     """Introspect this module's public surface for a tolerance parameter.
 
     Returns a mapping of callable name to the offending parameter names. It is
     empty by construction; it is written so that it stays empty.
+
+    **What this does not do:** it compares parameter *names* against
+    `TOLERANCE_PARAMETER_TOKENS`. It is a prompt for a human reviewer, not a
+    proof. `delta_ms`, `precision_s` and `bucket_s` pass it, by design of the
+    token list, which is why `ordering_comparisons` exists and why
+    `assert_no_tolerance_parameters` runs both.
     """
 
     found: dict[str, list[str]] = {}
@@ -427,7 +485,16 @@ def tolerance_parameters() -> dict[str, list[str]]:
 
 
 def assert_no_tolerance_parameters() -> None:
-    """Fail loudly if a tolerance parameter has been introduced.
+    """Fail loudly if a tolerance has been introduced.
+
+    Two independent checks, because either alone is blind:
+
+    1. `tolerance_parameters` -- a token *name* check on the public surface. It
+       catches `tolerance_seconds` and `epsilon`. It does not catch `delta_ms`,
+       and it is not claimed to.
+    2. `ordering_comparisons` -- a source check for a comparison operator other
+       than `==`/`!=` applied to a component that must match exactly. This is what
+       catches an unnamed tolerance such as `abs(a - b) <= 5`.
 
     Also re-checks that the logical tuple still carries exactly the four
     canonical integer components, so widening the key -- the other way a
@@ -439,6 +506,12 @@ def assert_no_tolerance_parameters() -> None:
         raise AssertionError(
             "a tolerance parameter exists on the intake surface, which D01 "
             f"prohibits: {offenders}"
+        )
+    orderings = ordering_comparisons()
+    if orderings:
+        raise AssertionError(
+            "a non-exact comparison of a logical-tuple component exists on the "
+            f"intake surface, which D01 prohibits: {orderings}"
         )
     if tuple(LogicalTuple.__dataclass_fields__) != TUPLE_COMPONENTS:
         raise AssertionError(
@@ -517,9 +590,17 @@ def find_exact_tuple_matches(
         .select_related("activity", "activity__source_object")
         .order_by("pk")
     ):
-        if canonical_sport_code(session.sport) != candidate.sport_code:
+        if canonical_sport_code(session.sport, origin="find_exact_tuple_matches.sport") != candidate.sport_code:
             continue
-        if session.elapsed_duration_seconds != candidate.elapsed_duration_ms:
+        # The comparison unit of section 6 is integer milliseconds, and the column
+        # now holds milliseconds under its own name. This line used to read
+        # `session.elapsed_duration_seconds != candidate.elapsed_duration_ms`,
+        # comparing a column that TK18 wrote in *seconds* against a millisecond
+        # candidate. A 30-minute run was therefore stored as 1800 by one path and
+        # 1800000 by the other, this comparison called them different, and the same
+        # activity was accepted a second time -- silently, because
+        # PositiveBigIntegerField accepts both. Both sides are now milliseconds.
+        if session.elapsed_duration_ms != candidate.elapsed_duration_ms:
             continue
         matches.append(
             TupleMatch(
@@ -794,7 +875,16 @@ def _write_sessions(
             session_count=facts.session_count,
             sport=sport_name(facts.sport_code),
             session_start_utc=facts.session_start_utc,
-            elapsed_duration_seconds=facts.elapsed_duration_ms,
+            # Write-site unit guard, identical in form to the one on TK18's write
+            # site: the unit is declared, the value is checked, and the column
+            # carries a database CheckConstraint on the same domain. This line
+            # used to write milliseconds into `elapsed_duration_seconds`, which is
+            # how a single column ended up holding two units.
+            elapsed_duration_ms=require_elapsed_duration_ms(
+                facts.elapsed_duration_ms,
+                origin="dedup._write_sessions.elapsed_duration_ms",
+                unit=CANONICAL_DURATION_UNIT,
+            ),
             timer_duration_seconds=facts.timer_duration_seconds,
         )
 
@@ -1238,7 +1328,7 @@ def build_snapshot_scope(
                 "session_index": item.session_index,
                 "source_digest": item.activity.source_object.digest,
                 "start_epoch_seconds": int(item.session_start_utc.timestamp()),
-                "elapsed_duration_ms": item.elapsed_duration_seconds,
+                "elapsed_duration_ms": item.elapsed_duration_ms,
             }
             for item in included
         ],
@@ -1349,6 +1439,7 @@ __all__ = [
     "history",
     "ingest",
     "open_conflicts",
+    "ordering_comparisons",
     "outcome_text",
     "resolve_uncertain",
     "sport_name",

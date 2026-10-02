@@ -49,6 +49,15 @@ Before writing, compare a fresh read with the proposed update, preserve interven
 
 Roles without GitHub access receive a fresh, bounded coordinator relay, labeled as such. On failed required refresh, report **unknown / GitHub out of sync**, retain pending updates as unsent evidence and pause dependent decisions. Continue unaffected authorized work. Saved snapshots and earlier messages are historical evidence, not live status.
 
+**Only the founder stops the work.** Work does not stop because a role decided it was stuck, tired, or done for the day. The **sole** ways to halt ongoing work are an explicit order from the founder, given **either in the current conversation or on GitHub** through a Project, Discussion, issue or message. Absent such an order, a role keeps pushing toward the first milestone. There is no third option, and no role has authority to declare a stopping point.
+
+**Never stop silently either — reporting is not quitting.** Because stopping is not a role's decision, a blocker is never a reason to go quiet. A role that is blocked, uncertain, or waiting on the founder **must** tell the founder on GitHub in the same turn and then **continue every other authorized, unblocked piece of work in the meantime**. A turn that ends with neither forward motion on authorized work nor a published message is a process failure. The message is an issue or discussion comment under that role's identity, titled with one of exactly two forms:
+
+- `..._need owner decision` — a decision, permission, credential or judgement is required from the founder, and work continues around it. Say what is needed, what is blocked, and what is proceeding regardless.
+- `..._for owner information` — reporting a finding, correction, risk or state the founder must know. Nothing is requested.
+
+State the observed situation, the evidence, what was and was not done, what continues, and what happens next. Silence is never acceptable, including when the founder appears unavailable and including when the role judges that nothing needs saying. **This binds every role, and the Primary Coordinator is accountable both for the whole team meeting it and for the goal continuing to move.** A role that cannot reach GitHub states that failure explicitly in its next available channel rather than dropping the obligation.
+
 ## 6. Requirements and delivery loop
 
 Use one backlog. PR means **pull request only**. CUS states the top-level customer/user outcome; Features group capability scope; SR derives obligations across applicable legal, engineering, runtime, architecture, security and other perspectives. Use stable CUS/SR IDs and affected Feature/Task links. Titles follow `[Type][area]content_of_title`; priority belongs in dedicated metadata, never titles.
@@ -56,6 +65,8 @@ Use one backlog. PR means **pull request only**. CUS states the top-level custom
 Follow current dependencies and start gates: W0 evidence/contracts/UI/test design; W1 persistent data/preparation/authorization; W2 skills/eligibility; W3 model access/manual execution; W4 history/dashboard/API; W5 candidate verification, acceptance and release. Waves group the delivery sequence; they are not calendar commitments or a forced serial schedule. Aggregate package completion must not incorrectly prevent its own authorized preparation children.
 
 Before product coding, finalize and review applicable architecture and test design, record necessary decisions and satisfy G0 or its approved replacement. A merged proposal or selected D01–D05 direction alone does not authorize coding.
+
+**No priority, no start.** A task with no recorded priority in its dedicated field or metadata **must not be started, continued, or reported as delivered work.** Priority is a precondition of execution, not a reporting nicety: a role that discovers a missing or unknown priority stops at the selection step, records **priority unknown / not set**, and does not begin. Reading priority is part of the mandatory fresh read in section 5, so an absent value is a defect in the record, not a blank to be filled in by the executing role. This applies to every role including the Primary Coordinator, and it applies to corrective, safety, and tooling work: a real defect found out of priority order is reported and left, not fixed under an unauthorized priority. Backfilling a priority after the fact does not authorize work already done; that work is reported as **delivered out of priority order** for Quality Manager review.
 
 Repeat: **refresh → select eligible work → publish bounded assignment → execute → inspect → test as applicable → independently review → correct/recheck → push and publish PR → obtain exact-candidate confirmation → integrate with authorization → update documentation/report → select next work**. Continue eligible independent work while another item is blocked. Do not repeatedly retry unchanged blockers or poll without useful work.
 

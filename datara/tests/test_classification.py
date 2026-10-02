@@ -59,13 +59,7 @@ def _load(name: str, relpath: str):
 
 # ``classification`` has no intra-package imports; ``intake`` does a relative
 # import, so it is loaded as a real package member of a throwaway package.
-import types  # noqa: E402
-
-_pkg = types.ModuleType("datara")
-_pkg.__path__ = [os.path.join(_REPO_ROOT, "datara")]
-sys.modules["datara"] = _pkg
-classification = _load("datara.classification", "datara/classification.py")
-intake = _load("datara.intake", "datara/intake.py")
+from datara import classification, intake  # noqa: E402
 
 C = classification
 I = intake

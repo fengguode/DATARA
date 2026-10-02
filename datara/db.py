@@ -357,6 +357,17 @@ FORBIDDEN_ENTITY_NAMES: tuple[str, ...] = (
     "Finding",
     "Connection",
     "SkillDefinition",
+    # Added 2 October 2026: the semantic class the TK21 brief named. These are
+    # not merely alternative spellings -- an entity named SkillInput or Prompt
+    # holds the outcome of executing a skill against a model, which is exactly
+    # what the condition forbids. A skill INPUT is not a result.
+    "SkillInput",
+    "Prompt",
+    "Completion",
+    "Result",
+    "Recommendation",
+    "ModelOutput",
+    "SkillRun",
 )
 
 #: "No mutable 'latest result' or current-value pointer may exist on any entity."

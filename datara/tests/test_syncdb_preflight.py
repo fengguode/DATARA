@@ -186,7 +186,7 @@ from django.test import TransactionTestCase
 
 
 class PreflightPostgreSQLRegressions(TransactionTestCase):
-    def test_fixed_collector_on_disposable_synthetic_database(self):
+    def _collect_on_synthetic_database(self, recorder_name='django_migrations'):
         import os
         import tempfile
         from pathlib import Path
@@ -209,18 +209,43 @@ class PreflightPostgreSQLRegressions(TransactionTestCase):
                 tables = connection.introspection.table_names(cursor)
             manifest = {'format': FORMAT, 'baseline_input_hashes': {}, 'schemas': ['public'],
                         'relations': [['public', table] for table in tables],
-                        'recorder': ['public', 'django_migrations']}
+                        'recorder': ['public', recorder_name]}
             with patch.dict(os.environ, {'PGSERVICEFILE': str(service), 'PGPASSWORD': settings['PASSWORD']}):
                 inventory = collect('synthetic_preflight', manifest, {'roles': [settings['USER']]})
         self.assertEqual(inventory['errors'], [], 'covered=' + ','.join(inventory['covered_query_ids']))
         self.assertTrue(set(QUERIES).issubset(inventory['covered_query_ids']))
         self.assertTrue({'acl_relations', 'acl_namespaces', 'acl_database', 'acl_columns',
-                         'database_privileges', 'recorder_observations'}.issubset(inventory['covered_query_ids']))
+                         'database_privileges'}.issubset(inventory['covered_query_ids']))
         identity = inventory['observations']['catalog_01'][0]
         self.assertEqual(identity['read_only'], 'on')
         self.assertEqual(identity['isolation'], 'repeatable read')
         self.assertFalse(inventory['eligible'])
         self.assertEqual(len(inventory['structural_hash']), 64)
+        self.assertIn('UNKNOWN_RECORDER_SCOPE', inventory['reason_codes'])
+        self.assertIn('UNKNOWN_ROLE_SETTINGS', inventory['reason_codes'])
+        self.assertNotIn('recorder_observations', inventory['covered_query_ids'])
+        self.assertNotIn('recorder_entries', inventory['observations'])
+        self.assertNotIn('recorder_counts', inventory['observations'])
+        self.assertTrue(all('rolconfig' not in row for row in inventory['observations']['catalog_13']))
+        return inventory
+
+    def test_fixed_collector_on_disposable_synthetic_database(self):
+        self._collect_on_synthetic_database()
+
+    def test_arbitrary_recorder_rows_are_never_collected(self):
+        from django.db import connection
+        self.assertTrue(connection.settings_dict['NAME'].startswith('test_datara_'))
+        with connection.cursor() as cursor:
+            cursor.execute('CREATE TABLE public.synthetic_recorder_decoy (app text, name text, applied timestamptz)')
+            cursor.execute('INSERT INTO public.synthetic_recorder_decoy VALUES (%s, %s, CURRENT_TIMESTAMP)', ['synthetic-private-marker-app', 'synthetic-private-marker-name'])
+        try:
+            inventory = self._collect_on_synthetic_database('synthetic_recorder_decoy')
+            encoded = canonical_bytes(inventory)
+            self.assertNotIn(b'synthetic-private-marker-app', encoded)
+            self.assertNotIn(b'synthetic-private-marker-name', encoded)
+        finally:
+            with connection.cursor() as cursor:
+                cursor.execute('DROP TABLE public.synthetic_recorder_decoy')
 
 
 class PreflightEvidenceBindingRegressions(unittest.TestCase):
@@ -262,6 +287,7 @@ class PreflightEvidenceBindingRegressions(unittest.TestCase):
         self.assertEqual(len(report['source_file_hashes']), 6)
         self.assertEqual(report['implementation_source_hash'], digest(report['source_file_hashes']))
         self.assertFalse(report['eligible'])
+
 
 
 

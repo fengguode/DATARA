@@ -1888,7 +1888,7 @@ class MilestoneAInputStore:
 def _evidence_rows_for_snapshot(
     store: Any, snapshot: Any, *, include_kind: bool = False
 ) -> list[dict[str, Any]]:
-    """Owner-scoped read of the evidence rows of one snapshot."""
+    """Read owned source-record evidence for a snapshot, excluding computed graphs."""
 
     from datara import models as m
 
@@ -1902,7 +1902,9 @@ def _evidence_rows_for_snapshot(
             "method_version": row.method_version,
             "method_inputs": row.method_inputs,
         }
-        for row in m.Evidence.objects.for_owner(store.scope.owner_id).filter(snapshot=snapshot).order_by(
+        for row in m.Evidence.objects.for_owner(store.scope.owner_id).filter(
+            snapshot=snapshot, kind="source_record"
+        ).order_by(
             "field_path", "evidence_id"
         )
     ]

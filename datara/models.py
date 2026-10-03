@@ -2,23 +2,22 @@
 
 Binding architectural condition (`docs/management/decision-register.md`,
 "Binding architectural condition, stated by meaning rather than by name"):
-Milestone A persists only ``Import``, ``SourceObject``, ``Activity``/``Session``,
-``Snapshot`` plus the three supporting records ``Eligibility``, ``Evidence`` and
-the quarantined conflict record -- and **none of them stores a skill-against-model
-outcome under any name**. The exclusion is semantic. Explicitly a defect if
+The source baseline persists ``Import``, ``SourceObject``, ``Activity``/``Session``,
+``Snapshot``, ``Eligibility``, ``Evidence`` and quarantine. The approved saved
+recorded aggregate contract adds ``Metric``, ``MetricOperand`` and ``MetricSeal``.
+None stores a skill-against-model outcome. The exclusion is semantic. A defect if
 present: ``Run``, ``SelectedSkillExecution``, ``Attempt``, ``AssessmentResult``,
 ``Assessment``, ``Finding``, ``Connection``, ``SkillDefinition``, or any mutable
 "latest result"/current-value pointer on any entity.
 
 `datara.db.find_forbidden_schema_entities()` machine-checks this file's output
-against the live database schema, so the condition is verified rather than
-asserted.
+against the live database schema when explicitly executed. This source change
+does not claim executed schema verification.
 
 What is deliberately NOT here, and why:
 
-* No ``Metric`` table. The contracts reference computed metrics but define no
-  schema of their own; that field contract is a D02/WP02 output. ``Evidence``
-  refuses the ``computed_metric`` kind until that contract exists.
+* Recorded Metric rows are deterministic preprocessing history under
+  ``datara/saved-recorded-aggregate/1``; they carry no analysis/model outcome.
 * No skill identifier on ``Eligibility``. Milestone A has no skill definitions
   (``SkillDefinition`` is an excluded entity), so the record carries a caller
   supplied rule-set version and a boolean, exactly as the G0 record describes.
@@ -420,6 +419,7 @@ class Snapshot(OwnerScopedModel):
 
     class Meta:
         db_table = "datara_snapshot"
+        constraints = [models.UniqueConstraint(fields=["owner", "snapshot_id"], name="datara_snapshot_owner_id_uniq")]
 
 
 # --------------------------------------------------------------------------
@@ -450,13 +450,11 @@ class Eligibility(OwnerScopedModel):
 
 
 class Evidence(OwnerScopedModel):
-    """Snapshot-local reference to a source record.
+    """Source reference or addressed value of a sealed recorded aggregate.
 
-    The `computed_metric` kind is refused at write time. The contracts reference
-    computed metrics but define no schema of their own, and the founder's G0
-    record states that Milestone A must not invent it; any metric persisted
-    before that contract exists is provisional. With no Milestone A run, evidence
-    can only ever resolve to a source record.
+    Source metadata retains its legacy semantics. Computed method provenance
+    comes from Metric and its versioned registry, not the legacy method columns.
+    Database triggers are authoritative for computed immutability.
     """
 
     KIND_SOURCE_RECORD = "source_record"
@@ -475,9 +473,85 @@ class Evidence(OwnerScopedModel):
     value_canonical = models.TextField(null=True, blank=True)
     method_version = models.CharField(max_length=64, null=True, blank=True)
     method_inputs = models.JSONField(default=dict)
+    metric = models.ForeignKey("Metric", on_delete=models.PROTECT, related_name="+", null=True, blank=True)
+    value_path = models.CharField(max_length=128, null=True, blank=True)
 
     class Meta:
         db_table = "datara_evidence"
+        constraints = [
+            models.UniqueConstraint(fields=["owner", "snapshot", "evidence_id"], name="datara_evidence_scope_id_uniq"),
+            models.UniqueConstraint(fields=["owner", "snapshot", "metric", "value_path"], name="datara_computed_evidence_path_uniq"),
+        ]
+
+
+class ImmutableGraphModel(OwnerScopedModel):
+    """Application refusal supplements the authoritative database triggers."""
+
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT, related_name="+")
+
+    class Meta:
+        abstract = True
+
+    def save(self, *args: Any, **kwargs: Any) -> None:
+        if not self._state.adding:
+            raise ImmutabilityViolation("saved metric graph is immutable")
+        super().save(*args, **kwargs)
+
+    def delete(self, *args: Any, **kwargs: Any) -> None:
+        raise ImmutabilityViolation("saved metric graph cannot be deleted")
+
+
+class Metric(ImmutableGraphModel):
+    """One frozen compound recorded aggregate, with versioned projections."""
+
+    metric_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    snapshot = models.ForeignKey(Snapshot, on_delete=models.PROTECT, related_name="+")
+    content_digest = models.CharField(max_length=71)
+    metric_contract_version = models.CharField(max_length=64)
+    metric_code = models.CharField(max_length=64)
+    canonical_content = models.TextField()
+    method_identity = models.JSONField()
+    supported_input_contract_version = models.CharField(max_length=64)
+    input_content_digest = models.CharField(max_length=71)
+    registry_adapter_version = models.CharField(max_length=64)
+    canonical_registry_content = models.TextField()
+    registry_projection_digest = models.CharField(max_length=71)
+    operand_projection_version = models.CharField(max_length=64)
+    canonical_operand_content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    creation_txid = models.BigIntegerField(default=0, editable=False)
+
+    class Meta:
+        db_table = "datara_metric"
+        constraints = [
+            models.UniqueConstraint(fields=["owner", "snapshot", "content_digest"], name="datara_metric_owner_snapshot_digest_uniq"),
+            models.UniqueConstraint(fields=["owner", "snapshot", "metric_id"], name="datara_metric_scope_id_uniq"),
+        ]
+
+
+class MetricOperand(ImmutableGraphModel):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    snapshot = models.ForeignKey(Snapshot, on_delete=models.PROTECT, related_name="+")
+    parent_metric = models.ForeignKey(Metric, on_delete=models.PROTECT, related_name="+")
+    source_evidence = models.ForeignKey(Evidence, on_delete=models.PROTECT, related_name="+", null=True, blank=True)
+    dependency_metric = models.ForeignKey(Metric, on_delete=models.PROTECT, related_name="+", null=True, blank=True)
+    dependency_value_path = models.CharField(max_length=128, null=True, blank=True)
+    role = models.CharField(max_length=128)
+    ordinal = models.PositiveIntegerField()
+    canonical_operand = models.TextField()
+
+    class Meta:
+        db_table = "datara_metric_operand"
+        constraints = [models.UniqueConstraint(fields=["parent_metric", "role", "ordinal"], name="datara_metric_operand_role_ordinal_uniq")]
+
+
+class MetricSeal(ImmutableGraphModel):
+    metric = models.OneToOneField(Metric, primary_key=True, on_delete=models.PROTECT, related_name="+", serialize=False)
+    snapshot = models.ForeignKey(Snapshot, on_delete=models.PROTECT, related_name="+")
+    creation_txid = models.BigIntegerField(default=0, editable=False)
+
+    class Meta:
+        db_table = "datara_metric_seal"
 
 
 class Quarantine(OwnerScopedModel):
@@ -533,6 +607,9 @@ MILESTONE_A_MODELS: tuple[type[models.Model], ...] = (
     Eligibility,
     Evidence,
     Quarantine,
+    Metric,
+    MetricOperand,
+    MetricSeal,
 )
 
 
@@ -556,6 +633,9 @@ __all__ = [
     "Eligibility",
     "Evidence",
     "Quarantine",
+    "Metric",
+    "MetricOperand",
+    "MetricSeal",
     "MILESTONE_A_MODELS",
     "model_names",
 ]

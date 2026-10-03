@@ -135,8 +135,11 @@ class OwnerScopedStore:
             raise ResourceNotVisible("datara.Snapshot", snapshot_id) from None
 
     def get_evidence(self, evidence_id: Any) -> Evidence:
+        """Return owned source evidence; computed evidence is unavailable here."""
         try:
-            return Evidence.objects.for_owner(self._scope.owner_id).get(pk=evidence_id)
+            return Evidence.objects.for_owner(self._scope.owner_id).get(
+                pk=evidence_id, kind="source_record"
+            )
         except (Evidence.DoesNotExist, ValueError, TypeError):
             raise ResourceNotVisible("datara.Evidence", evidence_id) from None
 

@@ -123,10 +123,10 @@ class OwnerScopedStore:
 
     def get_session(self, activity_id: Any) -> Session:
         activity = self.get_activity(activity_id)
-        session = activity.session_record
-        if session is None or session.owner_id != self._scope.owner_id:
-            raise ResourceNotVisible("datara.Session", activity_id)
-        return session
+        try:
+            return Session.objects.for_owner(self._scope.owner_id).get(activity_id=activity.pk)
+        except Session.DoesNotExist:
+            raise ResourceNotVisible("datara.Session", activity_id) from None
 
     def get_snapshot(self, snapshot_id: Any) -> Snapshot:
         try:

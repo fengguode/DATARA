@@ -217,7 +217,7 @@ class BindingConditionTests(TestCase):
         )
 
     def test_the_authorized_persistence_set_is_the_whole_set(self) -> None:
-        """The Milestone A set is exactly the four record groups plus three."""
+        """The approved source and recorded-metric graph is the entire set."""
         facts = introspect_persisted_schema()
         datara_tables = sorted(
             table for table in facts.table_names if table.startswith("datara_")
@@ -229,6 +229,9 @@ class BindingConditionTests(TestCase):
                 "datara_eligibility",
                 "datara_evidence",
                 "datara_import",
+                "datara_metric",
+                "datara_metric_operand",
+                "datara_metric_seal",
                 "datara_quarantine",
                 "datara_session",
                 "datara_snapshot",

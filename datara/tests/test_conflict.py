@@ -652,6 +652,9 @@ class ConflictTestCase(TestCase):
                 "Eligibility",
                 "Evidence",
                 "Quarantine",
+                "Metric",
+                "MetricOperand",
+                "MetricSeal",
             },
         )
         for forbidden in (

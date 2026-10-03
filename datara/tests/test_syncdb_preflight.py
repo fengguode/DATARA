@@ -196,12 +196,13 @@ class PreflightPostgreSQLRegressions(TransactionTestCase):
         settings = connection.settings_dict
         self.assertTrue(settings['NAME'].startswith('test_datara_'))
         self.assertEqual(connection.vendor, 'postgresql')
-        def libpq_quote(value):
-            return "'" + str(value).replace('\\', '\\\\').replace("'", "\\'") + "'"
+        for field in ('HOST', 'PORT', 'NAME', 'USER'):
+            self.assertNotIn(chr(10), str(settings[field]))
+            self.assertNotIn(chr(13), str(settings[field]))
         with tempfile.TemporaryDirectory(prefix='datara-synthetic-preflight-') as folder:
             service = Path(folder) / 'pg_service.conf'
             service.write_text('[synthetic_preflight]\n' + '\n'.join(
-                key + '=' + libpq_quote(settings[field])
+                key + '=' + str(settings[field])
                 for key, field in [('host', 'HOST'), ('port', 'PORT'), ('dbname', 'NAME'), ('user', 'USER')]
             ) + '\n', encoding='utf-8')
             with connection.cursor() as cursor:
@@ -211,7 +212,7 @@ class PreflightPostgreSQLRegressions(TransactionTestCase):
                         'recorder': ['public', 'django_migrations']}
             with patch.dict(os.environ, {'PGSERVICEFILE': str(service), 'PGPASSWORD': settings['PASSWORD']}):
                 inventory = collect('synthetic_preflight', manifest, {'roles': [settings['USER']]})
-        self.assertEqual(inventory['errors'], [])
+        self.assertEqual(inventory['errors'], [], 'covered=' + ','.join(inventory['covered_query_ids']))
         self.assertTrue(set(QUERIES).issubset(inventory['covered_query_ids']))
         self.assertTrue({'acl_relations', 'acl_namespaces', 'acl_database', 'acl_columns',
                          'database_privileges', 'recorder_observations'}.issubset(inventory['covered_query_ids']))
@@ -261,3 +262,7 @@ class PreflightEvidenceBindingRegressions(unittest.TestCase):
         self.assertEqual(len(report['source_file_hashes']), 6)
         self.assertEqual(report['implementation_source_hash'], digest(report['source_file_hashes']))
         self.assertFalse(report['eligible'])
+
+
+
+

@@ -41,7 +41,7 @@ class RecordedConsistencyTests(SimpleTestCase):
                               (3, "2026-09-02T00:00:00Z", 1000, "running")])
         self.assertEqual(self.counts(result), (28, 2, 2, 26))
         self.assertEqual(result.days[0].activity_count.integer, 2)
-        self.assertEqual(result.days[0].members, tuple(sorted((identity(1), identity(2)))))
+        self.assertEqual(result.days[0].members, (identity(2), identity(1)))
         self.assertEqual(result.days[1].activity_count.integer, 1)
         self.assertFalse(result.days[2].recorded_active)
 
@@ -51,7 +51,7 @@ class RecordedConsistencyTests(SimpleTestCase):
                              start="2026-09-01T12:00:00Z", end="2026-09-30T12:00:00Z")
         self.assertTrue(result.eligible)
         self.assertEqual(self.counts(result), (28, 0, 0, 28))
-        self.assertEqual(result.outside_effective, tuple(sorted((identity(1), identity(2)))))
+        self.assertEqual(result.outside_effective, (identity(2), identity(1)))
         self.assertEqual(result.days[0].start_epoch_seconds, _epoch("2026-09-02T00:00:00Z"))
         self.assertEqual(result.days[-1].end_epoch_seconds, _epoch("2026-09-30T00:00:00Z"))
         self.assertIn(b"partial", canonical_consistency_content(result))

@@ -219,6 +219,31 @@ class SavedMetricStore(OwnerScopedStore):
                            _canonical(json.loads(metric.canonical_content)["method_identity"]) if complete else None,
                            created)
 
+    def prepare_and_save_metric(self, saved_snapshot_id, metric_code):
+        """Prepare from an authorized saved source and atomically save its graph.
+
+        Nested success remains provisional until the caller's outer commit.
+        Eligibility and unavailable values are those of the canonical preparer.
+        """
+        try:
+            self._snapshot(saved_snapshot_id)
+            if metric_code not in ("activity-summary", "training-volume-trend"):
+                raise MetricStoreRefusal("unsupported_metric_code")
+            with self._owner_serialized_write():
+                snapshot = self._snapshot(saved_snapshot_id)
+                _, data = self._source(snapshot)
+                if metric_code == "activity-summary":
+                    prepared = summarize_recorded(data)
+                else:
+                    prepared = prepare_overall_trend(data)
+                return self.save_prepared_metrics(saved_snapshot_id, prepared)
+        except MetricStoreRefusal:
+            raise
+        except (DatabaseError, ScopedInputError, ProvenanceError, RecordedInputRefusal,
+                m.ResourceNotVisible, ValidationError, ValueError, TypeError,
+                KeyError, AttributeError):
+            raise MetricStoreRefusal("metric_persistence_unavailable") from None
+
     def save_prepared_metrics(self, saved_snapshot_id, prepared):
         """Atomically save one supported compound result, or reuse exact history."""
         try:

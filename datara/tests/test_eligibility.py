@@ -42,6 +42,7 @@ import unittest
 from contextlib import contextmanager
 from unittest import mock
 
+from datara import eligibility as eligibility_module
 from datara.eligibility import (
     CONTRACT_VERSION,
     COMPARATOR_AT_LEAST,
@@ -1436,46 +1437,9 @@ class _Exploding:
         return 0
 
 
-
 # ===========================================================================
 # E9 -- a wrong-typed observation is explained, never raised  (#385)
 # ===========================================================================
-
-
-#: Every reason_detail string this engine may ever emit, enumerated by hand.
-#: Deliberately NOT derived from REASON_DETAILS: deriving it would make the
-#: closed-vocabulary assertion circular. If a future change adds a detail to the
-#: engine but not to this set, the assertion below fails, which is the point.
-KNOWN_DETAILS = frozenset({
-    # satisfied
-    "present",
-    "within_declared_domain",
-    # absence
-    "observation_not_supplied",
-    "observation_is_null",
-    # invalid observed value
-    "type_mismatch",
-    "outside_declared_domain",
-    "non_finite_number",
-    "unsupported_observed_type",
-    "below_declared_minimum",
-    "above_declared_maximum",
-    "not_equal_to_declared_value",
-    # comparison not met
-    "below_required_window",
-    "above_permitted_window",
-    "above_permitted_limit",
-    "below_required_minimum",
-    "not_equal_to_required",
-    # not evaluable
-    "unknown_requirement_kind",
-    "unknown_comparator",
-    "unknown_declared_value_type",
-    "missing_required_value",
-    "required_value_type_mismatch",
-    "observation_not_comparable",
-    "evaluation_raised",
-})
 
 
 class E9WrongTypedObservationTests(unittest.TestCase):
@@ -1601,30 +1565,260 @@ class E9WrongTypedObservationTests(unittest.TestCase):
         self.assertEqual(decision.satisfied_requirements, ("REQ-OK",))
         self.assertFalse(decision.eligible)
 
-    def test_widening_the_unevaluable_vocabulary_did_not_open_it(self) -> None:
-        """The vocabulary is still closed: #385 added one detail to one code.
+    def test_only_the_codes_that_emit_a_detail_may_carry_it(self) -> None:
+        """The closed-set property, asserted in the direction that matters.
 
-        ``type_mismatch`` is now permitted under REASON_REQUIREMENT_NOT_EVALUABLE
-        in addition to REASON_MANDATORY_FIELD_INVALID, which already had it. It
-        must still be rejected under every other code -- otherwise the fix would
-        have converted a closed vocabulary into a loose one.
+        An earlier version of this test compared each vocabulary against a
+        hand-written mirror of their union. That checks the wrong direction --
+        that every *listed* detail is *known* -- and so cannot fail when the
+        engine emits a detail nobody listed, which is the actual failure mode.
+        The invariant that matters is stated in E10VocabularyInvariantTests,
+        which enumerates the emission sites instead of mirroring the literals.
+
+        What is worth keeping here is narrower and does hold: widening a
+        vocabulary must not leak a detail into codes that never emit it.
+        ``type_mismatch`` is produced for every kind, but only the two codes the
+        engine actually routes through may carry it.
         """
 
-        for code, details in REASON_DETAILS.items():
-            with self.subTest(code=code):
-                self.assertIsInstance(details, frozenset)
-                self.assertNotIn("not_a_real_detail", details)
-                self.assertLessEqual(
-                    details, KNOWN_DETAILS,
-                    f"{code} admits unknown detail(s): {sorted(details - KNOWN_DETAILS)}",
-                )
-
-        # Exactly the two codes whose engine paths emit this detail may carry it.
+        self.assertIn("type_mismatch", REASON_DETAILS[REASON_REQUIREMENT_NOT_EVALUABLE])
+        self.assertIn("type_mismatch", REASON_DETAILS[REASON_MANDATORY_FIELD_INVALID])
         permitting = {c for c, d in REASON_DETAILS.items() if "type_mismatch" in d}
         self.assertEqual(
             permitting,
             {REASON_MANDATORY_FIELD_INVALID, REASON_REQUIREMENT_NOT_EVALUABLE},
         )
+        # Every vocabulary is still a closed frozenset of plain strings, so free
+        # text cannot reach a stable code.
+        for code, details in REASON_DETAILS.items():
+            with self.subTest(code=code):
+                self.assertIsInstance(details, frozenset)
+                self.assertTrue(all(isinstance(d, str) for d in details))
+
+
+# --- helpers for the E10 vocabulary-invariant tests -------------------------
+#
+# These reach into the module's private producers on purpose. The invariant is
+# about what those producers CAN emit, so it cannot be stated through the public
+# surface without re-deriving it by trial -- which is exactly what produced the
+# three gaps this now pins.
+
+
+def eligibility_invalid_code_for(kind):
+    """The reason code a kind's unevaluable/invalid observation is reported under."""
+
+    return eligibility_module._INVALID_BY_KIND[kind]
+
+
+def validate_observed(requirement, observed):
+    """``_validate_observed`` -- the first producer of reason_detail values."""
+
+    return eligibility_module._validate_observed(requirement, observed)
+
+
+#: The detail the per-requirement exception handler emits.
+EVALUATION_RAISED = "evaluation_raised"
+
+
+class _RaisingObservation(int):
+    """An int that explodes on every comparison the engine might attempt.
+
+    Used where ``_Exploding`` cannot serve: ``_Exploding`` has no ``__ge__`` and
+    so is rejected earlier, on type, rather than reaching the comparison step
+    that the exception handler guards.
+    """
+
+    def __ge__(self, other):
+        raise RuntimeError("comparison exploded")
+
+    def __gt__(self, other):
+        raise RuntimeError("comparison exploded")
+
+    def __le__(self, other):
+        raise RuntimeError("comparison exploded")
+
+    def __lt__(self, other):
+        raise RuntimeError("comparison exploded")
+
+    def __eq__(self, other):
+        raise RuntimeError("comparison exploded")
+
+    def __ne__(self, other):
+        raise RuntimeError("comparison exploded")
+
+    def __hash__(self):
+        return 0
+
+
+class E10VocabularyInvariantTests(unittest.TestCase):
+    """The invariant that was violated twice, asserted so it cannot be a third time.
+
+    ``_validate_observed`` and the per-requirement exception handler both produce
+    a detail drawn from ONE namespace, but ``_INVALID_BY_KIND`` routes that
+    detail under one of THREE code vocabularies. Nothing in the module tied those
+    two facts together, so a detail could be emitted under a code whose closed
+    vocabulary did not admit it -- and the failure mode is catastrophic rather
+    than cosmetic: ``EligibilityDecision.__post_init__`` raises, no decision is
+    returned, and every *other* requirement's explanation is discarded.
+
+    That happened twice. ``type_mismatch`` shipped in #379 and was fixed in
+    #385; ``outside_declared_domain`` and ``evaluation_raised`` survived that fix
+    and were found in independent review. Both times the surviving gap had the
+    same shape: the only test input exercising the detail belonged to the one
+    kind whose vocabulary already admitted it.
+
+    These tests enumerate the emission sites instead of trusting hand-picked
+    inputs, so a future detail added to either producer fails here rather than
+    at a caller's ``except``.
+    """
+
+    #: Values chosen to drive every branch of ``_validate_observed``: the right
+    #: type, a wrong type, an unusable type, null, absent, and non-finite.
+    OBSERVATIONS = ("many", 3.5, True, [1], {"a": 1}, None, float("nan"), float("inf"), 0, 7, 30)
+
+    def _requirement(self, kind, source_key, comparator, value_type, required, domain):
+        kwargs = dict(
+            requirement_id="REQ-INVARIANT",
+            description="invariant probe",
+            kind=kind,
+            source_key=source_key,
+            comparator=comparator,
+            declared_value_type=value_type,
+            required_value=required,
+        )
+        if domain is not None:
+            kwargs["permitted_values"] = domain
+        return EligibilityRequirement(**kwargs)
+
+    def test_every_emittable_detail_is_admitted_by_every_invalid_code(self) -> None:
+        """The invariant itself, stated directly.
+
+        For each kind, take the code ``_INVALID_BY_KIND`` routes to and assert it
+        admits every detail ``_validate_observed`` can return. This is the check
+        that would have caught #379, #385's survivor D1, and D2.
+        """
+
+        emitted = set()
+        for kind in sorted(SUPPORTED_KINDS):
+            code = eligibility_invalid_code_for(kind)
+            for comparator in sorted(SUPPORTED_COMPARATORS):
+                for value_type in sorted(SUPPORTED_VALUE_TYPES):
+                    for domain in (None, ("running", "cycling"), (7, 14, 21, 28)):
+                        for required in (None, 0, 7, 90, "x"):
+                            for observed in self.OBSERVATIONS:
+                                try:
+                                    requirement = self._requirement(
+                                        kind, "k", comparator, value_type, required, domain)
+                                except Exception:
+                                    continue  # not a constructible declaration
+                                try:
+                                    detail = validate_observed(requirement, observed)
+                                except Exception:
+                                    continue
+                                if detail is not None:
+                                    emitted.add(detail)
+            permitted = REASON_DETAILS[code]
+            unpermitted = sorted(d for d in emitted if d not in permitted)
+            with self.subTest(kind=kind, invalid_code=code):
+                self.assertEqual(
+                    unpermitted, [],
+                    f"{kind} routes invalid observations to {code}, which does not "
+                    f"admit {unpermitted}; evaluate_eligibility would raise instead "
+                    f"of returning an explanation",
+                )
+
+    def test_the_exception_handler_detail_is_admitted_by_every_invalid_code(self) -> None:
+        """The second producer: an exception during one requirement's evaluation.
+
+        The handler reports through ``_INVALID_BY_KIND`` too, so
+        ``evaluation_raised`` must be admitted by the invalid code of every kind,
+        not only by REQUIREMENT_NOT_EVALUABLE.
+        """
+
+        for kind in sorted(SUPPORTED_KINDS):
+            code = eligibility_invalid_code_for(kind)
+            with self.subTest(kind=kind, invalid_code=code):
+                self.assertIn(
+                    EVALUATION_RAISED, REASON_DETAILS[code],
+                    f"{kind} routes a raising requirement to {code}, which does not "
+                    f"admit {EVALUATION_RAISED!r}",
+                )
+
+    def test_no_declaration_and_observation_pair_raises(self) -> None:
+        """The end-to-end guarantee: an unusable observation never raises.
+
+        SR11 requires an ineligible skill to *identify* its unmet requirements.
+        This asserts the engine always returns a decision, so a caller never has
+        to distinguish "ineligible" from "the engine fell over".
+        """
+
+        checked = 0
+        for kind in sorted(SUPPORTED_KINDS):
+            for comparator in sorted(SUPPORTED_COMPARATORS):
+                for value_type in sorted(SUPPORTED_VALUE_TYPES):
+                    for domain in (None, (7, 14, 21, 28)):
+                        for required in (None, 7, 90):
+                            for observed in self.OBSERVATIONS + (_RaisingObservation(),):
+                                try:
+                                    requirement = self._requirement(
+                                        kind, "k", comparator, value_type, required, domain)
+                                except Exception:
+                                    continue
+                                checked += 1
+                                with self.subTest(
+                                    kind=kind, comparator=comparator, value_type=value_type,
+                                    domain=domain, required=required, observed=repr(observed)[:24],
+                                ):
+                                    # The assertion is that a decision comes back at
+                                    # all, and that whatever it carries is inside the
+                                    # closed vocabulary. Some of these combinations are
+                                    # legitimately satisfied -- asserting ineligibility
+                                    # here would be asserting a product decision.
+                                    decision = decide({requirement.source_key: observed},
+                                                      requirements=[requirement])
+                                    for item in decision.unmet_requirements:
+                                        self.assertIn(item["reason_code"], REASON_DETAILS)
+                                        self.assertIn(
+                                            item["reason_detail"],
+                                            REASON_DETAILS[item["reason_code"]],
+                                        )
+                                    self.assertEqual(
+                                        decision.eligible, not decision.unmet_requirements)
+        self.assertGreater(checked, 1000, "the sweep must actually cover combinations")
+
+    def test_a_raising_requirement_never_discards_another_explanations(self) -> None:
+        """The isolation claim, exercised on the exception path for every kind.
+
+        The module docstring promises an exception during one requirement's
+        evaluation never discards the other requirements' explanations. That was
+        true for two kinds and false for ``mandatory_field`` until #385's review
+        finding D2.
+        """
+
+        for kind in sorted(SUPPORTED_KINDS):
+            raising_requirement = self._requirement(
+                kind, "boom", COMPARATOR_AT_LEAST, VALUE_ANY, 1, None)
+            bystander = EligibilityRequirement(
+                requirement_id="REQ-BYSTANDER",
+                description="perfectly evaluable",
+                kind=KIND_QUALITY_LIMIT,
+                source_key="invalid_record_count",
+                comparator=COMPARATOR_AT_MOST,
+                required_value=5,
+                declared_value_type=VALUE_INTEGER,
+            )
+            with self.subTest(kind=kind):
+                with network_disabled():
+                    decision = decide(
+                        {"boom": _RaisingObservation(), "invalid_record_count": 9},
+                        requirements=[raising_requirement, bystander],
+                    )
+                codes = unmet_codes(decision)
+                self.assertIn("REQ-BYSTANDER:QUALITY_LIMIT_NOT_MET", codes)
+                self.assertTrue(
+                    any(c.startswith("REQ-INVARIANT:") for c in codes),
+                    f"the raising requirement must still be explained for {kind}: {codes}",
+                )
 
 def _replace_field(requirement, field, value):
     """``dataclasses.replace`` with one field overridden."""

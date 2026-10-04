@@ -211,6 +211,15 @@ REASON_DETAILS: Mapping[str, frozenset[str]] = {
             "below_declared_minimum",
             "above_declared_maximum",
             "not_equal_to_declared_value",
+            # The per-requirement exception handler reports through
+            # _INVALID_BY_KIND, so a mandatory_field whose comparison raises
+            # arrives here rather than at REQUIREMENT_NOT_EVALUABLE. Without
+            # this entry the handler raised on construction instead of
+            # isolating the failure, discarding every other requirement's
+            # explanation -- the second violation of the same invariant, found
+            # in independent review of #385. The vocabulary is the right place
+            # to reconcile it: the codes are load-bearing and must not move.
+            "evaluation_raised",
         }
     ),
     REASON_HISTORY_COVERAGE_NOT_MET: frozenset(
@@ -240,6 +249,10 @@ REASON_DETAILS: Mapping[str, frozenset[str]] = {
             # review of #379; see issue #385. The vocabulary stays closed: a
             # detail that is not listed here is still rejected on construction.
             "type_mismatch",
+            # _validate_observed returns "outside_declared_domain" for every
+            # kind that carries a permitted_values domain, not just
+            # mandatory_field. See the note on "evaluation_raised" above.
+            "outside_declared_domain",
             "unsupported_observed_type",
             "evaluation_raised",
         }

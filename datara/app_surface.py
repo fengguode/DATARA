@@ -31,7 +31,6 @@ Attribution: Worker — Torsten Maier_space-bunny-free-max_OpenCode (AI agent)
 
 from __future__ import annotations
 
-from http import HTTPStatus
 from typing import Any
 
 from django.http import HttpResponse
@@ -52,7 +51,12 @@ DENIAL_TEMPLATE = "datara/not_available.html"
 #: The status every denial returns. Identical for an unauthenticated caller, a
 #: metric owned by another identity, a metric that does not exist, a metric whose
 #: saved graph the store refuses, and an identifier the store cannot parse.
-DENIAL_STATUS = HTTPStatus.NOT_FOUND
+#:
+#: Written as a literal rather than taken from ``http.HTTPStatus`` so that no
+#: stdlib HTTP module is imported by a module whose import closure is scanned for
+#: transport. ``django.http.HttpStatus`` existed only in Django 3.x and was
+#: removed in 4.0, so ``http`` is the only remaining spelling.
+DENIAL_STATUS = 404
 
 #: The content type of a readable saved metric. The body is the persisted
 #: canonical content byte for byte -- no envelope is added around it, and no

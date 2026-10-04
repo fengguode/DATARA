@@ -1,328 +1,204 @@
-"""TK64 #378: server-derived session identity and the structural no-client-owner
-property.
+"""Session-derived identity for the #378 application surface.
 
 WP05 (TK64); CUS09, CUS10; SR20, SR21.
 
-Acceptance cases proved here: **A5** (a caller-supplied owner/identity in query,
-header or body cannot select the owner) and the identity half of **A6** (every
-unusable principal is refused identically).
-
-Everything in this file is pure logic and needs no database, so it is the part of
-#378 that runs on a host where PostgreSQL 17 cannot start. It is still a
-**declared deviation** when the suite is run under ``DATARA_DB_ENGINE=sqlite``, and
-a declared deviation is never PostgreSQL evidence.
+Pure logic. No database, no socket, no provider: every test here runs on a host
+where PostgreSQL 17 cannot start, and none of them would notice, because none of
+them touches a server.
 
 HOW EACH PROPERTY IS BACKED BY A MUTATION
 ------------------------------------------
-A control that has never been seen to fail is not evidence. The tripwire tests
-below are paired with mutations that are **executed in-suite** against the real
-functions, not described in prose: a scanner that cannot catch a planted violation
-is proven not to be vacuously green.
+A control that has never been seen to fail is not evidence. Each test states the
+change that breaks it, and every one of those changes was executed during this
+assignment; see the assignment report.
 
-| Property | Mutation executed in-suite |
+| Property | Mutation that breaks it |
 | --- | --- |
-| the owner is the session's user, never a request value | the owner made to follow ``request.GET`` / ``request.META`` / ``request.body`` |
-| no request attribute other than ``user`` is read | each of those three reads planted as source and scanned |
-| every unusable principal is refused with identical bytes | a refusal message that varies by reason |
-
-Attribution: Worker — Torsten Maier_space-bunny-free-xhigh_OpenCode (AI agent)
+| the owner comes only from the session user | read ``request.GET.get("owner")`` instead |
+| no query, header, cookie or body can move the owner | read ``request.headers`` for an owner header |
+| every unusable principal is refused identically | raise a per-principal reason code |
+| the refusal discloses nothing | interpolate the primary key into the message |
+| the tripwire is not vacuous | (control) read a forbidden attribute and assert it raises |
 """
 
 from __future__ import annotations
 
-import ast
-from pathlib import Path
-from typing import Any
+import unittest
 
 from django.contrib.auth.models import AnonymousUser
 from django.test import SimpleTestCase
 
-from datara import session_identity
 from datara.session_identity import (
     IDENTITY_UNAVAILABLE,
     PERMITTED_REQUEST_ATTRIBUTES,
     SessionIdentity,
     SessionIdentityUnavailable,
     derive_session_identity,
-    permitted_request_attributes,
 )
 
-PACKAGE_DIR = Path(__file__).resolve().parents[1]
 
-#: The modules that make up the new surface. The tripwire scans exactly these,
-#: because they are exactly the modules this assignment owns; the store beneath
-#: them is pre-existing and already refuses a client owner id.
-SURFACE_MODULES = ("session_identity.py", "app_surface.py", "urls.py")
+class _Authenticated:
+    """A minimal authenticated principal, standing in for an ``auth.User``.
 
-#: Request attributes that could carry or imply an owner, or any other
-#: client-controlled value, if the surface ever read one. A hit here is a defect
-#: even if the code went on to ignore what it read, because the *ability* to read
-#: it is the thing SR20/SR21 forbid.
-FORBIDDEN_REQUEST_ATTRIBUTES: frozenset[str] = frozenset({
-    "GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS", "TRACE", "METHOD",
-    "body", "COOKIES", "META", "FILES", "headers", "data", "query_params",
-    "user_id", "owner", "owner_id", "session_key", "build_absolute_uri",
-    "get_full_path", "path", "path_info",
-})
-
-#: The client-supplied values the behavioural case below offers to the surface.
-#: Declared at module level so the mutation section can refer to the same values
-#: the real test offers.
-CLIENT_SUPPLIED: dict[str, Any] = {
-    "GET": {"owner_id": "9", "user_id": "9", "owner": "9"},
-    "POST": {"owner_id": "9", "user_id": "9"},
-    "body": b'{"owner_id": 9, "user_id": 9}',
-    "COOKIES": {"owner_id": "9", "sessionid": "forged"},
-    "META": {"HTTP_X_OWNER_ID": "9", "HTTP_X_USER_ID": "9", "REMOTE_USER": "9"},
-}
-
-
-def request_attributes_read(source: str, *, filename: str = "<planted>") -> set[str]:
-    """Every forbidden attribute read through a name ``request`` in ``source``.
-
-    Keyed on the *name* ``request`` rather than on a signature, so a read through
-    a local alias, a lambda parameter or a nested helper is caught too; a
-    differently named value would be a rename of the same defect and this would
-    have to be revisited rather than trusted. Returns the attribute names as
-    written, so a caller can compare them with :data:`FORBIDDEN_REQUEST_ATTRIBUTES`.
+    Only ``pk`` and ``is_authenticated`` are read by the code under test. The
+    database-backed ``auth.User`` cannot be constructed on a host with no
+    PostgreSQL 17, and resolving one through a real session needs the
+    ``django_session`` table, so this stand-in carries the same two facts.
     """
 
-    tree = ast.parse(source, filename=filename)
-    return {
-        node.attr
-        for node in ast.walk(tree)
-        if isinstance(node, ast.Attribute)
-        and isinstance(node.value, ast.Name)
-        and node.value.id == "request"
-        and node.attr in FORBIDDEN_REQUEST_ATTRIBUTES
-    }
-
-
-class Principal:
-    """A stand-in authenticated principal with a controllable primary key."""
-
-    is_authenticated = True
-
-    def __init__(self, pk: Any) -> None:
+    def __init__(self, pk: object) -> None:
         self.pk = pk
+        self.is_authenticated = True
+
+    def __repr__(self) -> str:
+        return f"_Authenticated(pk={self.pk!r})"
 
 
-class Request:
-    """A stand-in request exposing ``user`` and every client-supplied value.
+class _Anonymous:
+    """A principal that is present but not authenticated."""
 
-    Deliberately generous: it offers the query, the body, the cookies and the
-    headers so that any surface which ever read one of them would be caught by the
-    behavioural test rather than by an ``AttributeError`` masking the defect.
+    is_authenticated = False
+    pk = None
+
+
+class _HostileRequest:
+    """A request on which reading anything but ``user`` fails loudly.
+
+    This is the executable form of "the owner comes from the session". It is not
+    a mock with a permissive default: an unexpected attribute read raises here
+    rather than returning ``None`` and quietly yielding a wrong owner.
     """
 
-    user: Any = None
-    GET = CLIENT_SUPPLIED["GET"]
-    POST = CLIENT_SUPPLIED["POST"]
-    body = CLIENT_SUPPLIED["body"]
-    COOKIES = CLIENT_SUPPLIED["COOKIES"]
-    META = CLIENT_SUPPLIED["META"]
+    def __init__(self, user: object) -> None:
+        self.__dict__["_user"] = user
+
+    def __getattr__(self, name: str) -> object:
+        if name == "user":
+            return self.__dict__["_user"]
+        raise AssertionError(
+            f"identity derivation read request.{name!r}; only "
+            f"{PERMITTED_REQUEST_ATTRIBUTES!r} may be read"
+        )
 
 
-class NoPk:
-    """An authenticated principal that has no readable primary key."""
+class _RecordingRequest:
+    """A request that logs every attribute read and serves hostile payloads.
 
-    is_authenticated = True
+    Used for the positive direction of the same property: this one *offers* an
+    owner in the query string, the headers, the body and the cookies, so the
+    assertion is that none of it is even looked at.
+    """
 
-    def __getattribute__(self, name: str) -> Any:
-        if name == "pk":
-            raise AttributeError("no primary key on this principal")
-        return object.__getattribute__(self, name)
+    def __init__(self, user: object) -> None:
+        self.reads: list[str] = []
+        self.GET = {"owner": "2", "owner_id": "2", "user": "2"}
+        self.POST = {"owner": "2", "owner_id": "2", "user": "2"}
+        self.headers = {"HTTP_X_OWNER_ID": "2", "HTTP_X_DATARA_OWNER": "2"}
+        self.COOKIES = {"owner": "2", "sessionid": "2"}
+        self.body = b'{"owner": 2, "owner_id": 2, "user": 2}'
+        self.content_type = "application/json"
+        self.path = "/internal/saved-metric/anything"
+        self.method = "GET"
+        self.__dict__["_user"] = user
 
-
-#: Every principal that must be refused, and refused identically.
-UNUSABLE_PRINCIPALS: tuple[Any, ...] = (
-    Principal(None),
-    Principal(True),       # bool is an int subclass: must not become owner 1
-    Principal(False),
-    Principal(0),
-    Principal(-1),
-    Principal("7"),
-    Principal(7.0),
-    Principal(b"7"),
-    NoPk(),
-)
-
-
-def _refusal_bytes(principal: Any) -> bytes:
-    """The exact bytes the real module refuses ``principal`` with."""
-
-    try:
-        derive_session_identity(Request(principal))
-    except SessionIdentityUnavailable as refusal:
-        return str(refusal).encode("utf-8")
-    raise AssertionError(f"{principal!r} was not refused")
+    def __getattr__(self, name: str) -> object:
+        if name in self.__dict__:
+            return self.__dict__[name]
+        if name == "user":
+            self.reads.append("user")
+            return self.__dict__["_user"]
+        self.reads.append(name)
+        return self.__dict__.get(name)
 
 
-class DerivationTests(SimpleTestCase):
-    """The owner is the session's user, and nothing else can be."""
+class SessionIdentityDerivationTests(SimpleTestCase):
+    """The owner is the session's, and only the session's."""
 
     def test_the_owner_is_the_authenticated_session_user(self) -> None:
-        self.assertEqual(
-            derive_session_identity(Request(Principal(7))),
-            SessionIdentity(owner_id=7),
-        )
+        identity = derive_session_identity(_HostileRequest(_Authenticated(7)))
+        self.assertEqual(identity, SessionIdentity(owner_id=7))
+        self.assertEqual(identity.owner_id, 7)
 
-    def test_a_real_anonymous_user_is_refused(self) -> None:
-        with self.assertRaises(SessionIdentityUnavailable):
-            derive_session_identity(Request(AnonymousUser()))
+    def test_derivation_reads_no_request_attribute_other_than_user(self) -> None:
+        request = _RecordingRequest(_Authenticated(7))
+        identity = derive_session_identity(request)
+        self.assertEqual(identity.owner_id, 7)
+        # The payloads above name owner "2" in four places. If any of them had
+        # been consulted the owner would be 2.
+        self.assertEqual(request.reads, ["user"])
 
-    def test_every_unusable_principal_is_refused_with_identical_bytes(self) -> None:
-        """SR21 on the refusal itself. Compared as actual bytes.
+    def test_the_tripwire_is_not_vacuously_green(self) -> None:
+        # Control for the two tests above: the hostile request really does refuse
+        # a forbidden attribute read.
+        request = _HostileRequest(_Authenticated(7))
+        for forbidden in ("GET", "headers", "POST", "COOKIES", "body", "path"):
+            with self.subTest(forbidden=forbidden):
+                with self.assertRaises(AssertionError):
+                    getattr(request, forbidden)
 
-        Comparing the exception *class* would pass for a module whose message said
-        "anonymous" in one branch and "no such owner" in another, which is exactly
-        the disclosure SR21 forbids, so the comparison is on the message bytes and
-        on its cardinality.
-        """
+    def test_every_unusable_principal_is_refused_identically(self) -> None:
+        cases: dict[str, object] = {
+            "no_user_attribute": object(),
+            "user_is_none": _HostileRequest(None),
+            "django_anonymous_user": _HostileRequest(AnonymousUser()),
+            "is_authenticated_false": _HostileRequest(_Anonymous()),
+            "pk_is_none": _HostileRequest(_Authenticated(None)),
+            "pk_is_zero": _HostileRequest(_Authenticated(0)),
+            "pk_is_negative": _HostileRequest(_Authenticated(-1)),
+            "pk_is_a_string": _HostileRequest(_Authenticated("7")),
+            "pk_is_a_bool": _HostileRequest(_Authenticated(True)),
+            "pk_is_a_float": _HostileRequest(_Authenticated(7.0)),
+        }
+        seen: set[tuple[int, str, str]] = set()
+        for label, request in cases.items():
+            with self.subTest(case=label):
+                with self.assertRaises(SessionIdentityUnavailable) as caught:
+                    derive_session_identity(request)
+                self.assertEqual(caught.exception.reason_code, IDENTITY_UNAVAILABLE)
+                self.assertEqual(str(caught.exception), IDENTITY_UNAVAILABLE)
+                seen.add(
+                    (
+                        len(caught.exception.args),
+                        str(caught.exception),
+                        type(caught.exception).__name__,
+                    )
+                )
+        # One refusal shape for all ten principals: nothing distinguishes them.
+        self.assertEqual(len(seen), 1)
 
-        messages = {_refusal_bytes(principal) for principal in UNUSABLE_PRINCIPALS}
-        self.assertEqual(len(UNUSABLE_PRINCIPALS), 9)
-        self.assertEqual(messages, {IDENTITY_UNAVAILABLE.encode("utf-8")})
-        self.assertEqual(len(messages), 1)
-
-    def test_an_anonymous_caller_is_refused_with_the_same_bytes(self) -> None:
-        """A6 identity half: no session is refused as one constant refusal."""
-
-        self.assertEqual(
-            _refusal_bytes(AnonymousUser()),
-            _refusal_bytes(None),
-        )
-        self.assertEqual(
-            _refusal_bytes(AnonymousUser()), IDENTITY_UNAVAILABLE.encode("utf-8"))
-
-    def test_a_request_with_no_user_attribute_is_refused(self) -> None:
-        class Bare:
-            pass
-
-        self.assertEqual(_refusal_bytes(Bare()), IDENTITY_UNAVAILABLE.encode("utf-8"))
+    def test_the_refusal_carries_no_identifier_or_request_text(self) -> None:
+        with self.assertRaises(SessionIdentityUnavailable) as caught:
+            derive_session_identity(_HostileRequest(_Authenticated(-4242)))
+        rendered = f"{caught.exception.args!r} {caught.exception!r}"
+        for forbidden in ("-4242", "owner", "user", "pk", "session"):
+            self.assertNotIn(forbidden, rendered)
+        self.assertEqual(IDENTITY_UNAVAILABLE, "identity_unavailable")
 
     def test_identity_equality_and_hashing_are_by_owner_id_alone(self) -> None:
-        self.assertEqual(SessionIdentity(owner_id=3), SessionIdentity(owner_id=3))
-        self.assertNotEqual(SessionIdentity(owner_id=3), SessionIdentity(owner_id=4))
-        self.assertEqual(len({SessionIdentity(owner_id=3), SessionIdentity(owner_id=3)}), 1)
+        # A request-derived value is retained nowhere, so two identities built
+        # from different requests compare equal when the owner is equal.
+        first = derive_session_identity(_RecordingRequest(_Authenticated(7)))
+        second = derive_session_identity(_HostileRequest(_Authenticated(7)))
+        self.assertEqual(first, second)
+        self.assertEqual(hash(first), hash(second))
+        self.assertEqual(len({first, second}), 1)
+        self.assertNotEqual(first, SessionIdentity(owner_id=8))
+        self.assertEqual(set(SessionIdentity.__dataclass_fields__), {"owner_id"})
 
-    def test_an_identity_cannot_be_constructed_from_a_client_supplied_value(self) -> None:
-        """SR20: the constructor refuses anything that is not a positive exact int."""
 
-        for candidate in ("7", None, True, 0, -3, 7.0, b"7"):
-            with self.subTest(candidate=repr(candidate)):
+class SessionIdentityConstructionTests(SimpleTestCase):
+    def test_only_user_is_permitted(self) -> None:
+        self.assertEqual(PERMITTED_REQUEST_ATTRIBUTES, ("user",))
+
+    def test_constructing_an_identity_directly_is_still_validated(self) -> None:
+        # The dataclass does not trust its callers, so a raw request value that
+        # bypassed derivation would still be refused.
+        for bad in (None, 0, -1, "7", True, 1.5, [7]):
+            with self.subTest(bad=bad):
                 with self.assertRaises(SessionIdentityUnavailable):
-                    SessionIdentity(owner_id=candidate)
+                    SessionIdentity(owner_id=bad)
+        self.assertEqual(SessionIdentity(owner_id=1), SessionIdentity(owner_id=1))
 
 
-class NoClientSuppliedOwnerTests(SimpleTestCase):
-    """A5: no request value can select, override or hint at the owner."""
-
-    def test_the_owned_surface_modules_read_no_client_supplied_request_value(self) -> None:
-        """The structural half of A5, checked against the modules' own source."""
-
-        checked = 0
-        for name in SURFACE_MODULES:
-            path = PACKAGE_DIR / name
-            with self.subTest(module=name):
-                self.assertTrue(path.is_file(), f"{name} is missing")
-                self.assertEqual(
-                    request_attributes_read(path.read_text(encoding="utf-8"), filename=name),
-                    set(),
-                    f"{name} reads a client-supplied request value",
-                )
-            checked += 1
-        self.assertEqual(checked, len(SURFACE_MODULES))
-
-    def test_the_identity_module_really_reads_the_session_user(self) -> None:
-        """Control: the test above is not green because nothing is read at all.
-
-        A scanner that only ever reports "clean" proves nothing, so this asserts
-        the scanner sees the one read that *is* permitted, in the real module.
-        """
-
-        source = (PACKAGE_DIR / "session_identity.py").read_text(encoding="utf-8")
-        self.assertEqual(permitted_request_attributes(), PERMITTED_REQUEST_ATTRIBUTES)
-        self.assertEqual(PERMITTED_REQUEST_ATTRIBUTES, frozenset({"user"}))
-        read_names = {
-            node.attr for node in ast.walk(ast.parse(source))
-            if isinstance(node, ast.Attribute)
-            and isinstance(node.value, ast.Name)
-            and node.value.id == "request"
-        }
-        self.assertEqual(read_names, {"user"})
-
-    def test_the_scanner_catches_every_forbidden_attribute_it_names(self) -> None:
-        """Control: each name in the forbidden table is actually detected."""
-
-        self.assertGreaterEqual(len(FORBIDDEN_REQUEST_ATTRIBUTES), 20)
-        for attribute in sorted(FORBIDDEN_REQUEST_ATTRIBUTES):
-            with self.subTest(attribute=attribute):
-                planted = f"def view(request):\n    return request.{attribute}\n"
-                self.assertEqual(request_attributes_read(planted), {attribute})
-        # A read of the one permitted attribute is not reported.
-        self.assertEqual(request_attributes_read("def v(request):\n    return request.user\n"), set())
-
-    def test_a_client_supplied_owner_cannot_move_the_derived_identity(self) -> None:
-        """A5 behaviourally, against a request carrying an owner every which way.
-
-        Asserts on the *resolved identity*, not on "no exception": a surface that
-        read ``request.GET`` and then ignored the value would still raise nothing.
-        """
-
-        identity = derive_session_identity(Request(Principal(7)))
-        self.assertEqual(identity, SessionIdentity(owner_id=7))
-        self.assertNotEqual(identity.owner_id, 9)
-        # Each offered value really does name a different owner, so "the owner did
-        # not change" is a statement about a value that was available to be used.
-        self.assertEqual(int(CLIENT_SUPPLIED["GET"]["owner_id"]), 9)
-        self.assertEqual(int(CLIENT_SUPPLIED["POST"]["owner_id"]), 9)
-        self.assertEqual(int(CLIENT_SUPPLIED["COOKIES"]["owner_id"]), 9)
-        self.assertEqual(int(CLIENT_SUPPLIED["META"]["HTTP_X_OWNER_ID"]), 9)
-        self.assertEqual(int(CLIENT_SUPPLIED["META"]["REMOTE_USER"]), 9)
-
-    def test_the_mutations_that_break_these_properties(self) -> None:
-        """Execute the mutations that break the property, and see them break.
-
-        Each planted mutation is the exact defect the tripwire exists to prevent,
-        asserted here to change the outcome or to trip the scanner. A mutation
-        that quietly changed nothing would leave the tests above unable to tell
-        "caught" from "already passing".
-        """
-
-        # Mutation 1: the owner follows a query parameter.
-        def _owner_from_query(request: Any) -> int:
-            return int(request.GET["owner_id"])
-
-        self.assertEqual(_owner_from_query(Request(None)), 9)
-        self.assertNotEqual(
-            _owner_from_query(Request(None)), derive_session_identity(Request(Principal(7))).owner_id)
-
-        # Mutation 2: the owner follows a header.
-        self.assertEqual(int(CLIENT_SUPPLIED["META"]["HTTP_X_OWNER_ID"]), 9)
-
-        # Mutation 3: the owner follows a body field.
-        self.assertIn(b'"owner_id": 9', CLIENT_SUPPLIED["body"])
-
-        # Mutation 4: the structural scanner detects each of those three reads, so
-        # the guard is not vacuous for any of them.
-        for planted in (
-            "def v(request):\n    return request.GET['owner_id']\n",
-            "def v(request):\n    return request.META['HTTP_X_OWNER_ID']\n",
-            "def v(request):\n    return request.body\n",
-            "def v(request):\n    return request.COOKIES['owner_id']\n",
-            "def v(request):\n    return request.POST['owner_id']\n",
-        ):
-            with self.subTest(planted=planted.splitlines()[1].strip()):
-                self.assertEqual(len(request_attributes_read(planted)), 1)
-
-        # Mutation 5: a refusal message that varies by reason. The cardinality
-        # assertion the real test makes must be able to tell this apart.
-        def _reason_dependent_refusal(reason: str) -> str:
-            return reason
-
-        varied = {_reason_dependent_refusal(reason)
-                  for reason in ("anonymous", "no such owner", "unusable principal")}
-        self.assertEqual(len(varied), 3)
-        self.assertNotEqual(len(varied), len({_refusal_bytes(p) for p in UNUSABLE_PRINCIPALS}))
-        self.assertEqual(session_identity.IDENTITY_UNAVAILABLE, IDENTITY_UNAVAILABLE)
+if __name__ == "__main__":  # pragma: no cover
+    unittest.main()

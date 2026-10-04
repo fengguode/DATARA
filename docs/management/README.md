@@ -6,6 +6,8 @@ This is the single management entry point for Datara. [Project control issue](ht
 
 ## Management documents
 
+- [OpenCode takeover handover — 4 October 2026](opencode-handover-2026-10-04.md)
+
 - [Agreed project brief and roadmap](../project-brief-and-roadmap.md)
 - [Founding brainstorming record](../brainstorming-record-2026-09-30.md)
 - [Customer-User-Stories (top-level requirements)](product-requirements.md)

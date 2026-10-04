@@ -4,6 +4,18 @@
 
 Start with `AGENTS.md`, `docs/management/README.md`, `docs/project-brief-and-roadmap.md`, the relevant CUS, SR, and decision records, [the roster](roster.md), [shared lessons](knowledge/shared-lessons.md), and the assigned role knowledge file. The dated brainstorming record explains historical choices. The [GitHub Project](https://github.com/users/fengguode/projects/3) centralizes every P0 CUS, Feature, SR, Task and Subtask: linked issue content, priority, status, ownership and dependencies are the shared authoritative management record. DATARA's registry and documents mirror identifiers, traceability and planned coverage and retain linked detailed evidence. Do not create a second backlog. Prior-project lessons are methods to evaluate, not DATARA CUS or SR records or verification evidence.
 
+## Skill discovery and selection
+
+At task selection, check the [essential agent skill set](roster.md#essential-agent-skill-set) and the current environment's available skills. Use an installed skill when it fits the concrete task. When the user asks to find a skill, or a needed capability is absent, apply `find-skills` before building a replacement or declaring a tooling blocker.
+
+1. Identify the task and capability gap; search the existing installed catalog first.
+2. Read `find-skills/SKILL.md` and discover relevant candidates from the publisher or skills directory. Its keyword search is `npx skills find <task keywords>` when that CLI is available and permitted.
+3. Inspect the candidate's instructions, source, dependencies, task fit and requested actions. Popularity is a discovery signal, not proof of quality or authorization.
+4. Install through the supported skill installer when authorized, then read the installed skill and apply it within the bounded assignment. An explicit request to add a named skill authorizes that installation; discovery alone does not authorize unrelated installations, spending, credentials or access changes.
+5. Record the selected skill, source and actual availability in the assignment or handoff. If no suitable skill is found or discovery is unavailable, report that limit and continue eligible work using existing tools.
+
+Keep discovery proportional to the delivery need: reuse an existing suitable skill, avoid repeated searches for unchanged tasks, and retain the normal implementation, independent review and evidence gates. Skills do not override founder instructions, file ownership, product contracts or release permissions.
+
 ## Assignment and GitHub reporting
 
 Use the [project title convention](../management/README.md#requirement-and-backlog-title-convention) for requirement and backlog issue titles: `[Type][area]content_of_title`. Put priority in the Project Priority field or requirement priority metadata, never in the title.

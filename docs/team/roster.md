@@ -22,6 +22,14 @@ The source team's names and specified sandbox modes are retained. By the founder
 
 The Project **Agent** options identify the responsible role only, as `Role — Configured name`, for example `Worker — Torsten Maier` and `Primary Coordinator — Yi Tang`. That field records ownership, so it does not carry a model or harness. Issue assignments, activity comments, commit trailers, and pull request contribution tables use the fuller [identity label format](attribution.md#identity-label-format) defined in the Code of Conduct, which appends the model and harness. Actual runtime IDs and execution evidence are recorded separately; GitHub publishes comments under the authenticated account.
 
+## Essential agent skill set
+
+| Skill | Source | Workflow use |
+| --- | --- | --- |
+| `find-skills` (founder request: `find-skill`) | [Vercel Labs Find Skills](https://github.com/vercel-labs/skills/tree/main/skills/find-skills) | Discover suitable agent skills when a task needs a capability beyond the installed set; follow the [skill discovery step](workflow.md#skill-discovery-and-selection). |
+
+The founder adopted `find-skills` on 4 October 2026. It is installed for the current Codex user at `~/.codex/skills/find-skills/SKILL.md`; other agent environments must check their own installed skill catalog before claiming availability. Installation does not prove runtime invocation. Read the skill before use. This agent tooling supports DATARA delivery and does not extend the athlete-facing elemental skill library.
+
 ## Design skill inventory for later evaluation
 
 The prior project contains six generic design skills under `updater-vnext/.agents/skills/`:

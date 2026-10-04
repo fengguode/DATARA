@@ -1359,6 +1359,17 @@ class VocabularyTests(unittest.TestCase):
             dict(SATISFIED_OBSERVATIONS, sport="swimming"),
             dict(SATISFIED_OBSERVATIONS, covered_days=14),
             dict(SATISFIED_OBSERVATIONS, invalid_record_count=9),
+            # Wrong-typed observations for the two NON-mandatory kinds. These were
+            # absent from this sweep, which is how #385 shipped: heart_rate is a
+            # mandatory_field, the one kind whose invalid-value vocabulary already
+            # permitted "type_mismatch", so the sweep passed while
+            # history_coverage and quality_limit raised on construction.
+            dict(SATISFIED_OBSERVATIONS, covered_days=28.5),
+            dict(SATISFIED_OBSERVATIONS, invalid_record_count="0"),
+            dict(SATISFIED_OBSERVATIONS, covered_days=True),
+            dict(SATISFIED_OBSERVATIONS, invalid_record_count=[0]),
+            dict(SATISFIED_OBSERVATIONS, covered_days="28"),
+            dict(SATISFIED_OBSERVATIONS, invalid_record_count={"n": 0}),
             {},
             {"hostile": _Exploding(), "unseen": 1, "covered_days": 1},
         )
@@ -1424,6 +1435,196 @@ class _Exploding:
     def __hash__(self):
         return 0
 
+
+
+# ===========================================================================
+# E9 -- a wrong-typed observation is explained, never raised  (#385)
+# ===========================================================================
+
+
+#: Every reason_detail string this engine may ever emit, enumerated by hand.
+#: Deliberately NOT derived from REASON_DETAILS: deriving it would make the
+#: closed-vocabulary assertion circular. If a future change adds a detail to the
+#: engine but not to this set, the assertion below fails, which is the point.
+KNOWN_DETAILS = frozenset({
+    # satisfied
+    "present",
+    "within_declared_domain",
+    # absence
+    "observation_not_supplied",
+    "observation_is_null",
+    # invalid observed value
+    "type_mismatch",
+    "outside_declared_domain",
+    "non_finite_number",
+    "unsupported_observed_type",
+    "below_declared_minimum",
+    "above_declared_maximum",
+    "not_equal_to_declared_value",
+    # comparison not met
+    "below_required_window",
+    "above_permitted_window",
+    "above_permitted_limit",
+    "below_required_minimum",
+    "not_equal_to_required",
+    # not evaluable
+    "unknown_requirement_kind",
+    "unknown_comparator",
+    "unknown_declared_value_type",
+    "missing_required_value",
+    "required_value_type_mismatch",
+    "observation_not_comparable",
+    "evaluation_raised",
+})
+
+
+class E9WrongTypedObservationTests(unittest.TestCase):
+    """SR11: an ineligible skill identifies its unmet requirements.
+
+    Regression cover for #385. ``_validate_observed`` returns the detail
+    ``"type_mismatch"`` for a wrong-typed observation for *every* kind, but only
+    ``mandatory_field`` narrows to a vocabulary that permitted it. For
+    ``history_coverage`` and ``quality_limit`` the pair was rejected on
+    construction, so ``evaluate_eligibility`` raised
+    ``EligibilityContractError`` and every requirement's explanation was lost --
+    the opposite of the module's own isolation claim. These tests hold the fixed
+    behaviour: an observation of the wrong type yields an *ineligible decision
+    that names the unmet requirement*, for every kind, without raising.
+    """
+
+    #: Observations whose type cannot satisfy the declared type.
+    WRONG_TYPED = ("28.5", 28.5, True, [0], {"n": 0})
+
+    def _requirement(self, kind, source_key):
+        """One requirement of ``kind``, numeric, so a non-number is wrong-typed."""
+
+        return EligibilityRequirement(
+            requirement_id="REQ-WRONG-TYPED",
+            kind=kind,
+            source_key=source_key,
+            description="declared numeric, observed otherwise",
+            comparator=COMPARATOR_AT_LEAST,
+            required_value=28,
+            declared_value_type=VALUE_INTEGER,
+        )
+
+    def test_a_fractional_observation_against_an_integer_requirement_is_explained(self) -> None:
+        """The realistic case: 28.5 days of coverage where an integer was declared.
+
+        This is ordinary data, not an adversarial input, and it is the case the
+        original 48 tests never exercised.
+        """
+
+        requirement = self._requirement(KIND_HISTORY_COVERAGE, "covered_days")
+        with network_disabled():
+            decision = decide({"covered_days": 28.5}, requirements=[requirement])
+
+        self.assertFalse(decision.eligible)
+        item = only(decision)
+        self.assertEqual(item["reason_code"], REASON_REQUIREMENT_NOT_EVALUABLE)
+        self.assertEqual(item["reason_detail"], "type_mismatch")
+        self.assertEqual(item["observed_value"], 28.5)
+        self.assertIn(item["reason_detail"], REASON_DETAILS[item["reason_code"]])
+
+    def test_every_kind_explains_a_wrong_typed_observation_instead_of_raising(self) -> None:
+        """Sweep every kind against every wrong-typed observation.
+
+        Mutation: revert the #385 vocabulary entry and this raises
+        EligibilityContractError for two of the three kinds, failing here.
+        """
+
+        for kind, source_key in (
+            (KIND_MANDATORY_FIELD, "heart_rate"),
+            (KIND_HISTORY_COVERAGE, "covered_days"),
+            (KIND_QUALITY_LIMIT, "invalid_record_count"),
+        ):
+            requirement = self._requirement(kind, source_key)
+            for observed in self.WRONG_TYPED:
+                with self.subTest(kind=kind, observed=repr(observed)):
+                    with network_disabled():
+                        decision = decide({source_key: observed}, requirements=[requirement])
+
+                    self.assertFalse(decision.eligible)
+                    self.assertIsNone(decision.decision_reason_code)
+                    item = only(decision)
+                    self.assertIn(item["reason_code"], REASON_DETAILS)
+                    self.assertIn(item["reason_detail"], REASON_DETAILS[item["reason_code"]])
+                    self.assertNotEqual(item["reason_code"], REASON_REQUIREMENT_SATISFIED)
+                    self.assertFalse(is_execution_available(decision))
+                    with self.assertRaises(EligibilityRefusal):
+                        require_eligible(decision)
+
+    def test_a_wrong_typed_requirement_does_not_discard_the_other_explanations(self) -> None:
+        """Requirements are independent: one bad value must not lose the rest.
+
+        The candidate commit claimed an exception during one requirement's
+        evaluation is "isolated rather than discarding the other requirements'
+        explanations". That was false: the whole call raised. This test is the
+        executable meaning of the claim -- a second, evaluable requirement keeps
+        its own explanation alongside the wrong-typed one.
+        """
+
+        wrong = self._requirement(KIND_HISTORY_COVERAGE, "covered_days")
+        short = EligibilityRequirement(
+            requirement_id="REQ-SHORT",
+            kind=KIND_QUALITY_LIMIT,
+            source_key="invalid_record_count",
+            description="more invalid records than permitted",
+            comparator=COMPARATOR_AT_MOST,
+            required_value=5,
+            declared_value_type=VALUE_INTEGER,
+        )
+        satisfied = EligibilityRequirement(
+            requirement_id="REQ-OK",
+            kind=KIND_MANDATORY_FIELD,
+            source_key="heart_rate",
+            description="a recorded heart rate",
+            comparator=COMPARATOR_PRESENT,
+            declared_value_type=VALUE_INTEGER,
+        )
+
+        with network_disabled():
+            decision = decide(
+                {"covered_days": 28.5, "invalid_record_count": 9, "heart_rate": 150},
+                requirements=[wrong, short, satisfied],
+            )
+
+        codes = unmet_codes(decision)
+        self.assertEqual(
+            codes,
+            (
+                "REQ-SHORT:QUALITY_LIMIT_NOT_MET",
+                "REQ-WRONG-TYPED:REQUIREMENT_NOT_EVALUABLE",
+            ),
+        )
+        # The evaluable requirement still reports itself as satisfied.
+        self.assertEqual(decision.satisfied_requirements, ("REQ-OK",))
+        self.assertFalse(decision.eligible)
+
+    def test_widening_the_unevaluable_vocabulary_did_not_open_it(self) -> None:
+        """The vocabulary is still closed: #385 added one detail to one code.
+
+        ``type_mismatch`` is now permitted under REASON_REQUIREMENT_NOT_EVALUABLE
+        in addition to REASON_MANDATORY_FIELD_INVALID, which already had it. It
+        must still be rejected under every other code -- otherwise the fix would
+        have converted a closed vocabulary into a loose one.
+        """
+
+        for code, details in REASON_DETAILS.items():
+            with self.subTest(code=code):
+                self.assertIsInstance(details, frozenset)
+                self.assertNotIn("not_a_real_detail", details)
+                self.assertLessEqual(
+                    details, KNOWN_DETAILS,
+                    f"{code} admits unknown detail(s): {sorted(details - KNOWN_DETAILS)}",
+                )
+
+        # Exactly the two codes whose engine paths emit this detail may carry it.
+        permitting = {c for c, d in REASON_DETAILS.items() if "type_mismatch" in d}
+        self.assertEqual(
+            permitting,
+            {REASON_MANDATORY_FIELD_INVALID, REASON_REQUIREMENT_NOT_EVALUABLE},
+        )
 
 def _replace_field(requirement, field, value):
     """``dataclasses.replace`` with one field overridden."""

@@ -230,6 +230,16 @@ REASON_DETAILS: Mapping[str, frozenset[str]] = {
             "observation_is_null",
             "observation_not_comparable",
             "non_finite_number",
+            # ``_validate_observed`` returns "type_mismatch" for a wrong-typed
+            # observation for EVERY kind, but only ``mandatory_field`` narrows to
+            # REASON_MANDATORY_FIELD_INVALID, whose vocabulary already permitted
+            # it. ``history_coverage`` and ``quality_limit`` report this code, so
+            # without the entry below a wrong-typed observation against them made
+            # __post_init__ raise EligibilityContractError and destroyed every
+            # requirement's explanation instead of naming the unmet one. Found in
+            # review of #379; see issue #385. The vocabulary stays closed: a
+            # detail that is not listed here is still rejected on construction.
+            "type_mismatch",
             "unsupported_observed_type",
             "evaluation_raised",
         }

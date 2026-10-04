@@ -63,6 +63,7 @@ import json
 import sys
 import tempfile
 from contextlib import contextmanager
+from dataclasses import dataclass
 from pathlib import Path
 from unittest import mock
 
@@ -146,6 +147,13 @@ class _Principal:
         return f"_Principal(pk={self.pk})"
 
 
+@dataclass(frozen=True)
+class _Scope:
+    """Mirrors ``datara.db.OwnerScope``, which is what the real store exposes."""
+
+    owner_id: object
+
+
 class _SavedMetricStoreDouble:
     """Stand-in for ``SavedMetricStore`` with the real types and refusal codes.
 
@@ -209,6 +217,16 @@ class _SavedMetricStoreDouble:
     def __init__(self) -> None:
         self.owner_id: object = None
 
+    @property
+    def scope(self) -> _Scope:
+        """The owner the store actually resolved to.
+
+        ``owner_store_for`` compares this with the derived identity, so a double
+        that hid its scope would silently switch that check off.
+        """
+
+        return _Scope(owner_id=self.owner_id)
+
     def get_metric(self, metric_id: object) -> SavedMetric:
         self._record("get_metric", self.owner_id, str(metric_id))
         owned = type(self).saved.get(self.owner_id, {})
@@ -230,6 +248,14 @@ class _SavedMetricStoreDouble:
 
 def _route(metric_id: str) -> str:
     return f"/{datara_urls.PROVISIONAL_ROUTE_PREFIX}{metric_id}"
+
+
+def _request_with_user(pk: int):
+    """A bare GET request carrying only a principal, for direct function calls."""
+
+    request = RequestFactory().get(_route(OWN_METRIC))
+    request.user = _Principal(pk)
+    return request
 
 
 def _carriers(other: int, other_is_str: bool = False) -> dict[str, dict]:
@@ -461,6 +487,48 @@ class OwnReadTests(_SurfaceTestCase):
         self.assertEqual(
             _SavedMetricStoreDouble.calls,
             [("for_user", OWNER, "_Principal"), ("get_metric", OWNER, OWN_METRIC)],
+        )
+
+
+class StoreScopeInvariantTests(_SurfaceTestCase):
+    """The store's resolved scope must be the session's owner (SR20)."""
+
+    def test_a_store_scoped_to_another_owner_is_refused(self) -> None:
+        # The store resolves a different owner than the session does. That is the
+        # one thing the derived identity exists to catch, and it must be refused
+        # rather than read.
+        class _MisScoped(_SavedMetricStoreDouble):
+            @classmethod
+            def for_user(cls, user):
+                store = super().for_user(user)
+                store.owner_id = OTHER_OWNER
+                return store
+
+        with mock.patch.object(app_surface, "SavedMetricStore", _MisScoped):
+            _, response = self.drive(OWN_METRIC)
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(self.comparable(response),
+                         self.comparable(app_surface.generic_denial()))
+        self.assertNotIn(b"other_owner", response.content)
+
+    def test_a_matching_scope_is_served(self) -> None:
+        identity, store = app_surface.owner_store_for(_request_with_user(OWNER))
+        self.assertEqual(identity.owner_id, OWNER)
+        self.assertEqual(app_surface.store_owner_id(store), OWNER)
+
+    def test_store_owner_id_is_unverifiable_rather_than_raising(self) -> None:
+        # A store with no scope must degrade to "cannot check", not blow up on an
+        # attribute the double may not carry.
+        class _Opaque:
+            pass
+
+        self.assertIsNone(app_surface.store_owner_id(_Opaque()))
+        self.assertIsNone(app_surface.store_owner_id(object()))
+        self.assertEqual(
+            app_surface.store_owner_id(
+                type("S", (), {"scope": _Scope(owner_id=5)})()
+            ),
+            5,
         )
 
 

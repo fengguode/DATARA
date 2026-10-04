@@ -70,6 +70,28 @@ SAVED_METRIC_CONTENT_TYPE = "application/json"
 DENIAL_REASON = "not_available"
 
 
+#: Owner scope the store actually resolved, used only to assert that it is the
+#: session's owner. Read through :func:`store_owner_id` so a store without a
+#: ``scope`` degrades to "unverifiable" rather than raising on an attribute a
+#: test double may not carry.
+_UNVERIFIABLE_SCOPE = object()
+
+
+def store_owner_id(store: Any) -> Any:
+    """The owner id the store's own scope resolved to, or ``None``.
+
+    ``OwnerScopedStore`` exposes ``scope.owner_id``. Reading it back and comparing
+    it with the derived identity is what makes the identity load-bearing: without
+    that comparison the derived identity could be computed, discarded, and the
+    store built from a different principal with nothing noticing (SR20).
+    """
+
+    scope = getattr(store, "scope", _UNVERIFIABLE_SCOPE)
+    if scope is _UNVERIFIABLE_SCOPE:
+        return None
+    return getattr(scope, "owner_id", None)
+
+
 def owner_store_for(request: Any) -> tuple[SessionIdentity, SavedMetricStore]:
     """Return the session identity and the owner-scoped saved-metric store.
 
@@ -79,12 +101,24 @@ def owner_store_for(request: Any) -> tuple[SessionIdentity, SavedMetricStore]:
     either function, so there is no way to construct this pair from a request
     payload (CUS10, SR20).
 
+    The store's resolved scope is then compared against the derived identity and
+    a disagreement is refused. Both sides currently read ``request.user``, so the
+    check is an invariant assertion rather than a second derivation -- but it is
+    the assertion that catches a store built for anyone else, and it is what
+    keeps :func:`datara.session_identity.derive_session_identity` load-bearing on
+    this path instead of decorative.
+
     Raises :class:`~datara.session_identity.SessionIdentityUnavailable` when the
-    request carries no usable authenticated session.
+    request carries no usable authenticated session, or when the store's scope
+    does not resolve to that session's owner.
     """
 
     identity = derive_session_identity(request)
-    return identity, SavedMetricStore.for_user(request.user)
+    store = SavedMetricStore.for_user(request.user)
+    resolved = store_owner_id(store)
+    if resolved is not None and resolved != identity.owner_id:
+        raise SessionIdentityUnavailable()
+    return identity, store
 
 
 def generic_denial() -> HttpResponse:
@@ -138,4 +172,5 @@ __all__ = [
     "generic_denial",
     "owner_store_for",
     "saved_metric_view",
+    "store_owner_id",
 ]

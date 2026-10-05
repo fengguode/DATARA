@@ -41,6 +41,21 @@ Reuse one dedicated session per role when it supports the current model instruct
 
 Every bounded assignment names the role, issue, WP/CUS/Feature/SR/Task IDs, objective, dependencies/decision gates, acceptance criteria, exclusive writable paths, read-only references, base commit/branch/PR, available execution evidence, required checks, reviewers/final confirmer, current live-read timestamp and next handoff. Avoid concurrent edits to the same files. A sandbox's technical write access does not grant ownership. Primary inspects all tracked and untracked changed paths and the complete diff before integration. Preserve unrelated changes.
 
+### Coordinator merge authority
+
+The founder delegated merge authority to the Primary Coordinator on 5 October 2026: a pull request whose scope is **not CUS-level and not Feature-level** may be merged by the coordinator once its applicable confirmation gate has returned. CUS-level and Feature-level merges remain with the founder.
+
+This delegation changes **who performs the merge**, not **what evidence is required**. Section 7 still binds: the gate role for the scope must have returned a published verdict with no unresolved defect, findings must be fixed and re-verified on the merged head, and the process checkers must pass on that head. Authority to press the merge button is never a substitute for a gate that has not been satisfied, and it never converts an SR-, architecture-, contract- or user-visible-surface change into a task-level one.
+
+Applying it honestly means the following. Misclassifying scope in order to make a merge convenient is a conduct failure:
+
+- **Task-, subtask- and test-level pull requests** are within the delegation once their gate verdict is published.
+- A pull request that **implements or changes a system requirement, an architecture or a contract**, or that **makes a user-visible surface runnable**, still needs the section 7 confirmation for that scope even though the coordinator performs the merge. The fact that it was implemented as a task is not what decides this.
+- A pull request that **changes this Code of Conduct**, or that alters the coordinator's own authority, is not merged on the coordinator's authority. It is escalated to the founder.
+- A pull request whose **review record is unpublished**, or whose gate verdict is absent, rejected or conditional, is not merged regardless of scope.
+
+Record every merge made under the delegation with the pull request, the head SHA merged, the gate role whose verdict authorised it, and a link to that published verdict, so the authority is auditable rather than asserted.
+
 ### Agent identity labels
 
 Publish an agent identity as one canonical label that shows the persona, the model used, and the harness, so the two runtimes are distinguishable at a glance. This supplements the [issue #23](https://github.com/fengguode/DATARA/issues/23) attribution agreement; it does not replace it.

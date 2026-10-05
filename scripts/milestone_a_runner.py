@@ -215,7 +215,15 @@ def main():
     parser.add_argument("--native-windows", action="store_true")
     args = parser.parse_args()
     require(sys.flags.optimize == 0 and not os.environ.get("PYTHONOPTIMIZE"), "optimized Python refused")
-    require(platform.python_version() == "3.12.14", "candidate Python 3.12.14 required")
+    # Candidate interpreter pin: 3.12.10, moved from 3.12.14 by recorded founder
+    # decision (see docs/management/pinned-environment-decisions-2026-10-05.md).
+    # The gate is retained, not removed: an unpinned interpreter must still be
+    # refused. 3.12.14 has NO official Windows build -- python.org publishes
+    # source only for 3.12.11 and later, verified against the FTP listing, the
+    # release pages and the nuget.org "python" package index. 3.12.10 is the
+    # newest 3.12.x with an official Windows installer, so it is the nearest
+    # official interpreter to the original pin that actually runs on this host.
+    require(platform.python_version() == "3.12.10", "candidate Python 3.12.10 required")
     if args.native_windows:
         require(sys.platform == "win32", "native Windows interpreter required")
     identity()

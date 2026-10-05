@@ -15,12 +15,19 @@ powershell -NoProfile -File scripts/milestone_a.ps1 -Phase inspect -Python <abso
 ```
 
 `Phase` accepts only `inspect`, `install`, `migrate`, `test`, or `app-check`.
-The candidate contract requires native Windows Python **3.12.14**, PostgreSQL
+The candidate contract requires native Windows Python **3.12.10**, PostgreSQL
 **17.11**, `DATARA_DB_ENGINE=postgres`, `DATARA_DB_HOST=127.0.0.1` and
 `DATARA_DB_PORT=55432`. These are reported candidate settings requiring future
 executed evidence, distinct from the Linux/container reference topology.
 Optimized Python is refused. No implicit dependency installation occurs outside
 `install`; no SQLite fallback occurs in this Windows path.
+
+The interpreter pin was **3.12.14** and was moved to **3.12.10** by recorded
+founder decision; see
+[the pinned-environment decision record](../management/pinned-environment-decisions-2026-10-05.md).
+3.12.14 has no official Windows build, so the original pin was unsatisfiable on
+this platform. The pin itself is retained: an unpinned interpreter is still
+refused.
 
 | Phase | Explicit DATARA_DB_USER / DATARA_DB_NAME | Action |
 | --- | --- | --- |

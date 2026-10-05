@@ -57,6 +57,7 @@ import os
 import struct
 import unittest
 from typing import Iterable, Sequence
+from unittest import mock
 
 from datara import classification, intake
 from datara.canonical import IDENTITY_COMPONENTS, LogicalIdentity
@@ -93,6 +94,11 @@ ENUM, UINT8, UINT16, UINT32, SINT32 = 0x00, 0x02, 0x04, 0x06, 0x05
 #: raw 1142497800 == 2026-03-15T08:30:00Z.
 FIT_TIME_BASE = 1142497800
 EXPECTED_START_UTC = "2026-03-15T08:30:00Z"
+#: The same instant as whole seconds since the Unix epoch, as the canonical tuple
+#: carries it. Restored on review of #389: this constant and the exact-value
+#: assertion using it were deleted by that branch, and without them a one-second
+#: shift in the canonical identity instant passed the whole suite silently.
+EXPECTED_START_EPOCH_SECONDS = 1773563400
 INVALID_UINT8 = 0xFF
 INVALID_UINT16 = 0xFFFF
 INVALID_UINT32 = 0xFFFFFFFF
@@ -964,6 +970,22 @@ class DuplicateAndConflictTest(unittest.TestCase):
             IDENTITY_COMPONENTS,
         )
         self.assertEqual(record.logical_tuple.elapsed_duration_ms, 1_800_000)
+        # The exact canonical values, restored alongside the type and field-name
+        # checks above rather than replaced by them. Asserting only the type and
+        # the field names is satisfied by any three integers in any order, so a
+        # one-second shift in the canonical identity instant passed the whole
+        # suite silently. Proven by mutation: shifting
+        # classification.py:598 by one second left this file green. The exact
+        # assertion is what makes that mutant die.
+        self.assertEqual(
+            (
+                record.logical_tuple.sport_code,
+                record.logical_tuple.start_epoch_seconds,
+                record.logical_tuple.elapsed_duration_ms,
+            ),
+            (1, EXPECTED_START_EPOCH_SECONDS, 1_800_000),
+            "the quarantined candidate must carry the exact canonical tuple",
+        )
 
     def test_conflict_is_not_resolved_silently(self):
         # Mutation: auto-resolving to 'accepted' would fail this.
@@ -1090,22 +1112,42 @@ class PinnedProfileTest(unittest.TestCase):
     def test_a_mismatch_is_not_reported_as_absence(self):
         """The two failures are distinguishable, which is the whole point.
 
-        Mutation that fails: fold both cases into one ``_PINNED_AVAILABLE = False``
-        -- `pinned_state()` returns "absent" for a mismatch and this fails.
+        Rewritten on review of #389. The previous version asked the *ambient*
+        environment whether a mismatch happened, so on a host with the pinned SDK
+        installed and matching, ``state[0]`` was never ``"mismatch"`` and the
+        guarded block never ran. It therefore could not fail: the mutation it
+        documented was not exercised. A test that cannot fail is not evidence.
+
+        The mismatch is now produced deliberately, by making the verifier raise
+        exactly as it would on a real disagreement, so the branch runs regardless
+        of what is installed.
         """
 
-        state = C._load_pinned_state()
-        self.assertIn(state[0], ("available", "absent", "mismatch"))
-        if state[0] == "mismatch":
-            self.assertTrue(state[2], "a mismatch must carry a reason")
-            self.assertNotIsInstance(
-                self.assertRaises(C.PinnedProfileMismatch), AssertionError
-            )
-        # Absence reports DecoderUnavailable; mismatch reports
-        # PinnedProfileMismatch. Neither is reported as the other.
+        # Absence: the loader cannot import the SDK.
+        with mock.patch.object(C, "_load_pinned_profile", side_effect=ImportError("absent")):
+            state, profile, detail = C._load_pinned_state()
+        self.assertEqual(state, "absent")
+        self.assertIsNone(profile)
+        self.assertIn("ImportError", detail or "")
+
+        # Mismatch: the SDK loads and then disagrees with the matrix.
+        def _disagree(_profile):
+            raise C.PinnedProfileMismatch("profile version 21.216.0 pinned 21.217.0")
+
+        with mock.patch.object(C, "verify_pinned_profile", _disagree):
+            state, _profile, detail = C._load_pinned_state()
+        self.assertEqual(state, "mismatch")
+        self.assertTrue(detail, "a mismatch must carry a reason naming the disagreement")
+
+        # The two are distinct outcomes, and neither is reported as the other.
+        self.assertNotEqual(state, "absent")
         self.assertTrue(issubclass(C.PinnedProfileMismatch, RuntimeError))
         self.assertTrue(issubclass(C.DecoderUnavailable, RuntimeError))
         self.assertIsNot(C.PinnedProfileMismatch, C.DecoderUnavailable)
+
+        # The mutation this test documents is folding mismatch into absence.
+        # `assertEqual(state, "mismatch")` above is what kills it: if the loader
+        # ever reported a profile disagreement as absence, this fails here.
 
     def test_a_missing_decoder_is_still_absent_not_a_mismatch(self):
         """Mutation that fails: make absence raise PinnedProfileMismatch."""
@@ -1205,9 +1247,6 @@ class PinnedProfileTest(unittest.TestCase):
         # And a seconds-shaped value would never be equal to it.
         self.assertNotEqual(keyed.elapsed_duration_ms, 1800)
 
-
-if __name__ == "__main__":
-    unittest.main(verbosity=2)
 
 class KnownTuplesKeyingTest(unittest.TestCase):
     """``known_tuples`` must be comparable with a candidate's key.

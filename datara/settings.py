@@ -51,25 +51,50 @@ DEBUG = False
 
 INSTALLED_APPS = [
     # contenttypes/auth back the owner foreign key used for owner scoping
-    # (CUS10, SR20-SR21). No sessions/messages/admin/static surface is installed:
-    # this unit persists and reads data and serves no page.
+    # (CUS10, SR20-SR21). `sessions` is installed because the identity-bound
+    # read surface added in #378 derives its owner from `request.user`, and
+    # AuthenticationMiddleware only populates `request.user` from a session
+    # when SessionMiddleware and the sessions app are both present. Without
+    # them every request resolves to AnonymousUser and the surface denies
+    # everything. No messages/admin/static surface is installed.
     "django.contrib.contenttypes",
     "django.contrib.auth",
+    "django.contrib.sessions",
     "datara",
 ]
 
-# Present so Django's own security checks pass. This unit serves no page and no
-# endpoint; the middleware stack is here because the pinned command runs Django's
-# system checks, and a check failure must not be silently tolerated.
+# Present so Django's own security checks pass, and because the #378 read surface
+# needs a real session. SessionMiddleware must precede AuthenticationMiddleware:
+# the latter reads the session the former has not yet attached, and Django's own
+# system check (auth.E001) refuses the reversed order.
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
 ]
 
-ROOT_URLCONF = None
-TEMPLATES = []
+# The #378 surface is the first runnable page in this project. ROOT_URLCONF was
+# None because there was no URLconf to point at.
+ROOT_URLCONF = "datara.urls"
+
+# APP_DIRS makes datara/templates/ discoverable, so the surface's generic denial
+# template is found without coupling this file to that path. Empty
+# context_processors: the denial template must not gain a context that could vary
+# per request and reintroduce an existence oracle.
+TEMPLATES = [
+    {
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [],
+        "APP_DIRS": True,
+        "OPTIONS": {"context_processors": []},
+    },
+]
+
+# Still None: WSGI_APPLICATION names datara.wsgi.application, and no such module
+# exists. `runserver` falls back to get_internal_wsgi_application(), so leaving
+# this unset is honest rather than pointing at a module that is not there.
 WSGI_APPLICATION = None
 
 # Deterministic time handling. D02/D05: UTC instants; date scopes are half-open

@@ -31,8 +31,11 @@ path still resolves to Django's built-in technical 404 page. That page is
 uniform, is served with ``DEBUG=False``, and discloses **nothing about whether
 any metric exists** -- so SR21's indistinguishability is unaffected -- but it
 does mean route enumeration is possible against this URLconf. What is guaranteed
-is the narrower and sufficient claim: **no request for the route above produces
+is the narrower and sufficient claim: **no GET request for the route above produces
 a response shape other than the generic denial or the owner's own metric bytes.**
+An unsafe method never reaches the view at all -- ``CsrfViewMiddleware`` refuses
+it first, as 403 over real HTTP and 405 through the test client -- so those are
+method refusals and say nothing about whether any metric exists.
 
 Attribution: Worker — Torsten Maier_space-bunny-free-max_OpenCode (AI agent)
 """

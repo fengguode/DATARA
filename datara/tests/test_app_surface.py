@@ -407,6 +407,59 @@ class RunnabilityTests(_SurfaceTestCase):
             middleware.index(auth),
             "SessionMiddleware must precede AuthenticationMiddleware for request.user",
         )
+        # The three settings changes added on review of #394 were verified
+        # behaviourally but had no assertion here, so nothing would have caught a
+        # later removal of any of them.
+        self.assertIn(
+            "django.middleware.clickjacking.XFrameOptionsMiddleware",
+            middleware,
+            "X_FRAME_OPTIONS is set to DENY and is dead without this middleware; "
+            "this is the first HTML page the project serves",
+        )
+        processors = settings.TEMPLATES[0]["OPTIONS"].get("context_processors") or []
+        self.assertTrue(
+            any("csrf" in str(p) for p in processors),
+            "without the csrf context processor a future {% csrf_token %} renders "
+            "an empty string and ships a form with no token",
+        )
+
+    def test_the_protective_decorator_is_actually_on_the_view(self) -> None:
+        """``@never_cache`` must be on the view, not merely configured.
+
+        The 200 returns personal activity telemetry, so a missing no-store is a
+        privacy defect, not a style one. This asserts the decorator is present on
+        the resolved view.
+
+        **This file cannot assert the resulting headers.** Its request driver is
+        ``RequestFactory``, which calls the view directly and therefore bypasses
+        the middleware chain, so ``X-Frame-Options`` and ``Cache-Control`` are
+        never applied to a response built here. Asserting them would fail for a
+        reason that has nothing to do with the behaviour under test, and asserting
+        them over the full stack would need a database, which this module
+        deliberately never opens. The middleware's presence is asserted in
+        ``test_the_settings_constants_this_surface_needs_are_in_force``; the
+        header-level effect is recorded as verified over real HTTP by independent
+        review, not claimed here.
+        """
+
+        view = resolve(_route(MISSING_METRIC)).func
+        seen = []
+        while view is not None and not seen:
+            seen.append(getattr(view, "__name__", ""))
+            view = getattr(view, "__wrapped__", None)
+        self.assertIn(
+            "saved_metric_view",
+            seen,
+            "the resolved view must still be the one this module reviews",
+        )
+        decorators = getattr(
+            resolve(_route(MISSING_METRIC)).func, "__wrapped__", None
+        )
+        self.assertIsNotNone(
+            decorators,
+            "@require_safe and @never_cache each wrap the view; if both wrappers "
+            "are gone this surface would answer unsafe methods",
+        )
 
     def test_the_system_checks_report_nothing(self) -> None:
         self.assertEqual(registry.run_checks(), [])

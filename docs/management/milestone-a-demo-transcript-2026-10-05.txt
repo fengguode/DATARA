@@ -1,0 +1,133 @@
+------------------------------------------------------------------------------
+BEFORE  origin/main behaviour, unpatched
+  command: DATARA_SRC=C:\Users\guofe\AppData\Local\Temp\opencode\fix-379  python -X utf8 milestone_a_demo.py
+  exit=0
+------------------------------------------------------------------------------
+
+DATARA Milestone A - end-to-end demonstration
+SDK-generated FIT bytes -> classify -> plan -> (store) -> eligibility
+
+==============================================================================
+STAGE 1  classify_bytes  (pinned profile, no mocks)
+==============================================================================
+  [REJECT] baseline: road running  (115 B)
+          reason=undefined_base_type
+          detail=field 1 of message 0 declares base type 0x84, which pinned profile 21.217.0 does not define; its value cannot be interpreted
+  [REJECT] baseline: trail running  (115 B)
+          reason=undefined_base_type
+          detail=field 1 of message 0 declares base type 0x84, which pinned profile 21.217.0 does not define; its value cannot be interpreted
+  [REJECT] baseline: road cycling  (115 B)
+          reason=undefined_base_type
+          detail=field 1 of message 0 declares base type 0x84, which pinned profile 21.217.0 does not define; its value cannot be interpreted
+  [REJECT] C6: cross-sport running + road  (115 B)
+          reason=undefined_base_type
+          detail=field 1 of message 0 declares base type 0x84, which pinned profile 21.217.0 does not define; its value cannot be interpreted
+  [REJECT] C7 / D-A2: sub_sport = 254 all  (115 B)
+          reason=undefined_base_type
+          detail=field 1 of message 0 declares base type 0x84, which pinned profile 21.217.0 does not define; its value cannot be interpreted
+  [REJECT] C10 / D-A4: no activity message  (94 B)
+          reason=undefined_base_type
+          detail=field 1 of message 0 declares base type 0x84, which pinned profile 21.217.0 does not define; its value cannot be interpreted
+  [REJECT] D-A4: activity present, num_sessions absent  (115 B)
+          reason=undefined_base_type
+          detail=field 1 of message 0 declares base type 0x84, which pinned profile 21.217.0 does not define; its value cannot be interpreted
+  [REJECT] D-A4: activity present, num_sessions = 1  (120 B)
+          reason=undefined_base_type
+          detail=field 1 of message 0 declares base type 0x84, which pinned profile 21.217.0 does not define; its value cannot be interpreted
+==============================================================================
+STAGE 2  plan_import  (deterministic intake, per owner)
+==============================================================================
+  [skip]  baseline: road running: not accepted, intake never reached
+  [skip]  baseline: trail running: not accepted, intake never reached
+  [skip]  baseline: road cycling: not accepted, intake never reached
+  [skip]  C6: cross-sport running + road: not accepted, intake never reached
+  [skip]  C7 / D-A2: sub_sport = 254 all: not accepted, intake never reached
+  [skip]  C10 / D-A4: no activity message: not accepted, intake never reached
+  [skip]  D-A4: activity present, num_sessions absent: not accepted, intake never reached
+  [skip]  D-A4: activity present, num_sessions = 1: not accepted, intake never reached
+------------------------------------------------------------------------------
+SUMMARY  0/8 cases accepted at classification
+------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------
+AFTER   with base-type flag masked (0x7F)
+  command: DATARA_SRC=C:\Users\guofe\AppData\Local\Temp\opencode\demo-patched  python -X utf8 milestone_a_demo.py
+  exit=0
+------------------------------------------------------------------------------
+
+DATARA Milestone A - end-to-end demonstration
+SDK-generated FIT bytes -> classify -> plan -> (store) -> eligibility
+
+==============================================================================
+STAGE 1  classify_bytes  (pinned profile, no mocks)
+==============================================================================
+  [ACCEPT] baseline: road running  (115 B)
+          sport=running  sub_sport=road
+          elapsed_ms=1800500  timer_s=1800.500  dist_m=50000
+          start_utc=2043-11-13T22:13:20Z
+          warnings=['activity_message_absent', 'no_record_samples']
+  [ACCEPT] baseline: trail running  (115 B)
+          sport=running  sub_sport=trail
+          elapsed_ms=1200000  timer_s=1150  dist_m=30000
+          start_utc=2043-11-13T22:13:20Z
+          warnings=['activity_message_absent', 'no_record_samples']
+  [ACCEPT] baseline: road cycling  (115 B)
+          sport=cycling  sub_sport=road
+          elapsed_ms=2400000  timer_s=2300  dist_m=90000
+          start_utc=2043-11-13T22:13:20Z
+          warnings=['activity_message_absent', 'no_record_samples']
+  [ACCEPT] C6: cross-sport running + road  (115 B)
+          sport=running  sub_sport=road
+          elapsed_ms=900000  timer_s=900  dist_m=25000
+          start_utc=2043-11-13T22:13:20Z
+          warnings=['activity_message_absent', 'no_record_samples']
+  [ACCEPT] C7 / D-A2: sub_sport = 254 all  (115 B)
+          sport=running  sub_sport=all
+          elapsed_ms=900000  timer_s=900  dist_m=25000
+          start_utc=2043-11-13T22:13:20Z
+          warnings=['activity_message_absent', 'no_record_samples']
+  [ACCEPT] C10 / D-A4: no activity message  (94 B)
+          sport=running  sub_sport=road
+          elapsed_ms=900000  timer_s=900  dist_m=25000
+          start_utc=2043-11-13T22:13:20Z
+          warnings=['activity_message_absent', 'no_record_samples']
+  [ACCEPT] D-A4: activity present, num_sessions absent  (115 B)
+          sport=running  sub_sport=road
+          elapsed_ms=900000  timer_s=900  dist_m=25000
+          start_utc=2043-11-13T22:13:20Z
+          warnings=['activity_message_absent', 'no_record_samples']
+  [ACCEPT] D-A4: activity present, num_sessions = 1  (120 B)
+          sport=running  sub_sport=road
+          elapsed_ms=900000  timer_s=900  dist_m=25000
+          start_utc=2043-11-13T22:13:20Z
+          warnings=['no_record_samples']
+==============================================================================
+STAGE 2  plan_import  (deterministic intake, per owner)
+==============================================================================
+  [plan]  baseline: road running
+          accepted=1  rejected=0  duplicates=0  quarantined=0
+          rule_version=TK11-CLASS-1
+  [plan]  baseline: trail running
+          accepted=1  rejected=0  duplicates=0  quarantined=0
+          rule_version=TK11-CLASS-1
+  [plan]  baseline: road cycling
+          accepted=1  rejected=0  duplicates=0  quarantined=0
+          rule_version=TK11-CLASS-1
+  [plan]  C6: cross-sport running + road
+          accepted=1  rejected=0  duplicates=0  quarantined=0
+          rule_version=TK11-CLASS-1
+  [plan]  C7 / D-A2: sub_sport = 254 all
+          accepted=1  rejected=0  duplicates=0  quarantined=0
+          rule_version=TK11-CLASS-1
+  [plan]  C10 / D-A4: no activity message
+          accepted=1  rejected=0  duplicates=0  quarantined=0
+          rule_version=TK11-CLASS-1
+  [plan]  D-A4: activity present, num_sessions absent
+          accepted=1  rejected=0  duplicates=0  quarantined=0
+          rule_version=TK11-CLASS-1
+  [plan]  D-A4: activity present, num_sessions = 1
+          accepted=1  rejected=0  duplicates=0  quarantined=0
+          rule_version=TK11-CLASS-1
+------------------------------------------------------------------------------
+SUMMARY  8/8 cases accepted at classification
+------------------------------------------------------------------------------

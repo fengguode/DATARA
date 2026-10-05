@@ -15,14 +15,16 @@
 # D05 selects Django 5.2 LTS and PostgreSQL 17. `psycopg[binary]` is the
 # PostgreSQL 17 driver.
 #
-# `typing_extensions` is a transitive dependency of Django and was ABSENT from
-# this file while being installed. That made the claim above -- "exact == for
-# every distribution in the resolved set, including the transitive ones" --
-# false: an unpinned transitive dependency resolves differently per environment
-# while still satisfying this file. Pinned at the version present in the verified
-# environment. See docs/management/pinned-environment-decisions-2026-10-05.md.
-# NOTE: adding this line changes `pinned_dependency_lock_sha256`, which is the
-# SHA-256 of this file. Evidence quoting the previous value is not comparable.
+# `typing_extensions` is a transitive dependency of **psycopg** (its marker is
+# `typing-extensions>=4.6; python_version < "3.13"`) and was ABSENT from this file
+# while being installed. Django does NOT require it: Django 5.2.17 declares only
+# asgiref, sqlparse and tzdata. That made the claim above -- "exact == for every
+# distribution in the resolved set, including the transitive ones" -- false: an
+# unpinned transitive dependency resolves differently per environment while still
+# satisfying this file. Pinned at the version present in the verified environment.
+# See docs/management/pinned-environment-decisions-2026-10-05.md.
+# NOTE: adding this line changes `lock_sha256`, which is the SHA-256 of this file.
+# Evidence quoting the previous value is not comparable.
 #
 # No *model-provider* SDK is pinned: Milestone A makes no provider call (SR06),
 # and G0 criterion 3 is explicitly not waived for a provider. Nothing here may be

@@ -52,9 +52,19 @@ to tell a real regression from a naming mismatch without reading a test file.
 
 **This is a defect, not a design decision.** The coupling belongs in a shared
 constant rather than a literal inside one test module, and the runner's own
-validation should enforce what the suite actually requires. It is tracked
-separately; until it is fixed, the prefix requirement is stated here so the
-`test` phase is reproducible.
+validation should enforce what the suite actually requires.
+
+**It is not fixed by this change, and no tracking issue is cited for it.** An
+earlier draft of this section cited an issue number for it; that citation was
+checked and removed, because the referenced item turned out to be an unrelated
+pull request. Naming a tracker that does not track this defect is the same
+fabricated-authority error this paragraph exists to prevent. Until a real tracker
+exists, this section is the only record of the defect, which is itself a reason
+to fix it rather than to keep writing about it.
+
+**Independently reproduced.** With `DATARA_TEST_DB_NAME` set to a name that
+satisfies the runner's validation regex but not this prefix, the `test` phase
+reports `FAILED (failures=3)` and exits 1, with exactly the three named failures.
 
 | Phase | Explicit DATARA_DB_USER / DATARA_DB_NAME | Action |
 | --- | --- | --- |

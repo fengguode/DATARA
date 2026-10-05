@@ -169,8 +169,13 @@ echo "resolved_dependencies     :"
 # The evidence list must name every distribution in the lock file. `garmin_fit_sdk`
 # is included because it is the pinned FIT decoder; leaving it out let an
 # environment without it look identical to a resolved one.
+# `typing_extensions` is included because it is pinned as a transitive dependency
+# of psycopg. It was omitted here when the pin was added, so the evidence block
+# printed 7 of 8 pins and a reader could not tell whether the eighth was absent,
+# unpinned or unlisted. That is the same defect class this file exists to prevent:
+# a hard-coded enumeration of the pinned set that a new pin silently invalidates.
 "$PY" -m pip freeze --disable-pip-version-check 2>/dev/null \
-  | grep -Ei '^(asgiref|django|garmin-fit-sdk|psycopg|psycopg-binary|sqlparse|tzdata)==' \
+  | grep -Ei '^(asgiref|django|garmin-fit-sdk|psycopg|psycopg-binary|sqlparse|typing_extensions|tzdata)==' \
   | sed 's/^/  - /'
 echo "commit_sha                : $COMMIT_SHA"
 echo "commit_dirty_owned_paths  : ${COMMIT_DIRTY:-none}"

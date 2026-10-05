@@ -42,8 +42,12 @@ class _Authenticated:
 
     Only ``pk`` and ``is_authenticated`` are read by the code under test. The
     database-backed ``auth.User`` cannot be constructed on a host with no
-    PostgreSQL 17, and resolving one through a real session needs the
-    ``django_session`` table, so this stand-in carries the same two facts.
+    PostgreSQL 17, so this stand-in carries the same two facts. Note it is *not*
+    a stand-in for the sessions machinery: the sessions app and both session
+    middleware entries are deliberately not installed on this branch, so the real
+    stack produces a request with no ``.user`` attribute at all rather than one
+    carrying an ``AnonymousUser``. That state is covered directly by
+    ``test_missing_user_attribute_is_refused`` below.
     """
 
     def __init__(self, pk: object) -> None:

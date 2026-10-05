@@ -39,12 +39,14 @@ are load-bearing and are not papered over:
    (``canonical_metric_content(summarize_recorded(prepare_recorded_input(...)))``)
    over synthetic, DATARA-authored records. No database is needed for that, and
    no personal FIT telemetry is read.
-3. ``request.user`` is supplied by a stand-in principal, because resolving a real
-   session needs the ``django_session`` table. That Django's own
-   ``SessionMiddleware`` and ``AuthenticationMiddleware`` populate
-   ``request.user`` from the session is framework behaviour this module does not
+3. ``request.user`` is supplied by a stand-in principal, because Django's own
+   ``SessionMiddleware`` and ``AuthenticationMiddleware`` -- which populate
+   ``request.user`` from the session -- are deliberately not installed on this
+   branch (see ``datara/settings.py``). That is framework behaviour this module does not
    modify; what is proven here is that the surface consumes ``request.user`` and
-   nothing else.
+   nothing else. The genuinely attribute-less request that the real stack now
+   produces is covered separately by ``drive_without_user_attribute``, because the
+   ordinary helper assigns the attribute unconditionally.
 
 FIXTURE PROVENANCE
 ------------------
@@ -309,6 +311,32 @@ class _SurfaceTestCase(SimpleTestCase):
             headers=headers,
         )
         request.user = _Principal(OWNER) if user is ... else user
+        return match, match.func(request, *match.args, **match.kwargs)
+
+    def drive_without_user_attribute(self, metric_id: str):
+        """Drive the real view with a request that has no ``.user`` attribute at all.
+
+        This is the state a real request is in on this branch: with neither
+        ``SessionMiddleware`` nor ``AuthenticationMiddleware`` installed, Django
+        never attaches ``request.user``. The helper above cannot produce that
+        state, because it assigns ``request.user`` unconditionally -- including
+        for ``user=object()``, which is an attribute that *exists* and is
+        therefore not the case under test.
+
+        Without this, the ``except AttributeError`` branch is covered only in
+        datara/tests/test_session_identity.py. Removing that guard from the
+        view makes every request to the only route raise, which is a 500 over
+        the real stack, and no other test in the repository fails.
+        """
+
+        target = _route(metric_id)
+        match = resolve(target)
+        request = self.factory.get(target)
+        # Assert the precondition explicitly rather than trusting the factory.
+        self.assertFalse(
+            hasattr(request, "user"),
+            "the factory attached a user attribute; this test is then vacuous",
+        )
         return match, match.func(request, *match.args, **match.kwargs)
 
     def drive_carrying(self, metric_id: str, carrier: dict, *, user: object = ...):
@@ -636,6 +664,50 @@ class DenialTests(_SurfaceTestCase):
                     [],
                     "no store may be constructed without a usable session",
                 )
+
+    def test_request_without_user_attribute_is_denied(self) -> None:
+        """The founder-approved split's load-bearing case, at the view level.
+
+        With neither ``SessionMiddleware`` nor ``AuthenticationMiddleware``
+        installed, a real request has no ``.user`` attribute -- not an
+        anonymous one, not ``None``, none at all. The identity module must
+        refuse and the surface must return the canonical denial rather than
+        raising, because a raised AttributeError is a 500 over the real stack.
+
+        The subTest above cannot reach this state: it passes ``object()`` and
+        ``None``, both of which leave the attribute present, and the drive
+        helper assigned it unconditionally.
+        """
+
+        _SavedMetricStoreDouble.calls = []
+        _, response = self.drive_without_user_attribute(OWN_METRIC)
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(
+            _SavedMetricStoreDouble.calls,
+            [],
+            "no store may be constructed when there is no user attribute at all",
+        )
+
+    def test_absent_user_attribute_is_indistinguishable_from_an_unusable_one(self) -> None:
+        """The configuration must not be observable to a client.
+
+        If a request with no ``.user`` attribute produced a different status,
+        body or header set than one with an unusable ``.user``, then whether
+        this app has the sessions middleware installed would leak through the
+        response. That would make an internal configuration fact into a side
+        channel.
+        """
+
+        _SavedMetricStoreDouble.calls = []
+        _, absent = self.drive_without_user_attribute(OWN_METRIC)
+        _SavedMetricStoreDouble.calls = []
+        _, anonymous = self.drive(OWN_METRIC, user=AnonymousUser())
+        self.assertEqual(
+            self.comparable(absent),
+            self.comparable(anonymous),
+            "a request with no .user attribute must be indistinguishable from one "
+            "with an unusable .user, or the middleware configuration leaks",
+        )
 
     def test_every_denied_state_shares_one_response(self) -> None:
         canonical = self.comparable(app_surface.generic_denial())

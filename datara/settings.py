@@ -51,12 +51,20 @@ DEBUG = False
 
 INSTALLED_APPS = [
     # contenttypes/auth back the owner foreign key used for owner scoping
-    # (CUS10, SR20-SR21). `sessions` is installed because the identity-bound
-    # read surface added in #378 derives its owner from `request.user`, and
-    # AuthenticationMiddleware only populates `request.user` from a session
-    # when SessionMiddleware and the sessions app are both present. Without
-    # them every request resolves to AnonymousUser and the surface denies
-    # everything. No messages/admin/static surface is installed.
+    # (CUS10, SR20-SR21). No messages/admin/static surface is installed.
+    #
+    # django.contrib.sessions was here and was removed on the founder-approved
+    # split of #394. It created a persisted table with no producer: nothing in
+    # this package can log anyone in, so every real request resolved to
+    # AnonymousUser and was denied anyway, while an unowned personal-data table
+    # sat in the schema. Shipping a persisted personal-data table as a side
+    # effect of making a page runnable is a data-contract decision reserved to
+    # the founder, so it is held back rather than carried here.
+    #
+    # django.contrib.auth is deliberately KEPT even though
+    # AuthenticationMiddleware is not installed: the owner foreign key needs
+    # the app, and contenttypes is its dependency. Removing the middleware is
+    # not the same decision as removing the app.
     "django.contrib.contenttypes",
     "django.contrib.auth",
     # django.contrib.sessions is deliberately NOT installed here. It was, and it
@@ -74,17 +82,29 @@ INSTALLED_APPS = [
     "datara",
 ]
 
-# Present so Django's own security checks pass, and because the #378 read surface
-# needs a real session. SessionMiddleware must precede AuthenticationMiddleware:
-# the latter reads the session the former has not yet attached.
+# Present so Django's own security checks pass, and to enforce X_FRAME_OPTIONS,
+# which is set to DENY below and is otherwise inert (added on review of #394).
 #
-# The order is correct but NOT enforced by `django check`. There is no such system
-# check: auth.E001 is about REQUIRED_FIELDS, and the only middleware-order check in
-# django.contrib.auth (auth.E013) concerns LoginRequiredMiddleware. Reversing the
-# two leaves `check` green and fails at request time with ImproperlyConfigured,
-# returning 500 on every route. The real guard is the assertion on relative
-# position in datara/tests/test_app_surface.py (test_middleware_order_puts_sessions
-# _before_authentication); keep this comment and that test in step.
+# SessionMiddleware and AuthenticationMiddleware were here and were removed on
+# the founder-approved split of #394, together with the sessions app. The
+# ordering rule that used to be documented here no longer applies, because
+# neither entry remains: the live list is Security, Common, Csrf,
+# XFrameOptions, and none of those four has a required relative order.
+#
+# The footgun that rule guarded against still exists one level down, and is
+# asserted as an absence in datara/tests/test_app_surface.py: installing
+# AuthenticationMiddleware WITHOUT SessionMiddleware raises
+# ImproperlyConfigured at request time, returns 500 on every route, and leaves
+# `django check` green. Reintroducing one without the other is the failure that
+# test now prevents.
+#
+# With neither present a request has no request.user at all.
+# datara/session_identity.py reads it inside a try/except AttributeError and
+# refuses, so the surface denies rather than raises. That path is covered by
+# test_missing_user_attribute_is_refused (test_session_identity.py) and, at the
+# view level, by test_request_without_user_attribute_is_denied
+# (test_app_surface.py) -- the unit test alone left the view unguarded, because
+# the view's test helper always assigned a .user attribute.
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.middleware.common.CommonMiddleware",

@@ -43,16 +43,21 @@ Every bounded assignment names the role, issue, WP/CUS/Feature/SR/Task IDs, obje
 
 ### Coordinator merge authority
 
-The founder delegated merge authority to the Primary Coordinator on 5 October 2026: a pull request whose scope is **not CUS-level and not Feature-level** may be merged by the coordinator once its applicable confirmation gate has returned. CUS-level and Feature-level merges remain with the founder.
+The founder delegated merge authority to the Primary Coordinator on 5 October 2026: a pull request whose scope is **not CUS-level, not Feature-level and not SR-level** may be merged by the coordinator once its applicable confirmation gate has returned. **CUS-level, Feature-level and SR-level merges remain with the founder**, and the founder reserved SR-level explicitly after the coordinator proposed leaving it inside the delegation.
 
-This delegation changes **who performs the merge**, not **what evidence is required**. Section 7 still binds: the gate role for the scope must have returned a published verdict with no unresolved defect, findings must be fixed and re-verified on the merged head, and the process checkers must pass on that head. Authority to press the merge button is never a substitute for a gate that has not been satisfied, and it never converts an SR-, architecture-, contract- or user-visible-surface change into a task-level one.
+This delegation changes **who performs the merge**, not **what evidence is required**. Section 7 still binds: the gate role for the scope must have returned a published verdict with no unresolved defect, findings must be fixed and re-verified on the merged head, and the process checkers must pass on that head. Authority to press the merge button is never a substitute for a gate that has not been satisfied, and it never converts a higher-level change into a task-level one.
 
 Applying it honestly means the following. Misclassifying scope in order to make a merge convenient is a conduct failure:
 
 - **Task-, subtask- and test-level pull requests** are within the delegation once their gate verdict is published.
-- A pull request that **implements or changes a system requirement, an architecture or a contract**, or that **makes a user-visible surface runnable**, still needs the section 7 confirmation for that scope even though the coordinator performs the merge. The fact that it was implemented as a task is not what decides this.
+- **CUS-level, Feature-level and SR-level pull requests are the founder's.** This includes a pull request that **implements or changes a system requirement**, whatever task it was assigned to. Implementing an SR as a task does not make it task-level, and the coordinator does not merge it.
+- A pull request that **changes an architecture or a contract**, or that **makes a user-visible surface runnable**, is not merged on the coordinator's authority either. It is escalated with the section 7 confirmation for that scope attached.
 - A pull request that **changes this Code of Conduct**, or that alters the coordinator's own authority, is not merged on the coordinator's authority. It is escalated to the founder.
 - A pull request whose **review record is unpublished**, or whose gate verdict is absent, rejected or conditional, is not merged regardless of scope.
+
+**Notify the founder when a pull request is ready for their decision.** When a pull request reaches the founder's table, raise it on GitHub in an issue or discussion comment carrying the founder's contact tag and a direct mention, and state the pull request, its scope level, the head SHA proposed for merge, the gate verdict that authorised it with a link to that published verdict, and anything still outstanding. "Ready for merge" reported only inside the coordinator's session is not a notification.
+
+A pull request inside the coordinator's own delegation is merged when its gate is satisfied; the founder does not need to be asked for it. The notification duty is for the founder's table, and for any escalation.
 
 Record every merge made under the delegation with the pull request, the head SHA merged, the gate role whose verdict authorised it, and a link to that published verdict, so the authority is auditable rather than asserted.
 

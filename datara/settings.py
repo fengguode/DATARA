@@ -65,12 +65,23 @@ INSTALLED_APPS = [
 
 # Present so Django's own security checks pass, and because the #378 read surface
 # needs a real session. SessionMiddleware must precede AuthenticationMiddleware:
-# the latter reads the session the former has not yet attached, and Django's own
-# system check (auth.E001) refuses the reversed order.
+# the latter reads the session the former has not yet attached.
+#
+# The order is correct but NOT enforced by `django check`. There is no such system
+# check: auth.E001 is about REQUIRED_FIELDS, and the only middleware-order check in
+# django.contrib.auth (auth.E013) concerns LoginRequiredMiddleware. Reversing the
+# two leaves `check` green and fails at request time with ImproperlyConfigured,
+# returning 500 on every route. The real guard is the assertion on relative
+# position in datara/tests/test_app_surface.py (test_middleware_order_puts_sessions
+# _before_authentication); keep this comment and that test in step.
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
+    # X_FRAME_OPTIONS below is DENY, and this list was hand-written without the
+    # middleware that enforces it, so the setting had no effect and this first
+    # HTML page went out unframable. Added on review of #394.
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
 ]
@@ -80,15 +91,22 @@ MIDDLEWARE = [
 ROOT_URLCONF = "datara.urls"
 
 # APP_DIRS makes datara/templates/ discoverable, so the surface's generic denial
-# template is found without coupling this file to that path. Empty
-# context_processors: the denial template must not gain a context that could vary
-# per request and reintroduce an existence oracle.
+# template is found without coupling this file to that path. The context
+# processors exist to supply csrf_token; the denial template renders with an
+# explicitly empty context dict, so no request-derived value reaches that
+# response and the processors cannot become an existence oracle (SR21).
+# django.template.context_processors.csrf was added on review of #394: without it
+# a future {% csrf_token %} would render "" silently and ship a form with no token.
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [],
         "APP_DIRS": True,
-        "OPTIONS": {"context_processors": []},
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.csrf",
+            ],
+        },
     },
 ]
 

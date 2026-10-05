@@ -12,8 +12,8 @@ what is stored.
 Scope discipline, and the reason several things are conspicuously absent:
 
 * **No public contract is defined here.** No envelope, no field list, no route
-  naming policy and no API version string is authored or implied. Issue #369
-  owns those and its decision is not approved. The single route in
+  naming policy and no API version string is authored or implied. Discussion
+  #369 owns those and its decision is not approved. The single route in
   ``datara/urls.py`` is an internal placeholder for this increment.
 * **Denial is generic.** A metric owned by another identity and a metric that
   does not exist produce the same status code and the same response body. The
@@ -36,6 +36,7 @@ from typing import Any
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.decorators.http import require_safe
+from django.views.decorators.cache import never_cache
 
 from datara.metric_store import MetricStoreRefusal, SavedMetricStore
 from datara.session_identity import (
@@ -134,11 +135,18 @@ def generic_denial() -> HttpResponse:
 
 
 @require_safe
+@never_cache
 def saved_metric_view(request: Any, metric_id: str) -> HttpResponse:
     """Return the saved metric identified by ``metric_id`` for the session owner.
 
     Read-only: one call to ``SavedMetricStore.get_metric``, then either the saved
     bytes unchanged or the generic denial. There is no write path here.
+
+    ``never_cache`` is applied here rather than in settings because it must cover
+    the success path: this response is personal activity telemetry, and without
+    it the 200 carried no ``Cache-Control`` header at all. Applied on review of
+    #394. It adds headers only -- the denial body stays byte-identical, which is
+    what makes the two refusal cases indistinguishable.
     """
 
     try:

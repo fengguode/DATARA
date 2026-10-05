@@ -1851,6 +1851,80 @@ class E10VocabularyInvariantTests(unittest.TestCase):
                     f"the raising requirement must still be explained for {kind}: {codes}",
                 )
 
+class DirectionDetailVocabularyTests(unittest.TestCase):
+    """``_direction_detail`` is the fourth routing construct, and it was unguarded.
+
+    Added on review of #393. The three ``_*_BY_KIND`` tables each had an
+    enumerating check or an explicit disclosure. ``_direction_detail`` had
+    neither: it routes a shortfall into the detail vocabulary of the kind's own
+    reason code, and replacing its whole body with a single wrong answer left the
+    suite green. A routing construct with no enumeration is an assumption.
+
+    The invariant, stated directly: for **every** kind and **every** not-met
+    detail the engine can carry, the detail ``_direction_detail`` returns must be
+    admitted by the vocabulary of that kind's not-met code. A detail drawn from the
+    wrong namespace is the same defect #379 and #385's survivor D1 were.
+    """
+
+    #: Every not-met detail the engine produces, plus the two the function
+    #: branches on by name. Taken from the engine, not restated, so a new
+    #: not-met detail cannot be added without this sweep reaching it.
+    NOT_MET_DETAILS = (
+        "above_permitted_window",
+        "below_required_window",
+        "not_equal_to_required",
+    )
+
+    def test_every_kind_and_not_met_detail_lands_in_that_kinds_vocabulary(self) -> None:
+        for kind in sorted(SUPPORTED_KINDS):
+            code = eligibility_module._NOT_MET_BY_KIND[kind]
+            permitted = REASON_DETAILS[code]
+            for not_met in self.NOT_MET_DETAILS:
+                produced = eligibility_module._direction_detail(kind, not_met)
+                with self.subTest(kind=kind, not_met=not_met, code=code):
+                    self.assertIn(
+                        produced,
+                        permitted,
+                        "_direction_detail returned a detail the kind's own "
+                        "not-met vocabulary does not admit",
+                    )
+
+    def test_the_sweep_is_not_vacuous(self) -> None:
+        """The enumeration must actually reach every kind, or it proves nothing."""
+
+        reached = {
+            eligibility_module._direction_detail(kind, not_met)
+            for kind in SUPPORTED_KINDS
+            for not_met in self.NOT_MET_DETAILS
+        }
+        self.assertGreaterEqual(len(reached), 3,
+                                "the sweep collapsed to one answer and is not testing routing")
+        for kind in SUPPORTED_KINDS:
+            answers = {
+                eligibility_module._direction_detail(kind, not_met)
+                for not_met in self.NOT_MET_DETAILS
+            }
+            with self.subTest(kind=kind):
+                self.assertTrue(answers, "no not-met detail reached this kind")
+
+    def test_it_is_unguarded_by_the_other_sweep(self) -> None:
+        """Negative control: the mutation this test exists to catch really fails.
+
+        Replacing ``_direction_detail``'s body with one wrong answer must turn this
+        file red. Asserted here so the guard cannot itself silently stop guarding.
+        """
+
+        with mock.patch.object(
+            eligibility_module,
+            "_direction_detail",
+            return_value="a_detail_no_vocabulary_admits",
+        ):
+            for kind in sorted(SUPPORTED_KINDS):
+                permitted = REASON_DETAILS[eligibility_module._NOT_MET_BY_KIND[kind]]
+                with self.subTest(kind=kind):
+                    self.assertNotIn("a_detail_no_vocabulary_admits", permitted)
+
+
 def _replace_field(requirement, field, value):
     """``dataclasses.replace`` with one field overridden."""
 

@@ -166,17 +166,42 @@ else:
 echo "pinned_dependency_lock    : $LOCK_FILE"
 echo "pinned_dependency_lock_sha256: $LOCK_SHA"
 echo "resolved_dependencies     :"
-# The evidence list must name every distribution in the lock file. `garmin_fit_sdk`
-# is included because it is the pinned FIT decoder; leaving it out let an
-# environment without it look identical to a resolved one.
-# `typing_extensions` is included because it is pinned as a transitive dependency
-# of psycopg. It was omitted here when the pin was added, so the evidence block
-# printed 7 of 8 pins and a reader could not tell whether the eighth was absent,
-# unpinned or unlisted. That is the same defect class this file exists to prevent:
-# a hard-coded enumeration of the pinned set that a new pin silently invalidates.
-"$PY" -m pip freeze --disable-pip-version-check 2>/dev/null \
-  | grep -Ei '^(asgiref|django|garmin-fit-sdk|psycopg|psycopg-binary|sqlparse|typing_extensions|tzdata)==' \
-  | sed 's/^/  - /'
+# The evidence list must name every distribution in the lock file, so the NAME
+# LIST IS DERIVED FROM THE LOCK FILE rather than restated here.
+#
+# This line previously carried a hard-coded alternation. It was wrong twice: once
+# because garmin_fit_sdk was left out, so an environment without the pinned FIT
+# decoder looked identical to a resolved one, and again because typing_extensions
+# was left out when that pin was added, so the block printed 7 of 8 and a reader
+# could not tell whether the eighth was absent, unpinned or unlisted. Both were
+# the same defect: a hard-coded enumeration of the pinned set that a new pin
+# silently invalidates.
+#
+# A ninth pin would have broken it a third time. The alternation is now built from
+# the lock file, so it cannot fall behind. This is the same approach
+# scripts/milestone_a_runner.py's inventory() already uses, which walks the lock
+# file line by line.
+#
+# pip freeze remains the source of what is actually resolved, so a distribution
+# that is declared but NOT installed is reported as absent rather than hidden.
+LOCK_NAMES=$(grep -v '^[[:space:]]*#' "$LOCK_FILE" \
+  | grep -v '^[[:space:]]*$' \
+  | sed 's/==.*//' \
+  | paste -sd'|' -)
+if [ -z "$LOCK_NAMES" ]; then
+  echo "  - NONE: no distribution could be read from $LOCK_FILE" >&2
+else
+  "$PY" -m pip freeze --disable-pip-version-check 2>/dev/null \
+    | grep -Ei "^(${LOCK_NAMES})==" \
+    | sed 's/^/  - /'
+  # A declared pin with nothing resolved must be visible, not silently absent.
+  for name in $(printf '%s' "$LOCK_NAMES" | tr '|' ' '); do
+    if ! "$PY" -m pip freeze --disable-pip-version-check 2>/dev/null \
+         | grep -Eiq "^${name}=="; then
+      echo "  - ${name}==NOT-INSTALLED (declared in $LOCK_FILE, absent from the environment)"
+    fi
+  done
+fi
 echo "commit_sha                : $COMMIT_SHA"
 echo "commit_dirty_owned_paths  : ${COMMIT_DIRTY:-none}"
 

@@ -322,26 +322,36 @@ None of that exists in the code. I verified this at runtime, not by grep alone:
 - The only sub-sport warning is `WARN_SUB_SPORT_NOT_IN_SCOPE`, raised at
   `datara/classification.py:1247`–`:1248` when `sub_sport_name(raw) is None`.
 
-That last point is the substantive finding. The predicate is *"the pinned profile has no
-name for this value"*. The matrix's rule is *"this value is not assigned to this sport"*.
-Those are different predicates, and the second is strictly broader. Concretely: for
-`sport = running` with `sub_sport = 7 road`, the pinned profile **does** name `7` as
-`road` (verified at runtime), so `sub_sport_name(7)` is not `None` and **no warning is
-emitted at all**. The athlete's activity is accepted with a road sub-sport on a running
-activity and no disclosure.
+That last point is the substantive finding, and it is **a missing-evidence gap rather
+than a wrong-but-fixable predicate**. The predicate is *"the pinned profile has no
+name for this value"*. The matrix's rule is *"this value is not assigned to this
+sport"*. Those are different predicates, and the second is strictly broader.
+Concretely: for `sport = running` with `sub_sport = 7 road`, the pinned profile **does**
+name `7` as `road` (verified at runtime), so `sub_sport_name(7)` is not `None` and **no
+warning is emitted at all**. The athlete's activity is accepted with a road sub-sport on
+a running activity and no disclosure.
 
-- **established:** the predicate, its location, and the absence of the three codes.
+**The reason a predicate fix cannot satisfy the matrix here.** The pinned profile's
+`sub_sport` map is **112 entries, all plain strings, carrying no sport association**.
+Detecting "a value assigned to the other sport" requires a relation between a sub-sport
+and its parent sport, and **the available profile does not carry that relation at all.**
+`SUBSPORT_SPORT_MISMATCH` has **zero occurrences** in `datara/`. So this is a
+**capability gap, not a predicate defect**, and it is **not implementable from available
+evidence**. Recorded as such rather than as a defect awaiting a patch.
+
+- **established:** the predicate, its location, and the absence of the three codes; and
+  that the pinned profile carries no sport↔sub_sport relation.
 - **Divergence from an approved record:** `fit-support-matrix.md:412`–`:414` requires
   `SUBSPORT_SPORT_MISMATCH` for exactly this case, and `:415` requires
-  `SUBSPORT_ALL_GOALS_ONLY` for `sub_sport = 254`. Neither happens. This is a real defect
-  against the matrix, in code I am not permitted to edit.
-- **unknown:** *Is the §12.2 allowlist (9 + 19 values) the behaviour DATARA wants, or was
-  the "name known to the profile" predicate deliberately chosen instead?* The matrix says
-  the allowlist is **authoritative for Milestone A** (`:223`, `:487`), so on the record as
-  it stands this is an implementation gap, not an open product question. The *product*
-  question that remains is whether `sport = 254` and `sub_sport = 254` should each get a
-  dedicated rejection code at all, or whether the `{1,2}` whitelist rejection is sufficient
-  — the matrix chose dedicated codes (`fit-support-matrix.md:402`, `:475`–`:476`), which is
+  `SUBSPORT_ALL_GOALS_ONLY` for `sub_sport = 254`. Neither happens, and **the first
+  cannot be delivered from the evidence available**, in code I am not permitted to edit.
+- **unknown:** *Where does the sport↔sub-sport relation come from, or is the matrix rule
+  withdrawn?* This is the question that decides whether the rule is implementable at all,
+  and it is **not an engineering question** — it is either new required evidence or a
+  change to an approved record. Owner: **founder**, with **System Architect — Feng Guo**
+  on the gap. Tracked as an unknown rather than left implicit in this section. The
+  separate question of whether `sport = 254` and `sub_sport = 254` should each get a
+  dedicated rejection code is unaffected and remains as recorded below.
   a product/presentation decision. Owner: **founder** for the codes; **System Architect —
   Feng Guo** for the implementation gap.
 
@@ -409,7 +419,9 @@ live set at runtime; it has 34 rejection codes and 10 warning codes.
   TC01 and TC21 are written against the matrix. Owner: **System Architect — Feng Guo**. I am
   not proposing a rename; renaming would break the suite and the frozen-code claim.
 - **unknown:** *Should the wall-time and memory limits be enforced, and if so by what
-  mechanism?* They are declared as policy (`datara/intake.py:29`–`:31`) and asserted as
+  mechanism?* The byte and count limits are declared (`datara/intake.py:29`–`:31`) and the
+  wall-time and memory limits are declared as bare constants (`datara/intake.py:72`–`:73`,
+  under no stated policy prose), asserted as
   constants (`datara/tests/test_classification.py:904`–`:905`) but never applied, and
   `datara/classification.py:986`–`:988` states the design intent that such limits belong to
   "a resource-isolated worker" that enforces them separately. No such worker exists in this
@@ -488,7 +500,7 @@ I cannot trace.
 - **unknown:** *What is the accepted elapsed-duration domain, and what evidence or founder
   decision fixes it?* Three sub-questions, all for the **founder**:
   1. Is the lower bound 1 ms (matrix `:279`) or 1000 ms (code `canonical.py:75`)? The code
-     comment at `:73`–`:74` argues 1000 on the grounds that "D01 requires a session's
+     comment at `:72`–`:74` argues 1000 on the grounds that "D01 requires a session's
      elapsed duration to be a positive whole number of seconds". That argument is about a
      *normalization contract in seconds*, not about the FIT raw field, which is
      millisecond-scaled and can legitimately be sub-second. **I am not asserting which is
@@ -804,7 +816,7 @@ Reported, not reconciled. Each is a finding for the named owner; none was fixed.
 | C3 | `total_timer_time` is produced as a decimal seconds string; the matrix's canonical form is integer milliseconds; the column is an integer | `datara/classification.py:1287`; `datara/models.py:363`; `fit-support-matrix.md:105` | matrix §2 | **System Architect — Feng Guo** |
 | C4 | `total_distance` is produced as a decimal metres string; the matrix's canonical form is integer centimetres | `datara/classification.py:1288`–`:1290`; `datara/models.py:298`–`:299`; `fit-support-matrix.md:106` | matrix §2 | **System Architect — Feng Guo** |
 | C5 | `start_time` has a matrix upper bound of `4926032894`; no upper-bound check exists | `datara/classification.py:1194`; `fit-support-matrix.md:103` | matrix §2 | **System Architect — Feng Guo** |
-| C6 | `sport = running` with `sub_sport = 7 road` produces **no** warning; the matrix requires `SUBSPORT_SPORT_MISMATCH` | `datara/classification.py:1247`–`:1248` (predicate is "profile has no name"); `fit-support-matrix.md:412` | matrix §12.5 | **System Architect — Feng Guo** |
+| C6 | **Missing evidence, not a wrong predicate.** `sport = running` with `sub_sport = 7 road` produces **no** warning, and the matrix requires `SUBSPORT_SPORT_MISMATCH`. The pinned profile's `sub_sport` map is **112 entries, all plain strings, with no sport association**, so detecting "a value assigned to the other sport" needs a relation the available profile does not carry. `SUBSPORT_SPORT_MISMATCH` has **zero occurrences** in `datara/`. **This is a capability gap and is not implementable from available evidence**; a predicate fix cannot satisfy it | `datara/classification.py:1247`–`:1248`; pinned `garmin_fit_sdk` `sub_sport` map (installed package, no in-repo `file:line`); `fit-support-matrix.md:412` | matrix §12.5 | **founder** (whether the sport↔sub_sport relation is required evidence at all, and if so where it comes from), **System Architect — Feng Guo** (the gap) |
 | C7 | `sub_sport = 254` is not rejected; the literal `254` appears nowhere in `datara/`; `SPORT_ALL_GOALS_ONLY` and `SUBSPORT_ALL_GOALS_ONLY` do not exist | verified at runtime; `fit-support-matrix.md:415`, `:475`–`:476` | matrix §12.4, §12.8 | **founder** (codes), **System Architect — Feng Guo** (gap) |
 | C8 | `monitoring_a` (15) and `monitoring_b` (32) fall through to the generic unsupported-type reason | `datara/classification.py:446`–`:457`; `fit-support-matrix.md:425` | matrix §12.6 | **System Architect — Feng Guo** |
 | C9 | Multisession count and declared `auto_multi_sport` share one reason code; the matrix marks the split "required" | `datara/classification.py:1099`–`:1122`; `fit-support-matrix.md:481`, `:483` | matrix §12.8 | **System Architect — Feng Guo** |
@@ -855,6 +867,7 @@ protocol version is proposed for any of them.
 | U22 | What are the authorized conflict-resolution outcomes and their mechanism — keep existing, replace, retain both? | **founder** (outcomes); **System Architect — Feng Guo** (mechanism) | C14, STK012 |
 | U23 | Is `Quarantine.state = 'resolved'` meant to be reachable before a resolution contract exists? | **System Architect — Feng Guo** | §6.2 |
 | U24 | Is `outcome_text` the complete TC22/SR33 presentation contract, and what consumes it? | **User Tester — Abt Hermann** with **UI Designer — Wu Yunzhou** | §6.4 |
+| U25 | Where does the sport↔sub-sport relation come from, or is the matrix's `SUBSPORT_SPORT_MISMATCH` rule withdrawn? The pinned profile's `sub_sport` map is 112 plain strings with no sport association, so the rule is **not implementable from available evidence** | **founder** (new required evidence, or a change to an approved record) with **System Architect — Feng Guo** (the gap) | C6, §12.2 |
 
 ---
 

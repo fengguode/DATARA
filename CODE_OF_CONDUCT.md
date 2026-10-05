@@ -171,23 +171,23 @@ Do not report a pull request as merge-ready, and do not present it for confirmat
 
 **Preserve rejected and superseded verdicts.** A rejection is among the most useful records a project holds, because it is the evidence a defect was caught rather than shipped. Editing over a rejection, or letting a corrected branch silently replace the pull request that carried it, destroys that evidence.
 
-### Pre-review readiness gate
+### Pre-review declarations
 
-A candidate is **not ready to dispatch for review** until its readiness manifest is committed on the branch and `scripts/check_pr_readiness.py` has been run against it and returned exit 0. **This clause binds only once that script is present on `main`; until then the obligation is the declaration itself, and the reviewer verifies the declarations rather than trusting them.** The gate exists because five candidates were rejected for reasons that a declared, checked declaration would have surfaced.
+Before dispatching a candidate for review, its author **declares** the following in the pull request. These are author obligations, checked by the reviewer. **They are not mechanically enforced, and this section does not claim they are** — a readiness-gate script was built for this purpose and was rejected on review as a checkbox rather than a gate, with two reproduced paths returning success while a defect existed. A green tick from a check that cannot fail is worse than no check, because it converts *"nobody looked"* into *"something says it is fine."*
 
-The gate reports on **five declared conditions**. Only the first is derived from the diff; the other four are satisfied by what the author declares, and an empty declaration satisfies them. That is why the declarations are published and independently checked:
+The declarations exist because five candidates were rejected for reasons a declared, checked declaration would have surfaced:
 
-1. **Adverse deltas.** Any file with deleted lines must be declared with a reason. Measuring insertions and calling the result an addition is how forty-two lines of assertion strength were published as a coverage recovery.
-2. **Notation-complete replacement.** A replaced value is searched in every notation it could take. A pin written `3.12.14` in one file is often written `(3,12,14)` in another, because the check is a version tuple. A search that cannot see its own subject is not evidence.
-3. **Cited documents exist.** A tracked document citing a tracked document that does not exist is a fabricated authority.
-4. **Evidence is reproducible.** A quantitative claim whose harness is not committed is not evidence for the next reviewer. Declare the dimensions and the harness, or drop the figure.
-5. **Authority sources are inventoried.** List the authoritative records consulted, with line references. Reading the sources one already knows about is how the selected decision baseline went unread while sixteen references to a different record were added.
+1. **Adverse deltas.** Every file with deleted lines is named, with the reason. Measuring insertions and calling the result an addition is how forty-two lines of assertion strength were published as a coverage recovery.
+2. **Notation-complete replacement.** A replaced value is searched in every notation it could take. A pin written `3.12.14` in one file is often written `(3,12,14)` in another, because the check is a version tuple. **A search that cannot see its own subject is not evidence** — and neither is a check that prints "ok" for a notation it never searched.
+3. **Cited documents exist.** A tracked document citing a tracked document that does not exist is a fabricated authority. The citation is opened, not assumed.
+4. **Evidence is reproducible.** Every quantitative claim states **the exact command that produced it and the exact conditions under which it reproduces**. A claim whose harness is not committed is not evidence for the next reviewer. Declare the dimensions and the harness, or drop the figure.
+5. **Authority sources are inventoried.** The authoritative records consulted are listed, with line references. Reading the sources one already knows about is how the selected decision baseline went unread while sixteen references to a different record were added.
 
 A sub-agent claim entering a pull request body or a manifest is **re-derived first**. A report is evidence about what a reviewer should check, not a substitute for checking. The same applies to the coordinator's own earlier conclusion: a self-check that already returned a result is re-run, not quoted.
 
-A rejected candidate is re-gated before it is re-dispatched, and the finding that caused the rejection is shown to have been addressed rather than asserted to be.
+A rejected candidate is **re-checked against the finding that caused its rejection** before it is re-dispatched, and that finding is shown to have been addressed rather than asserted to be.
 
-`--accept` records a deliberate acceptance of a named finding for a reviewer to see and overrule. Acceptance is never used to make a defect disappear: every accepted id is printed in the output, and an id that matches no finding is an error rather than a silent pass. A published verdict uses the [confirmation record template](docs/team/pull-request-confirmation.md) verbatim, so it states the **reviewed head SHA**, its scope and one of **Confirmed / Changes requested / Blocked** — the same binding the confirmation rules already impose.
+A published verdict uses the [confirmation record template](docs/team/pull-request-confirmation.md) verbatim, so it states the **reviewed head SHA**, its scope and one of **Confirmed / Changes requested / Blocked** — the same binding the confirmation rules already impose.
 
 ## 8. Data, rights and authorization
 

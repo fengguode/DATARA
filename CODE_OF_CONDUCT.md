@@ -55,7 +55,7 @@ Applying it honestly means the following. Misclassifying scope in order to make 
 - A pull request that **changes this Code of Conduct**, or that alters the coordinator's own authority, is not merged on the coordinator's authority. It is escalated to the founder.
 - A pull request whose **review record is unpublished**, or whose gate verdict is absent, rejected or conditional, is not merged regardless of scope.
 
-**Notify the founder when a pull request is ready for their decision.** When a pull request reaches the founder's table, raise it on GitHub in an issue or discussion comment carrying the founder's contact tag and a direct mention, and state the pull request, its scope level, the head SHA proposed for merge, the gate verdict that authorised it with a link to that published verdict, and anything still outstanding. "Ready for merge" reported only inside the coordinator's session is not a notification.
+**Notify the founder when a pull request is ready for their decision.** When a pull request reaches the founder's table, raise it as a **discussion comment** per section 3, carrying the founder's contact tag **`#Report_to_Owner`** with a direct mention **`@fengguode`**, and state the pull request, its scope level, the head SHA proposed for merge, the gate verdict that authorised it with a link to that published verdict, and anything still outstanding. Title it with exactly one of the section 5 forms: `..._need owner decision` when a decision, permission, credential or judgement is required, or `..._for owner information` when only a finding, correction, risk or state is being reported. "Ready for merge" reported only inside the coordinator's session is not a notification.
 
 A pull request inside the coordinator's own delegation is merged when its gate is satisfied; the founder does not need to be asked for it. The notification duty is for the founder's table, and for any escalation.
 
@@ -136,7 +136,7 @@ Before product coding, finalize and review applicable architecture and test desi
 
 **No priority, no start.** A task with no recorded priority in its dedicated field or metadata **must not be started, continued, or reported as delivered work.** Priority is a precondition of execution, not a reporting nicety: a role that discovers a missing or unknown priority stops at the selection step, records **priority unknown / not set**, and does not begin. Reading priority is part of the mandatory fresh read in section 5, so an absent value is a defect in the record, not a blank to be filled in by the executing role. This applies to every role including the Primary Coordinator, and it applies to corrective, safety, and tooling work: a real defect found out of priority order is reported and left, not fixed under an unauthorized priority. Backfilling a priority after the fact does not authorize work already done; that work is reported as **delivered out of priority order** for Quality Manager review.
 
-Repeat: **refresh → select eligible work → publish bounded assignment → execute → inspect → test as applicable → independently review → publish the review verdict on the pull request → correct/recheck → push and publish PR → obtain exact-candidate confirmation → integrate with authorization → update documentation/report → select next work**. Continue eligible independent work while another item is blocked. Do not repeatedly retry unchanged blockers or poll without useful work.
+Repeat: **refresh → select eligible work → publish bounded assignment → execute → inspect → test as applicable → independently review → correct/recheck → push and publish PR → publish the review verdict on the pull request → obtain exact-candidate confirmation → integrate with authorization → update documentation/report → select next work**. The verdict is published **after** the pull request exists and **after** the corrections it describes, so that it can be read against the head it reviewed and can satisfy the requirement that findings are re-verified on that final head. Continue eligible independent work while another item is blocked. Do not repeatedly retry unchanged blockers or poll without useful work.
 
 ## 7. Independent confirmation and evidence
 
@@ -173,9 +173,9 @@ Do not report a pull request as merge-ready, and do not present it for confirmat
 
 ### Pre-review readiness gate
 
-A candidate is **not ready to dispatch for review** until `scripts/check_pr_readiness.py` has been run against it and returned exit 0, and until its readiness manifest is committed on the branch. The gate exists because five candidates were rejected and every one of those rejections was preventable by a check the author did not run.
+A candidate is **not ready to dispatch for review** until its readiness manifest is committed on the branch and `scripts/check_pr_readiness.py` has been run against it and returned exit 0. **This clause binds only once that script is present on `main`; until then the obligation is the declaration itself, and the reviewer verifies the declarations rather than trusting them.** The gate exists because five candidates were rejected for reasons that a declared, checked declaration would have surfaced.
 
-The gate refuses on five conditions, and the author declares each:
+The gate reports on **five declared conditions**. Only the first is derived from the diff; the other four are satisfied by what the author declares, and an empty declaration satisfies them. That is why the declarations are published and independently checked:
 
 1. **Adverse deltas.** Any file with deleted lines must be declared with a reason. Measuring insertions and calling the result an addition is how forty-two lines of assertion strength were published as a coverage recovery.
 2. **Notation-complete replacement.** A replaced value is searched in every notation it could take. A pin written `3.12.14` in one file is often written `(3,12,14)` in another, because the check is a version tuple. A search that cannot see its own subject is not evidence.
@@ -187,7 +187,7 @@ A sub-agent claim entering a pull request body or a manifest is **re-derived fir
 
 A rejected candidate is re-gated before it is re-dispatched, and the finding that caused the rejection is shown to have been addressed rather than asserted to be.
 
-`--accept` records a deliberate acceptance of a named finding for a reviewer to see and overrule. Acceptance is never used to make a defect disappear, and every accepted id is printed in the output.
+`--accept` records a deliberate acceptance of a named finding for a reviewer to see and overrule. Acceptance is never used to make a defect disappear: every accepted id is printed in the output, and an id that matches no finding is an error rather than a silent pass. A published verdict uses the [confirmation record template](docs/team/pull-request-confirmation.md) verbatim, so it states the **reviewed head SHA**, its scope and one of **Confirmed / Changes requested / Blocked** — the same binding the confirmation rules already impose.
 
 ## 8. Data, rights and authorization
 

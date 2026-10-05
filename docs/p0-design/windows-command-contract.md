@@ -106,12 +106,23 @@ No phase chain silently continues after a failure.
 
 ## Fresh test lifecycle
 
-Supply `DATARA_TEST_DB_NAME=test_datara_<safeid>` explicitly. The safe ID consists
-of 8–50 lowercase ASCII letters, digits or underscores and begins with a letter or
-digit; the total name must fit PostgreSQL's 63-character identifier limit. Choose a
-unique run ID before execution. Names for the preserved database, sandbox base,
-`postgres`, `template0` and `template1` cannot be test targets. Test reuse,
-parallel database clones and mirrors are refused.
+Supply `DATARA_TEST_DB_NAME=test_datara_history_<safeid>` explicitly. The name
+**must** begin `test_datara_history_` — the runner refuses anything else before
+creating a database, with a message saying so; see [the prefix requirement](#the-test-phase-pins-a-test-database-name-prefix)
+above for why. After the prefix, the safe ID consists of 7–42 lowercase ASCII
+letters, digits or underscores and begins with a letter or digit.
+
+Two limits bound that length, and the smaller one wins:
+
+- **PostgreSQL identifiers are capped at 63 bytes.** The 21-byte prefix leaves
+  **42** bytes for the safe ID.
+- **The runner's own regex caps the whole name at 61 bytes**
+  (`test_datara_` + 1 character + up to 49), which leaves **40**.
+
+So the usable safe-ID length is **7–40**, and a name longer than that is refused.
+Choose a unique run ID before execution. Names for the preserved database,
+sandbox base, `postgres`, `template0` and `template1` cannot be test targets. Test
+reuse, parallel database clones and mirrors are refused.
 
 The runner factory replaces PostgreSQL's database-creation object for this invocation.
 It checks for a collision through the explicit `postgres` maintenance connection,

@@ -24,25 +24,36 @@ the FTP listing, the release pages, and the nuget.org `python` package index. A
 pin that no obtainable interpreter can satisfy is not a pin; it is a permanent
 refusal.
 
-**What was changed, and where — all four sites.** Baseline `origin/main` (`9a1693b`)
-for every row, so this table describes *this* change and not the earlier attempt.
+**What was changed, and where — all four sites.** The **Was** column is
+`origin/main` (`9a1693b`); the **Now** column is `origin/main`'s line numbers
+carried forward to this head. Line numbers drift as a file grows, so each row also
+names the **form** of the assertion, which does not drift.
 
-| File | Line | Form | Was (`9a1693b`) | Now |
-| --- | --- | --- | --- | --- |
-| `scripts/milestone_a_runner.py` | 157 | `platform.python_version() ==` | `3.12.14` | `3.12.10` |
-| `scripts/milestone_a_runner.py` | 226 | `require(platform.python_version() ==` | `3.12.14` | `3.12.10` |
-| `scripts/milestone_a.ps1` | 18 | `sys.version_info[:3] == (3,12,…)` | `(3,12,14)` | `(3,12,10)` |
-| `scripts/milestone_a.sh` | 55 | `sys.version_info[:3] == (3,12,…)` | `(3,12,14)` | `(3,12,10)` |
+| File | Line at `9a1693b` | Line at this head | Form | Was (`9a1693b`) | Now |
+| --- | --- | --- | --- | --- | --- |
+| `scripts/milestone_a_runner.py` | 157 | 184 | `platform.python_version() ==` | `3.12.14` | `3.12.10` |
+| `scripts/milestone_a_runner.py` | 218 | 253 | `require(platform.python_version() ==` | `3.12.14` | `3.12.10` |
+| `scripts/milestone_a.ps1` | 18 | 18 | `sys.version_info[:3] == (3,12,…)` | `(3,12,14)` | `(3,12,10)` |
+| `scripts/milestone_a.sh` | 55 | 55 | `sys.version_info[:3] == (3,12,…)` | `(3,12,14)` | `(3,12,10)` |
 
 A fifth site was found by review of the first version of this change and fixed
-with it: `scripts/milestone_a.sh:173` printed the resolved-dependency evidence
+with it: `scripts/milestone_a.sh:178` printed the resolved-dependency evidence
 list from a hard-coded alternation that omitted `typing_extensions`, so once that
 pin was added the evidence block showed **7 of 8 pins**. It is a hard-coded
 enumeration of the pinned set in the same style as the version pins, and a new
 pin silently invalidated it — the same defect class, in the same file. See D2.
 
+**This enumeration is still hard-coded and remains a known residual risk.** A
+ninth pin added to the lock file would drop out of that evidence block again, with
+no error. The runner's own `inventory()` does not have this problem — it walks the
+lock file line by line and reports every pin it finds — so the correct fix is to
+make the shell evidence block walk the lock file too, rather than restating it.
+Recorded as a known residual rather than fixed here, because the shell block is on
+the legacy combined path and not the Windows pinned path.
+
 **A defect this record exists to prevent.** The first attempt changed only
-`milestone_a_runner.py:226` and left the other three sites at `3.12.14`. Those
+`milestone_a_runner.py`'s `main()` interpreter gate and left the other three
+sites at `3.12.14`. Those
 three are **invisible to a plain text search for `3.12.14`** at the two wrapper
 sites, because they express the version as a **tuple literal** `(3,12,14)` with
 no dots. The defect survived a reviewer reading the diff and survived the author
@@ -93,10 +104,27 @@ would mis-predict which interpreters need it.
 in the verified environment.
 
 **Consequence — the lock value changes.** The pinned command prints
-`lock_sha256`, defined as the SHA-256 of `requirements-milestone-a.txt` itself.
-**Any historical evidence quoting the previous value refers to a different file
-and must not be compared against a run of the current one.** The current value is
-`0eb1a8f5cfdfa85d54a921466eedae3574ace51647f93a2471ee9ebb88574694`.
+`lock_sha256`, defined as the SHA-256 of the bytes of
+`requirements-milestone-a.txt` as they sit in the working tree. **Any historical
+evidence quoting a previous value refers to a different file and must not be
+compared against a run of the current one.**
+
+The current value is `885474fea81cedef49fcc6138d9710e8bd7d9547c5914449c9d06e300d3c4f87`.
+
+**Read this before quoting any value: `lock_sha256` is not portable.** The runner
+hashes working-tree bytes via `lock.read_bytes()`, and a checkout with
+`core.autocrlf=true` produces **CRLF** while an LF checkout produces different
+bytes and therefore a different hash. On this branch the CRLF working tree yields
+the value above; the LF blob in the repository yields `957b7c68...`. This is
+pre-existing on `main` and not introduced here, but it means *"the current
+value"* is a statement about a checkout, not about the repository. Quote the hash
+together with the line-ending form it was taken under, or do not quote it at all.
+
+**A correction, made after this number was already wrong once.** An earlier
+version of this record asserted a **superseded** hash as the current one. It was
+caught on re-review and is recorded here rather than quietly replaced, because a
+hash stated as current and wrong is worse than no hash: it lets two runs be
+compared when they are not comparable.
 
 **Note on the token's name.** The runner prints `lock_sha256`; the requirements
 header and the `milestone_a.sh` combined path call the same value
@@ -133,13 +161,46 @@ pin decision inherit an unfounded assertion about a P0 backend requirement.
   commit, not assumed.
 - The two wrapper files were opened and read at the cited lines.
 - `docs/management/pinned-environment-decisions-2026-10-05.md` is created by this
-  change, so the citation at `milestone_a_runner.py:219` now resolves, and the
-  target is **tracked at `HEAD`**, not merely present in a working tree.
+  change, so the runner's citation of this file now resolves, and the target is
+  **tracked at `HEAD`**, not merely present in a working tree.
 - The requirements file was diffed against the **installed** distribution set in
   the 3.12.10 environment; all eight non-`pip` distributions are pinned exactly
   and `pip` is reported separately by the runner.
 - `lock_sha256` was confirmed equal to an independently computed SHA-256 of the
   requirements file, and confirmed to **change** when a pin changes.
+
+**Citations in this record are given as file plus form, not file plus line
+number**, wherever a line number would drift as the cited file grows. The site
+table above is the one exception: it carries both the `origin/main` line and the
+line at this head, so a reader can check either. An earlier version of this record
+cited bare line numbers that all became wrong when a later commit inserted lines
+above them — the same defect class as citing a document that does not exist, in a
+milder form, and the reason the convention changed.
+
+## Known defects in this branch's history, recorded rather than erased
+
+**`be793e7`, the first commit on this branch, is defective and was not rewritten.**
+
+- Its **Git author** is `Worker - Torsten Maier`, with an ASCII hyphen, while its
+  `Implemented-by` trailer names the Primary Coordinator. The two disagree, and
+  the author's dash is non-canonical.
+- Its **published commit message contains two literal `@@EM@@` placeholder
+  tokens** where an em dash belongs, visible on the pull request.
+- Its message asserts **"328 tests, OK"**, a figure that no later run on this
+  branch reproduces; the current count is 316.
+
+**Why history was not rewritten.** Two completed independent reviews cite
+`be793e7`, `cfdf898` and `78be377` as the heads they reviewed. Rebasing to
+correct the author and the message would change every SHA on the branch and
+invalidate those reviews' head bindings — trading a cosmetic defect in one old
+commit for a broken evidence trail across the whole pull request. The defect is
+recorded here instead.
+
+**`scripts/check_identity_labels.py` does not catch any of this.** It regex-scans
+commit *message lines* for trailer keys. It never reads the Git author (`%an`) and
+never inspects the message body, so its exit 0 proves nothing about either defect.
+**A green identity-label result is not evidence that attribution metadata is
+correct**, and this branch is a concrete demonstration.
 
 **Host observation, not a repository fact.** The 3.12.10 interpreter on the
 machine this change was produced and verified on lives at

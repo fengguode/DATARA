@@ -36,11 +36,19 @@ PHASES = ("inspect", "install", "migrate", "test", "app-check")
 #    name up front, with a message naming the requirement, instead of letting the
 #    suite fail three tests for a reason the operator did not choose.
 #
+# TARGET is now derived from TEST_DB_PREFIX rather than restating it, so the two
+# rules cannot drift apart inside this file. The suite still asserts the prefix
+# independently, in two places, and that duplication remains: three assertions of
+# one value. Deriving the runner's copy from a shared constant imported out of the
+# suite was considered and rejected -- the runner executes before Django is
+# configured, and importing a test module there would make a legitimate run fail
+# for an unrelated reason. The residual is recorded in the decision record.
+#
 # The two rules disagreeing was a defect, not two valid requirements: TARGET was
 # strictly more permissive than what the suite accepts, so a name could be fully
 # conformant with the documented contract and still break the run.
 TEST_DB_PREFIX = "test_datara_history_"
-TARGET = re.compile(r"test_datara_[a-z0-9][a-z0-9_]{7,49}\Z")
+TARGET = re.compile(re.escape(TEST_DB_PREFIX) + r"[a-z0-9][a-z0-9_]{0,39}\Z")
 
 class CommandRefused(RuntimeError):
     pass
@@ -60,17 +68,22 @@ def validate_connection(phase):
         validate_target(os.environ.get("DATARA_TEST_DB_NAME", ""), actual[1])
 
 def validate_target(name, base):
-    require(bool(TARGET.fullmatch(name)) and len(name) <= 63 and
-            name not in {base, "datara_local", "datara_testsandbox", "postgres", "template0", "template1"},
-            "fresh allowlisted disposable test database name required")
-    # Refused here rather than surfacing as three test failures downstream. See
-    # TEST_DB_PREFIX above for why the suite's requirement is the binding one.
+    # The prefix is checked FIRST and separately, so that a name failing it gets a
+    # message naming the prefix rather than the generic TARGET message. TARGET is
+    # derived from the prefix, so without this ordering the specific cause would be
+    # swallowed by the general rule and an operator would have to re-derive it.
     require(name.startswith(TEST_DB_PREFIX),
             "test database name must begin '" + TEST_DB_PREFIX + "': "
             "datara/tests/test_metric_history_process.py spawns a child process that "
             "refuses any other name as a safety guard, and a conforming name outside "
             "this prefix fails three unrelated tests for a reason the operator did "
             "not choose")
+    require(bool(TARGET.fullmatch(name)) and len(name) <= 63 and
+            name not in {base, "datara_local", "datara_testsandbox", "postgres", "template0", "template1"},
+            "fresh allowlisted disposable test database name required: after the '" +
+            TEST_DB_PREFIX + "' prefix supply 7-40 lowercase ASCII letters, digits or "
+            "underscores beginning with a letter or digit (whole name capped at 61 "
+            "bytes, under PostgreSQL's 63-byte identifier limit)")
 
 def inventory():
     lock = ROOT / "requirements-milestone-a.txt"

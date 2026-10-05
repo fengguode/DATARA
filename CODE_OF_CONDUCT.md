@@ -116,7 +116,7 @@ Before product coding, finalize and review applicable architecture and test desi
 
 **No priority, no start.** A task with no recorded priority in its dedicated field or metadata **must not be started, continued, or reported as delivered work.** Priority is a precondition of execution, not a reporting nicety: a role that discovers a missing or unknown priority stops at the selection step, records **priority unknown / not set**, and does not begin. Reading priority is part of the mandatory fresh read in section 5, so an absent value is a defect in the record, not a blank to be filled in by the executing role. This applies to every role including the Primary Coordinator, and it applies to corrective, safety, and tooling work: a real defect found out of priority order is reported and left, not fixed under an unauthorized priority. Backfilling a priority after the fact does not authorize work already done; that work is reported as **delivered out of priority order** for Quality Manager review.
 
-Repeat: **refresh → select eligible work → publish bounded assignment → execute → inspect → test as applicable → independently review → correct/recheck → push and publish PR → obtain exact-candidate confirmation → integrate with authorization → update documentation/report → select next work**. Continue eligible independent work while another item is blocked. Do not repeatedly retry unchanged blockers or poll without useful work.
+Repeat: **refresh → select eligible work → publish bounded assignment → execute → inspect → test as applicable → independently review → publish the review verdict on the pull request → correct/recheck → push and publish PR → obtain exact-candidate confirmation → integrate with authorization → update documentation/report → select next work**. Continue eligible independent work while another item is blocked. Do not repeatedly retry unchanged blockers or poll without useful work.
 
 ## 7. Independent confirmation and evidence
 
@@ -127,6 +127,29 @@ Confirmations bind to the full reviewed head SHA and exact scope. Later changes 
 Use proportionate actual checks. Documentation can use independent read-through, links, paths and configuration checks. Run `python scripts/check_requirements.py` for registry changes; its management/coverage validation is not product verification, and unsupported additive links need direct audit. Applicable product evidence records candidate/build, environment/dependencies, fixture provenance, reproduction steps, expected/actual results, pass/fail/blocked status, defects and limits.
 
 Keep source inspections, mocked tests, live customer-model integration, running-system verification, rendered UI checks and founder validation distinct. Identify the loaded process/build for runtime evidence and the actual isolated target for browser evidence. Preserve failed, blocked and historical results; never relabel plans as passing checks.
+
+### Review records are published, not summarised
+
+A review is not performed until its verdict is **published on GitHub as a comment on the pull request it reviews**, carrying the reviewing role's canonical identity label. A verdict held only in an agent session, a coordinator summary or a conversation is not a review record. Anyone reading the pull request later must be able to reach every verdict, including the ones that rejected the work.
+
+Post agent verdicts as **comments**. Never press `Approve`, `Request changes`, or any other review control through the founder's account token: the rendered result is indistinguishable from a human approval by a person who has read nothing. A false approval signal planted in the confirmation record is a conduct failure, not a shortcut, and it is worse than publishing nothing.
+
+While a review is in flight, **state that it is in flight** on the pull request, naming the reviewing role and what it is checking. Silence is read as "unreviewed", and a reviewer looking for the work of a named role cannot otherwise tell whether the gate is open.
+
+Maintain **one review-record index** covering the concurrent pull requests, listing for each its scope, the role reviewing it, and the verdict. The per-pull-request comment is authoritative; the index is navigation, so that a founder or later reader does not have to open every pull request to learn what was found.
+
+Work **authored or corrected by the coordinator is unreviewed** until a role independent of that work has reviewed it, and must be labelled unreviewed in the index and on the pull request. Self-verification is not review. This binds corrective and tooling work exactly as it binds new work: a fix written and checked by the same agent that wrote the defect is one verification, not two.
+
+Use **merge-ready**, and "ready for founder confirmation", only against a stated bar, and name what is outstanding against it:
+
+1. the applicable gate role has returned a verdict with no unresolved defect;
+2. every finding is fixed and the fix re-verified on the final head;
+3. the process checkers pass on that final head;
+4. the reviewing role's verdict is published on the pull request.
+
+Do not report a pull request as merge-ready, and do not present it for confirmation, while any of the four is unmet. Open pull requests with no published verdicts are an **open gate**, not progress toward approval.
+
+**Preserve rejected and superseded verdicts.** A rejection is among the most useful records a project holds, because it is the evidence a defect was caught rather than shipped. Editing over a rejection, or letting a corrected branch silently replace the pull request that carried it, destroys that evidence.
 
 ## 8. Data, rights and authorization
 

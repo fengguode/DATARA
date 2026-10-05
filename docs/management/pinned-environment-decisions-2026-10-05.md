@@ -25,16 +25,23 @@ pin that no obtainable interpreter can satisfy is not a pin; it is a permanent
 refusal.
 
 **What was changed, and where — all four sites.** The **Was** column is
-`origin/main` (`9a1693b`); the **Now** column is `origin/main`'s line numbers
-carried forward to this head. Line numbers drift as a file grows, so each row also
-names the **form** of the assertion, which does not drift.
+`origin/main` (`9a1693b`). The **Now (line)** column gives the line **at `68fcb39`**,
+and each row also names the **form** of the assertion, which does not drift at all.
 
-| File | Line at `9a1693b` | Line at this head | Form | Was (`9a1693b`) | Now |
+| File | Was (`9a1693b`) | Now (line) | Form | Was | Now |
 | --- | --- | --- | --- | --- | --- |
-| `scripts/milestone_a_runner.py` | 157 | 184 | `platform.python_version() ==` | `3.12.14` | `3.12.10` |
-| `scripts/milestone_a_runner.py` | 218 | 253 | `require(platform.python_version() ==` | `3.12.14` | `3.12.10` |
+| `scripts/milestone_a_runner.py` | 157 | 197 | `platform.python_version() ==` | `3.12.14` | `3.12.10` |
+| `scripts/milestone_a_runner.py` | 218 | 266 | `require(platform.python_version() ==` | `3.12.14` | `3.12.10` |
 | `scripts/milestone_a.ps1` | 18 | 18 | `sys.version_info[:3] == (3,12,…)` | `(3,12,14)` | `(3,12,10)` |
 | `scripts/milestone_a.sh` | 55 | 55 | `sys.version_info[:3] == (3,12,…)` | `(3,12,14)` | `(3,12,10)` |
+
+**Read the form column, not the line column, when checking this table.** The line
+numbers are accurate at `68fcb39` and will drift the moment a commit inserts lines
+above them. That has already happened twice on this branch: an earlier version of
+this table carried `184` and `253`, which were correct at `a98a31d` and wrong by
+exactly the 13 lines that commit inserted. A third revision of this table is
+therefore not a fix; the durable form is the assertion's *shape*, which is what
+the form column gives.
 
 A fifth site was found by review of the first version of this change and fixed
 with it: `scripts/milestone_a.sh:178` printed the resolved-dependency evidence

@@ -37,11 +37,16 @@ hard requirement enforced elsewhere, and it is a **platform parity break**.
 
 The cause is `datara/tests/test_metric_history_process.py:66`, which asserts that
 the configured test database name starts with `test_datara_history_`. Three tests
-fail when the name does not, **even though the name is otherwise perfectly
-conformant with the runner's own validation rule**
-(`scripts/milestone_a_runner.py`, the `test_datara_[a-z0-9][a-z0-9_]{7,49}`
-pattern). Reproduced: a name satisfying that regex but not the hard-coded prefix
-produces exactly three unrelated failures.
+fail when the name does not, **even though the name was at the time perfectly
+conformant with the runner's own validation rule** — which was then
+`test_datara_[a-z0-9][a-z0-9_]{7,49}`, strictly more permissive than the suite's
+requirement. Reproduced: a name satisfying that regex but not the hard-coded
+prefix produced exactly three unrelated failures.
+
+**That regex no longer exists.** It was replaced by this branch, and quoting it
+here as the runner's current rule was itself a defect — a live citation of a
+deleted pattern, in the paragraph arguing the section's case. The runner's rule is
+now derived from the prefix constant, so the two cannot disagree.
 
 **Why this belongs in the command contract.** Without it, a reviewer reproducing
 a `test` phase result on a different but equally valid database name sees three
@@ -108,18 +113,24 @@ No phase chain silently continues after a failure.
 
 Supply `DATARA_TEST_DB_NAME=test_datara_history_<safeid>` explicitly. The name
 **must** begin `test_datara_history_` — the runner refuses anything else before
-creating a database, with a message saying so; see [the prefix requirement](#the-test-phase-pins-a-test-database-name-prefix)
-above for why. After the prefix, the safe ID consists of 7–42 lowercase ASCII
-letters, digits or underscores and begins with a letter or digit.
+creating a database, with a message saying so; see [the prefix requirement](#parity-break-the-test-phase-pins-a-test-database-name-prefix)
+above for why.
 
-Two limits bound that length, and the smaller one wins:
+After the prefix, the safe ID is **1–40** lowercase ASCII letters, digits or
+underscores, beginning with a letter or digit. That makes the whole name
+**21–60 bytes**.
 
-- **PostgreSQL identifiers are capped at 63 bytes.** The 21-byte prefix leaves
-  **42** bytes for the safe ID.
-- **The runner's own regex caps the whole name at 61 bytes**
-  (`test_datara_` + 1 character + up to 49), which leaves **40**.
+Those figures are **derived from the prefix length**, not typed by hand:
+`len("test_datara_history_")` is **20**, the safe ID contributes 1–40, and the
+runner builds both its regex and its refusal message from those two constants.
+An earlier version of this section stated a 21-byte prefix, a 61-byte cap and a
+safe ID of 7–40, and contradicted itself ten lines later. All three numbers were
+wrong. The runner's refusal message now computes its own wording, so the two
+cannot disagree.
 
-So the usable safe-ID length is **7–40**, and a name longer than that is refused.
+Note the floor: **a one-character safe ID is valid** and is accepted. There is no
+minimum length beyond that.
+
 Choose a unique run ID before execution. Names for the preserved database,
 sandbox base, `postgres`, `template0` and `template1` cannot be test targets. Test
 reuse, parallel database clones and mirrors are refused.

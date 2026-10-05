@@ -48,7 +48,27 @@ PHASES = ("inspect", "install", "migrate", "test", "app-check")
 # strictly more permissive than what the suite accepts, so a name could be fully
 # conformant with the documented contract and still break the run.
 TEST_DB_PREFIX = "test_datara_history_"
-TARGET = re.compile(re.escape(TEST_DB_PREFIX) + r"[a-z0-9][a-z0-9_]{0,39}\Z")
+TEST_DB_SAFE_ID_MIN = 1
+TEST_DB_SAFE_ID_MAX = 40
+TEST_DB_NAME_MIN = len(TEST_DB_PREFIX) + TEST_DB_SAFE_ID_MIN
+TEST_DB_NAME_MAX = len(TEST_DB_PREFIX) + TEST_DB_SAFE_ID_MAX
+TARGET = re.compile(re.escape(TEST_DB_PREFIX) + r"[a-z0-9][a-z0-9_]{0," +
+                    str(TEST_DB_SAFE_ID_MAX - 1) + r"}\Z")
+# The bounds above are DERIVED from the prefix length, never written out by hand.
+# A first attempt asserted "21-byte prefix", "61 bytes" and a safe ID of "7-40" in
+# the refusal message and in the command contract. All three were wrong: the prefix
+# is 20 bytes, the whole name is capped at 60, and the regex has always accepted a
+# safe ID of 1. Asserting the numbers is how they became wrong; deriving them is
+# what stops the next prefix change from making the message lie again.
+
+def safe_id_requirement():
+    """The length rule, computed. Never retype these numbers anywhere else."""
+
+    return ("after the '" + TEST_DB_PREFIX + "' prefix supply " +
+            str(TEST_DB_SAFE_ID_MIN) + "-" + str(TEST_DB_SAFE_ID_MAX) +
+            " lowercase ASCII letters, digits or underscores beginning with a letter "
+            "or digit; the whole name is then " + str(TEST_DB_NAME_MIN) + "-" +
+            str(TEST_DB_NAME_MAX) + " bytes, under PostgreSQL's 63-byte identifier limit")
 
 class CommandRefused(RuntimeError):
     pass
@@ -78,12 +98,21 @@ def validate_target(name, base):
             "refuses any other name as a safety guard, and a conforming name outside "
             "this prefix fails three unrelated tests for a reason the operator did "
             "not choose")
-    require(bool(TARGET.fullmatch(name)) and len(name) <= 63 and
-            name not in {base, "datara_local", "datara_testsandbox", "postgres", "template0", "template1"},
-            "fresh allowlisted disposable test database name required: after the '" +
-            TEST_DB_PREFIX + "' prefix supply 7-40 lowercase ASCII letters, digits or "
-            "underscores beginning with a letter or digit (whole name capped at 61 "
-            "bytes, under PostgreSQL's 63-byte identifier limit)")
+    # The deny-list was dead code. Every accepted name starts with TEST_DB_PREFIX,
+    # and none of the reserved names do, so `name not in {...}` could never be the
+    # binding check -- a review demonstrated that `test_datara_history_datara_local`
+    # and `test_datara_history_postgres` are both accepted. It is now made effective
+    # by comparing the SAFE-ID SUFFIX against the reserved names, so a disposable
+    # database cannot be named after a real one. Removing the check instead would
+    # have been the wrong trade: it is cheap defence in depth, and it now works.
+    reserved = {base, "datara_local", "datara_testsandbox", "postgres", "template0", "template1"}
+    suffix = name[len(TEST_DB_PREFIX):] if name.startswith(TEST_DB_PREFIX) else name
+    require(suffix.lower() not in reserved,
+            "test database name must not reuse a reserved name after the '" +
+            TEST_DB_PREFIX + "' prefix: " + safe_id_requirement())
+    require(bool(TARGET.fullmatch(name)) and len(name) <= 63,
+            "fresh allowlisted disposable test database name required: " +
+            safe_id_requirement())
 
 def inventory():
     lock = ROOT / "requirements-milestone-a.txt"

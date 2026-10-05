@@ -29,6 +29,33 @@ founder decision; see
 this platform. The pin itself is retained: an unpinned interpreter is still
 refused.
 
+### Parity break: the `test` phase pins a test database name prefix
+
+**The `test` phase on this platform requires the disposable database name to
+begin `test_datara_history_`.** This is not a convention of this document; it is a
+hard requirement enforced elsewhere, and it is a **platform parity break**.
+
+The cause is `datara/tests/test_metric_history_process.py:66`, which asserts that
+the configured test database name starts with `test_datara_history_`. Three tests
+fail when the name does not, **even though the name is otherwise perfectly
+conformant with the runner's own validation rule**
+(`scripts/milestone_a_runner.py`, the `test_datara_[a-z0-9][a-z0-9_]{7,49}`
+pattern). Reproduced: a name satisfying that regex but not the hard-coded prefix
+produces exactly three unrelated failures.
+
+**Why this belongs in the command contract.** Without it, a reviewer reproducing
+a `test` phase result on a different but equally valid database name sees three
+failures, reasonably concludes the branch regressed, and reports a defect that
+does not exist. Worse, any recorded pass figure becomes non-reproducible for
+reasons that have nothing to do with the code under test. A reader must be able
+to tell a real regression from a naming mismatch without reading a test file.
+
+**This is a defect, not a design decision.** The coupling belongs in a shared
+constant rather than a literal inside one test module, and the runner's own
+validation should enforce what the suite actually requires. It is tracked
+separately; until it is fixed, the prefix requirement is stated here so the
+`test` phase is reproducible.
+
 | Phase | Explicit DATARA_DB_USER / DATARA_DB_NAME | Action |
 | --- | --- | --- |
 | inspect | One of the three pairs below | Interpreter/dependency/candidate identity and nonmutating connection/role metadata |

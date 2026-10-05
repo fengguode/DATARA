@@ -154,7 +154,7 @@ def FreshDatabaseRunner(*args, **kwargs):
             super().__init__(*args, **kwargs)
             require(not self.keepdb and self.parallel in (0, 1), "reuse and parallel database cloning refused")
             validate_connection("test")
-            require(sys.flags.optimize == 0 and platform.python_version() == "3.12.14",
+            require(sys.flags.optimize == 0 and platform.python_version() == "3.12.10",
                     "test interpreter contract refused")
             inventory()
             probe("test")

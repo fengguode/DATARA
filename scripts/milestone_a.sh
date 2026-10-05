@@ -52,7 +52,7 @@ if [ "$#" -gt 0 ]; then
   [ -n "${DATARA_PYTHON:-}" ] && [ -n "${DATARA_VENV:-}" ] || { echo "explicit interpreter and venv required" >&2; exit 1; }
   case "$(uname -s)" in MINGW*|MSYS*|CYGWIN*) phase_python="$DATARA_VENV/Scripts/python.exe" ;; *) phase_python="$DATARA_VENV/bin/python" ;; esac
   if [ "$1" = install ] && [ ! -x "$phase_python" ]; then
-    "$DATARA_PYTHON" -c 'import sys; sys.exit(0 if sys.version_info[:3] == (3,12,14) and not sys.flags.optimize else 1)'
+    "$DATARA_PYTHON" -c 'import sys; sys.exit(0 if sys.version_info[:3] == (3,12,10) and not sys.flags.optimize else 1)'
     "$DATARA_PYTHON" -m venv "$DATARA_VENV" >/dev/null 2>&1 || { echo "venv preparation failed; diagnostics suppressed" >&2; exit 1; }
   fi
   echo "shell_version=$BASH_VERSION"

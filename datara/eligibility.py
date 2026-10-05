@@ -211,6 +211,19 @@ REASON_DETAILS: Mapping[str, frozenset[str]] = {
             "below_declared_minimum",
             "above_declared_maximum",
             "not_equal_to_declared_value",
+            # _validate_observed's final `else` arm returns this for a declared
+            # type it does not recognise, and routes it through
+            # _INVALID_BY_KIND like every other detail it produces. Step 1 of
+            # _evaluate_one rejects an unsupported declared type before
+            # _validate_observed is called, so the arm is currently unreachable
+            # from the public API -- but the pair must still be admissible, so
+            # that a future change to that ordering yields an explanation rather
+            # than a raise that discards every other requirement's reason. Found
+            # by the second independent review of #385; the arm is deliberately
+            # NOT deleted, because deleting it would let an unsupported type fall
+            # through to the permitted_values check and return None, i.e. be read
+            # as admissible and then satisfied.
+            "unknown_declared_value_type",
             # The per-requirement exception handler reports through
             # _INVALID_BY_KIND, so a mandatory_field whose comparison raises
             # arrives here rather than at REQUIREMENT_NOT_EVALUABLE. Without

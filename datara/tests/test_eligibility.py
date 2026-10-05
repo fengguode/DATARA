@@ -1696,13 +1696,28 @@ class E10VocabularyInvariantTests(unittest.TestCase):
         For each kind, take the code ``_INVALID_BY_KIND`` routes to and assert it
         admits every detail ``_validate_observed`` can return. This is the check
         that would have caught #379, #385's survivor D1, and D2.
+
+        The declared-type dimension deliberately includes a type the engine does
+        **not** support. ``_validate_observed`` has an ``else`` arm returning
+        ``unknown_declared_value_type``, and for ``mandatory_field`` that routes
+        to a vocabulary which does not admit it -- the same inadmissible pair as
+        the two defects above. It is not reachable through the public API,
+        because step 1 rejects an unsupported declared type before
+        ``_validate_observed`` is called, so a sweep over the supported types
+        alone cannot see it. Enumerating only the types the engine accepts tests
+        exactly the set for which that branch is dead.
+
+        The arm is **not** to be deleted as "dead code": deleting it would let an
+        unsupported type fall through to the ``permitted_values`` check and
+        return ``None``, i.e. be read as admissible and then satisfied, which is
+        worse than raising.
         """
 
-        emitted = set()
         for kind in sorted(SUPPORTED_KINDS):
             code = eligibility_invalid_code_for(kind)
+            emitted = set()  # per kind: see note below
             for comparator in sorted(SUPPORTED_COMPARATORS):
-                for value_type in sorted(SUPPORTED_VALUE_TYPES):
+                for value_type in sorted(SUPPORTED_VALUE_TYPES) + [UNSEEN_VALUE_TYPE]:
                     for domain in (None, ("running", "cycling"), (7, 14, 21, 28)):
                         for required in (None, 0, 7, 90, "x"):
                             for observed in self.OBSERVATIONS:
@@ -1745,17 +1760,33 @@ class E10VocabularyInvariantTests(unittest.TestCase):
                 )
 
     def test_no_declaration_and_observation_pair_raises(self) -> None:
-        """The end-to-end guarantee: an unusable observation never raises.
+        """The end-to-end guarantee, scoped honestly: a bad observation *value*.
 
-        SR11 requires an ineligible skill to *identify* its unmet requirements.
-        This asserts the engine always returns a decision, so a caller never has
-        to distinguish "ineligible" from "the engine fell over".
+        SR11 requires an ineligible skill to *identify* its unmet requirements,
+        so a caller should never have to distinguish "ineligible" from "the
+        engine fell over". This asserts that for every constructible
+        requirement/observation-**value** pair, a decision comes back and whatever
+        it carries is inside the closed vocabulary.
+
+        **Scope, stated because an earlier version of this docstring overclaimed.**
+        This sweep varies observation *values*. It does not vary the
+        ``Mapping`` object or its **keys**, and the declaration's ``kind`` is not
+        constrained to a string. Two pre-existing paths can therefore still raise
+        out of ``evaluate_eligibility`` and discard every explanation -- both
+        filed separately by the second independent review:
+
+        * an unhashable ``kind`` makes the exception handler's own
+          ``_INVALID_BY_KIND.get(kind)`` raise inside an ``except`` block;
+        * a non-``str`` observation key breaks the sort or the key check.
+
+        Do not read a green run here as "the engine cannot raise". It means the
+        value-space is clean.
         """
 
         checked = 0
         for kind in sorted(SUPPORTED_KINDS):
             for comparator in sorted(SUPPORTED_COMPARATORS):
-                for value_type in sorted(SUPPORTED_VALUE_TYPES):
+                for value_type in sorted(SUPPORTED_VALUE_TYPES) + [UNSEEN_VALUE_TYPE]:
                     for domain in (None, (7, 14, 21, 28)):
                         for required in (None, 7, 90):
                             for observed in self.OBSERVATIONS + (_RaisingObservation(),):

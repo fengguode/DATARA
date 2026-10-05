@@ -59,7 +59,18 @@ INSTALLED_APPS = [
     # everything. No messages/admin/static surface is installed.
     "django.contrib.contenttypes",
     "django.contrib.auth",
-    "django.contrib.sessions",
+    # django.contrib.sessions is deliberately NOT installed here. It was, and it
+    # created a persisted table with no producer: nothing in this package can log
+    # anyone in, so every real request resolved to AnonymousUser and was denied,
+    # while the table sat in the schema as an unowned decision. Shipping a
+    # persisted personal-data table as a side effect of making a page runnable is
+    # a data-contract decision reserved to the founder, so it is held back rather
+    # than carried here.
+    #
+    # Without SessionMiddleware and AuthenticationMiddleware a request has no
+    # request.user at all. datara/session_identity.py reads it inside a
+    # try/except AttributeError and refuses, so the surface denies rather than
+    # fails -- which is the whole observable behaviour of this increment.
     "datara",
 ]
 
@@ -82,8 +93,11 @@ MIDDLEWARE = [
     # middleware that enforces it, so the setting had no effect and this first
     # HTML page went out unframable. Added on review of #394.
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "django.contrib.sessions.middleware.SessionMiddleware",
-    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    # SessionMiddleware and AuthenticationMiddleware were here and are held back
+    # with the sessions app, for the reason given in INSTALLED_APPS. Nothing is
+    # lost observably: with neither present, request.user does not exist, the
+    # identity module refuses on AttributeError, and every request is denied --
+    # which is what happened anyway, because no producer could create a session.
 ]
 
 # The #378 surface is the first runnable page in this project. ROOT_URLCONF was

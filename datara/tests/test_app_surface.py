@@ -396,17 +396,32 @@ class RunnabilityTests(_SurfaceTestCase):
             settings.TEMPLATES[0]["APP_DIRS"],
             "APP_DIRS is what makes datara/templates discoverable without DIRS",
         )
-        self.assertIn("django.contrib.sessions", settings.INSTALLED_APPS)
-        middleware = list(settings.MIDDLEWARE)
-        sessions = "django.contrib.sessions.middleware.SessionMiddleware"
-        auth = "django.contrib.auth.middleware.AuthenticationMiddleware"
-        self.assertIn(sessions, middleware)
-        self.assertIn(auth, middleware)
-        self.assertLess(
-            middleware.index(sessions),
-            middleware.index(auth),
-            "SessionMiddleware must precede AuthenticationMiddleware for request.user",
+        # The sessions app and its two middleware entries are deliberately absent
+        # on this branch. They were present, and they created a persisted table
+        # with no producer -- nothing in this package can log anyone in, so every
+        # request was denied anyway while an unowned personal-data table sat in
+        # the schema. That is a founder data-contract decision, so it is held back.
+        #
+        # Asserted as an absence, not merely omitted: if the sessions half is
+        # reintroduced without that decision, this fails rather than the schema
+        # quietly growing a table again.
+        self.assertNotIn(
+            "django.contrib.sessions",
+            settings.INSTALLED_APPS,
+            "the sessions app creates a persisted table with no producer; "
+            "restoring it requires the founder's recorded data-contract decision",
         )
+        middleware = list(settings.MIDDLEWARE)
+        for absent in (
+            "django.contrib.sessions.middleware.SessionMiddleware",
+            "django.contrib.auth.middleware.AuthenticationMiddleware",
+        ):
+            self.assertNotIn(
+                absent,
+                middleware,
+                "held back with the sessions app; without it the identity module "
+                "refuses on AttributeError and every request is denied",
+            )
         # The three settings changes added on review of #394 were verified
         # behaviourally but had no assertion here, so nothing would have caught a
         # later removal of any of them.

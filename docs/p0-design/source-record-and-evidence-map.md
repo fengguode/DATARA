@@ -16,6 +16,40 @@ commit. Nothing was inferred from a name or a docstring.
 
 ---
 
+## Standing of the records cited here — read this before any "divergence" row
+
+`docs/p0-design/README.md:3` records the package as *"engineering proposal; not approved,
+implemented, verified, accepted, or released"*, and `:11` states the rule this document
+depends on: **"Contracts are proposals unless a founder decision record says otherwise."**
+`fit-support-matrix.md:1` titles itself *"**Proposed** FIT support and mapping matrix"* and
+`:3` states it is *"not an approved implementation/source contract or conformance result."*
+`duplicate-conflict-options.md:3` is likewise *"proposed research output … No new policy,
+schema freeze or implementation evidence."*
+
+So those records are **proposals**, and this document does not call them approved anywhere.
+
+**The binding authority it does cite is `docs/management/decision-register.md`, whose §3
+(3 October 2026, Author: **System Architect — Feng Guo**, `:90`–`:92`) records five
+architecture decisions D-A1 … D-A5 (`:94`, `:96`, `:98`, `:100`, `:102`).** Those are
+recorded decisions, and they are what the implementation is obliged to satisfy. Where a
+finding here says *implementation gap against an authoritative record*, it means **one of
+these decisions**, cited by its D-number.
+
+Where the same rule is *also* carried by a proposal record, this document cites the
+decision first and names the proposal only as corroboration. The two are not merged: a
+proposal can be wrong and a decision can be unimplemented, and those are different
+findings with different owners.
+
+**An earlier revision of this document got this wrong in a way worth naming.** It called
+`fit-support-matrix.md` *"the approved record"* in twelve places while that file disclaims
+approved status in its own first three lines, and it never once cited
+`decision-register.md`. The conclusions survive, and C6's obligation in fact rests on a
+*stronger* basis than the document then claimed. But an obligation asserted on a record
+that denies being approved is an unsupported obligation, and the correct authority was
+uncited while sitting in the same repository. Corrected throughout below.
+
+---
+
 ## How to read this document
 
 Every claim carries one of two marks.
@@ -39,8 +73,9 @@ Owner routing used in this document:
 
 - **Founder** — product decisions: accepted scope, thresholds, tolerances, protocol
   version selection, fixture rights.
-- **System Architect — Feng Guo** — architectural findings: where the implementation and
-  an approved record disagree about structure, vocabulary, or evidence discipline.
+- **System Architect — Feng Guo** — architectural findings: where the implementation and a
+  recorded decision in `decision-register.md` disagree about structure, vocabulary, or
+  evidence discipline.
 
 I am not deciding any of these. Each is a question, not a recommendation.
 
@@ -297,78 +332,98 @@ traced back to the source file.
 
 ### 3.4 Canonical forms the code produces, against the matrix's declared canonical fields
 
-This is where the code and the approved matrix diverge most, so every divergence is stated
-rather than reconciled.
+This is where the code and the recorded canonical forms diverge most, so every divergence is
+stated rather than reconciled.
 
 | Source field | Matrix canonical field and type (`fit-support-matrix.md`) | What the code actually produces | Agreement |
 | --- | --- | --- | --- |
 | `session` 18/2 `start_time` | `start_utc_seconds`, **integer** epoch seconds, `:103` | `start_time_utc`: an **ISO-8601 string**, `datara/classification.py:1275` via `:848`–`:858` | **Divergence in form.** The integer form exists, but only later and separately, inside the tuple: `canonical.py:241`–`:256` converts the string to integer epoch seconds. The persisted form is a `DateTimeField` (`datara/models.py:361`), not an integer. |
 | `session` 18/7 `total_elapsed_time` | `elapsed_ms`, **integer** milliseconds, `:104` | `elapsed_duration_ms`: the raw value passed through `require_elapsed_duration_ms` (`:1281`–`:1285`), **and** `elapsed_duration_seconds`: a decimal **string** (`:1286`) | **Agreement on the integer millisecond form.** The string form is additional, not contradictory, but it is what `ImportPlan.accepted()` reports (`datara/intake.py:189`). |
-| `session` 18/8 `total_timer_time` | `timer_ms`, **integer** milliseconds, `:105` | `timer_duration_seconds`: `_exact_scaled(timer.raw, 1000)` — a **decimal seconds string**, `:1287` | **Divergence, and a persistence-blocking one.** `Session.timer_duration_seconds` is an integer column (`datara/models.py:363`). `_exact_scaled` renders the exact quotient to three decimal places, so a raw `1800500` yields `"1800.500"` (verified at runtime), which cannot be written to an integer column without a conversion that no approved record specifies. **unknown:** *What is the canonical form and integer representation of `total_timer_time` for persistence?* Owner: **System Architect — Feng Guo**. |
+| `session` 18/8 `total_timer_time` | `timer_ms`, **integer** milliseconds, `:105` | `timer_duration_seconds`: `_exact_scaled(timer.raw, 1000)` — a **decimal seconds string**, `:1287` | **Divergence, and a persistence-blocking one.** `Session.timer_duration_seconds` is an integer column (`datara/models.py:363`). `_exact_scaled` renders the exact quotient to three decimal places, so a raw `1800500` yields `"1800.500"` (verified at runtime), which cannot be written to an integer column without a conversion that **no recorded decision specifies** — I checked `decision-register.md` §3 (`:90`–`:110`) and the proposal matrix declares only the source-typed form, not a persisted one. **unknown:** *What is the canonical form and integer representation of `total_timer_time` for persistence?* Owner: **System Architect — Feng Guo**. |
 | `session` 18/9 `total_distance` | `distance_cm`, **integer** centimetres, `:106` | `total_distance_metres`: `_exact_scaled(distance.raw, 100)` — a **decimal metres string**, `:1288`–`:1290` | **Divergence.** Units differ (metres vs centimetres) and representation differs (decimal string vs integer). `Activity.distance_value` is an integer column with a separate `distance_unit_code` (`datara/models.py:298`–`:299`), so the mapping is undefined. **unknown:** *Which integer representation and unit code does `total_distance` persist as?* Owner: **System Architect — Feng Guo**. |
-| `session` 18/5 `sport` | integer enum `{1,2}`, `:101` | `sport_name` is the **string** name (`classification.py:1171`); `sport_raw` keeps the integer | **Divergence in what is carried.** `Session.sport` stores the string (`datara/dedup.py:876` uses `sport_name(...)`), and the tuple converts back via `canonical_sport_code` (`datara/canonical.py:178`–`:203`). `fit-support-matrix.md:130` says the canonical comparison value is the integer. The integer comparison is correct; the persisted column is a display string. **unknown:** *Is a display string acceptable in `Session.sport`, given the matrix names the integer as canonical?* Owner: **System Architect — Feng Guo**. |
+| `session` 18/5 `sport` | integer enum `{1,2}`, `:101` | `sport_name` is the **string** name (`classification.py:1171`); `sport_raw` keeps the integer | **Divergence in what is carried.** `Session.sport` stores the string (`datara/dedup.py:876` uses `sport_name(...)`), and the tuple converts back via `canonical_sport_code` (`datara/canonical.py:178`–`:203`). `fit-support-matrix.md:101` types the canonical value as *"integer enum"* and `:96` states *"Canonical types are integers by design"*. The integer comparison is correct; the persisted column is a display string. **unknown:** *Is a display string acceptable in `Session.sport`, given the matrix names the integer as canonical?* Owner: **System Architect — Feng Guo**. |
 | `session` 18/6 `sub_sport` | integer enum plus `indoor_outdoor`, `:102` | `sub_sport_raw` and `sub_sport_name` are carried (`:1270`–`:1271`); **no indoor/outdoor value is computed anywhere** | **Required but absent** — see §3.5. |
 
-### 3.5 Sub-sport: the approved matrix's rule is not implemented, and the gap is larger than "absent"
+### 3.5 Sub-sport: **D-A1 and D-A3 are not implemented**, and the gap is larger than "absent"
 
-The matrix froze an allowlist of 9 running and 19 cycling sub-sports with an indoor/outdoor
-rule and four new codes (`fit-support-matrix.md:318`–`:371`, `:373`–`:391`, `:467`–`:483`).
-None of that exists in the code. I verified this at runtime, not by grep alone:
+**D-A1** (`decision-register.md:94`, Author: **System Architect — Feng Guo**, recorded
+3 October 2026) freezes the sub-sport allowlist and **D-A3** (`:98`) requires that an
+unknown, unassigned or **cross-sport** sub-sport is *"accepted with disclosure and never
+rejected"*, under four stable codes including `SUBSPORT_SPORT_MISMATCH`. **D-A2** (`:96`)
+adds `SUBSPORT_ALL_GOALS_ONLY` and `SPORT_ALL_GOALS_ONLY` for `254 all`. **None of that
+exists in the code.** I verified this at runtime, not by grep alone:
 
 - `datara.classification` has **no** `REASON_SUBSPORT_ALL_GOALS_ONLY`,
   **no** `REASON_SPORT_ALL_GOALS_ONLY` and **no** `WARN_SESSION_COUNT_UNDECLARED`
-  attributes. (`fit-support-matrix.md:475`–`:477` require all three.)
+  attributes. (`decision-register.md:96` requires the first two; `SESSION_COUNT_UNDECLARED`
+  is required by the proposed matrix at `fit-support-matrix.md:477`, so that one is a
+  proposal-stage item, not a decision-stage one.)
 - The literal `254` appears **nowhere** in `datara/`.
 - The only sub-sport warning is `WARN_SUB_SPORT_NOT_IN_SCOPE`, raised at
   `datara/classification.py:1247`–`:1248` when `sub_sport_name(raw) is None`.
 
 That last point is the substantive finding, and it is **a missing-evidence gap rather
 than a wrong-but-fixable predicate**. The predicate is *"the pinned profile has no
-name for this value"*. The matrix's rule is *"this value is not assigned to this
+name for this value"*. D-A3's rule is *"this value is not assigned to this
 sport"*. Those are different predicates, and the second is strictly broader.
 Concretely: for `sport = running` with `sub_sport = 7 road`, the pinned profile **does**
 name `7` as `road` (verified at runtime), so `sub_sport_name(7)` is not `None` and **no
 warning is emitted at all**. The athlete's activity is accepted with a road sub-sport on
-a running activity and no disclosure.
+a running activity and no disclosure. **D-A3 names this exact case and gives it a code.**
 
-**Where the relation comes from — corrected.** An earlier revision of this section
+**Where the relation comes from — corrected twice.** An earlier revision of this section
 said the rule was **not implementable from available evidence** and re-owned the
 item to the founder. **That was wrong, and it deleted the evidence that made the
-original finding correct.**
+original finding correct.** The revision after that asserted the relation on
+`fit-support-matrix.md` as *"the approved record"*, which that file denies at `:1` and
+`:3`. **The authority is D-A1.**
 
 The pinned SDK profile's `sub_sport` map is indeed **112 entries, all plain strings,
 carrying no sport association** — that part is verified and still stands. But the
-relation **is** available, in this repository, in the approved record:
+relation **is** available, in this repository, under a recorded decision:
 
-- `fit-support-matrix.md:318`§12.2 is titled *"The frozen allowlist (authoritative)"*
-  and **is** the sport→sub-sport assignment table: 9 running values (`:322`–`:334`),
-  19 cycling (`:336`–`:358`), the remaining 84 assigned to neither (`:369`), and a
-  completeness identity `9 + 19 − 1 + 84 + 1 = 112` (`:371`).
-- `:223` records the `sport`/`sub_sport` enumerations and approved pairs as
-  **"Authoritative for Milestone A"**.
-- `:487` states *"Worker and Tester may now implement, **without inventing
-  anything**: the sub-sport allowlist of §12.2…"*
+- **`decision-register.md:94` (D-A1)** states the partition as **9** assigned to `sport`
+  1 `running`, **19** to `sport` 2 `cycling`, one shared (`0 generic`), **84** to
+  neither, and `254`, on pinned `profile.py` bytes **SHA-256-verified against MAP01
+  before any value was read** (`cfc2737…865c`, 967399 bytes, match), with the enums
+  **parsed, never imported**. That is the authoritative assignment, and its evidence
+  basis is stated in the decision itself.
+- D-A1 also **corrects the proposal record** where they differ: the matrix *"had
+  approved only 6 cycling values and had silently dropped 11 cycling-tagged
+  sub-sports"* the publisher assigns to cycling, `track_cycling` 13, `bmx` 29,
+  `commuting` 48 and `e_bike_enduro` 127 among them. Where the two disagree, **D-A1
+  governs and the matrix is the superseded draft.**
+- The proposed matrix's §12.2 (`fit-support-matrix.md:318`–`:371`) tabulates the same
+  partition — 9 running (`:322`–`:334`), 19 cycling (`:336`–`:358`), 84 to neither
+  (`:369`), completeness identity `9 + 19 − 1 + 84 + 1 = 112` (`:371`) — and `:223`
+  marks it *"Authoritative for Milestone A"*, `:487` permits implementing it *"without
+  inventing anything"*. **These are corroboration, not the authority**, and the matrix's
+  own title says **"Proposed"**.
 
 So `sub_sport = 7 road` is in the cycling set and not the running set, and the
-matrix rule at `:412` is **directly decidable** from tables already in this
-repository. **This is an implementation gap against an authoritative record, not a
+cross-sport case is **directly decidable** from D-A1's recorded partition.
+**This is an implementation gap against a recorded architecture decision, not a
 capability gap and not a founder question.** Owner: **System Architect — Feng Guo**
 as code owner. The gap is in code this document's author is not permitted to edit.
 
 The precise, narrower statement: the relation is **not derivable from the SDK
 profile alone** — the profile carries no sport association — but it **is** supplied
-by the matrix's own frozen tables. Both halves are needed; either alone would
+by D-A1's frozen partition. Both halves are needed; either alone would
 mislead.
 
 - **established:** the predicate, its location, the absence of the three codes; that
-  the pinned profile carries no sport↔sub_sport relation; **and** that
-  `fit-support-matrix.md`§12.2 supplies that relation authoritatively.
-- **Divergence from an approved record:** `fit-support-matrix.md:412`–`:414` requires
-  `SUBSPORT_SPORT_MISMATCH` for exactly this case, and `:415` requires
-  `SUBSPORT_ALL_GOALS_ONLY` for `sub_sport = 254`. Neither happens, against a record
-  that `:223` and `:487` make authoritative for exactly this implementation. On the
-  record as it stands this is an **implementation gap, not an open product
-  question**. Owner: **System Architect — Feng Guo**. The separate question of
+  the pinned profile carries no sport↔sub_sport relation; **and** that D-A1 supplies
+  that relation as a recorded decision on SHA-256-verified bytes.
+- **Implementation gap against a recorded decision:** `decision-register.md:98` (D-A3)
+  requires disclosure for exactly the cross-sport case — *"Four distinct causes, four
+  stable codes, all resolving to `null` with the raw value retained:
+  `SUBSPORT_ABSENT`, `SUBSPORT_INVALID`, `SUBSPORT_SPORT_MISMATCH`,
+  `SUBSPORT_UNMAPPED`"* — and `:96` (D-A2) requires `SUBSPORT_ALL_GOALS_ONLY` for
+  `sub_sport = 254`. Neither happens. `SUBSPORT_SPORT_MISMATCH` has **zero occurrences**
+  in `datara/`. The proposed matrix states the same requirement at
+  `fit-support-matrix.md:412`–`:414` and `:415`. On the decision register as it stands
+  this is an **implementation gap, not an open product question**. Owner:
+  **System Architect — Feng Guo**. The separate question of
   whether `sport = 254` and `sub_sport = 254` each deserve a dedicated rejection code
   is unaffected and remains as recorded below, owned by **founder** for the codes.
 
@@ -459,7 +514,7 @@ repository, that is a separate **unknown** with a founder owner.
 | --- | --- | --- |
 | Raw `start_time` is a `date_time` | compared against the pinned minimum `268435456`; a value below it is rejected | `datara/classification.py:107`, `:1194`–`:1202` |
 | Raw → UTC | `raw + 631065600`, integer arithmetic, rendered with `datetime.fromtimestamp(..., tz=utc)` and a `Z` suffix | `datara/classification.py:848`–`:858` |
-| Offset provenance | the constant `631065600` is present in the pinned SDK at `util.py:18` and used at `util.py:25` (verified at runtime, §1.5) | also asserted in prose at `fit-support-matrix.md:131` |
+| Offset provenance | the constant `631065600` is present in the pinned SDK at `util.py:18` and used at `util.py:25` (verified at runtime, §1.5) | also recorded in the proposed matrix at `fit-support-matrix.md:16`, `:53` and `:103` |
 | String → canonical integer | `start_epoch_seconds_from_utc_text` parses the `…Z` form; `start_epoch_seconds_from_datetime` **refuses a non-zero microsecond rather than truncating** | `datara/canonical.py:241`–`:273` |
 | Persisted form | `Session.session_start_utc` is a `DateTimeField` | `datara/models.py:361` |
 | Snapshot scope form | half-open `[start, end)`, both bounds must be aware | `datara/dedup.py:1301`–`:1306` |
@@ -507,12 +562,16 @@ I cannot trace.
   caller-supplied field (`datara/normalization.py:265`, `:277`, `:452`, validated only for
   positivity at `:461`). **There is no 24-hour default in this repository.** The stated
   justification for an enforced database constraint is therefore unsupported.
-- **Divergence from the approved matrix, twice over.** `fit-support-matrix.md:104` gives
-  the Milestone A valid range as `1` – `4294967294`, and `:279` explicitly records the
-  lower bound of `1` as "an engineering decision, not profile-derived … recorded as my
-  decision for escalation". The code enforces **1000** as the lower bound, not `1`. And the
-  code enforces an **upper** bound of `86_400_000` that the matrix does not state at all;
-  the matrix's upper bound is the full uint32 domain.
+- **Divergence from the proposed matrix, twice over — proposal stage, not a decision-stage
+  obligation.** `fit-support-matrix.md:104` gives the Milestone A valid range as
+  `1` – `4294967294`, and `:279` explicitly records the lower bound of `1` as "an
+  engineering decision, not profile-derived … recorded as my decision for escalation".
+  **That matrix is a proposal** (`:1`, `:3`), and `decision-register.md` records no
+  decision fixing this domain, so this is **not** an implementation gap against a binding
+  record — it is a divergence from a draft that the Architect may revise. The code enforces
+  **1000** as the lower bound, not `1`. And the code enforces an **upper** bound of
+  `86_400_000` that the matrix does not state at all; the matrix's upper bound is the full
+  uint32 domain.
 
 - **unknown:** *What is the accepted elapsed-duration domain, and what evidence or founder
   decision fixes it?* Three sub-questions, all for the **founder**:
@@ -590,9 +649,10 @@ protocol document under §1.3.
 –`:1025`, and the pinned decoder genuinely raises (`decoder.py:347`–`:348`, verified at
 runtime). Tested at `datara/tests/test_classification.py:404`–`:422`.
 
-**Divergence from the approved record, and it is a *missing* integrity rule:**
-`fit-support-matrix.md:174`–`:175` lists "Integrity — whole-file integrity under the pinned
-rules". The code verifies the **header** CRC only when the header carries one, and the
+**Divergence from the proposed record, and it is a *missing* integrity rule — proposal
+stage:** `fit-support-matrix.md:174`–`:175` lists "Integrity — whole-file integrity under
+the pinned rules". `decision-register.md` records no decision requiring whole-file
+integrity, so this rests on a proposal, not a binding record. The code verifies the **header** CRC only when the header carries one, and the
 **file** CRC always. It does **not** verify that a 12-byte (no-CRC) header is legal in the
 pinned profile beyond the size-byte check, and it does not apply any profile-level integrity
 concept beyond CRC. **unknown:** *Is header-CRC-absent (12-byte header) unconditionally
@@ -742,9 +802,10 @@ Requirement: **SR04**, **SR33**. Oracle: **TC03**. Contract: `duplicate-conflict
   visible exclusion entry naming the reason (`datara/dedup.py:1314`–`:1319`, `:1346`–`:1355`).
 - **established:** no merge is an outcome of the state machine at all — no branch combines
   fields of two originals (`datara/dedup.py:29`–`:31`).
-- **Divergence from the approved record:** `duplicate-conflict-options.md:120` records
+- **Divergence from the proposed record:** `duplicate-conflict-options.md:120` records
   **OQ-1**: "P3 fires against an accepted activity even after a 'retain both'
-  resolution."
+  resolution." That record is *"proposed research output"* (`:3`) and it records an
+  **open question**, so it binds nothing.
   Since no resolution can be recorded (§6.2), this is currently unreachable rather than
   wrong. It becomes live the moment a resolution is implemented.
 
@@ -833,7 +894,7 @@ Reported, not reconciled. Each is a finding for the named owner; none was fixed.
 | C3 | `total_timer_time` is produced as a decimal seconds string; the matrix's canonical form is integer milliseconds; the column is an integer | `datara/classification.py:1287`; `datara/models.py:363`; `fit-support-matrix.md:105` | matrix §2 | **System Architect — Feng Guo** |
 | C4 | `total_distance` is produced as a decimal metres string; the matrix's canonical form is integer centimetres | `datara/classification.py:1288`–`:1290`; `datara/models.py:298`–`:299`; `fit-support-matrix.md:106` | matrix §2 | **System Architect — Feng Guo** |
 | C5 | `start_time` has a matrix upper bound of `4926032894`; no upper-bound check exists | `datara/classification.py:1194`; `fit-support-matrix.md:103` | matrix §2 | **System Architect — Feng Guo** |
-| C6 | **Implementation gap against an authoritative record.** `sport = running` with `sub_sport = 7 road` produces **no** warning, and the matrix requires `SUBSPORT_SPORT_MISMATCH`. The relation needed to decide it is **not in the SDK profile** — its `sub_sport` map is 112 plain strings with no sport association — but it **is** in `fit-support-matrix.md`§12.2, the frozen allowlist, which `:223` and `:487` make **authoritative for Milestone A** and implementable *"without inventing anything"*. `7 road` is in the cycling set and not the running set, so `:412` is directly decidable today. `SUBSPORT_SPORT_MISMATCH` has **zero occurrences** in `datara/` | `datara/classification.py:1247`–`:1248`; `fit-support-matrix.md:318`–`:371` (§12.2 tables), `:223`, `:487`, `:412` | matrix §12.5, §12.2 | **System Architect — Feng Guo** (implementation gap in code this document does not edit) |
+| C6 | **Implementation gap against recorded decisions D-A1 and D-A3.** `sport = running` with `sub_sport = 7 road` produces **no** warning, while `decision-register.md:98` (D-A3) requires disclosure and names the code `SUBSPORT_SPORT_MISMATCH` for exactly a cross-sport sub-sport, and `:96` (D-A2) requires `SUBSPORT_ALL_GOALS_ONLY` for `254`. The relation needed to decide it is **not in the SDK profile** — its `sub_sport` map is 112 plain strings with no sport association — but it **is** in **D-A1** (`:94`), which freezes the partition as 9 running / 19 cycling / one shared / 84 to neither on SHA-256-verified pinned bytes. `7 road` is in the cycling set and not the running set, so the cross-sport case is directly decidable today. `SUBSPORT_SPORT_MISMATCH` has **zero occurrences** in `datara/`. The proposed matrix tabulates the same partition at §12.2 (`fit-support-matrix.md:318`–`:371`, `:223`, `:487`) and states the same requirement at `:412`–`:415` — corroboration, **not** the authority | `datara/classification.py:1247`–`:1248`; `decision-register.md:94` (D-A1), `:96` (D-A2), `:98` (D-A3); corroborating `fit-support-matrix.md:318`–`:371`, `:223`, `:412`, `:487` | matrix §12.5, §12.2 (corroborating) | **System Architect — Feng Guo** (implementation gap in code this document does not edit; author of the decisions) |
 | C7 | `sub_sport = 254` is not rejected; the literal `254` appears nowhere in `datara/`; `SPORT_ALL_GOALS_ONLY` and `SUBSPORT_ALL_GOALS_ONLY` do not exist | verified at runtime; `fit-support-matrix.md:415`, `:475`–`:476` | matrix §12.4, §12.8 | **founder** (codes), **System Architect — Feng Guo** (gap) |
 | C8 | `monitoring_a` (15) and `monitoring_b` (32) fall through to the generic unsupported-type reason | `datara/classification.py:446`–`:457`; `fit-support-matrix.md:425` | matrix §12.6 | **System Architect — Feng Guo** |
 | C9 | Multisession count and declared `auto_multi_sport` share one reason code; the matrix marks the split "required" | `datara/classification.py:1099`–`:1122`; `fit-support-matrix.md:481`, `:483` | matrix §12.8 | **System Architect — Feng Guo** |
@@ -856,6 +917,11 @@ assignment asks for the current state, and because each was confirmed still open
 
 Every open question from this document, with its owner. No threshold, tolerance, policy or
 protocol version is proposed for any of them.
+
+**Reading the count.** Rows U1–U24 are live questions. **U25 is a withdrawn row, retained
+rather than erased** so that the correction is visible — it records a question that was
+already answered by a recorded decision and should not have been raised. A parser counting
+live rows must exclude it; a reader counting table rows will see 25 rows and 24 questions.
 
 | # | Question | Owner | Blocks |
 | --- | --- | --- | --- |
@@ -884,7 +950,7 @@ protocol version is proposed for any of them.
 | U22 | What are the authorized conflict-resolution outcomes and their mechanism — keep existing, replace, retain both? | **founder** (outcomes); **System Architect — Feng Guo** (mechanism) | C14, STK012 |
 | U23 | Is `Quarantine.state = 'resolved'` meant to be reachable before a resolution contract exists? | **System Architect — Feng Guo** | §6.2 |
 | U24 | Is `outcome_text` the complete TC22/SR33 presentation contract, and what consumes it? | **User Tester — Abt Hermann** with **UI Designer — Wu Yunzhou** | §6.4 |
-| U25 | **WITHDRAWN.** Asked whether the sport↔sub-sport relation existed and who owned it. It does exist: `fit-support-matrix.md`§12.2 is the frozen authoritative allowlist, and `:223`/`:487` make it implementable without inventing anything. The question was therefore already answered by the approved record, and asking it of the founder registered a settled matter as open. Withdrawn; the live gap is C6, an implementation task owned by **System Architect — Feng Guo**. Withdrawn in review of #391 | **System Architect — Feng Guo** | C6 |
+| U25 | **WITHDRAWN — not a live question.** Asked whether the sport↔sub-sport relation existed and who owned it. It does exist, as a recorded architecture decision: `decision-register.md:94` (D-A1) freezes the partition on SHA-256-verified pinned bytes, and `:98` (D-A3) requires the cross-sport disclosure. (An earlier revision cited `fit-support-matrix.md`§12.2 as *"the approved record"*; that file is titled **"Proposed"** and disclaims approved status at `:1` and `:3`, so it corroborates but does not bind. Corrected in review of #391.) Asking this of the founder registered a settled matter as open. The live gap is C6, an implementation task owned by **System Architect — Feng Guo** | **System Architect — Feng Guo** | C6 |
 
 ---
 
@@ -897,7 +963,15 @@ protocol version is proposed for any of them.
 the SR14/SR15/SR27 and SR01–SR04 registry entries, the STK001–STK004 and STK011–STK012
 subtask entries, the TC01/TC03/TC19/TC24 verification-case entries, and the existing
 `docs/p0-design/`, `docs/management/source-evidence/` and `docs/management/p0-decision-baseline-2026-10-01.md`
-records. Where a claim is about runtime behaviour rather than source text, I confirmed it
+records.
+
+**`docs/management/decision-register.md` is in that list, and its omission was a defect in
+an earlier revision of this document.** I read it specifically: §2 at `:86`–`:88`, and §3
+at `:90`–`:110` — the five architecture decisions **D-A1** (`:94`), **D-A2** (`:96`),
+**D-A3** (`:98`), **D-A4** (`:100`), **D-A5** (`:102`), plus `:104` (what §3 routed rather
+than decided), `:106` (divergences reported to their owners, not fixed), `:108` (what
+stays open) and `:110` (the evidence basis and its limits). Those lines are the authority
+for §3.5, for C6, and for the standing rules at the head of this document. Where a claim is about runtime behaviour rather than source text, I confirmed it
 by importing the module in this environment; those confirmations are labelled "verified at
 runtime" at the point of use.
 
@@ -943,5 +1017,6 @@ coordinator to action:
 **Attribution.** Authored by
 **Worker — Torsten Maier_space-bunny-free-xhigh_OpenCode (AI agent)** under issue #384.
 Runtime execution link: unavailable in this runtime. Behaviour claims were read from the
-implementation at `9a1693b`; where the implementation and an approved record disagree, §7
+implementation at `9a1693b`; where the implementation and a recorded decision in
+`decision-register.md` disagree, §7
 says so rather than choosing between them.

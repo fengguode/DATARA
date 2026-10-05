@@ -6,11 +6,11 @@ Start with `AGENTS.md`, `docs/management/README.md`, `docs/project-brief-and-roa
 
 ## The project wiki — a separate repository with bounded authority
 
-The [project wiki](https://github.com/fengguode/DATARA.wiki) is a **separate git repository**, not a directory in this one. It is part of the team workflow by founder instruction of 5 October 2026.
+The [project wiki](https://github.com/fengguode/DATARA/wiki) is a **separate git repository**, not a directory in this one. It is part of the team workflow by founder instruction of 5 October 2026. **That instruction was received in conversation and has no GitHub record**: a search of every discussion and issue comment finds no trace of it, so this is a coordinator-relayed instruction, not a cited founder decision, and it is recorded as such rather than dressed as a link.
 
 | Field | Value |
 | --- | --- |
-| Repository | [fengguode/DATARA.wiki](https://github.com/fengguode/DATARA.wiki) |
+| Repository | [read](https://github.com/fengguode/DATARA/wiki) | clone `git clone https://github.com/fengguode/DATARA.wiki.git` |
 | Published branch | `master` — the branch GitHub serves. Commit there. |
 | Maintainer | **Product Manager — Yu Wang**, by founder instruction |
 | Audience | Customers and the public, who must not need engineering documents |
@@ -28,7 +28,7 @@ The [project wiki](https://github.com/fengguode/DATARA.wiki) is a **separate git
 1. **No counts, inventories or file listings on the wiki.** File and module counts change with every commit, so any such number becomes false with nobody editing the page. State status; link to the repository for contents.
 2. **Every factual claim about repository state is verified against `origin/main` before publishing**, with the commit it was checked against recorded next to the claim. A claim without a recorded commit is not evidence.
 
-**Verification is by the git endpoint, not the API.** The wiki repository returns 404 through `repos/…/contents` for the current token while `git ls-remote https://github.com/fengguode/DATARA.wiki.git` succeeds. Confirm a wiki change with `git ls-remote` and a clone, and do not conclude from an API 404 that the repository is absent.
+**Verify through the git endpoint. The GitHub REST API does not serve wiki repositories at all** — `repos/…/DATARA.wiki` returns 404 for any token, including one holding the broadest `repo` scope, while the same token reads `repos/…/DATARA/contents` successfully. This is a property of the API, **not** a permissions problem, so do not go hunting for a scope fix. `git ls-remote https://github.com/fengguode/DATARA.wiki.git` succeeds and is the reliable check. An earlier version of this note blamed the token, which was wrong.
 
 ## Skill discovery and selection
 

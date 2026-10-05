@@ -26,21 +26,33 @@ depends on: **"Contracts are proposals unless a founder decision record says oth
 `duplicate-conflict-options.md:3` is likewise *"proposed research output … No new policy,
 schema freeze or implementation evidence."*
 
-So those records are **proposals**, and this document does not call them approved anywhere.
+So those records are **proposals** in their package-level status — and this document does
+not call them approved anywhere. One of them is not uniformly so; the exception is
+disclosed immediately below rather than left to be discovered.
 
-**The binding authority it does cite is `docs/management/decision-register.md`, whose §3
-(3 October 2026, Author: **System Architect — Feng Guo**, `:90`–`:92`) records five
-architecture decisions D-A1 … D-A5 (`:94`, `:96`, `:98`, `:100`, `:102`).** Those are
-recorded decisions, and they are what the implementation is obliged to satisfy. Where a
-finding here says *implementation gap against an authoritative record*, it means **one of
-these decisions**, cited by its D-number.
+**The authority this document treats as binding is `docs/management/decision-register.md`,
+whose §3 (3 October 2026, Author: **System Architect — Feng Guo**, `:90`–`:92`) records
+five architecture decisions D-A1 … D-A5 (`:94`, `:96`, `:98`, `:100`, `:102`).**
+
+**That treatment is a reading this document adopts, not a derivation it performs, and it
+is stated as such here because the alternative is asserting what the next subsection
+concedes is unsettled.** §3's own title is *"five architecture decisions closing contracts
+TK11 and TK15 could not implement"*, and a record that closes contracts is not a proposal;
+that is the whole basis. But `README.md:11` names a **founder** decision record as what
+lifts a contract out of proposal status, and register §3 is Architect-authored and records
+no founder decision on these five items. Whether register §3 is that record is a
+**contract-status judgment owned by System Architect — Feng Guo**, who authored it, and it
+is **not settled here**. No confirmation of this document settles it either.
+
+Where a finding below says *implementation gap against an authoritative record*, it means
+**one of these decisions**, cited by its D-number — on that adopted reading.
 
 Where the same rule is *also* carried by a proposal record, this document cites the
 decision first and names the proposal only as corroboration. The two are not merged: a
 proposal can be wrong and a decision can be unimplemented, and those are different
 findings with different owners.
 
-### Three facts that cut the other way, disclosed rather than omitted
+### Three facts that cut against that reading, disclosed rather than omitted
 
 The characterisation above is incomplete on its own, and the incompleteness matters
 because it is the difference between *evidence* and *confirmation*. Each of these was
@@ -58,13 +70,11 @@ verified in this worktree at `9a1693b`:
    text" of D-A1–D-A3.** The decision and its tabulation are therefore the same
    instrument, not a decision and a superseded draft.
 
-The reading this document adopts — that register §3 binds — is **defensible**: §3's own
-title is *"five architecture decisions closing contracts TK11 and TK15 could not
-implement"*, and a record that closes contracts is not a proposal. But it is a reading,
-not a derivation, and **whether `decision-register.md` §3 is the record that lifts these
-contracts out of proposal status under `README.md:11` is an architecture judgment that
-belongs to System Architect — Feng Guo, who authored it.** This document does not settle
-it, and no confirmation of this document settles it either.
+Stated plainly, once: this document **adopts** the reading that register §3 binds, **and
+does not establish it.** An earlier revision of this section asserted the same status as
+fact before disclosing these three facts, which is asserting what the disclosure concedes
+is unsettled; that is now corrected in the wording above rather than only in the
+disclosure below.
 
 **An earlier revision of this document got this wrong in a way worth naming.** It called
 `fit-support-matrix.md` *"the approved record"* in twelve places while that file disclaims
@@ -475,7 +485,7 @@ mislead.
   whether `sport = 254` and `sub_sport = 254` each deserve a dedicated rejection code
   is unaffected and remains as recorded below, owned by **founder** for the codes.
 
-### 3.6 Session cardinality: three of the four matrix outcomes are not distinguishable today
+### 3.6 Session cardinality: three of the four **D-A4** outcomes are not distinguishable today
 
 - **established:** observed count `0` → `missing_session` (`datara/classification.py:1089`–`:1098`); count `> 1` and `activity.type == 1` **both** → the single code `multisport_or_chained_layout` (`:1099`–`:1122`).
 - **Divergence against a recorded decision, still open:** `decision-register.md:106`
@@ -508,7 +518,7 @@ mislead.
   open.
 - **unknown:** *Should `num_sessions == 0` be treated as undeclared (matrix case B) or as a contradiction (matrix case C)?* The matrix's case-C row reads "present, valid, and not equal to the observed count", and `0` is present and valid, so it reads as a contradiction today. Owner: **System Architect — Feng Guo**.
 
-### 3.7 File-type exclusions: incomplete against the matrix's own correction
+### 3.7 File-type exclusions: incomplete against `decision-register.md:104`
 
 - **established:** `FILE_TYPE_EXCLUSIONS` has exactly six keys — `workout`, `course`,
   `schedules`, `monitoring_daily`, `weight`, `blood_pressure`
@@ -526,9 +536,11 @@ mislead.
   still missing, so those two file types fall through to the generic
   `unsupported_file_type` — same rejection, wrong explanation. Owner: **System Architect
   — Feng Guo**.
-- **unknown, and correctly left open by the matrix:** *Which reason should `goals` (11) and
-  `activity_summary` (20) receive?* `fit-support-matrix.md:427` records both as open rather
-  than decided, and no code or record decides them. Owner: **founder**.
+- **unknown, and correctly left open by both records:** *Which reason should `goals` (11)
+  and `activity_summary` (20) receive?* `decision-register.md:108` lists the `goals` and
+  `activity_summary` file-type reasons under **"Unchanged and still open"**, so the
+  Architect has already recorded that this remains undecided. `fit-support-matrix.md:427`
+  records both as open rather than decided, and no code decides them. Owner: **founder**.
 
 ### 3.8 Reason and warning code vocabulary: two vocabularies coexist
 
@@ -973,7 +985,7 @@ Reported, not reconciled. Each is a finding for the named owner; none was fixed.
 | C4 | `total_distance` is produced as a decimal metres string; the matrix's canonical form is integer centimetres | `datara/classification.py:1288`–`:1290`; `datara/models.py:298`–`:299`; `fit-support-matrix.md:106` | matrix §2 | **System Architect — Feng Guo** |
 | C5 | `start_time` has a matrix upper bound of `4926032894`; no upper-bound check exists | `datara/classification.py:1194`; `fit-support-matrix.md:103` | matrix §2 | **System Architect — Feng Guo** |
 | C6 | **Implementation gap against recorded decisions D-A1 and D-A3.** `sport = running` with `sub_sport = 7 road` produces **no** warning, while `decision-register.md:98` (D-A3) requires disclosure and names the code `SUBSPORT_SPORT_MISMATCH` for exactly a cross-sport sub-sport, and `:96` (D-A2) requires `SUBSPORT_ALL_GOALS_ONLY` for `254`. The relation needed to decide it is **not in the SDK profile** — its `sub_sport` map is 112 plain strings with no sport association — but it **is** in **D-A1** (`:94`), which freezes the partition as 9 running / 19 cycling / one shared / 84 to neither on SHA-256-verified pinned bytes. `7 road` is in the cycling set and not the running set, so the cross-sport case is directly decidable today. `SUBSPORT_SPORT_MISMATCH` has **zero occurrences** in `datara/`. The proposed matrix tabulates the same partition at §12.2 (`fit-support-matrix.md:318`–`:371`, `:223`, `:487`) and states the same requirement at `:412`–`:415` — corroboration, **not** the authority | `datara/classification.py:1247`–`:1248`; `decision-register.md:94` (D-A1), `:96` (D-A2), `:98` (D-A3); corroborating `fit-support-matrix.md:318`–`:371`, `:223`, `:412`, `:487` | matrix §12.5, §12.2 (corroborating) | **System Architect — Feng Guo** (implementation gap in code this document does not edit; author of the decisions) |
-| C7 | `sub_sport = 254` is not rejected; the literal `254` appears nowhere in `datara/`; `SPORT_ALL_GOALS_ONLY` and `SUBSPORT_ALL_GOALS_ONLY` do not exist | verified at runtime; **`decision-register.md:96` (D-A2)** names both codes — `decision-register.md` is the only file in the repository that does; corroborating `fit-support-matrix.md:415`, `:475`–`:476` | D-A2 (`decision-register.md:96`); matrix §12.4, §12.8 (corroborating) | **founder** (codes), **System Architect — Feng Guo** (gap) |
+| C7 | `sub_sport = 254` is not rejected; the literal `254` appears nowhere in `datara/`; `SPORT_ALL_GOALS_ONLY` and `SUBSPORT_ALL_GOALS_ONLY` do not exist | verified at runtime; **`decision-register.md:96` (D-A2)** names both codes, and is the **only record that names them as a decision-stage requirement** — `fit-support-matrix.md:415`, `:475`–`:476` name the same two identifiers in its proposal tables, so both files carry the string and only D-A2 carries it as binding | D-A2 (`decision-register.md:96`); matrix §12.4, §12.8 (corroborating, proposal-stage) | **founder** (codes), **System Architect — Feng Guo** (gap) |
 | C8 | `monitoring_a` (15) and `monitoring_b` (32) fall through to the generic unsupported-type reason | `datara/classification.py:446`–`:457`; `fit-support-matrix.md:425` | matrix §12.6 | **System Architect — Feng Guo** |
 | C9 | Multisession count and declared `auto_multi_sport` share one reason code; the split is recorded as required | `datara/classification.py:1099`–`:1122`; **`decision-register.md:106` divergence (a)** — *"the implementation collapses multisession counting and the `auto_multi_sport` assertion into one reason"*; corroborating `fit-support-matrix.md:481`, `:483` | `decision-register.md:106` (a); matrix §12.8 (corroborating) | **System Architect — Feng Guo** |
 | C10 | "activity present, `num_sessions` absent" produces no disclosure at all | `datara/classification.py:1138`–`:1144`; **D-A4 (`decision-register.md:100`)** — *"the merged implementation discloses neither in the second case, which is a real gap reported to the code owner"*; corroborating `fit-support-matrix.md:454`, `:459` | D-A4 (`decision-register.md:100`); matrix §12.7 case B (corroborating) | **System Architect — Feng Guo** |
@@ -992,10 +1004,14 @@ the two records are not equivalent.** C6, C7, C9 and C10 are recorded in
 recorded, so it is a routed gap rather than a decided requirement. `fit-support-matrix.md`
 independently reports all five (`:412`, `:415`, `:425`, `:459`, `:481`, `:483`) and is
 their designated detailed text (`decision-register.md:92`), so it is **corroboration
-throughout** — except where an identifier appears only there, which is the case for
-`SESSION_COUNT_UNDECLARED`, `ACTIVITY_MESSAGE_ABSENT`, `MULTISESSION_UNSUPPORTED` and
-`SPORT_ALL_GOALS_ONLY` at some earlier revisions. All five were re-confirmed still open
-at `9a1693b`.
+throughout** — except where an identifier appears **only** there. Measured at `9a1693b`,
+that is the case for exactly three of them, with **0 occurrences in
+`decision-register.md`**: `SESSION_COUNT_UNDECLARED`, `ACTIVITY_MESSAGE_ABSENT` and
+`MULTISESSION_UNSUPPORTED`. It is **not** the case for `SPORT_ALL_GOALS_ONLY` or
+`SUBSPORT_ALL_GOALS_ONLY`, which D-A2 (`decision-register.md:96`) names explicitly — an
+earlier revision of this paragraph listed them anyway, which was a false exclusivity
+claim, and the row above refuted it in its own cell. All five were re-confirmed still
+open at `9a1693b`.
 
 ---
 
@@ -1059,8 +1075,10 @@ TK11 and TK15 could not implement` block (heading at `:90`) at `:90`–`:110` �
 architecture decisions **D-A1** (`:94`), **D-A2** (`:96`), **D-A3** (`:98`), **D-A4**
 (`:100`), **D-A5** (`:102`), plus `:104` (what §3 routed rather than decided), `:106`
 (divergences reported to their owners, not fixed), `:108` (what stays open) and `:110`
-(the evidence basis and its limits). Those lines are the authority for §3.5, for C6, and
-for the standing rules at the head of this document. I name the headings rather than a
+(the evidence basis and its limits). Those lines are the authority for the standing rules at
+the head of this document, and for **§3.5, §3.6, §3.7 and rows C6, C7, C9 and C10** —
+the full set, because the decision-citation discipline was applied to all of them and not
+only to the first. I name the headings rather than a
 section number because the register has no `##`-level "§2" — the lines resolve, the label
 did not exist. Where a claim is about runtime behaviour rather than source text, I confirmed it
 by importing the module in this environment; those confirmations are labelled "verified at

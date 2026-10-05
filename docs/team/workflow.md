@@ -6,11 +6,13 @@ Start with `AGENTS.md`, `docs/management/README.md`, `docs/project-brief-and-roa
 
 ## The project wiki — a separate repository with bounded authority
 
-The [project wiki](https://github.com/fengguode/DATARA/wiki) is a **separate git repository**, not a directory in this one. It is part of the team workflow by founder instruction of 5 October 2026. **That instruction was received in conversation and has no GitHub record**: a search of every discussion and issue comment finds no trace of it, so this is a coordinator-relayed instruction, not a cited founder decision, and it is recorded as such rather than dressed as a link.
+The project wiki is a **separate git repository** [https://github.com/fengguode/DATARA.wiki.git](https://github.com/fengguode/DATARA.wiki.git), not a directory in this one. It is part of the team workflow by founder instruction of 5 October 2026.
+
+**Two URL forms, and the difference matters.** `https://github.com/fengguode/DATARA.wiki.git` is the repository identity: it is what you clone, fetch and push, and it is the only one of the two that works for git. `https://github.com/fengguode/DATARA/wiki` is the rendered form for reading. **A link to `.../DATARA.wiki` without `.git` is not valid at all** and returns HTTP 404, which is why it must not appear here. **That instruction was received in conversation and has no GitHub record**: a search of every discussion and issue comment finds no trace of it, so this is a coordinator-relayed instruction, not a cited founder decision, and it is recorded as such rather than dressed as a link.
 
 | Field | Value |
 | --- | --- |
-| Repository | [read](https://github.com/fengguode/DATARA/wiki) | clone `git clone https://github.com/fengguode/DATARA.wiki.git` |
+| Repository | `https://github.com/fengguode/DATARA.wiki.git` | rendered for reading at [/wiki](https://github.com/fengguode/DATARA/wiki) |
 | Published branch | `master` — the branch GitHub serves. Commit there. |
 | Maintainer | **Product Manager — Yu Wang**, by founder instruction |
 | Audience | Customers and the public, who must not need engineering documents |

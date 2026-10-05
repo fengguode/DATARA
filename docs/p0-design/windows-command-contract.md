@@ -50,21 +50,26 @@ does not exist. Worse, any recorded pass figure becomes non-reproducible for
 reasons that have nothing to do with the code under test. A reader must be able
 to tell a real regression from a naming mismatch without reading a test file.
 
-**This is a defect, not a design decision.** The coupling belongs in a shared
-constant rather than a literal inside one test module, and the runner's own
-validation should enforce what the suite actually requires.
-
-**It is not fixed by this change, and no tracking issue is cited for it.** An
-earlier draft of this section cited an issue number for it; that citation was
-checked and removed, because the referenced item turned out to be an unrelated
-pull request. Naming a tracker that does not track this defect is the same
-fabricated-authority error this paragraph exists to prevent. Until a real tracker
-exists, this section is the only record of the defect, which is itself a reason
-to fix it rather than to keep writing about it.
-
 **Independently reproduced.** With `DATARA_TEST_DB_NAME` set to a name that
-satisfies the runner's validation regex but not this prefix, the `test` phase
-reports `FAILED (failures=3)` and exits 1, with exactly the three named failures.
+satisfies the runner's regex but not this prefix, the suite previously reported
+`FAILED (failures=3)` and exited 1, with exactly the three named failures — a
+regression that does not exist.
+
+**Now fixed in the runner, and this section describes the enforced rule rather
+than a workaround.** `scripts/milestone_a_runner.py` validates the prefix
+alongside its own `TARGET` regex, so a non-conforming name is **refused up front**
+with a message naming the requirement, instead of surfacing later as three test
+failures whose cause the operator did not choose.
+
+The suite's requirement is the binding one and was deliberately **not** weakened.
+`datara/tests/test_metric_history_process.py` spawns a child Python process that
+connects to the disposable database for real, and that child refuses any other
+name — a safety guard proving it cannot reach a real database. Loosening it
+to accept arbitrary names would have removed that guard.
+
+Verified after the change: a `TARGET`-conformant non-prefixed name now exits 1
+with `REFUSED: test database name must begin 'test_datara_history_'`; a
+prefixed name still runs `Ran 316 tests`, `OK`, exit 0.
 
 | Phase | Explicit DATARA_DB_USER / DATARA_DB_NAME | Action |
 | --- | --- | --- |

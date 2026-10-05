@@ -21,6 +21,25 @@ ROLES = {"migrate": ("datara_migrator", "datara_local"),
          "test": ("datara_test_runner", "datara_testsandbox"),
          "app-check": ("datara_app", "datara_local")}
 PHASES = ("inspect", "install", "migrate", "test", "app-check")
+
+# The disposable test database must satisfy TWO conditions, and this runner now
+# enforces both. Previously it enforced only the first, which is how a name could
+# pass validation here and then fail three unrelated tests inside the suite.
+#
+# 1. TARGET: the name is a fresh, allowlisted, disposable test database.
+# 2. TEST_DB_PREFIX: datara/tests/test_metric_history_process.py spawns a child
+#    Python process that connects to this database for real. That child refuses to
+#    run against a name that does not begin `test_datara_history_`, and the parent
+#    asserts the same prefix. That guard is a safety property -- it is what proves
+#    the child cannot connect to a real database -- so it is deliberately NOT
+#    weakened here to make arbitrary names pass. Instead the runner refuses such a
+#    name up front, with a message naming the requirement, instead of letting the
+#    suite fail three tests for a reason the operator did not choose.
+#
+# The two rules disagreeing was a defect, not two valid requirements: TARGET was
+# strictly more permissive than what the suite accepts, so a name could be fully
+# conformant with the documented contract and still break the run.
+TEST_DB_PREFIX = "test_datara_history_"
 TARGET = re.compile(r"test_datara_[a-z0-9][a-z0-9_]{7,49}\Z")
 
 class CommandRefused(RuntimeError):
@@ -44,6 +63,14 @@ def validate_target(name, base):
     require(bool(TARGET.fullmatch(name)) and len(name) <= 63 and
             name not in {base, "datara_local", "datara_testsandbox", "postgres", "template0", "template1"},
             "fresh allowlisted disposable test database name required")
+    # Refused here rather than surfacing as three test failures downstream. See
+    # TEST_DB_PREFIX above for why the suite's requirement is the binding one.
+    require(name.startswith(TEST_DB_PREFIX),
+            "test database name must begin '" + TEST_DB_PREFIX + "': "
+            "datara/tests/test_metric_history_process.py spawns a child process that "
+            "refuses any other name as a safety guard, and a conforming name outside "
+            "this prefix fails three unrelated tests for a reason the operator did "
+            "not choose")
 
 def inventory():
     lock = ROOT / "requirements-milestone-a.txt"

@@ -1907,22 +1907,39 @@ class DirectionDetailVocabularyTests(unittest.TestCase):
             with self.subTest(kind=kind):
                 self.assertTrue(answers, "no not-met detail reached this kind")
 
-    def test_it_is_unguarded_by_the_other_sweep(self) -> None:
-        """Negative control: the mutation this test exists to catch really fails.
+    def test_the_guard_above_actually_fails_under_this_mutation(self) -> None:
+        """Negative control: the mutation really does turn the guard red.
 
-        Replacing ``_direction_detail``'s body with one wrong answer must turn this
-        file red. Asserted here so the guard cannot itself silently stop guarding.
+        An earlier version of this claimed to be a negative control but was
+        **inert**: it patched ``_direction_detail`` and then asserted that the
+        substituted string was absent from each vocabulary. That assertion is true
+        whatever the code does, so the test could not fail and proved nothing.
+
+        This one **runs the real invariant** from
+        ``test_every_kind_and_not_met_detail_lands_in_that_kinds_vocabulary``
+        while the mutation is in place, and requires it to raise. If the guard ever
+        stops guarding @@EM@@ if the sweep stops reaching some kind, or if the
+        vocabulary widens to admit the substituted answer @@EM@@ this fails.
         """
 
+        guard = DirectionDetailVocabularyTests(
+            "test_every_kind_and_not_met_detail_lands_in_that_kinds_vocabulary"
+        )
         with mock.patch.object(
             eligibility_module,
             "_direction_detail",
             return_value="a_detail_no_vocabulary_admits",
         ):
-            for kind in sorted(SUPPORTED_KINDS):
-                permitted = REASON_DETAILS[eligibility_module._NOT_MET_BY_KIND[kind]]
-                with self.subTest(kind=kind):
-                    self.assertNotIn("a_detail_no_vocabulary_admits", permitted)
+            with self.assertRaises(AssertionError):
+                guard.test_every_kind_and_not_met_detail_lands_in_that_kinds_vocabulary()
+
+    def test_the_guard_passes_when_nothing_is_mutated(self) -> None:
+        """The other half of the control: the guard is not simply always red."""
+
+        guard = DirectionDetailVocabularyTests(
+            "test_every_kind_and_not_met_detail_lands_in_that_kinds_vocabulary"
+        )
+        guard.test_every_kind_and_not_met_detail_lands_in_that_kinds_vocabulary()
 
 
 def _replace_field(requirement, field, value):

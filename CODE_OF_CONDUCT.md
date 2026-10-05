@@ -171,6 +171,24 @@ Do not report a pull request as merge-ready, and do not present it for confirmat
 
 **Preserve rejected and superseded verdicts.** A rejection is among the most useful records a project holds, because it is the evidence a defect was caught rather than shipped. Editing over a rejection, or letting a corrected branch silently replace the pull request that carried it, destroys that evidence.
 
+### Pre-review readiness gate
+
+A candidate is **not ready to dispatch for review** until `scripts/check_pr_readiness.py` has been run against it and returned exit 0, and until its readiness manifest is committed on the branch. The gate exists because five candidates were rejected and every one of those rejections was preventable by a check the author did not run.
+
+The gate refuses on five conditions, and the author declares each:
+
+1. **Adverse deltas.** Any file with deleted lines must be declared with a reason. Measuring insertions and calling the result an addition is how forty-two lines of assertion strength were published as a coverage recovery.
+2. **Notation-complete replacement.** A replaced value is searched in every notation it could take. A pin written `3.12.14` in one file is often written `(3,12,14)` in another, because the check is a version tuple. A search that cannot see its own subject is not evidence.
+3. **Cited documents exist.** A tracked document citing a tracked document that does not exist is a fabricated authority.
+4. **Evidence is reproducible.** A quantitative claim whose harness is not committed is not evidence for the next reviewer. Declare the dimensions and the harness, or drop the figure.
+5. **Authority sources are inventoried.** List the authoritative records consulted, with line references. Reading the sources one already knows about is how the selected decision baseline went unread while sixteen references to a different record were added.
+
+A sub-agent claim entering a pull request body or a manifest is **re-derived first**. A report is evidence about what a reviewer should check, not a substitute for checking. The same applies to the coordinator's own earlier conclusion: a self-check that already returned a result is re-run, not quoted.
+
+A rejected candidate is re-gated before it is re-dispatched, and the finding that caused the rejection is shown to have been addressed rather than asserted to be.
+
+`--accept` records a deliberate acceptance of a named finding for a reviewer to see and overrule. Acceptance is never used to make a defect disappear, and every accepted id is printed in the output.
+
 ## 8. Data, rights and authorization
 
 Do not commit credentials, personal FIT telemetry, runtime data or other sensitive evidence to this public repository. Use sanitized artifacts and authorized restricted evidence locations. Protect customer keys and owner-scoped data. Source access, license presence, owner acceptance, permitted execution, benchmarking and distribution rights are distinct; document required rights before use. Never accept binding terms on the owner's behalf without applicable authorization.

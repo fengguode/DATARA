@@ -5,7 +5,7 @@
 
 ## Start here
 
-1. Read this handover and the [copy-ready OpenCode continuation prompt](opencode-continuation-prompt.md).
+1. Read this handover and the [copy-ready OpenCode continuation prompt](opencode-continuous-execution-prompt.md).
 2. Refresh live main, [AGENTS.md](../../AGENTS.md), the [management index](README.md), [project brief](../project-brief-and-roadmap.md), [team workflow](../team/workflow.md), [roster](../team/roster.md), [attribution](../team/attribution.md), [PR confirmation policy](../team/pull-request-confirmation.md), saved team knowledge, requirements/traceability, [decision register](decision-register.md), [D01–D05 baseline](p0-decision-baseline-2026-10-01.md), [P0 plan](p0-implementation-plan.md), [validation plan](validation-plan.md), and [release lifecycle](lifecycle-and-releases.md).
 3. Refresh [Project 3](https://github.com/users/fengguode/projects/3), control [issue #8](https://github.com/fengguode/DATARA/issues/8), each affected package/task/bug, PRs and reviews, and relevant owner Discussions including nested replies. Project fields are the shared status authority; issue-body prose may be historical. Record disagreements and read back mutations.
 4. Confirm actual receiving-runtime model, available skills, permissions, and tool limits. Requested configuration is not evidence that a model loaded. Establish the actual coordinator, owner, branch/head and exclusive paths in #8 before a new overlapping write.

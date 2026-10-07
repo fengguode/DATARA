@@ -52,7 +52,7 @@ if [ "$#" -gt 0 ]; then
   [ -n "${DATARA_PYTHON:-}" ] && [ -n "${DATARA_VENV:-}" ] || { echo "explicit interpreter and venv required" >&2; exit 1; }
   case "$(uname -s)" in MINGW*|MSYS*|CYGWIN*) phase_python="$DATARA_VENV/Scripts/python.exe" ;; *) phase_python="$DATARA_VENV/bin/python" ;; esac
   if [ "$1" = install ] && [ ! -x "$phase_python" ]; then
-    "$DATARA_PYTHON" -c 'import sys; sys.exit(0 if sys.version_info[:3] == (3,12,14) and not sys.flags.optimize else 1)'
+    "$DATARA_PYTHON" -c 'import sys; sys.exit(0 if sys.version_info[:3] == (3,12,10) and not sys.flags.optimize else 1)'
     "$DATARA_PYTHON" -m venv "$DATARA_VENV" >/dev/null 2>&1 || { echo "venv preparation failed; diagnostics suppressed" >&2; exit 1; }
   fi
   echo "shell_version=$BASH_VERSION"
@@ -166,12 +166,42 @@ else:
 echo "pinned_dependency_lock    : $LOCK_FILE"
 echo "pinned_dependency_lock_sha256: $LOCK_SHA"
 echo "resolved_dependencies     :"
-# The evidence list must name every distribution in the lock file. `garmin_fit_sdk`
-# is included because it is the pinned FIT decoder; leaving it out let an
-# environment without it look identical to a resolved one.
-"$PY" -m pip freeze --disable-pip-version-check 2>/dev/null \
-  | grep -Ei '^(asgiref|django|garmin-fit-sdk|psycopg|psycopg-binary|sqlparse|tzdata)==' \
-  | sed 's/^/  - /'
+# The evidence list must name every distribution in the lock file, so the NAME
+# LIST IS DERIVED FROM THE LOCK FILE rather than restated here.
+#
+# This line previously carried a hard-coded alternation. It was wrong twice: once
+# because garmin_fit_sdk was left out, so an environment without the pinned FIT
+# decoder looked identical to a resolved one, and again because typing_extensions
+# was left out when that pin was added, so the block printed 7 of 8 and a reader
+# could not tell whether the eighth was absent, unpinned or unlisted. Both were
+# the same defect: a hard-coded enumeration of the pinned set that a new pin
+# silently invalidates.
+#
+# A ninth pin would have broken it a third time. The alternation is now built from
+# the lock file, so it cannot fall behind. This is the same approach
+# scripts/milestone_a_runner.py's inventory() already uses, which walks the lock
+# file line by line.
+#
+# pip freeze remains the source of what is actually resolved, so a distribution
+# that is declared but NOT installed is reported as absent rather than hidden.
+LOCK_NAMES=$(grep -v '^[[:space:]]*#' "$LOCK_FILE" \
+  | grep -v '^[[:space:]]*$' \
+  | sed 's/==.*//' \
+  | paste -sd'|' -)
+if [ -z "$LOCK_NAMES" ]; then
+  echo "  - NONE: no distribution could be read from $LOCK_FILE" >&2
+else
+  "$PY" -m pip freeze --disable-pip-version-check 2>/dev/null \
+    | grep -Ei "^(${LOCK_NAMES})==" \
+    | sed 's/^/  - /'
+  # A declared pin with nothing resolved must be visible, not silently absent.
+  for name in $(printf '%s' "$LOCK_NAMES" | tr '|' ' '); do
+    if ! "$PY" -m pip freeze --disable-pip-version-check 2>/dev/null \
+         | grep -Eiq "^${name}=="; then
+      echo "  - ${name}==NOT-INSTALLED (declared in $LOCK_FILE, absent from the environment)"
+    fi
+  done
+fi
 echo "commit_sha                : $COMMIT_SHA"
 echo "commit_dirty_owned_paths  : ${COMMIT_DIRTY:-none}"
 

@@ -115,6 +115,17 @@ No authority in this package for runtime provisioning/reset, grants, credentials
 
 Observed past test environment: native Windows, Python 3.12.14, Django 5.2.17, PostgreSQL 17.11, restricted existing test role. Committed `requirements-milestone-a.txt` pins the decoder and all distributions. Read the command contract and `scripts/milestone_a_runner.py` before use; runtime availability at takeover is unknown until checked. Do not publish authentication or read private password files into logs.
 
+> **SUPERSEDED IN PART — 2026-10-05.** The Python 3.12.14 pin recorded above no
+> longer applies. 3.12.14 has no official Windows build, so it was unsatisfiable
+> on this platform, and the pin is now **3.12.10** by recorded founder decision.
+> The parity break on the `test` phase, and the newly pinned
+> `typing_extensions==4.16.0` which changes `lock_sha256`, are both recorded in
+> [the pinned-environment decision record](pinned-environment-decisions-2026-10-05.md).
+> Everything else on this line — Django 5.2.17, PostgreSQL 17.11, the restricted
+> existing test role, and the no-credentials rule — still stands. The original
+> text is preserved above rather than edited, because this handover is a dated
+> record and the correction belongs beside it, not inside it.
+
 From a clean, fixed candidate with privately supplied, already authorized environment:
 
 ```powershell

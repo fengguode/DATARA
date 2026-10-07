@@ -21,7 +21,54 @@ ROLES = {"migrate": ("datara_migrator", "datara_local"),
          "test": ("datara_test_runner", "datara_testsandbox"),
          "app-check": ("datara_app", "datara_local")}
 PHASES = ("inspect", "install", "migrate", "test", "app-check")
-TARGET = re.compile(r"test_datara_[a-z0-9][a-z0-9_]{7,49}\Z")
+
+# The disposable test database must satisfy TWO conditions, and this runner now
+# enforces both. Previously it enforced only the first, which is how a name could
+# pass validation here and then fail three unrelated tests inside the suite.
+#
+# 1. TARGET: the name is a fresh, allowlisted, disposable test database.
+# 2. TEST_DB_PREFIX: datara/tests/test_metric_history_process.py spawns a child
+#    Python process that connects to this database for real. That child refuses to
+#    run against a name that does not begin `test_datara_history_`, and the parent
+#    asserts the same prefix. That guard is a safety property -- it is what proves
+#    the child cannot connect to a real database -- so it is deliberately NOT
+#    weakened here to make arbitrary names pass. Instead the runner refuses such a
+#    name up front, with a message naming the requirement, instead of letting the
+#    suite fail three tests for a reason the operator did not choose.
+#
+# TARGET is now derived from TEST_DB_PREFIX rather than restating it, so the two
+# rules cannot drift apart inside this file. The suite still asserts the prefix
+# independently, in two places, and that duplication remains: three assertions of
+# one value. Deriving the runner's copy from a shared constant imported out of the
+# suite was considered and rejected -- the runner executes before Django is
+# configured, and importing a test module there would make a legitimate run fail
+# for an unrelated reason. The residual is recorded in the decision record.
+#
+# The two rules disagreeing was a defect, not two valid requirements: TARGET was
+# strictly more permissive than what the suite accepts, so a name could be fully
+# conformant with the documented contract and still break the run.
+TEST_DB_PREFIX = "test_datara_history_"
+TEST_DB_SAFE_ID_MIN = 1
+TEST_DB_SAFE_ID_MAX = 40
+TEST_DB_NAME_MIN = len(TEST_DB_PREFIX) + TEST_DB_SAFE_ID_MIN
+TEST_DB_NAME_MAX = len(TEST_DB_PREFIX) + TEST_DB_SAFE_ID_MAX
+TARGET = re.compile(re.escape(TEST_DB_PREFIX) + r"[a-z0-9][a-z0-9_]{0," +
+                    str(TEST_DB_SAFE_ID_MAX - 1) + r"}\Z")
+# The bounds above are DERIVED from the prefix length, never written out by hand.
+# A first attempt asserted "21-byte prefix", "61 bytes" and a safe ID of "7-40" in
+# the refusal message and in the command contract. All three were wrong: the prefix
+# is 20 bytes, the whole name is capped at 60, and the regex has always accepted a
+# safe ID of 1. Asserting the numbers is how they became wrong; deriving them is
+# what stops the next prefix change from making the message lie again.
+
+def safe_id_requirement():
+    """The length rule, computed. Never retype these numbers anywhere else."""
+
+    return ("after the '" + TEST_DB_PREFIX + "' prefix supply " +
+            str(TEST_DB_SAFE_ID_MIN) + "-" + str(TEST_DB_SAFE_ID_MAX) +
+            " lowercase ASCII letters, digits or underscores beginning with a letter "
+            "or digit; the whole name is then " + str(TEST_DB_NAME_MIN) + "-" +
+            str(TEST_DB_NAME_MAX) + " bytes, under PostgreSQL's 63-byte identifier limit")
 
 class CommandRefused(RuntimeError):
     pass
@@ -41,9 +88,31 @@ def validate_connection(phase):
         validate_target(os.environ.get("DATARA_TEST_DB_NAME", ""), actual[1])
 
 def validate_target(name, base):
-    require(bool(TARGET.fullmatch(name)) and len(name) <= 63 and
-            name not in {base, "datara_local", "datara_testsandbox", "postgres", "template0", "template1"},
-            "fresh allowlisted disposable test database name required")
+    # The prefix is checked FIRST and separately, so that a name failing it gets a
+    # message naming the prefix rather than the generic TARGET message. TARGET is
+    # derived from the prefix, so without this ordering the specific cause would be
+    # swallowed by the general rule and an operator would have to re-derive it.
+    require(name.startswith(TEST_DB_PREFIX),
+            "test database name must begin '" + TEST_DB_PREFIX + "': "
+            "datara/tests/test_metric_history_process.py spawns a child process that "
+            "refuses any other name as a safety guard, and a conforming name outside "
+            "this prefix fails three unrelated tests for a reason the operator did "
+            "not choose")
+    # The deny-list was dead code. Every accepted name starts with TEST_DB_PREFIX,
+    # and none of the reserved names do, so `name not in {...}` could never be the
+    # binding check -- a review demonstrated that `test_datara_history_datara_local`
+    # and `test_datara_history_postgres` are both accepted. It is now made effective
+    # by comparing the SAFE-ID SUFFIX against the reserved names, so a disposable
+    # database cannot be named after a real one. Removing the check instead would
+    # have been the wrong trade: it is cheap defence in depth, and it now works.
+    reserved = {base, "datara_local", "datara_testsandbox", "postgres", "template0", "template1"}
+    suffix = name[len(TEST_DB_PREFIX):] if name.startswith(TEST_DB_PREFIX) else name
+    require(suffix.lower() not in reserved,
+            "test database name must not reuse a reserved name after the '" +
+            TEST_DB_PREFIX + "' prefix: " + safe_id_requirement())
+    require(bool(TARGET.fullmatch(name)) and len(name) <= 63,
+            "fresh allowlisted disposable test database name required: " +
+            safe_id_requirement())
 
 def inventory():
     lock = ROOT / "requirements-milestone-a.txt"
@@ -154,7 +223,7 @@ def FreshDatabaseRunner(*args, **kwargs):
             super().__init__(*args, **kwargs)
             require(not self.keepdb and self.parallel in (0, 1), "reuse and parallel database cloning refused")
             validate_connection("test")
-            require(sys.flags.optimize == 0 and platform.python_version() == "3.12.14",
+            require(sys.flags.optimize == 0 and platform.python_version() == "3.12.10",
                     "test interpreter contract refused")
             inventory()
             probe("test")
@@ -215,7 +284,15 @@ def main():
     parser.add_argument("--native-windows", action="store_true")
     args = parser.parse_args()
     require(sys.flags.optimize == 0 and not os.environ.get("PYTHONOPTIMIZE"), "optimized Python refused")
-    require(platform.python_version() == "3.12.14", "candidate Python 3.12.14 required")
+    # Candidate interpreter pin: 3.12.10, moved from 3.12.14 by recorded founder
+    # decision (see docs/management/pinned-environment-decisions-2026-10-05.md).
+    # The gate is retained, not removed: an unpinned interpreter must still be
+    # refused. 3.12.14 has NO official Windows build -- python.org publishes
+    # source only for 3.12.11 and later, verified against the FTP listing, the
+    # release pages and the nuget.org "python" package index. 3.12.10 is the
+    # newest 3.12.x with an official Windows installer, so it is the nearest
+    # official interpreter to the original pin that actually runs on this host.
+    require(platform.python_version() == "3.12.10", "candidate Python 3.12.10 required")
     if args.native_windows:
         require(sys.platform == "win32", "native Windows interpreter required")
     identity()

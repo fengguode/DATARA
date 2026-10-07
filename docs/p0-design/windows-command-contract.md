@@ -15,12 +15,66 @@ powershell -NoProfile -File scripts/milestone_a.ps1 -Phase inspect -Python <abso
 ```
 
 `Phase` accepts only `inspect`, `install`, `migrate`, `test`, or `app-check`.
-The candidate contract requires native Windows Python **3.12.14**, PostgreSQL
+The candidate contract requires native Windows Python **3.12.10**, PostgreSQL
 **17.11**, `DATARA_DB_ENGINE=postgres`, `DATARA_DB_HOST=127.0.0.1` and
 `DATARA_DB_PORT=55432`. These are reported candidate settings requiring future
 executed evidence, distinct from the Linux/container reference topology.
 Optimized Python is refused. No implicit dependency installation occurs outside
 `install`; no SQLite fallback occurs in this Windows path.
+
+The interpreter pin was **3.12.14** and was moved to **3.12.10** by recorded
+founder decision; see
+[the pinned-environment decision record](../management/pinned-environment-decisions-2026-10-05.md).
+3.12.14 has no official Windows build, so the original pin was unsatisfiable on
+this platform. The pin itself is retained: an unpinned interpreter is still
+refused.
+
+### Parity break: the `test` phase pins a test database name prefix
+
+**The `test` phase on this platform requires the disposable database name to
+begin `test_datara_history_`.** This is not a convention of this document; it is a
+hard requirement enforced elsewhere, and it is a **platform parity break**.
+
+The cause is `datara/tests/test_metric_history_process.py:66`, which asserts that
+the configured test database name starts with `test_datara_history_`. Three tests
+fail when the name does not, **even though the name was at the time perfectly
+conformant with the runner's own validation rule** — which was then
+`test_datara_[a-z0-9][a-z0-9_]{7,49}`, strictly more permissive than the suite's
+requirement. Reproduced: a name satisfying that regex but not the hard-coded
+prefix produced exactly three unrelated failures.
+
+**That regex no longer exists.** It was replaced by this branch, and quoting it
+here as the runner's current rule was itself a defect — a live citation of a
+deleted pattern, in the paragraph arguing the section's case. The runner's rule is
+now derived from the prefix constant, so the two cannot disagree.
+
+**Why this belongs in the command contract.** Without it, a reviewer reproducing
+a `test` phase result on a different but equally valid database name sees three
+failures, reasonably concludes the branch regressed, and reports a defect that
+does not exist. Worse, any recorded pass figure becomes non-reproducible for
+reasons that have nothing to do with the code under test. A reader must be able
+to tell a real regression from a naming mismatch without reading a test file.
+
+**Independently reproduced.** With `DATARA_TEST_DB_NAME` set to a name that
+satisfies the runner's regex but not this prefix, the suite previously reported
+`FAILED (failures=3)` and exited 1, with exactly the three named failures — a
+regression that does not exist.
+
+**Now fixed in the runner, and this section describes the enforced rule rather
+than a workaround.** `scripts/milestone_a_runner.py` validates the prefix
+alongside its own `TARGET` regex, so a non-conforming name is **refused up front**
+with a message naming the requirement, instead of surfacing later as three test
+failures whose cause the operator did not choose.
+
+The suite's requirement is the binding one and was deliberately **not** weakened.
+`datara/tests/test_metric_history_process.py` spawns a child Python process that
+connects to the disposable database for real, and that child refuses any other
+name — a safety guard proving it cannot reach a real database. Loosening it
+to accept arbitrary names would have removed that guard.
+
+Verified after the change: a `TARGET`-conformant non-prefixed name now exits 1
+with `REFUSED: test database name must begin 'test_datara_history_'`; a
+prefixed name still runs `Ran 316 tests`, `OK`, exit 0.
 
 | Phase | Explicit DATARA_DB_USER / DATARA_DB_NAME | Action |
 | --- | --- | --- |
@@ -57,12 +111,29 @@ No phase chain silently continues after a failure.
 
 ## Fresh test lifecycle
 
-Supply `DATARA_TEST_DB_NAME=test_datara_<safeid>` explicitly. The safe ID consists
-of 8–50 lowercase ASCII letters, digits or underscores and begins with a letter or
-digit; the total name must fit PostgreSQL's 63-character identifier limit. Choose a
-unique run ID before execution. Names for the preserved database, sandbox base,
-`postgres`, `template0` and `template1` cannot be test targets. Test reuse,
-parallel database clones and mirrors are refused.
+Supply `DATARA_TEST_DB_NAME=test_datara_history_<safeid>` explicitly. The name
+**must** begin `test_datara_history_` — the runner refuses anything else before
+creating a database, with a message saying so; see [the prefix requirement](#parity-break-the-test-phase-pins-a-test-database-name-prefix)
+above for why.
+
+After the prefix, the safe ID is **1–40** lowercase ASCII letters, digits or
+underscores, beginning with a letter or digit. That makes the whole name
+**21–60 bytes**.
+
+Those figures are **derived from the prefix length**, not typed by hand:
+`len("test_datara_history_")` is **20**, the safe ID contributes 1–40, and the
+runner builds both its regex and its refusal message from those two constants.
+An earlier version of this section stated a 21-byte prefix, a 61-byte cap and a
+safe ID of 7–40, and contradicted itself ten lines later. All three numbers were
+wrong. The runner's refusal message now computes its own wording, so the two
+cannot disagree.
+
+Note the floor: **a one-character safe ID is valid** and is accepted. There is no
+minimum length beyond that.
+
+Choose a unique run ID before execution. Names for the preserved database,
+sandbox base, `postgres`, `template0` and `template1` cannot be test targets. Test
+reuse, parallel database clones and mirrors are refused.
 
 The runner factory replaces PostgreSQL's database-creation object for this invocation.
 It checks for a collision through the explicit `postgres` maintenance connection,

@@ -23,14 +23,14 @@ implemented, verified, accepted, or released"*, and `:11` states the rule this d
 depends on: **"Contracts are proposals unless a founder decision record says otherwise."**
 `fit-support-matrix.md:1` titles itself *"**Proposed** FIT support and mapping matrix"* and
 `:3` states it is *"not an approved implementation/source contract or conformance result."*
-`duplicate-conflict-options.md:3` is likewise *"proposed research output … No new policy,
+`../management/source-evidence/duplicate-conflict-options.md:3` is likewise *"proposed research output … No new policy,
 schema freeze or implementation evidence."*
 
 So those records are **proposals in their package-level status** — and this document does
 not call them approved anywhere. **Three sections are not proposals**, and neither is register §3: `fit-support-matrix.md`
-§12, `duplicate-conflict-options.md` §13–§15, and `decision-register.md` §3 — all four are
+§12, `../management/source-evidence/duplicate-conflict-options.md` §13–§15, and `decision-register.md` §3 — all four are
 named as the decisions' **detailed text** at `decision-register.md:92`, so they are derived
-architecture decisions on the basis stated below. **`duplicate-conflict-options.md`'s other
+architecture decisions on the basis stated below. **`../management/source-evidence/duplicate-conflict-options.md`'s other
 sections, including its STK011/STK012 material at `:20` and `:31`, remain proposal-stage**,
 and this document labels them so rather than treating the whole file as designated. The
 exceptions are disclosed immediately below rather than left to be discovered.
@@ -792,7 +792,7 @@ every accept/reject branch has been decided, at `:1259`).
 
 ## 5. STK011 — exact-byte duplicate behaviour, traced through the implementation
 
-Requirement: **SR04**. Oracle: **TC03**. Contract: `duplicate-conflict-options.md` §5
+Requirement: **SR04**. Oracle: **TC03**. Contract: `../management/source-evidence/duplicate-conflict-options.md` §5
 precedence table, `fit-support-matrix.md` §5 dispositions.
 
 ### 5.1 Already implemented
@@ -878,8 +878,8 @@ coordinator's recorded baseline, not something I reproduced.
 
 ## 6. STK012 — unresolved logical-conflict examples against what the code does today
 
-Requirement: **SR04**, **SR33**. Oracle: **TC03**. Contract: `duplicate-conflict-options.md`
-§5–§9; examples at `duplicate-conflict-options.md:31`–`:42`.
+Requirement: **SR04**, **SR33**. Oracle: **TC03**. Contract: `../management/source-evidence/duplicate-conflict-options.md`
+§5–§9; examples at `../management/source-evidence/duplicate-conflict-options.md:31`–`:42`.
 
 ### 6.1 The conflict key, as implemented
 
@@ -905,78 +905,44 @@ Requirement: **SR04**, **SR33**. Oracle: **TC03**. Contract: `duplicate-conflict
   visible exclusion entry naming the reason (`datara/dedup.py:1314`–`:1319`, `:1346`–`:1355`).
 - **established:** no merge is an outcome of the state machine at all — no branch combines
   fields of two originals (`datara/dedup.py:29`–`:31`).
-- **Divergence from the proposed record:** `duplicate-conflict-options.md:120` records
+- **Divergence from the proposed record:** `../management/source-evidence/duplicate-conflict-options.md:120` records
   **OQ-1**: "P3 fires against an accepted activity even after a 'retain both'
   resolution." That record is *"proposed research output"* (`:3`) and it records an
   **open question**, so it binds nothing.
   Since no resolution can be recorded (§6.2), this is currently unreachable rather than
   wrong. It becomes live the moment a resolution is implemented.
 
-### 6.2 Resolution: required by the contract, entirely absent from the code
+### 6.2 D01 resolution choices: selected; implementation absent
 
-This is the clearest "required but absent" in STK012.
+D01 selected explicit user resolution and names three allowed choices. The governing selection is recorded in [the P0 decision baseline](../management/p0-decision-baseline-2026-10-01.md), with the options comparison explicitly stating that **Selected D01 governs**. The comparison file at [duplicate-conflict-options.md](../management/source-evidence/duplicate-conflict-options.md) is labelled proposed research output and creates no new policy; its detailed implementation gaps do not reopen or negate D01.
 
-- **established, required:** three explicit owner resolutions — keep existing, replace via
-  auditable supersession, retain both — are specified as the only authorized state changes
-  at `duplicate-conflict-options.md:158`, with supersession lineage at `:159`, and as
-  worked examples in the STK012 table at `:37`–`:39`.
-- **established, the schema anticipates it:** `Quarantine.RESOLUTION_CHOICES` has the three
-  values and `resolution` / `resolved_at` are nullable columns
-  (`datara/models.py:571`–`:575`, `:592`–`:593`; `datara/migrations/0001_initial.py:177`–`:178`).
-- **established, no code ever writes one:** the only two writes of a `Quarantine` row set
-  `resolution=None, resolved_at=None` — `datara/dedup.py:1001`–`:1002` (P3) and
-  `datara/dedup.py:1103`–`:1104` (P4). A repository-wide search for `STATE_RESOLVED`
-  returns **no assignment anywhere**: the constant is declared
-  (`datara/models.py:569`) and used only in a `choices` list.
-- **established, supersession has no representation:** searching `datara/` for "supersed"
-  returns only docstring prose (`datara/dedup.py:23`, `datara/storage.py:14`,
-  `datara/dedup.py:1214`) and the *string* `replace_via_supersession` in the choices tuple.
-  There is no supersession entity, no lineage column, no transition, and no function.
-- **established, "retain both" has no semantics:** with no resolution record there is
-  nothing that would stop P3 re-firing, which is exactly the risk
-  `duplicate-conflict-options.md:39` flags ("prevent unchanged repeated submissions from
-  silently creating more accepted copies").
+- **Selected by D01:** the owner may choose keep existing, replace through auditable supersession, or retain both valid originals and their lineage. Never silently merge, use tolerance, or overwrite. These are selected outcomes, not proposal-stage alternatives.
+- **Selected and represented in schema:** `Quarantine.RESOLUTION_CHOICES` has those values, and `resolution` / `resolved_at` are nullable columns (`datara/models.py:571`–`:575`, `:592`–`:593`; `datara/migrations/0001_initial.py:177`–`:178`).
+- **Selected but not implemented:** the two current `Quarantine` writes set `resolution=None, resolved_at=None` — `datara/dedup.py:1001`–`:1002` (P3) and `:1103`–`:1104` (P4). A repository-wide search for `STATE_RESOLVED` finds no assignment; the constant is declared at `datara/models.py:569` and used only in a choices list.
+- **Selected but not represented:** the code has no supersession entity, lineage column, transition, or function. Searches find only docstring prose and the `replace_via_supersession` choice string.
+- **Still unspecified:** the selected outcomes do not define atomicity, crash/retry behavior, snapshot/result references, concurrency, or exact re-import behavior after each resolution. The comparison records these as remaining work; it is a source of implementation questions, not a competing policy authority.
 
-So the three STK012 resolution examples — keep existing, replace, retain both
-(`duplicate-conflict-options.md:37`–`:39`, under *"STK012 — logical conflicts and
-resolution"* at `:31`) — are **entirely unimplemented**, and OQ-1, supersession lineage,
-interrupted-resolution recovery and the `Quarantine` state machine are consequently
-**unreachable**. **These examples precede the 2 October increment header at
-`duplicate-conflict-options.md:52`; they are not the detailed text designated at
-`decision-register.md:92` (§13–§15 are). They therefore remain proposal-stage, and no
-decision requires these three outcomes to exist; they are a routed founder question
-(§6.2), not an implementation obligation. This is a large, coherent gap rather than a set of small
-defects, and it is the honest answer to "what does the code do today": it creates a
-quarantine and stops.
+The current code creates a quarantine and stops: the three D01-selected outcomes have no implementation path. This is an implementation gap against the selected D01 outcomes. D01 does not by itself settle the mechanism. The **System Architect — Feng Guo** owns the transition, lineage, snapshot-reference, and recovery contract under D01. Only a change to the selected outcome choices would require a new founder product decision.
 
-- **unknown:** *What is the authorized resolution contract — the transition set, the
-  atomicity boundary, what happens to snapshots that referenced the superseded activity,
-  and what a repeat submission does after each resolution?* The record asks the question
-  (`duplicate-conflict-options.md:37`–`:40`, `:156`–`:159`) and does not answer it. Owner:
-  **founder** for the resolution outcomes a user may choose; **System Architect — Feng Guo**
-  for the transaction and lineage mechanism.
-- **unknown:** *Is `Quarantine.state = 'resolved'` reachable by any path at all today?* No
-  writer exists (§above), so the state is declared and unreachable. Whether the field
-  should exist before a resolution contract does is an architectural question. Owner:
-  **System Architect — Feng Guo**.
+- **Unresolved engineering question:** What transaction boundary and durable state transition records each selected owner choice while preserving originals and lineage?
+- **Unresolved engineering question:** How do existing snapshots/results continue to resolve superseded or retained source references?
+- **Unresolved engineering question:** What retry/idempotency behavior follows each completed resolution, including repeated exports and concurrent or interrupted requests?
+- **Unresolved architecture question:** Is `Quarantine.state = 'resolved'` needed and reachable in the implementation, or should the state be represented differently? Owner: **System Architect — Feng Guo**.
 
-### 6.3 The unresolved conflict examples, compared against the code
+### 6.3 D01-selected conflict outcomes, compared with current code
 
-The examples at `duplicate-conflict-options.md:35`–`:40`, each compared with what the code
-does now.
+The table separates selected D01 outcomes from the code state and from implementation mechanics still unspecified by D01. Proposal-only details in [the comparison record](../management/source-evidence/duplicate-conflict-options.md) are not treated as additional requirements.
 
-| Example | Selected direction | What the code does today | State |
+| Example | D01-selected direction | What the code does today | State |
 | --- | --- | --- | --- |
-| A/X and A/Y differ in bytes, exact tuple equal | quarantine Y; exclude from normal history and skill snapshots | `find_exact_tuple_matches` → P3 → new `SourceObject` + `Activity(disposition=quarantined)` + `Quarantine` row in one transaction; excluded from `history()` and from `build_snapshot_scope` with a named exclusion | **already implemented** (`datara/dedup.py:941`–`:1026`, `:1238`–`:1253`, `:1314`–`:1355`); tested `datara/tests/test_conflict.py:223`, `:254` |
-| Tuple differs | no match from this heuristic; import only if other checks pass; no comprehensive dedup claim | P5 accepts, with detail text stating that no duplicate claim is made | **already implemented** (`datara/dedup.py:892`–`:939`, detail at `:936`); tested `datara/tests/test_conflict.py:125` |
-| Keep existing | owner explicitly resolves for existing history | **no resolution path exists** | **required but absent** |
-| Replace | auditable supersession, preserve originals and lineage | **no supersession representation exists** | **required but absent** |
-| Retain both | owner explicitly chooses both; repeats must not silently multiply | **no resolution path; P3 re-fires on every re-export** | **required but absent** |
-| Concurrent / interrupted resolution | only authorized owner actions alter state; interruption must be recoverable | **no resolution state to interrupt**; concurrency beyond the byte layer is not exercised (§5.3) | **required but absent** |
+| A/X and A/Y differ in bytes, exact tuple equal | Quarantine Y as a possible conflict; exclude unresolved candidates from normal history and skill snapshots | `find_exact_tuple_matches` → P3 → new `SourceObject` + `Activity(disposition=quarantined)` + `Quarantine` row in one transaction; excluded from `history()` and `build_snapshot_scope` with a named exclusion | **selected behavior implemented** (`datara/dedup.py:941`–`:1026`, `:1238`–`:1253`, `:1314`–`:1355`); tested at `datara/tests/test_conflict.py:223`, `:254` |
+| Tuple differs | No match from this heuristic; import only if every other conformance/eligibility check passes | P5 accepts, with detail text stating no duplicate claim is made | **selected behavior implemented** (`datara/dedup.py:892`–`:939`, detail at `:936`); tested at `datara/tests/test_conflict.py:125` |
+| Keep existing | Owner explicitly chooses existing history; preserve valid originals and lineage | No resolution path writes the selected outcome | **selected by D01; transition not implemented** |
+| Replace | Owner explicitly chooses auditable supersession; preserve valid originals and lineage | No supersession representation or transition exists | **selected by D01; transition and lineage not implemented** |
+| Retain both | Owner explicitly chooses both; preserve both valid originals and lineage | No resolution path; P3 can re-fire on a repeated export because no resolution is recorded | **selected by D01; transition not implemented**. Exact post-resolution re-import behavior remains unspecified. |
+| Concurrent / interrupted resolution | D01 selects explicit owner resolution but specifies no concurrency or recovery mechanism | No resolution state exists to race or recover | **mechanism unspecified and unimplemented**; requires an engineering contract under the selected D01 choices |
 
-**STK012's own acceptance criterion is satisfied by the above:** each example's competing
-outcomes are stated and none is resolved here, and **no tolerance threshold is encoded** —
-the tolerance key is empty and machine-checked (`datara/dedup.py:442`–`:527`).
+The comparison's STK012 table records the D01 selection and enumerates remaining work; its proposal label means it supplies no additional policy or schema decision. The implementation gap is the absence of the selected user-resolution paths and their required original/lineage preservation. Atomicity, reference handling, concurrency, crash recovery, and retry semantics remain engineering questions; they do not make the D01 choices themselves undecided. **No tolerance threshold is encoded** — the tolerance key is empty and machine-checked (`datara/dedup.py:442`–`:527`).
 
 ### 6.4 Presentation: partially implemented
 
@@ -984,7 +950,7 @@ the tolerance key is empty and machine-checked (`datara/dedup.py:442`–`:527`).
   asserting the three states carry required content and no prohibited wording
   (`datara/tests/test_conflict.py:573`).
 - **unknown:** *Is `outcome_text` the complete athlete-facing contract for TC22 / SR33, and
-  is it wired to any presentation surface?* `duplicate-conflict-options.md:161`–`:186`
+  is it wired to any presentation surface?* `../management/source-evidence/duplicate-conflict-options.md:161`–`:186`
   assigns wording to TC22/UI-SR02 and leaves layout to UI Designer and User Tester. No
   dashboard or API module exists in this repository to consume it. Owner: **User Tester —
   Abt Hermann** with **UI Designer — Wu Yunzhou**.
@@ -1010,7 +976,7 @@ Reported, not reconciled. Each is a finding for the named owner; none was fixed.
 | C11 | Two reason-code vocabularies coexist (uppercase matrix, lowercase code); the code's set is the one with a test | `fit-support-matrix.md:182`–`:212` vs `datara/classification.py:117`–`:231`; `datara/tests/test_classification.py:516` | matrix §5, and TC01/TC21 oracle wording | **System Architect — Feng Guo** |
 | C12 | Original-byte immutability is application-enforced; the metric graph has database triggers | `datara/models.py:252`–`:261`; `datara/migrations/0002_saved_metric_graph.py:49`, `:70`, `:146` vs. no trigger in `0001_initial.py` | SR03 (stated intent), architectural consistency | **System Architect — Feng Guo** |
 | C13 | No production path converts decoded bytes into the duplicate/conflict state machine's input; `SessionFacts` is test-only | `datara/dedup.py:723`; `datara/dedup.py:82`–`:108`; `datara/tests/test_conflict.py:85` | SR04 end-to-end | **System Architect — Feng Guo** |
-| C14 | Conflict resolution, supersession and retain-both are declared in the schema and required by the contract, with no writer | `datara/models.py:571`–`:575`, `:592`–`:593`; `datara/dedup.py:1001`–`:1002`, `:1103`–`:1104`; `duplicate-conflict-options.md:158`–`:159`, `:37`–`:39` | `duplicate-conflict-options.md` §5, §8 | **founder** (outcomes), **System Architect — Feng Guo** (mechanism) |
+| C14 | D01-selected conflict-resolution outcomes are declared in the schema but have no transition or writer | `datara/models.py:571`–`:575`, `:592`–`:593`; `datara/dedup.py:1001`–`:1002`, `:1103`–`:1104`; D01 at `../management/p0-decision-baseline-2026-10-01.md`; remaining mechanics in `../management/source-evidence/duplicate-conflict-options.md` §5/§8 | D01 selected outcomes; the comparison's atomicity/lineage/snapshot/retry questions remain open engineering detail | **System Architect — Feng Guo** (implementation contract) |
 | C15 | The FIT file-header profile version is read and reported but never validated, and `Import.profile_reference` is always `None` | `datara/classification.py:633`, `:1006`; `datara/dedup.py:861` | SR27 (authoritative profile version per accepted variant) | **founder** (selection), **System Architect — Feng Guo** (evidence) |
 | C16 | Wall-time and memory limits are declared as bare constants and test-asserted, and required as reject codes by the matrix, but never enforced anywhere. **No policy prose states them as policy**: `:29`–`:31` are byte and count limits, and the wall-time and memory constants at `:72`–`:73` sit under none | `datara/intake.py:29`–`:31` (byte/count), `:72`–`:73` (wall-time, memory); `datara/tests/test_classification.py:904`–`:905`; `datara/classification.py:986`–`:988`; `fit-support-matrix.md:205`–`:206` | matrix §5 `LIMIT_*` codes | **System Architect — Feng Guo** |
 
@@ -1072,7 +1038,7 @@ U25; a reader counting table rows will see **26 rows and 24 questions**.
 | U19 | Must a repeat submission with a different `media_type` be a duplicate or an error? | **System Architect — Feng Guo** | §4.6 |
 | U20 | What is the byte→persistence composition contract, and which layer owns it? | **System Architect — Feng Guo** | C13 |
 | U21 | Does `(owner, digest)` arbitrate correctly under two concurrent PostgreSQL connections? | **User Tester — Abt Hermann** with **System Architect — Feng Guo** | §5.3, TC03 |
-| U22 | What are the authorized conflict-resolution outcomes and their mechanism — keep existing, replace, retain both? | **founder** (outcomes); **System Architect — Feng Guo** (mechanism) | C14, STK012 |
+| U22 | What transaction, lineage, snapshot-reference and retry mechanisms implement the D01-selected outcomes — keep existing, auditable replacement, retain both? | **System Architect — Feng Guo** | C14, STK012 |
 | U23 | Is `Quarantine.state = 'resolved'` meant to be reachable before a resolution contract exists? | **System Architect — Feng Guo** | §6.2 |
 | U24 | Is `outcome_text` the complete TC22/SR33 presentation contract, and what consumes it? | **User Tester — Abt Hermann** with **UI Designer — Wu Yunzhou** | §6.4 |
 | U25 | **WITHDRAWN — not a live question.** Asked whether the sport↔sub-sport relation existed and who owned it. It does exist, as a recorded architecture decision: `decision-register.md:94` (D-A1) freezes the partition on SHA-256-verified pinned bytes, and `:98` (D-A3) requires the cross-sport disclosure. (An earlier revision called §12.2 *"the approved record"*, which overstated the source's status: the matrix is titled **"Proposed"** and disclaims an approved implementation contract at `:1` and `:3`; however, `decision-register.md:92` designates §12 as detailed text for the recorded architecture decisions. It carries that derived-decision standing for the matters it details; it does not become a founder decision record.) Asking this of the founder registered a settled matter as open. The live gap is C6, an implementation task owned by **System Architect — Feng Guo** | **System Architect — Feng Guo** | C6 |

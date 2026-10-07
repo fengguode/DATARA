@@ -4,6 +4,34 @@
 
 Start with `AGENTS.md`, `docs/management/README.md`, `docs/project-brief-and-roadmap.md`, the relevant CUS, SR, and decision records, [the roster](roster.md), [shared lessons](knowledge/shared-lessons.md), and the assigned role knowledge file. The dated brainstorming record explains historical choices. The [GitHub Project](https://github.com/users/fengguode/projects/3) centralizes every P0 CUS, Feature, SR, Task and Subtask: linked issue content, priority, status, ownership and dependencies are the shared authoritative management record. DATARA's registry and documents mirror identifiers, traceability and planned coverage and retain linked detailed evidence. Do not create a second backlog. Prior-project lessons are methods to evaluate, not DATARA CUS or SR records or verification evidence.
 
+## The project wiki — a separate repository with bounded authority
+
+The project wiki is a **separate git repository** [https://github.com/fengguode/DATARA.wiki.git](https://github.com/fengguode/DATARA.wiki.git), not a directory in this one. It is part of the team workflow by founder instruction of 5 October 2026.
+
+**Two URL forms, and the difference matters.** `https://github.com/fengguode/DATARA.wiki.git` is the repository identity: it is what you clone, fetch and push, and it is the only one of the two that works for git. `https://github.com/fengguode/DATARA/wiki` is the rendered form for reading. **A link to `.../DATARA.wiki` without `.git` is not valid at all** and returns HTTP 404, which is why it must not appear here. **That instruction was received in conversation and has no GitHub record**: a search of every discussion and issue comment finds no trace of it, so this is a coordinator-relayed instruction, not a cited founder decision, and it is recorded as such rather than dressed as a link.
+
+| Field | Value |
+| --- | --- |
+| Repository | `https://github.com/fengguode/DATARA.wiki.git` | rendered for reading at [/wiki](https://github.com/fengguode/DATARA/wiki) |
+| Published branch | `master` — the branch GitHub serves. Commit there. |
+| Maintainer | **Product Manager — Yu Wang**, by founder instruction |
+| Audience | Customers and the public, who must not need engineering documents |
+| Governs | The wording of the [feature-illusion rule](https://github.com/fengguode/DATARA/wiki/Feature-Illusion-Rule) only |
+| Does not govern | Product scope, requirements, contracts, traceability, evidence, or process |
+
+**The wiki governs one thing, and that is the whole of its authority.** Founder decision, 1 October 2026, [discussion #296](https://github.com/fengguode/DATARA/discussions/296#discussioncomment-18700275). Where a rule's wording appears in both places, the wiki is the source and this repository's copy is the defect to fix. That precedence is narrow and does not travel: the wiki cannot widen or narrow a requirement, and where a requirement and a wiki page appear to conflict, **the requirement governs and the page is the defect**.
+
+**Reading the wiki is not a substitute for reading the repository.** A role working on requirements, contracts or evidence reads those records here. The wiki is a publication surface, not a source for engineering decisions.
+
+**Changing the rule is a two-repository change.** Edit the wiki page first, then update every repository mirror in the same change, and record what changed. Mirrors currently live in `CODE_OF_CONDUCT.md`, `docs/customer/landing-page-brief.md` and `docs/project-brief-and-roadmap.md`. A mirror that has drifted is a repository defect, not a variation of the rule.
+
+**Because the wiki is separate, it drifts silently.** Two rules follow, and both exist because the wiki has already carried a false statement:
+
+1. **No counts, inventories or file listings on the wiki.** File and module counts change with every commit, so any such number becomes false with nobody editing the page. State status; link to the repository for contents.
+2. **Every factual claim about repository state is verified against `origin/main` before publishing**, with the commit it was checked against recorded next to the claim. A claim without a recorded commit is not evidence.
+
+**Verify through the git endpoint. The GitHub REST API does not serve wiki repositories at all** — `repos/…/DATARA.wiki` returns 404 for any token, including one holding the broadest `repo` scope, while the same token reads `repos/…/DATARA/contents` successfully. This is a property of the API, **not** a permissions problem, so do not go hunting for a scope fix. `git ls-remote https://github.com/fengguode/DATARA.wiki.git` succeeds and is the reliable check. An earlier version of this note blamed the token, which was wrong.
+
 ## Skill discovery and selection
 
 At task selection, check the [essential agent skill set](roster.md#essential-agent-skill-set) and the current environment's available skills. Use an installed skill when it fits the concrete task. When the user asks to find a skill, or a needed capability is absent, apply `find-skills` before building a replacement or declaring a tooling blocker.

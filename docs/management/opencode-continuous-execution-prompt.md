@@ -13,6 +13,8 @@ Complete the first P0 athlete journey under approved requirements: supported sou
 
 Respect one backlog, dependencies, named WP/CUS/SR/task IDs, exclusive paths, isolated branches/worktrees and reviewable PRs. Do not invent provider/model outcomes, metric schemas, public routes/fields/envelopes/versions, or latest-result pointers. Datara's model is P1 recommendations only; no silent provider fallback. Follow the decision records and G0 replacement limits in the handover.
 
+**Milestone-first goal pursuit:** When actively pursuing the goal, focus effort on the remaining work that concretely advances the first complete P0 athlete milestone. Do not spend time reconstructing, auditing, or debating what OpenCode previously did; use current verified repository, issue, PR, Project, and decision state only as needed to choose safe next work and avoid overlapping edits. Keep prior history as evidence, but let milestone outcomes—not handover administration—drive the work. Surface only material owner decisions and blockers that affect the next delivery step.
+
 ## Agents, skills and owner communication
 Configure agents other than Feng Guo to gpt-6-luna with medium reasoning (“6 Luna Mid”); Feng Guo stays gpt-6.1-sol, low. Confirm provider/model identifiers and effective loading. Preserve role permissions and independent review. Keep actual runtime states explicit.
 

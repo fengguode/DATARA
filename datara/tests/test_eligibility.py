@@ -454,6 +454,22 @@ class E3InvalidMandatoryFieldTests(unittest.TestCase):
         item = only(decision)
         self.assertEqual(item["reason_code"], REASON_REQUIREMENT_NOT_EVALUABLE)
         self.assertEqual(item["reason_detail"], "non_finite_number")
+        self.assertTrue(item["observed_supplied"])
+        self.assertTrue(item["observed_present"])
+        self.assertIsNone(item["observed_value"])
+
+    def test_nonportable_observation_is_present_but_not_echoed(self) -> None:
+        """A supplied object remains present even when it cannot enter JSON."""
+
+        with network_disabled():
+            decision = decide(dict(SATISFIED_OBSERVATIONS, heart_rate=object()))
+
+        item = only(decision)
+        self.assertEqual(item["reason_code"], REASON_MANDATORY_FIELD_INVALID)
+        self.assertEqual(item["reason_detail"], "type_mismatch")
+        self.assertTrue(item["observed_supplied"])
+        self.assertTrue(item["observed_present"])
+        self.assertIsNone(item["observed_value"])
 
     def test_each_declared_value_type_accepts_its_own_and_rejects_its_neighbours(self) -> None:
         """Each declared type rejects the neighbouring type, and accepts its own.

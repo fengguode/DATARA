@@ -967,7 +967,7 @@ def _explain(outcome: _Outcome) -> dict:
         "required_value": requirement.required_value,
         "observed_value": reported,
         "observed_supplied": outcome.observed_supplied,
-        "observed_present": reported is not None,
+        "observed_present": outcome.observed_supplied and outcome.observed is not None,
         "reason_code": outcome.reason_code,
         "reason_detail": outcome.reason_detail,
     }

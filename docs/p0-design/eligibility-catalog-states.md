@@ -7,7 +7,7 @@ Affected stories/features/requirements: CUS04, CUS05; FEAT31; SR11, SR58.
 Parent task: [TK35 / #134](https://github.com/fengguode/DATARA/issues/134).  
 Subtask: [STK110 / #206](https://github.com/fengguode/DATARA/issues/206).  
 Planned verification: TC45.  
-Open decision: D02.  
+D02 status: selected P0 skill direction; remaining contract and evaluation-evidence gates stay open.  
 Coordinator: Primary Coordinator — Yi Tang. GitHub publisher: fengguode.
 
 ## Scope and boundaries
@@ -48,7 +48,7 @@ A reviewer can determine from this note whether it:
 3. Keeps missing-input explanations tied to approved requirement/reason data rather than inventing thresholds or codes.
 4. Names the current action for each case or explicitly records that no action is specified/approved, without creating a UI interaction or recovery workflow.
 5. Separately records text and keyboard accessibility questions.
-6. Names D02 and TC45 as unresolved decision/evidence references.
+6. Describes D02's selected direction and remaining contract/evidence gates accurately, and names TC45 as a planned, not-run evidence reference.
 7. Avoids product code, detailed architecture, schema choices, test execution, verification, acceptance, and release claims.
 
 ## Traceability and remaining gates

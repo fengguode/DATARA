@@ -20,9 +20,9 @@ it; the recorded run of each mutation is in the assignment report.
 
 WHAT IS AND IS NOT PROVEN HERE, STATED PLAINLY
 ------------------------------------------------
-PostgreSQL 17 cannot start on this host, so ``datara.migrations.0002`` cannot be
-applied and the saved-metric graph cannot be persisted here. Two consequences
-are load-bearing and are not papered over:
+This module uses a replaced store and never opens a database. It does not
+establish current PostgreSQL availability or migration execution. Its evidence
+has the following boundaries:
 
 1. The store is replaced by :class:`_SavedMetricStoreDouble`, which raises the
    **real** ``MetricStoreRefusal`` with the **real** reason code the real store
@@ -297,13 +297,14 @@ class _SurfaceTestCase(SimpleTestCase):
         data: dict | None = None,
         headers: dict | None = None,
         body: bytes | None = None,
+        method: str = "GET",
     ):
         """Resolve the real route and call the view the real resolver returns."""
 
         target = _route(metric_id)
         match = resolve(target)
         request = self.factory.generic(
-            "GET",
+            method,
             target,
             data=body if body is not None else "",
             content_type="application/json" if body is not None else "text/plain",
@@ -466,43 +467,43 @@ class RunnabilityTests(_SurfaceTestCase):
             "an empty string and ships a form with no token",
         )
 
-    def test_the_protective_decorator_is_actually_on_the_view(self) -> None:
-        """``@never_cache`` must be on the view, not merely configured.
+    def test_safe_responses_have_private_no_store_cache_headers(self) -> None:
+        """The view decorator applies headers even with RequestFactory.
 
-        The 200 returns personal activity telemetry, so a missing no-store is a
-        privacy defect, not a style one. This asserts the decorator is present on
-        the resolved view.
-
-        **This file cannot assert the resulting headers.** Its request driver is
-        ``RequestFactory``, which calls the view directly and therefore bypasses
-        the middleware chain, so ``X-Frame-Options`` and ``Cache-Control`` are
-        never applied to a response built here. Asserting them would fail for a
-        reason that has nothing to do with the behaviour under test, and asserting
-        them over the full stack would need a database, which this module
-        deliberately never opens. The middleware's presence is asserted in
-        ``test_the_settings_constants_this_surface_needs_are_in_force``; the
-        header-level effect is recorded as verified over real HTTP by independent
-        review, not claimed here.
+        Removing ``@never_cache`` must break this check independently of the
+        remaining method decorator. This proves direct-view response behavior,
+        not middleware, HTTP transport, or real session authentication.
         """
+        required = {"private", "no-store", "no-cache", "must-revalidate", "max-age=0"}
+        cases = (
+            (OWN_METRIC, _Principal(OWNER), 200),
+            (OTHER_METRIC, _Principal(OWNER), 404),
+            (MISSING_METRIC, _Principal(OWNER), 404),
+            (OWN_METRIC, AnonymousUser(), 404),
+        )
+        for method in ("GET", "HEAD"):
+            for metric_id, user, status in cases:
+                with self.subTest(method=method, metric_id=metric_id, status=status):
+                    _, response = self.drive(metric_id, user=user, method=method)
+                    self.assertEqual(response.status_code, status)
+                    directives = {
+                        part.strip().lower()
+                        for part in response.headers.get("Cache-Control", "").split(",")
+                    }
+                    self.assertTrue(required <= directives, response.headers)
 
-        view = resolve(_route(MISSING_METRIC)).func
-        seen = []
-        while view is not None and not seen:
-            seen.append(getattr(view, "__name__", ""))
-            view = getattr(view, "__wrapped__", None)
-        self.assertIn(
-            "saved_metric_view",
-            seen,
-            "the resolved view must still be the one this module reviews",
-        )
-        decorators = getattr(
-            resolve(_route(MISSING_METRIC)).func, "__wrapped__", None
-        )
-        self.assertIsNotNone(
-            decorators,
-            "@require_safe and @never_cache each wrap the view; if both wrappers "
-            "are gone this surface would answer unsafe methods",
-        )
+    def test_unsafe_methods_are_refused_before_store_access(self) -> None:
+        """Removing ``@require_safe`` must break this independent behavior check."""
+        for method in ("POST", "PUT", "PATCH", "DELETE", "OPTIONS", "TRACE"):
+            with self.subTest(method=method):
+                _SavedMetricStoreDouble.reset()
+                _, response = self.drive(OWN_METRIC, method=method)
+                self.assertEqual(response.status_code, 405)
+                self.assertEqual(
+                    {part.strip() for part in response.headers["Allow"].split(",")},
+                    {"GET", "HEAD"},
+                )
+                self.assertEqual(_SavedMetricStoreDouble.calls, [])
 
     def test_the_system_checks_report_nothing(self) -> None:
         self.assertEqual(registry.run_checks(), [])

@@ -8,6 +8,9 @@ This is the single management entry point for Datara. [Project control issue](ht
 
 - [OpenCode continuous execution prompt — current receiving instructions](opencode-continuation-prompt.md)
 
+- [OpenCode continuous-execution prompt — handover](opencode-continuous-execution-prompt.md)
+- [OpenCode project handover — 7 October 2026](opencode-handover-2026-10-07.md)
+
 - [OpenCode takeover handover — 4 October 2026](opencode-handover-2026-10-04.md)
 
 - [Agreed project brief and roadmap](../project-brief-and-roadmap.md)

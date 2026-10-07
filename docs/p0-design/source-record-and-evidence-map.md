@@ -912,17 +912,20 @@ Requirement: **SR04**, **SR33**. Oracle: **TC03**. Contract: `duplicate-conflict
   Since no resolution can be recorded (§6.2), this is currently unreachable rather than
   wrong. It becomes live the moment a resolution is implemented.
 
-### 6.2 Resolution: required by the contract, entirely absent from the code
+### 6.2 Resolution examples: proposed; not implemented in code
 
-This is the clearest "required but absent" in STK012.
+This section compares proposal-stage STK012 examples with current code. Issue #384 asks the
+map to distinguish implemented behaviour from requirements that are absent; this document
+does not infer that the proposed resolution outcomes are approved requirements.
 
-- **established, required:** three explicit owner resolutions — keep existing, replace via
-  auditable supersession, retain both — are specified as the only authorized state changes
-  at `duplicate-conflict-options.md:158`, with supersession lineage at `:159`, and as
-  worked examples in the STK012 table at `:37`–`:39`.
+- **proposal-stage, not an approved contract:** `duplicate-conflict-options.md:37`–`:40`
+  and `:156`–`:159` list three example outcomes — keep existing, replace via auditable
+  supersession, and retain both. The cited record identifies itself as proposed research
+  output. These citations establish what the proposal says, not that the outcomes are
+  authorized state transitions.
 - **established, the schema anticipates it:** `Quarantine.RESOLUTION_CHOICES` has the three
   values and `resolution` / `resolved_at` are nullable columns
-  (`datara/models.py:571`–`:575`, `:592`–`:593`; `datara/migrations/0001_initial.py:177`–`:178`).
+  (`datara/models.py:571`–`:575`, `:592`–`:593; `datara/migrations/0001_initial.py:177`–`:178`).
 - **established, no code ever writes one:** the only two writes of a `Quarantine` row set
   `resolution=None, resolved_at=None` — `datara/dedup.py:1001`–`:1002` (P3) and
   `datara/dedup.py:1103`–`:1104` (P4). A repository-wide search for `STATE_RESOLVED`
@@ -932,22 +935,18 @@ This is the clearest "required but absent" in STK012.
   returns only docstring prose (`datara/dedup.py:23`, `datara/storage.py:14`,
   `datara/dedup.py:1214`) and the *string* `replace_via_supersession` in the choices tuple.
   There is no supersession entity, no lineage column, no transition, and no function.
-- **established, "retain both" has no semantics:** with no resolution record there is
-  nothing that would stop P3 re-firing, which is exactly the risk
+- **established, "retain both" has no resolution semantics:** with no resolution record there
+  is nothing that would stop P3 re-firing, which is the risk
   `duplicate-conflict-options.md:39` flags ("prevent unchanged repeated submissions from
   silently creating more accepted copies").
 
-So the three STK012 resolution examples — keep existing, replace, retain both
-(`duplicate-conflict-options.md:37`–`:39`, under *"STK012 — logical conflicts and
-resolution"* at `:31`) — are **entirely unimplemented**, and OQ-1, supersession lineage,
-interrupted-resolution recovery and the `Quarantine` state machine are consequently
-**unreachable**. **These examples precede the 2 October increment header at
-`duplicate-conflict-options.md:52`; they are not the detailed text designated at
-`decision-register.md:92` (§13–§15 are). They therefore remain proposal-stage, and no
-decision requires these three outcomes to exist; they are a routed founder question
-(§6.2), not an implementation obligation. This is a large, coherent gap rather than a set of small
-defects, and it is the honest answer to "what does the code do today": it creates a
-quarantine and stops.
+The three STK012 resolution examples — keep existing, replace, retain both
+(`duplicate-conflict-options.md:37`–`:39`) — have no implementation path in the code
+described here. This is a statement about current implementation; it does not classify
+their absence as an unmet requirement. Whether these outcomes should be implemented remains
+an open owner decision. OQ-1, supersession lineage, interrupted-resolution recovery and the
+`Quarantine` state machine therefore remain unresolved; the code creates a quarantine and
+stops.
 
 - **unknown:** *What is the authorized resolution contract — the transition set, the
   atomicity boundary, what happens to snapshots that referenced the superseded activity,
@@ -969,14 +968,15 @@ does now.
 | --- | --- | --- | --- |
 | A/X and A/Y differ in bytes, exact tuple equal | quarantine Y; exclude from normal history and skill snapshots | `find_exact_tuple_matches` → P3 → new `SourceObject` + `Activity(disposition=quarantined)` + `Quarantine` row in one transaction; excluded from `history()` and from `build_snapshot_scope` with a named exclusion | **already implemented** (`datara/dedup.py:941`–`:1026`, `:1238`–`:1253`, `:1314`–`:1355`); tested `datara/tests/test_conflict.py:223`, `:254` |
 | Tuple differs | no match from this heuristic; import only if other checks pass; no comprehensive dedup claim | P5 accepts, with detail text stating that no duplicate claim is made | **already implemented** (`datara/dedup.py:892`–`:939`, detail at `:936`); tested `datara/tests/test_conflict.py:125` |
-| Keep existing | owner explicitly resolves for existing history | **no resolution path exists** | **required but absent** |
-| Replace | auditable supersession, preserve originals and lineage | **no supersession representation exists** | **required but absent** |
-| Retain both | owner explicitly chooses both; repeats must not silently multiply | **no resolution path; P3 re-fires on every re-export** | **required but absent** |
-| Concurrent / interrupted resolution | only authorized owner actions alter state; interruption must be recoverable | **no resolution state to interrupt**; concurrency beyond the byte layer is not exercised (§5.3) | **required but absent** |
+| Keep existing | owner explicitly resolves for existing history | **no resolution path exists** | **proposal only; not implemented** |
+| Replace | auditable supersession, preserve originals and lineage | **no supersession representation exists** | **proposal only; not implemented** |
+| Retain both | owner explicitly chooses both; repeats must not silently multiply | **no resolution path; P3 re-fires on every re-export** | **proposal only; not implemented** |
+| Concurrent / interrupted resolution | only authorized owner actions alter state; interruption must be recoverable | **no resolution state to interrupt**; concurrency beyond the byte layer is not exercised (§5.3) | **not established; no resolution state to interrupt** |
 
-**STK012's own acceptance criterion is satisfied by the above:** each example's competing
-outcomes are stated and none is resolved here, and **no tolerance threshold is encoded** —
-the tolerance key is empty and machine-checked (`datara/dedup.py:442`–`:527`).
+This comparison records the implemented behaviour and keeps proposal-stage outcomes
+undecided; it does not establish their absence as an unmet requirement. **No tolerance
+threshold is encoded** — the tolerance key is empty and machine-checked
+(`datara/dedup.py:442`–`:527`).
 
 ### 6.4 Presentation: partially implemented
 

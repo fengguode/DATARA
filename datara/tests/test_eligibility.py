@@ -1964,8 +1964,14 @@ class FinalReviewRegressionTests(unittest.TestCase):
 
     def test_warning_strings_are_sorted_after_rendering(self) -> None:
         with network_disabled():
-            decision = decide({"A": 1, "\\n": 1}, requirements=())
-        self.assertEqual(decision.warnings, tuple(sorted(decision.warnings)))
+            decision = decide({"A": 1, "\n": 1}, requirements=())
+        self.assertEqual(
+            decision.warnings,
+            (
+                "no declared requirement reads observation key 'A'",
+                "no declared requirement reads observation key '\\n'",
+            ),
+        )
 
     def test_unhashable_unknown_kind_returns_a_fail_closed_decision(self) -> None:
         requirement = EligibilityRequirement(

@@ -782,6 +782,32 @@ class E6FailClosedTests(unittest.TestCase):
         with self.assertRaises(EligibilityRefusal):
             require_eligible(decision)
 
+        # Keep the forged payload internally consistent so only the empty-rule
+        # eligibility invariant, not a stale-payload check, rejects it.
+        forged_fields = {
+            "rule_set_version": decision.rule_set_version,
+            "rule_version": decision.rule_version,
+            "rule_set_digest": decision.rule_set_digest,
+            "rule_set": decision.rule_set,
+            "eligible": True,
+            "decision_reason_code": None,
+            "satisfied_requirements": decision.satisfied_requirements,
+            "unmet_requirements": decision.unmet_requirements,
+            "observed_source_keys": decision.observed_source_keys,
+            "unused_observation_keys": decision.unused_observation_keys,
+            "warnings": decision.warnings,
+        }
+        forged_payload = eligibility_module.canonical_json(
+            eligibility_module._decision_payload(**forged_fields)
+        )
+        with self.assertRaises(EligibilityContractError):
+            dataclasses.replace(
+                decision,
+                eligible=True,
+                decision_reason_code=None,
+                canonical_payload=forged_payload,
+            )
+
     def test_an_exception_while_evaluating_one_requirement_is_unmet_and_isolated(self) -> None:
         """Mutation: let the exception propagate out of ``evaluate_eligibility``.
 

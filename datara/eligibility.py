@@ -471,7 +471,12 @@ class EligibilityDecision:
         self._check_ordered("warnings")
         self._check_unmet()
         self._check_rule_set()
-        if self.eligible != (self.decision_reason_code is None and not self.unmet_requirements):
+        expected_eligible = (
+            bool(self.rule_set)
+            and self.decision_reason_code is None
+            and not self.unmet_requirements
+        )
+        if self.eligible != expected_eligible:
             raise EligibilityContractError("eligible_inconsistent_with_unmet_requirements")
         if self.canonical_payload != canonical_json(self._payload()):
             raise EligibilityContractError("canonical_payload_does_not_match_content")

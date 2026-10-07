@@ -1036,5 +1036,138 @@ class BatchIsolationTest(unittest.TestCase):
         self.assertEqual(plan.accepted_source_objects(), ())
 
 
+def _encoder_file_id_and_session() -> bytes:
+    """One FIT file written by the pinned SDK's own encoder.
+
+    Shared by the tests below so the fixture is built once and every assertion
+    runs against identical bytes.
+    """
+
+    from garmin_fit_sdk.encoder import Encoder
+
+    enc = Encoder()
+    enc.write_mesg({"mesg_num": 0, "type": 4, "manufacturer": 1, "product": 1,
+                    "serial_number": 1, "time_created": FIT_TIME_BASE})
+    enc.write_mesg({"mesg_num": 18, "sport": 1, "sub_sport": 7,
+                    "start_time": FIT_TIME_BASE, "total_elapsed_time": 1800.0,
+                    "total_timer_time": 1800.0, "total_distance": 50000.0,
+                    "num_active_samples": 10})
+    return enc.close()
+
+
+class FlagBitBaseTypeTests(unittest.TestCase):
+    """A base-type byte's flag bits must be masked exactly as the decoder masks them.
+
+    Regression cover for the defect that made ingestion impossible: the scanner
+    validated the RAW base-type byte, so every file the pinned SDK's own encoder
+    wrote -- which sets those flag bits -- was rejected with
+    ``undefined_base_type`` while the pinned decoder read it back without
+    complaint, and the rejection message blamed the pinned profile.
+    """
+
+    def test_the_mask_equals_the_pinned_decoders_own_mask(self):
+        import garmin_fit_sdk.fit as fit
+
+        self.assertEqual(C.BASE_TYPE_FLAG_MASK, int(fit.BASE_TYPE_MASK))
+
+    def test_a_flag_bearing_base_type_is_accepted(self):
+        """Every message-definition base-type byte in a real file carries flags.
+
+        The fixture is the pinned encoder's own output. The check below walks that
+        file's first message-definition record to find its base-type bytes, rather
+        than scanning a fixed window for a byte pattern, and asserts that
+        flag-bearing bytes are really present before asserting acceptance -- so
+        the test cannot be vacuous.
+        """
+        data = _encoder_file_id_and_session()
+
+        # Walk the first definition record: header(1) reserved(1) arch(1)
+        # global_num(2) num_fields(1), then 3 bytes per field: num, size, type.
+        record_start = data.index(b"\x40", 14)
+        num_fields = data[record_start + 5]
+        first_type = record_start + 6
+        base_types = [data[first_type + 3 * i + 2] for i in range(num_fields)]
+        flag_bearing = [b for b in base_types if b & 0x80]
+        self.assertTrue(
+            flag_bearing,
+            f"fixture carries no flag-bearing base-type byte: {base_types!r}",
+        )
+
+        out = C.classify_bytes(data)
+        self.assertTrue(out.accepted, out.reason_detail)
+        self.assertNotEqual(out.reason_code, C.REASON_UNDEFINED_BASE_TYPE)
+
+    def test_a_genuinely_undefined_type_is_still_rejected(self):
+        # 0x7F masks to 0x1F, which the pinned profile does not define either.
+        out = C.classify_bytes(_build_fit(undefined_base_type=True))
+        self.assertFalse(out.accepted)
+        self.assertEqual(out.reason_code, C.REASON_UNDEFINED_BASE_TYPE)
+        self.assertIn("0x7F", out.reason_detail)
+        self.assertIn("0x1F", out.reason_detail)
+
+    def test_the_mask_equal_guard_fires_when_the_sdk_disagrees(self):
+        """The guard's raise branch must be exercisable, or it is decoration.
+
+        Deleting the three raise lines leaves every other test green, so without
+        this one the guard could be silently removed.
+        """
+        import garmin_fit_sdk.fit as fit
+        import unittest.mock as mock
+
+        with mock.patch.object(fit, "BASE_TYPE_MASK", 0x7F):
+            with self.assertRaises(C.PinnedProfileMismatch) as caught:
+                C._load_pinned_profile()
+        self.assertIn("BASE_TYPE_MASK", str(caught.exception))
+
+    def test_a_missing_mask_constant_is_a_mismatch_not_a_pass(self):
+        """A re-pin that drops the constant must not disable the guard."""
+        import garmin_fit_sdk.fit as fit
+        import unittest.mock as mock
+
+        with mock.patch.object(fit, "BASE_TYPE_MASK", None):
+            with self.assertRaises(C.PinnedProfileMismatch) as caught:
+                C._load_pinned_profile()
+        self.assertIn("absent from the pinned SDK", str(caught.exception))
+
+    def test_a_mask_disagreement_is_reported_as_mismatch_not_absent(self):
+        """Absence and disagreement are different facts and must stay different.
+
+        The module carries a three-state machine for exactly this; a mask
+        disagreement landing in "absent" would claim the SDK cannot be imported.
+        """
+        import garmin_fit_sdk.fit as fit
+        import unittest.mock as mock
+
+        with mock.patch.object(fit, "BASE_TYPE_MASK", 0x7F):
+            with mock.patch.object(
+                C, "_load_pinned_profile", wraps=C._load_pinned_profile
+            ):
+                state, profile, detail = C._load_pinned_state()
+        self.assertEqual(state, "mismatch")
+        self.assertIn("BASE_TYPE_MASK", detail)
+
+    def test_a_file_written_by_the_pinned_encoder_is_accepted(self):
+        """The round trip that should have existed and did not.
+
+        No test called the pinned SDK's encoder, and no .fit fixture existed
+        outside demo_file/, so the input class the SDK itself produces was never
+        exercised.
+        """
+        from garmin_fit_sdk.decoder import Decoder
+        from garmin_fit_sdk.stream import Stream
+
+        data = _encoder_file_id_and_session()
+
+        # The pinned decoder must agree it is a FIT file first, otherwise this
+        # test would pass for the wrong reason.
+        self.assertTrue(Decoder(Stream.from_byte_array(bytearray(data))).is_fit())
+
+        out = C.classify_bytes(data)
+        self.assertTrue(out.accepted, out.reason_detail)
+        self.assertEqual(out.reason_code, C.REASON_ACCEPTED)
+        self.assertEqual(out.sport_name, "running")
+        self.assertEqual(out.sub_sport_name, "road")
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

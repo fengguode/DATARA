@@ -76,6 +76,27 @@ MESG_DEFINITION_MASK = 0x40
 COMPRESSED_HEADER_MASK = 0x80
 LOCAL_MESG_NUM_MASK = 0x0F
 DEVELOPER_DATA_MASK = 0x20
+#: Flag bits a message-definition base-type byte may carry above the type itself.
+#: The pinned decoder masks with exactly this before validating, in
+#: ``garmin_fit_sdk.decoder.Decoder.__decode_mesg_def``::
+#:
+#:     "base_type": self._stream.read_byte() & FIT.BASE_TYPE_MASK,
+#:     if field_definition["base_type"] not in FIT.BASE_TYPE_DEFINITIONS: ...
+#:
+#: so a scanner that does not mask the same bits rejects files its own decoder
+#: accepts, and reports the pinned profile as incomplete when it is not.  The
+#: value is the pinned SDK's ``FIT.BASE_TYPE_MASK`` (``0x1F``, verified against
+#: garmin-fit-sdk 21.217.0), and it is asserted against the SDK whenever the
+#: pinned profile is loaded, so a pin change that moves the mask fails loudly
+#: instead of silently reintroducing the defect.
+#:
+#: It is ``0x1F`` and **not** ``0x7F``: the pinned type space is ``0x00``-``0x10``
+#: (``fit.BASE_TYPE_DEFINITIONS`` keys, maximum ``0x10``), so bits 5-7 carry no
+#: type information at all. **Discarding** those bits is what makes this scanner
+#: agree with the decoder -- an exhaustive check over all 256 byte values finds 0
+#: disagreements for ``0x1F`` and 102 for ``0x7F``, every one of them a byte the
+#: decoder accepts and the wider mask rejects.
+BASE_TYPE_FLAG_MASK = 0x1F
 
 # D01: "Protocol coverage is FIT 1.0 and 2.0."
 SUPPORTED_PROTOCOL_MAJORS = (1, 2)
@@ -242,6 +263,26 @@ def _load_pinned_profile() -> dict[str, Any]:
     from garmin_fit_sdk import Profile  # noqa: PLC0415 - optional dependency
     import garmin_fit_sdk.fit as fit  # noqa: PLC0415
 
+    # The scanner below masks a message-definition base-type byte with
+    # BASE_TYPE_FLAG_MASK before validating it.  That mask must be the pinned
+    # decoder's own ``FIT.BASE_TYPE_MASK``, because the decoder applies it at
+    # exactly the same point.  If a pin change moves it, this module would
+    # silently disagree with the decoder about which files are readable, so the
+    # mismatch is raised here with the profile rather than discovered on a file.
+    sdk_mask = getattr(fit, "BASE_TYPE_MASK", None)
+    if sdk_mask is None or int(sdk_mask) != BASE_TYPE_FLAG_MASK:
+        # A MISSING constant is a mismatch too, not a pass. If a re-pin renames or
+        # drops BASE_TYPE_MASK the guard must not quietly disable itself, because
+        # the scanner would then keep masking with a hard-coded value and silently
+        # disagree with the decoder again -- the exact failure this check exists
+        # to prevent.
+        found = "absent from the pinned SDK" if sdk_mask is None else f"0x{int(sdk_mask):02X}"
+        raise PinnedProfileMismatch(
+            f"the pinned SDK's FIT.BASE_TYPE_MASK is {found} but this scanner "
+            f"masks with 0x{BASE_TYPE_FLAG_MASK:02X}; the two must agree or the "
+            "scanner will reject files the pinned decoder accepts"
+        )
+
     return {
         "version": dict(Profile["version"]),
         "file": dict(Profile["types"]["file"]),
@@ -349,6 +390,12 @@ def _load_pinned_state() -> tuple[str, Mapping[str, Any] | None, str | None]:
 
     try:
         profile = _load_pinned_profile()
+    except PinnedProfileMismatch as exc:
+        # A mask disagreement is a MISMATCH, never an absence. Reporting it as
+        # "absent" would say the pinned SDK cannot be imported, which is a
+        # different fact with a different consequence, and it is the exact
+        # conflation PinnedProfileMismatch's own docstring forbids.
+        return "mismatch", None, str(exc)
     except Exception as exc:  # noqa: BLE001 - absence is reported, not raised
         return "absent", None, f"{exc.__class__.__name__}: {exc}"
     try:
@@ -745,15 +792,34 @@ def _scan(data: bytes) -> StructureScan:
                 field_def_num = data[cursor]
                 field_size = data[cursor + 1]
                 base_type = data[cursor + 2]
-                if _PINNED_AVAILABLE and base_type not in _PINNED_PROFILE["base_types"]:
+                # Mask the flag bits exactly as the pinned decoder does before
+                # validating, so this scanner never rejects a file that decoder
+                # accepts.  The MASKED type is what gets stored, because that is
+                # the value the pinned decoder interprets.  The raw byte is kept
+                # only as a loop local, for the diagnostic message below.
+                #
+                # The stored element currently has no consumer: `_scan`'s field
+                # table never leaves the function and the third tuple slot is
+                # unpacked and discarded.  It is retained deliberately, so a
+                # future consumer inherits the decoder's value rather than the
+                # raw byte.  Note that the decoder ALSO substitutes UINT8 when a
+                # declared size is not a multiple of its base size; that
+                # substitution is NOT mirrored here and is recorded as a separate
+                # gap, because it cannot be reached while the slot is unused.
+                masked_base_type = base_type & BASE_TYPE_FLAG_MASK
+                if (
+                    _PINNED_AVAILABLE
+                    and masked_base_type not in _PINNED_PROFILE["base_types"]
+                ):
                     error = REASON_UNDEFINED_BASE_TYPE
                     detail = (
                         f"field {field_def_num} of message {global_num} declares base "
-                        f"type 0x{base_type:02X}, which pinned profile 21.217.0 does "
-                        "not define; its value cannot be interpreted"
+                        f"type 0x{base_type:02X} (type 0x{masked_base_type:02X} after "
+                        "masking the flag bits), which pinned profile 21.217.0 "
+                        "does not define; the declared type cannot be interpreted"
                     )
                     break
-                fields.append((field_def_num, field_size, base_type))
+                fields.append((field_def_num, field_size, masked_base_type))
                 cursor += 3
             if error is not None:
                 break

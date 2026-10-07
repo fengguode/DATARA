@@ -2,14 +2,31 @@
 
 Trace: CUS01; SR01, SR02, SR27, SR32; FEAT01; WP02; D01.  TC01, TC19, TC21.
 
-Run (from the repository root of the TK11 worktree)::
+Run (from the repository root)::
 
-    python -X utf8 datara/tests/test_classification.py
+    python -X utf8 -m django test datara.tests.test_classification
 
-stdlib ``unittest`` only, so the pinned command needs no test-runner dependency.
-``datara/__init__.py`` is owned by another task, so this module loads the two
-modules under test directly by path.  That keeps the pinned command runnable
-whether or not the package ``__init__`` currently imports cleanly.
+or, for the whole Milestone A unit::
+
+    bash scripts/milestone_a.sh
+
+**Why this module now imports normally.** It previously installed a throwaway
+package::
+
+    _pkg = types.ModuleType("datara")
+    _pkg.__path__ = [os.path.join(_REPO_ROOT, "datara")]
+    sys.modules["datara"] = _pkg
+
+and never restored ``sys.modules``. The replacement had no ``__file__``, so
+after this module was imported ``from datara import CONTRACT_VERSION`` raised
+``ImportError: cannot import name 'CONTRACT_VERSION' from 'datara' (unknown
+location)`` and ``datara`` had no attribute ``tests``. In a combined tree the
+loader then failed for every *other* test module: 74 tests were collected
+instead of 140, with 45 failures and 3 loader errors -- a suite that reported a
+number of passing tests while two thirds of the unit never ran. The workaround
+was a workaround for a real dependency, not a missing one: ``datara`` is a
+normal package and this module imports it normally. The two imports below are
+the whole fix.
 
 FIXTURE PROVENANCE (docs/management/source-evidence/fixture-provenance.md FIX01)
 ---------------------------------------------------------------------------
@@ -34,32 +51,16 @@ or stat'ed by this suite; no test in this file refers to that path.
 
 from __future__ import annotations
 
+import ast
 import hashlib
-import importlib.util
 import os
 import struct
-import sys
 import unittest
 from typing import Iterable, Sequence
+from unittest import mock
 
-_TESTS_DIR = os.path.dirname(os.path.abspath(__file__))
-_REPO_ROOT = os.path.dirname(os.path.dirname(_TESTS_DIR))
-
-
-def _load(name: str, relpath: str):
-    """Load a module by path, independent of the package ``__init__``."""
-    full = os.path.join(_REPO_ROOT, relpath)
-    spec = importlib.util.spec_from_file_location(name, full)
-    assert spec is not None and spec.loader is not None
-    module = importlib.util.module_from_spec(spec)
-    sys.modules[name] = module
-    spec.loader.exec_module(module)
-    return module
-
-
-# ``classification`` has no intra-package imports; ``intake`` does a relative
-# import, so it is loaded as a real package member of a throwaway package.
-from datara import classification, intake  # noqa: E402
+from datara import classification, intake
+from datara.canonical import IDENTITY_COMPONENTS, LogicalIdentity
 
 C = classification
 I = intake
@@ -93,7 +94,10 @@ ENUM, UINT8, UINT16, UINT32, SINT32 = 0x00, 0x02, 0x04, 0x06, 0x05
 #: raw 1142497800 == 2026-03-15T08:30:00Z.
 FIT_TIME_BASE = 1142497800
 EXPECTED_START_UTC = "2026-03-15T08:30:00Z"
-#: The same instant as whole seconds since the Unix epoch, as the canonical tuple carries it.
+#: The same instant as whole seconds since the Unix epoch, as the canonical tuple
+#: carries it. Restored on review of #389: this constant and the exact-value
+#: assertion using it were deleted by that branch, and without them a one-second
+#: shift in the canonical identity instant passed the whole suite silently.
 EXPECTED_START_EPOCH_SECONDS = 1773563400
 INVALID_UINT8 = 0xFF
 INVALID_UINT16 = 0xFFFF
@@ -725,9 +729,13 @@ class ProtocolAndLayoutTest(unittest.TestCase):
             "outcome_of_skill",
         }
 
-        for relpath in ("datara/classification.py", "datara/intake.py"):
+        for relpath in ("classification.py", "intake.py"):
             with self.subTest(module=relpath):
-                path = os.path.join(_REPO_ROOT, relpath)
+                # Resolved from the imported module, not from a path constant this
+                # file used to compute for itself.
+                path = os.path.join(
+                    os.path.dirname(os.path.abspath(C.__file__)), relpath
+                )
                 with open(path, encoding="utf-8") as handle:
                     tree = ast.parse(handle.read(), filename=path)
 
@@ -953,19 +961,30 @@ class DuplicateAndConflictTest(unittest.TestCase):
         assert record is not None
         self.assertEqual(record.owner_key, "o")
         self.assertNotEqual(record.conflicting_digest, record.candidate_digest)
-        # The logical tuple is the canonical B3 type: an identity-independent
-        # value object of exactly three integers, in milliseconds. Asserting the
-        # components rather than len() is stronger, and it is what distinguishes a
-        # genuine quarantine from an accidental mismatch.
-        identity = record.logical_tuple
+        # The key is the canonical three-integer identity, not a three-string
+        # tuple: the two are not comparable, which is what let one activity be
+        # written twice.
+        self.assertIsInstance(record.logical_tuple, LogicalIdentity)
+        self.assertEqual(
+            tuple(type(record.logical_tuple).__dataclass_fields__),
+            IDENTITY_COMPONENTS,
+        )
+        self.assertEqual(record.logical_tuple.elapsed_duration_ms, 1_800_000)
+        # The exact canonical values, restored alongside the type and field-name
+        # checks above rather than replaced by them. Asserting only the type and
+        # the field names is satisfied by any three integers in any order, so a
+        # one-second shift in the canonical identity instant passed the whole
+        # suite silently. Proven by mutation: shifting
+        # classification.py:598 by one second left this file green. The exact
+        # assertion is what makes that mutant die.
         self.assertEqual(
             (
-                identity.sport_code,
-                identity.start_epoch_seconds,
-                identity.elapsed_duration_ms,
+                record.logical_tuple.sport_code,
+                record.logical_tuple.start_epoch_seconds,
+                record.logical_tuple.elapsed_duration_ms,
             ),
-            (1, EXPECTED_START_EPOCH_SECONDS, 1800000),
-            'the quarantined candidate must carry the exact canonical tuple',
+            (1, EXPECTED_START_EPOCH_SECONDS, 1_800_000),
+            "the quarantined candidate must carry the exact canonical tuple",
         )
 
     def test_conflict_is_not_resolved_silently(self):
@@ -1035,6 +1054,256 @@ class BatchIsolationTest(unittest.TestCase):
         self.assertEqual(plan.outcomes[0].reason_code, C.REASON_MISSING_ELAPSED_DURATION)
         self.assertEqual(plan.accepted_source_objects(), ())
 
+
+# ---------------------------------------------------------------------------
+# Profile pinning: a mismatch must raise, and must not look like absence.
+#
+# The previous implementation asserted the profile facts inside
+# ``try/except Exception``, so (a) a mismatch was swallowed and reported as
+# "decoder not installed", and (b) under ``python -O`` the asserts were stripped
+# and the contract silently re-based on whatever profile the installed SDK
+# carried. ``PYTHONOPTIMIZE`` is inherited from the caller's environment, so a
+# stripped run was reachable without anyone choosing it.
+# ---------------------------------------------------------------------------
+
+
+class PinnedProfileTest(unittest.TestCase):
+    def _good_profile(self) -> dict:
+        return {
+            "version": {"major": 21, "minor": 217, "patch": 0, "type": "Release"},
+            "file": {4: "activity"},
+            "sport": {1: "running", 2: "cycling"},
+            "sub_sport": {0: "generic"},
+            "activity": {1: "auto_multi_sport"},
+            "date_time": {C.DATE_TIME_MIN: "min"},
+        }
+
+    def test_the_real_profile_is_verified_not_assumed(self):
+        # Mutation that fails: skip verification entirely -- this still passes,
+        # which is why the negative tests below matter more than this one.
+        self.assertIn(C.pinned_state(), ("available", "absent", "mismatch"))
+        if C.pinned_state() == "available":
+            C.verify_pinned_profile(self._good_profile())
+            self.assertTrue(C.decoder_available())
+
+    def test_a_profile_mismatch_raises_rather_than_being_absorbed(self):
+        """A changed pinned artifact is a loud failure, not a silent re-base.
+
+        Mutation that fails: replace the explicit ``!=`` comparisons in
+        `verify_pinned_profile` with ``assert`` statements -- under
+        ``PYTHONOPTIMIZE=1`` they are stripped, this raises nothing, and the
+        contract re-bases.
+        """
+
+        for label, mutate in (
+            ("version", lambda p: p.update(version={"major": 22, "minor": 0, "patch": 0, "type": "Release"})),
+            ("file_type", lambda p: p["file"].update({4: "history"})),
+            ("sport_running", lambda p: p["sport"].update({1: "walking"})),
+            ("sport_cycling", lambda p: p["sport"].update({2: "hiking"})),
+            ("date_time", lambda p: p.update(date_time={})),
+            ("activity", lambda p: p["activity"].update({1: "invalid"})),
+        ):
+            with self.subTest(broken=label):
+                profile = self._good_profile()
+                mutate(profile)
+                with self.assertRaises(C.PinnedProfileMismatch):
+                    C.verify_pinned_profile(profile)
+
+    def test_a_mismatch_is_not_reported_as_absence(self):
+        """The two failures are distinguishable, which is the whole point.
+
+        Rewritten on review of #389. The previous version asked the *ambient*
+        environment whether a mismatch happened, so on a host with the pinned SDK
+        installed and matching, ``state[0]`` was never ``"mismatch"`` and the
+        guarded block never ran. It therefore could not fail: the mutation it
+        documented was not exercised. A test that cannot fail is not evidence.
+
+        The mismatch is now produced deliberately, by making the verifier raise
+        exactly as it would on a real disagreement, so the branch runs regardless
+        of what is installed.
+        """
+
+        # Absence: the loader cannot import the SDK.
+        with mock.patch.object(C, "_load_pinned_profile", side_effect=ImportError("absent")):
+            state, profile, detail = C._load_pinned_state()
+        self.assertEqual(state, "absent")
+        self.assertIsNone(profile)
+        self.assertIn("ImportError", detail or "")
+
+        # Mismatch: the SDK loads and then disagrees with the matrix.
+        def _disagree(_profile):
+            raise C.PinnedProfileMismatch("profile version 21.216.0 pinned 21.217.0")
+
+        with mock.patch.object(C, "verify_pinned_profile", _disagree):
+            state, _profile, detail = C._load_pinned_state()
+        self.assertEqual(state, "mismatch")
+        self.assertTrue(detail, "a mismatch must carry a reason naming the disagreement")
+
+        # The two are distinct outcomes, and neither is reported as the other.
+        self.assertNotEqual(state, "absent")
+        self.assertTrue(issubclass(C.PinnedProfileMismatch, RuntimeError))
+        self.assertTrue(issubclass(C.DecoderUnavailable, RuntimeError))
+        self.assertIsNot(C.PinnedProfileMismatch, C.DecoderUnavailable)
+
+        # The mutation this test documents is folding mismatch into absence.
+        # `assertEqual(state, "mismatch")` above is what kills it: if the loader
+        # ever reported a profile disagreement as absence, this fails here.
+
+    def test_a_missing_decoder_is_still_absent_not_a_mismatch(self):
+        """Mutation that fails: make absence raise PinnedProfileMismatch."""
+
+        self.assertTrue(issubclass(C.DecoderUnavailable, RuntimeError))
+        original = C._load_pinned_profile
+        C._load_pinned_profile = lambda: (_ for _ in ()).throw(ImportError("no sdk"))
+        try:
+            state, profile, detail = C._load_pinned_state()
+            self.assertEqual(state, "absent")
+            self.assertIsNone(profile)
+            self.assertIn("ImportError", detail or "")
+        finally:
+            C._load_pinned_profile = original
+
+    def test_the_checks_are_not_asserts_so_optimisation_cannot_strip_them(self):
+        """`python -O` cannot remove a comparison or a raise.
+
+        Mutation that fails: reintroduce any ``assert`` in the profile
+        verification path -- `ast` finds it and this fails.
+        """
+
+        import ast as _ast
+
+        tree = _ast.parse(open(C.__file__, encoding="utf-8").read())
+        offenders = [
+            node.lineno
+            for node in _ast.walk(tree)
+            if isinstance(node, _ast.Assert)
+            and "profile" in _ast.dump(node).lower()
+        ]
+        self.assertEqual(offenders, [], "a profile check is an assert again")
+
+    def test_a_classification_carries_the_canonical_millisecond_value(self):
+        """B3: one quantity, one unit, on every path that emits it.
+
+        Mutation that fails: drop the ``elapsed_duration_ms`` keyword from the
+        accepted ``FileClassification`` -- it stays None and this fails.
+        """
+
+        result = C.classify_bytes(_build_fit())
+        self.assertTrue(result.accepted)
+        self.assertEqual(result.elapsed_duration_ms, 1_800_000)
+        # The seconds string is still emitted -- it is the exact decimal rendering
+        # and removing it would change TK11's own output contract -- but it is no
+        # longer what the duplicate key is built from.
+        self.assertEqual(result.elapsed_duration_seconds, "1800")
+        self.assertEqual(result.logical_tuple.elapsed_duration_ms, 1_800_000)
+
+    def test_the_logical_tuple_is_the_canonical_integer_identity(self):
+        """Not a three-string tuple, and not comparable as one.
+
+        Mutation that fails: revert `logical_tuple` to
+        ``(sport_name, start_time_utc, elapsed_duration_seconds)`` -- the
+        isinstance and field assertions fail.
+        """
+
+        result = C.classify_bytes(_build_fit())
+        identity = result.logical_tuple
+        self.assertIsInstance(identity, LogicalIdentity)
+        self.assertEqual(tuple(type(identity).__dataclass_fields__), IDENTITY_COMPONENTS)
+        self.assertTrue(
+            all(type(v) is int for v in (identity.sport_code, identity.start_epoch_seconds, identity.elapsed_duration_ms)),
+            "every component must be an exact integer, not a string",
+        )
+
+    def test_a_rejected_file_has_no_tuple_and_no_duration(self):
+        """Mutation that fails: populate either field on a rejection."""
+
+        result = C.classify_bytes(_build_fit(total_elapsed_time=None))
+        self.assertFalse(result.accepted)
+        self.assertIsNone(result.logical_tuple)
+        self.assertIsNone(result.elapsed_duration_ms)
+        self.assertIsNone(result.elapsed_duration_seconds)
+
+    def test_the_canonical_key_agrees_with_the_one_the_persistence_layer_uses(self):
+        """The end-to-end proof of B3, across the two write paths.
+
+        `datara.dedup` compares integer milliseconds. The classifier's key must
+        be the same integers, or the same activity is invisible to the exact
+        matcher.
+
+        Mutation that fails: return the seconds string in the key -- the equality
+        below fails.
+        """
+
+        result = C.classify_bytes(_build_fit())
+        from datara.canonical import LogicalTuple
+
+        keyed = result.logical_tuple.with_owner(7)
+        self.assertIsInstance(keyed, LogicalTuple)
+        self.assertEqual(keyed.elapsed_duration_ms, 1_800_000)
+        self.assertEqual(
+            tuple(type(keyed).__dataclass_fields__),
+            ("owner_id",) + IDENTITY_COMPONENTS,
+        )
+        # And a seconds-shaped value would never be equal to it.
+        self.assertNotEqual(keyed.elapsed_duration_ms, 1800)
+
+
+class KnownTuplesKeyingTest(unittest.TestCase):
+    """``known_tuples`` must be comparable with a candidate's key.
+
+    It was declared and documented as ``(sport, start_time_utc,
+    elapsed_duration_seconds)`` string triples while the candidate key became a
+    ``LogicalIdentity``. The two can never be equal, so every caller-supplied
+    existing tuple was silently dropped and its file was **accepted** instead of
+    quarantined -- a caller-visible argument that had no effect at all.
+    """
+
+    def test_an_existing_tuple_makes_the_candidate_quarantined(self):
+        first = _build_fit()
+        second = _build_fit(sub_sport=2)
+        self.assertNotEqual(first, second)
+
+        identity = C.classify_bytes(first).logical_tuple
+        self.assertIsInstance(identity, LogicalIdentity)
+
+        plan = I.plan_import(
+            "o",
+            [("b.fit", second)],
+            known_tuples=[(hashlib.sha256(second).hexdigest(), identity)],
+        )
+        self.assertEqual(len(plan.quarantined), 1)
+        self.assertEqual(len(plan.accepted), 0)
+
+    def test_a_differently_shaped_key_is_refused_rather_than_ignored(self):
+        """Mutation that fails: drop the isinstance check -- this raises nothing."""
+
+        with self.assertRaises(TypeError) as caught:
+            I.plan_import(
+                "o",
+                [("b.fit", _build_fit(sub_sport=2))],
+                known_tuples=[("deadbeef", ("running", "2026-03-15T08:30:00Z", "1800"))],
+            )
+        self.assertIn("LogicalIdentity", str(caught.exception))
+
+    def test_the_mutation_a_string_triple_would_produce_is_accepted_instead(self):
+        """Why the refusal exists: the old key shape silently accepted a duplicate.
+
+        Same logical activity, same owner, different bytes, and the existing
+        tuple is dropped -- so the file is accepted as a new activity. This is
+        the assertion that documents the harm.
+        """
+
+        first = _build_fit()
+        second = _build_fit(sub_sport=2)
+        identity = C.classify_bytes(first).logical_tuple
+        with_stale_key = I.plan_import(
+            "o",
+            [("b.fit", second)],
+            known_tuples=[(hashlib.sha256(second).hexdigest(), identity)],
+        )
+        # If the key shape ever changed back to a string triple, this goes to 1
+        # accepted and the test above would already have stopped raising.
+        self.assertEqual(len(with_stale_key.quarantined), 1)
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)

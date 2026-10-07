@@ -41,6 +41,26 @@ Reuse one dedicated session per role when it supports the current model instruct
 
 Every bounded assignment names the role, issue, WP/CUS/Feature/SR/Task IDs, objective, dependencies/decision gates, acceptance criteria, exclusive writable paths, read-only references, base commit/branch/PR, available execution evidence, required checks, reviewers/final confirmer, current live-read timestamp and next handoff. Avoid concurrent edits to the same files. A sandbox's technical write access does not grant ownership. Primary inspects all tracked and untracked changed paths and the complete diff before integration. Preserve unrelated changes.
 
+### Coordinator merge authority
+
+The founder delegated merge authority to the Primary Coordinator on 5 October 2026: a pull request whose scope is **not CUS-level, not Feature-level and not SR-level** may be merged by the coordinator once its applicable confirmation gate has returned. **CUS-level, Feature-level and SR-level merges remain with the founder**, and the founder reserved SR-level explicitly after the coordinator proposed leaving it inside the delegation.
+
+This delegation changes **who performs the merge**, not **what evidence is required**. Section 7 still binds: the gate role for the scope must have returned a published verdict with no unresolved defect, findings must be fixed and re-verified on the merged head, and the process checkers must pass on that head. Authority to press the merge button is never a substitute for a gate that has not been satisfied, and it never converts a higher-level change into a task-level one.
+
+Applying it honestly means the following. Misclassifying scope in order to make a merge convenient is a conduct failure:
+
+- **Task-, subtask- and test-level pull requests** are within the delegation once their gate verdict is published.
+- **CUS-level, Feature-level and SR-level pull requests are the founder's.** This includes a pull request that **implements or changes a system requirement**, whatever task it was assigned to. Implementing an SR as a task does not make it task-level, and the coordinator does not merge it.
+- A pull request that **changes an architecture or a contract**, or that **makes a user-visible surface runnable**, is not merged on the coordinator's authority either. It is escalated with the section 7 confirmation for that scope attached.
+- A pull request that **changes this Code of Conduct**, or that alters the coordinator's own authority, is not merged on the coordinator's authority. It is escalated to the founder.
+- A pull request whose **review record is unpublished**, or whose gate verdict is absent, rejected or conditional, is not merged regardless of scope.
+
+**Notify the founder when a pull request is ready for their decision.** When a pull request reaches the founder's table, raise it as a **discussion comment** per section 3, carrying the founder's contact tag **`#Report_to_Owner`** with a direct mention **`@fengguode`**, and state the pull request, its scope level, the head SHA proposed for merge, the gate verdict that authorised it with a link to that published verdict, and anything still outstanding. Title it with exactly one of the section 5 forms: `..._need owner decision` when a decision, permission, credential or judgement is required, or `..._for owner information` when only a finding, correction, risk or state is being reported. "Ready for merge" reported only inside the coordinator's session is not a notification.
+
+A pull request inside the coordinator's own delegation is merged when its gate is satisfied; the founder does not need to be asked for it. The notification duty is for the founder's table, and for any escalation.
+
+Record every merge made under the delegation with the pull request, the head SHA merged, the gate role whose verdict authorised it, and a link to that published verdict, so the authority is auditable rather than asserted.
+
 ### Agent identity labels
 
 Publish an agent identity as one canonical label that shows the persona, the model used, and the harness, so the two runtimes are distinguishable at a glance. This supplements the [issue #23](https://github.com/fengguode/DATARA/issues/23) attribution agreement; it does not replace it.
@@ -116,7 +136,7 @@ Before product coding, finalize and review applicable architecture and test desi
 
 **No priority, no start.** A task with no recorded priority in its dedicated field or metadata **must not be started, continued, or reported as delivered work.** Priority is a precondition of execution, not a reporting nicety: a role that discovers a missing or unknown priority stops at the selection step, records **priority unknown / not set**, and does not begin. Reading priority is part of the mandatory fresh read in section 5, so an absent value is a defect in the record, not a blank to be filled in by the executing role. This applies to every role including the Primary Coordinator, and it applies to corrective, safety, and tooling work: a real defect found out of priority order is reported and left, not fixed under an unauthorized priority. Backfilling a priority after the fact does not authorize work already done; that work is reported as **delivered out of priority order** for Quality Manager review.
 
-Repeat: **refresh → select eligible work → publish bounded assignment → execute → inspect → test as applicable → independently review → correct/recheck → push and publish PR → obtain exact-candidate confirmation → integrate with authorization → update documentation/report → select next work**. Continue eligible independent work while another item is blocked. Do not repeatedly retry unchanged blockers or poll without useful work.
+Repeat: **refresh → select eligible work → publish bounded assignment → execute → inspect → test as applicable → independently review → correct/recheck → push and publish PR → publish the review verdict on the pull request → obtain exact-candidate confirmation → integrate with authorization → update documentation/report → select next work**. The verdict is published **after** the pull request exists and **after** the corrections it describes, so that it can be read against the head it reviewed and can satisfy the requirement that findings are re-verified on that final head. Continue eligible independent work while another item is blocked. Do not repeatedly retry unchanged blockers or poll without useful work.
 
 ## 7. Independent confirmation and evidence
 
@@ -127,6 +147,47 @@ Confirmations bind to the full reviewed head SHA and exact scope. Later changes 
 Use proportionate actual checks. Documentation can use independent read-through, links, paths and configuration checks. Run `python scripts/check_requirements.py` for registry changes; its management/coverage validation is not product verification, and unsupported additive links need direct audit. Applicable product evidence records candidate/build, environment/dependencies, fixture provenance, reproduction steps, expected/actual results, pass/fail/blocked status, defects and limits.
 
 Keep source inspections, mocked tests, live customer-model integration, running-system verification, rendered UI checks and founder validation distinct. Identify the loaded process/build for runtime evidence and the actual isolated target for browser evidence. Preserve failed, blocked and historical results; never relabel plans as passing checks.
+
+### Review records are published, not summarised
+
+A review is not performed until its verdict is **published on GitHub as a comment on the pull request it reviews**, carrying the reviewing role's canonical identity label. A verdict held only in an agent session, a coordinator summary or a conversation is not a review record. Anyone reading the pull request later must be able to reach every verdict, including the ones that rejected the work.
+
+Post agent verdicts as **comments**. Never press `Approve`, `Request changes`, or any other review control through the founder's account token: the rendered result is indistinguishable from a human approval by a person who has read nothing. A false approval signal planted in the confirmation record is a conduct failure, not a shortcut, and it is worse than publishing nothing.
+
+While a review is in flight, **state that it is in flight** on the pull request, naming the reviewing role and what it is checking. Silence is read as "unreviewed", and a reviewer looking for the work of a named role cannot otherwise tell whether the gate is open.
+
+Maintain **one review-record index** covering the concurrent pull requests, listing for each its scope, the role reviewing it, and the verdict. The per-pull-request comment is authoritative; the index is navigation, so that a founder or later reader does not have to open every pull request to learn what was found.
+
+Work **authored or corrected by the coordinator is unreviewed** until a role independent of that work has reviewed it, and must be labelled unreviewed in the index and on the pull request. Self-verification is not review. This binds corrective and tooling work exactly as it binds new work: a fix written and checked by the same agent that wrote the defect is one verification, not two.
+
+Use **merge-ready**, and "ready for founder confirmation", only against a stated bar, and name what is outstanding against it:
+
+1. the applicable gate role has returned a verdict with no unresolved defect;
+2. every finding is fixed and the fix re-verified on the final head;
+3. the process checkers pass on that final head;
+4. the reviewing role's verdict is published on the pull request.
+
+Do not report a pull request as merge-ready, and do not present it for confirmation, while any of the four is unmet. Open pull requests with no published verdicts are an **open gate**, not progress toward approval.
+
+**Preserve rejected and superseded verdicts.** A rejection is among the most useful records a project holds, because it is the evidence a defect was caught rather than shipped. Editing over a rejection, or letting a corrected branch silently replace the pull request that carried it, destroys that evidence.
+
+### Pre-review declarations
+
+Before dispatching a candidate for review, its author **declares** the following in the pull request. These are author obligations, checked by the reviewer. **They are not mechanically enforced, and this section does not claim they are** — a readiness-gate script was built for this purpose and was rejected on review as a checkbox rather than a gate, with two reproduced paths returning success while a defect existed. A green tick from a check that cannot fail is worse than no check, because it converts *"nobody looked"* into *"something says it is fine."*
+
+The declarations exist because five candidates were rejected for reasons a declared, checked declaration would have surfaced:
+
+1. **Adverse deltas.** Every file with deleted lines is named, with the reason. Measuring insertions and calling the result an addition is how forty-two lines of assertion strength were published as a coverage recovery.
+2. **Notation-complete replacement.** A replaced value is searched in every notation it could take. A pin written `3.12.14` in one file is often written `(3,12,14)` in another, because the check is a version tuple. **A search that cannot see its own subject is not evidence** — and neither is a check that prints "ok" for a notation it never searched.
+3. **Cited documents exist.** A tracked document citing a tracked document that does not exist is a fabricated authority. The citation is opened, not assumed.
+4. **Evidence is reproducible.** Every quantitative claim states **the exact command that produced it and the exact conditions under which it reproduces**. A claim whose harness is not committed is not evidence for the next reviewer. Declare the dimensions and the harness, or drop the figure.
+5. **Authority sources are inventoried.** The authoritative records consulted are listed, with line references. Reading the sources one already knows about is how the selected decision baseline went unread while sixteen references to a different record were added.
+
+A sub-agent claim entering a pull request body or a manifest is **re-derived first**. A report is evidence about what a reviewer should check, not a substitute for checking. The same applies to the coordinator's own earlier conclusion: a self-check that already returned a result is re-run, not quoted.
+
+A rejected candidate is **re-checked against the finding that caused its rejection** before it is re-dispatched, and that finding is shown to have been addressed rather than asserted to be.
+
+A published verdict uses the [confirmation record template](docs/team/pull-request-confirmation.md) verbatim, so it states the **reviewed head SHA**, its scope and one of **Confirmed / Changes requested / Blocked** — the same binding the confirmation rules already impose.
 
 ## 8. Data, rights and authorization
 

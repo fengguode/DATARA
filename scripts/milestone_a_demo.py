@@ -1,15 +1,15 @@
-﻿"""Milestone A end-to-end demonstration harness.
+﻿"""FIT classification and intake-planning demonstration harness.
 
-Drives the real DATARA chain against real PostgreSQL with real FIT bytes:
+Exercises pinned-SDK byte generation, FIT classification, and deterministic intake planning:
 
-    SDK Encoder -> classify_bytes -> plan_import -> OriginalStore -> eligibility
+    SDK Encoder -> classify_bytes -> plan_import
 
-No mocks, no stubs, no hand-assembled FIT bytes. Every FIT file here is written by
-the pinned SDK's own encoder, so this exercises the input class the repository's
-tests never covered.
+No mocks, no stubs, and no hand-assembled FIT bytes. Every FIT file here is written by
+the pinned SDK encoder. This demonstration does not persist records or evaluate
+eligibility, and it is not a product test or end-to-end milestone verification.
 
 Run with the pinned interpreter and DJANGO_SETTINGS_MODULE=datara.settings.
-Prints a report; writes nothing to the repository.
+Prints a classification and intake-plan report; it does not write product records.
 """
 
 from __future__ import annotations
@@ -25,7 +25,7 @@ django.setup()
 
 from garmin_fit_sdk.encoder import Encoder  # noqa: E402
 
-from datara import intake, storage  # noqa: E402
+from datara import intake  # noqa: E402
 from datara.classification import classify_bytes, pinned_profile  # noqa: E402
 
 PROFILE = pinned_profile()
@@ -171,8 +171,8 @@ def intake_all(results: dict[str, tuple]) -> None:
 
 def main() -> int:
     print()
-    print("DATARA Milestone A - end-to-end demonstration")
-    print("SDK-generated FIT bytes -> classify -> plan -> (store) -> eligibility")
+    print("DATARA FIT classification and intake-planning demonstration")
+    print("SDK-generated FIT bytes -> classify -> deterministic intake plan")
     print()
     results = classify_all()
     intake_all(results)

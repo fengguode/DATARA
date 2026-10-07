@@ -12,7 +12,7 @@ Coordinator: Primary Coordinator — Yi Tang. GitHub publisher: fengguode.
 
 ## Scope and boundaries
 
-This note translates the existing acceptance criteria for four catalog conditions—eligible, ineligible, empty, and error—into reviewable outcomes. The dated D02 baseline already selects the P0 target skills (`activity-summary`, `training-volume-trend`, and `training-consistency`) and records their descriptive metric and UTC calculation direction. This note does not change that selected scope or those rules. D02 still has open engineering and evidence work: frozen schemas and fixtures, independently reviewed rubric anchors, and live evaluation. This note does not choose additional skill declarations, input thresholds, reason-code vocabulary, UI layout, control pattern, exact user-facing copy, or an accessibility conformance target.
+This note translates the existing acceptance criteria for four catalog conditions—eligible, ineligible, empty, and error—into reviewable outcomes. The dated D02 baseline already selects the P0 target skills (`activity-summary`, `training-volume-trend`, and `training-consistency`) and records their descriptive metric and UTC calculation direction. This note does not change that selected scope or those rules. D02 still has open engineering and evidence work: frozen schemas and fixtures, independently reviewed rubric anchors, and live evaluation. The dated D04 baseline separately selects WCAG 2.2 AA as the accessibility design target and identifies keyboard/screen-reader journeys and other design checks; that target remains subject to design and evidence checks and is not a conformance claim. This note does not choose additional skill declarations, input thresholds, reason-code vocabulary, UI layout, control pattern, exact user-facing copy, or a new accessibility target.
 
 The catalog communicates deterministic eligibility before any analysis. An eligible entry is not a completed assessment or recommendation. An ineligible entry cannot be submitted for execution. Viewing or explaining eligibility makes no model call. No UI state may imply a result that the available source data and approved skill contract do not support. The action column records only an action already supported by current requirements, or explicitly says that no action is currently specified or approved; it does not create recovery behavior.
 
@@ -35,9 +35,9 @@ The current records do not establish empty-response causes, a complete remediati
 - Can eligible choices and any permitted recovery/selection actions be reached and operated using a keyboard?
 - Is ineligibility communicated without presenting an executable action for that entry?
 - When the catalog is empty or fails, is the condition identifiable as a status/error and is focus behavior understandable after recovery?
-- Which additional text alternatives, focus behavior, status announcements, responsive checks, or formal conformance target apply to TC45? The current SR58 requires text and keyboard operation but does not set those detailed criteria or a conformance level.
+- How should the selected D04 WCAG 2.2 AA design target and named keyboard/screen-reader checks be applied to these catalog states, and what case-specific evidence belongs in TC45? SR58 requires text and keyboard operation; the selected target does not by itself establish implementation or conformance.
 
-These questions invite review; they do not silently extend SR58 or adopt a WCAG conformance target. Any new normative obligation must follow the project change process and founder confirmation where CUS scope changes.
+These questions invite design and evidence review; they do not change SR58 or D04's selected accessibility target and do not claim conformance. Any new normative obligation must follow the project change process and founder confirmation where CUS scope changes.
 
 ## Acceptance review checklist for TK35 / STK110
 
@@ -58,7 +58,7 @@ A reviewer can determine from this note whether it:
 | CUS04 / CUS05 | Skill choice and data-dependent eligibility outcome | The D02 baseline selects three P0 skills and UTC metric direction. Frozen schemas/fixtures, rubric review, live evaluation, and any remaining applicability or input-contract details stay open. |
 | FEAT31 | Explain eligibility and operable catalog states | Proposed capability grouping; does not approve a presentation design. |
 | SR11 | Block execution and identify unmet requirements for an ineligible skill | Reason identifiers and exact unmet-input matrix depend on approved skill contracts. |
-| SR58 | Make eligible/ineligible choices and reasons clear through text and keyboard operation | The requirement does not establish visual design or a formal conformance target. |
+| SR58 | Make eligible/ineligible choices and reasons clear through text and keyboard operation | SR58 sets text/keyboard behavior; D04 separately selects WCAG 2.2 AA and named accessibility design checks, whose catalog mapping and evidence remain open. |
 | TC45 | Planned catalog and accessibility verification | Not run. Requires an approved contract and a runnable candidate for product-level checks. |
 | D02 | Skills, applicability, coverage/trend rules, evaluation thresholds | The target skills and core UTC calculation direction are selected in the dated baseline; schemas, fixtures, independently reviewed rubric anchors, and live evaluation remain open. This note does not resolve those gates. |
 

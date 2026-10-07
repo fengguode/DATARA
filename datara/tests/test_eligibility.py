@@ -1942,6 +1942,45 @@ class DirectionDetailVocabularyTests(unittest.TestCase):
         guard.test_every_kind_and_not_met_detail_lands_in_that_kinds_vocabulary()
 
 
+
+class FinalReviewRegressionTests(unittest.TestCase):
+    """Regressions from independent review of the exact #393 candidate."""
+
+    def test_equals_accepts_matching_boolean_flag_values(self) -> None:
+        for value in (False, True):
+            requirement = EligibilityRequirement(
+                requirement_id="REQ-FLAG",
+                kind=KIND_MANDATORY_FIELD,
+                source_key="enabled",
+                description="an exact boolean flag",
+                comparator=COMPARATOR_EQUALS,
+                required_value=value,
+                declared_value_type=VALUE_FLAG,
+            )
+            with self.subTest(value=value), network_disabled():
+                decision = decide({"enabled": value}, requirements=[requirement])
+            self.assertTrue(decision.eligible)
+            self.assertEqual(decision.satisfied_requirements, ("REQ-FLAG",))
+
+    def test_warning_strings_are_sorted_after_rendering(self) -> None:
+        with network_disabled():
+            decision = decide({"A": 1, "\\n": 1}, requirements=())
+        self.assertEqual(decision.warnings, tuple(sorted(decision.warnings)))
+
+    def test_unhashable_unknown_kind_returns_a_fail_closed_decision(self) -> None:
+        requirement = EligibilityRequirement(
+            requirement_id="REQ-UNKNOWN-KIND",
+            kind=["unhashable", "kind"],
+            source_key="value",
+            description="an unknown malformed kind",
+            comparator=COMPARATOR_PRESENT,
+            declared_value_type=VALUE_ANY,
+        )
+        with network_disabled():
+            decision = decide({"value": 1}, requirements=[requirement])
+        self.assertFalse(decision.eligible)
+        self.assertEqual(only(decision)["reason_detail"], "unknown_requirement_kind")
+
 def _replace_field(requirement, field, value):
     """``dataclasses.replace`` with one field overridden."""
 

@@ -823,7 +823,7 @@ def _evaluate_one(
     """
 
     # 1. Recognisability. An unknown kind, comparator or declared type is unmet.
-    if requirement.kind not in SUPPORTED_KINDS:
+    if type(requirement.kind) is not str or requirement.kind not in SUPPORTED_KINDS:
         return _unevaluable(requirement, "unknown_requirement_kind")
     if requirement.comparator not in SUPPORTED_COMPARATORS:
         return _unevaluable(requirement, "unknown_comparator")
@@ -857,10 +857,8 @@ def _evaluate_one(
         required = requirement.required_value
         if required is None:
             return _unevaluable(requirement, "missing_required_value")
-        if isinstance(required, bool):
-            return _unevaluable(requirement, "required_value_type_mismatch")
         if requirement.comparator in (COMPARATOR_AT_LEAST, COMPARATOR_AT_MOST):
-            if not isinstance(required, (int, float)):
+            if isinstance(required, bool) or not isinstance(required, (int, float)):
                 return _unevaluable(requirement, "required_value_type_mismatch")
             if type(observed) is bool or not isinstance(observed, (int, float)):
                 return _unevaluable(requirement, "observation_not_comparable")
@@ -1054,8 +1052,12 @@ def evaluate_eligibility(
                 _Outcome(
                     requirement=requirement,
                     satisfied=False,
-                    reason_code=_INVALID_BY_KIND.get(
-                        requirement.kind, REASON_REQUIREMENT_NOT_EVALUABLE
+                    reason_code=(
+                        _INVALID_BY_KIND.get(
+                            requirement.kind, REASON_REQUIREMENT_NOT_EVALUABLE
+                        )
+                        if type(requirement.kind) is str
+                        else REASON_REQUIREMENT_NOT_EVALUABLE
                     ),
                     reason_detail="evaluation_raised",
                     observed=_NOT_SUPPLIED,
@@ -1070,7 +1072,9 @@ def evaluate_eligibility(
     observed_keys = tuple(key for key in referenced if key in observations)
     referenced_set = set(referenced)
     unused = tuple(sorted(key for key in observations if key not in referenced_set))
-    warnings = tuple(f"no declared requirement reads observation key {key!r}" for key in unused)
+    warnings = tuple(sorted(
+        f"no declared requirement reads observation key {key!r}" for key in unused
+    ))
 
     return _finish(
         rule_set_version=rule_set_version,

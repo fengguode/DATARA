@@ -1,3 +1,14 @@
+ARCHIVED HISTORICAL TRANSCRIPT — 2026-10-05
+
+This retained output is not current-main evidence or candidate-specific verification. Its
+commands ran from temporary scratch worktrees. The AFTER section reflects a scratch
+0x7F mask experiment; it is not the pinned implementation. Current main
+d393680ad83f8ec25f3ff43a881d1a8430a0dfa9 uses the SDK's BASE_TYPE_FLAG_MASK = 0x1F.
+These eight fixtures do not distinguish the masks. Do not use this transcript to claim
+that current main or the current PR branch was run. The harness only classifies
+SDK-encoded FIT bytes and creates deterministic intake plans; it does not persist
+records or evaluate eligibility.
+
 ------------------------------------------------------------------------------
 BEFORE  origin/main behaviour, unpatched
   command: DATARA_SRC=C:\Users\guofe\AppData\Local\Temp\opencode\fix-379  python -X utf8 milestone_a_demo.py

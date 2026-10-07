@@ -925,7 +925,7 @@ does not infer that the proposed resolution outcomes are approved requirements.
   authorized state transitions.
 - **established, the schema anticipates it:** `Quarantine.RESOLUTION_CHOICES` has the three
   values and `resolution` / `resolved_at` are nullable columns
-  (`datara/models.py:571`–`:575`, `:592`–`:593; `datara/migrations/0001_initial.py:177`–`:178`).
+  (`datara/models.py:571`–`:575`, `:592`–`:593`; `datara/migrations/0001_initial.py:177`–`:178`).
 - **established, no code ever writes one:** the only two writes of a `Quarantine` row set
   `resolution=None, resolved_at=None` — `datara/dedup.py:1001`–`:1002` (P3) and
   `datara/dedup.py:1103`–`:1104` (P4). A repository-wide search for `STATE_RESOLVED`

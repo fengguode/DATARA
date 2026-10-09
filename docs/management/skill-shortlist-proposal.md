@@ -25,20 +25,37 @@ The founding record describes books and videos as possible sources for Datara-au
 
 Medical or diagnostic expertise; recovery, nutrition, and advice; load-change interpretation; recovery trends; missing-information analysis as a standalone skill; and conversion of findings into suggested actions are not added to this shortlist. The founding record presents several as examples, not as the selected P0 set. Automated source-to-skill creation and commercial expert-IP mechanisms remain deferred.
 
+## Excluded illustrative candidates — required fields recorded as open
+
+These examples remain unselected ideas from the founding record, not proposed P0 skills. The table records TC80's required fields without inventing outcomes, inputs, evidence, or D02 selections.
+
+| Excluded idea | Intended outcome | Scope / excluded behavior | Origin / method source | Input needs | Available evidence | Exclusion reason and unresolved D02 item |
+|---|---|---|---|---|---|---|
+| Medical diagnosis or advice | Open — no approved user outcome or method defined. | Excluded from the selected descriptive P0 skills; no diagnosis or treatment recommendation. | Founding brainstorming example only; no method source. | Missing/open — none specified. | Brainstorming mention only; no method, fixture, or evaluation evidence. | Not selected by D02; medical scope is unsupported here. No D02 decision to publish it. |
+| Recovery advice or trend | Open — no approved user outcome or method defined. | Excluded as a standalone P0 skill; no recovery assessment or prescription. | Founding brainstorming example only; no method source. | Missing/open — none specified. | Brainstorming mention only; no method, fixture, or evaluation evidence. | Not among the three selected D02 skills. A future candidate needs separate scope and evidence review. |
+| Nutrition advice | Open — no approved user outcome or method defined. | Excluded from the selected P0 shortlist; no nutrition assessment or prescription. | Founding brainstorming example only; no method source. | Missing/open — none specified. | Brainstorming mention only; no method, fixture, or evaluation evidence. | Not among the three selected D02 skills. A future candidate needs separate scope and evidence review. |
+| Load-change interpretation | Open — the example does not define an athlete outcome or method. | Not included in the selected P0 skill set. | Founding brainstorming example only; no method source. | Missing/open — none specified. | Brainstorming mention only; no operational or evaluation evidence. | D02 selected three other targets. No selection or threshold decision for this example. |
+| Missing-information check as a standalone skill | Open — no standalone outcome or method defined. | Missing-data limitations may be disclosed by a selected skill; this example is not a separate selected skill. | Founding brainstorming example only; no method source. | Missing/open — none specified. | Brainstorming mention only; no standalone method or evaluation evidence. | Not among the three selected D02 skills. A future standalone candidate needs separate scope and evidence. |
+| Converting assessments into suggested actions | Open — no approved action outcome or method defined. | Not in the selected descriptive P0 library; recommendations are outside this D02 shortlist. | Founding brainstorming example only; no method source. | Missing/open — none specified. | Brainstorming mention only; no method, fixture, or evaluation evidence. | Not among the three selected D02 skills. Any future recommendation capability needs separate scope and approval. |
+
+Automated source-to-skill creation and commercial expert-IP mechanisms are deferred project capabilities, not candidate skills in this shortlist.
+
 ## D02 evaluation gates and unresolved contract work
 
-The D02 baseline records a proposed/selected evaluation structure: at least ten distinct cases per skill, with relevant positive, insufficient-input, optional-missing, conflict-exclusion, UTC-boundary, and arithmetic/zero-baseline cases; at least three independent attempts per case for each released provider/model pair; and distinct evidence for deterministic metrics, schema/contract validation, mocked adapter behavior, and substantive live-connection quality. The substantive rubric describes five dimensions scored 0/1/2, with an initial 8/10 minimum and no zero dimension. Its anchors and approval/freeze status remain an independent-review gate; no quality run is evidenced here.
+The D02 baseline records a proposed/selected evaluation structure: at least ten distinct cases per skill, with relevant positive, insufficient-input, optional-missing, conflict-exclusion, UTC-boundary, and arithmetic/zero-baseline cases; at least three independent attempts per case for each released provider/model pair; and distinct evidence for deterministic metrics, schema/contract validation, mocked adapter behavior, and substantive live-connection quality. The substantive rubric describes five dimensions scored 0/1/2; the D02 baseline selects an initial minimum of 8/10 with no zero dimension. Independent review/freeze of the rubric anchors remains a gate, and no quality run is evidenced here.
 
 Before implementation or release contracts are frozen, the project still needs:
 - common and per-skill input/output schemas, classifications, abstention behavior, and evidence-reference rules;
 - reconciliation of the older WP01 “stable” threshold proposal with D02's sign-based trend direction;
 - permissioned fixture manifests and independently calculated expected values;
-- independently reviewed rubric anchors and confirmation of the applicable minimum threshold;
+- independent review and freeze of rubric anchors; the D02 baseline's initial minimum of 8/10 with no zero dimension is selected;
 - substantive evidence for every supported provider/model connection.
 
 This shortlist does not itself authorize or perform those activities. Deterministic correctness, schema checks, mocked behavior, and live-connection quality remain separate evidence categories.
 
 ## TC80 completeness inspection
+
+TC80 is **Not run**. Its registry expected text says “D02 choices remain open.” Read literally, that conflicts with the current D02 decision register and baseline, which record the three skill names, descriptive rules, and initial 8/10/no-zero score rule as selected; detailed schemas, fixtures, rubric-anchor review, and substantive live quality evidence remain unmet. This proposal preserves both source records without changing the registry or claiming TC80 passes. Record current selections as selected and unresolved details as open; reconcile the stale generic expected wording through normal registry change control before claiming a passing TC80 result.
 
 | Required review field | Status in this proposal |
 |---|---|
@@ -47,8 +64,8 @@ This shortlist does not itself authorize or perform those activities. Determinis
 | Origin and method source | Selected Datara-created direction is identified; per-method source passage and rights evidence are missing/open. |
 | Input needs | Proposed fields and D02 eligibility direction are present; frozen schemas and source mappings remain open. |
 | Evidence | Current D02, WP01, CUS/SR, and TC records are linked below; no product test result is claimed. |
-| Exclusion rationale | Present for selected candidates and examples outside the shortlist. |
-| Unresolved decisions/gates | Present: schema, trend wording, fixture/provenance, rubric, and live evaluation. |
+| Exclusion rationale | Present for the selected candidates; excluded-example rows record intended outcome, scope, origin, inputs, evidence, rationale, and D02 status, marking undefined fields open/missing. |
+| Unresolved D02 details/gates | Present: schemas, trend wording, fixture/provenance, rubric-anchor review, and live evaluation remain open; the three-skill direction and initial score rule are recorded as selected. |
 | Evaluated or released claim | None. TC80 is an artifact inspection, not product verification. |
 
 ## Evidence references
@@ -59,7 +76,7 @@ All repository citations below point to the reviewed source snapshot at [e59294d
 - [WP01 proposed baseline](https://github.com/fengguode/DATARA/blob/e59294d80218b7701051a9cba2d26413754a728a/docs/management/wp01-requirements-package.md): supplies an earlier candidate and threshold proposal; its “stable” trend wording needs reconciliation with D02.
 - [CUS04 / FEAT04](https://github.com/fengguode/DATARA/blob/e59294d80218b7701051a9cba2d26413754a728a/docs/management/product-requirements.md): establishes the user outcome and library requirement; it does not establish an evaluated skill.
 - [SR08 / SR50 and evaluation/provenance obligations](https://github.com/fengguode/DATARA/blob/e59294d80218b7701051a9cba2d26413754a728a/docs/management/system-requirements.md): require declared skill versions, inputs, applicability, method, output contract and evaluation cases, with retained versions.
-- [TC80](https://github.com/fengguode/DATARA/blob/e59294d80218b7701051a9cba2d26413754a728a/docs/management/requirements-registry.json): defines the planned shortlist-completeness inspection; it is not passing product evidence.
+- [TC80](https://github.com/fengguode/DATARA/blob/e59294d80218b7701051a9cba2d26413754a728a/docs/management/requirements-registry.json): defines the planned shortlist-completeness inspection and remains Not run. Its generic “D02 choices remain open” expected phrase conflicts with the current selected baseline when read literally; this proposal records the mismatch without claiming that TC80 passes.
 - [Founding brainstorming record](https://github.com/fengguode/DATARA/blob/e59294d80218b7701051a9cba2d26413754a728a/docs/brainstorming-record-2026-09-30.md): preserves the distinction between illustrative ideas, selected baseline direction, and deferred source-to-skill/commercial work.
 - [TK30 #129](https://github.com/fengguode/DATARA/issues/129) and [STK100 #201](https://github.com/fengguode/DATARA/issues/201): track this source-only proposal and candidate inventory.
 

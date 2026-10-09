@@ -1,11 +1,11 @@
 # TK17 persistent-data history, rights and lifecycle gap report
 
 **Evidence review date:** 2026-10-10  
-**Status:** Evidence-linked requirements report prepared for review. This is not legal advice, an approved implementation contract, product verification, or evidence that controls are deployed.
+**Status:** Evidence-linked requirements report reviewed for its bounded documentation scope and merged in [PR #434](https://github.com/fengguode/DATARA/pull/434). This is not legal advice, an approved implementation contract, product verification, or evidence that controls are deployed. TC24 and TC26 remain Not run.
 
 **Traceability:** WP02; TK17 (#123); CUS02/CUS03; FEAT02/FEAT03; SR03/SR28; STK017 (#189)/STK018 (#190); TC24/TC26. Parent TK03 (#270). TK17's acceptance criterion is to cite a source or explicitly record an unknown/owner question for rights, retention, backup/recovery and privacy affecting retained and prepared user data, without inventing legal duties or durations. This report changes neither requirements registry nor task status.
 
-**Attribution:** Compiled by Primary Coordinator Yi Tang as a supporting evidence report for the existing TK17 assignment. The Project still identifies System Architect — Feng Guo as the planned assigned role, Quality Manager — Wang Xiaofeng as quality owner, and the founder as final CUS confirmer. This report does not claim those roles reviewed or authored it.
+**Attribution:** Compiled by Primary Coordinator Yi Tang as a supporting evidence report for the existing TK17 assignment. The Project still identifies System Architect — Feng Guo as the planned assigned role, Quality Manager — Wang Xiaofeng as quality owner, and the founder as final CUS confirmer. Neither role authored this report. Their subsequent exact-head confirmations are recorded below and in [Discussion #436](https://github.com/fengguode/DATARA/discussions/436).
 
 ## Executive result
 
@@ -99,7 +99,7 @@ Next steps stay within the existing project backlog and its gates:
 - Official Garmin/PyPI material was consulted as cited above; the issue and repository records are the project-authoritative source for selected decisions and traceability.
 - External source and package contents were inspected as public text/metadata only. No SDK/package install, execution, source/sample redistribution, personal FIT access, database action, provider call or product test was performed for this report.
 - Package checksums above are copied from PyPI's release record, not reproduced locally.
-- This report is newly prepared source documentation. No independent technical review or Quality Manager confirmation has yet been performed on this file.
+- At PR #434 head `0f42fe5ef562ff05e86c587c0d6609ed75c2ec45`, Reviewer — Dennis Windmaier completed an independent source/acceptance review with no findings, and Quality Manager — Wang Xiaofeng completed the traceability/evidence audit with no confirmed findings. Readback: [PR #434](https://github.com/fengguode/DATARA/pull/434) and [Discussion #436](https://github.com/fengguode/DATARA/discussions/436). This is desk/source review of the documentation-only diff; it does not resolve legal applicability, establish product behavior, or make TC24/TC26 passing evidence.
 
 ## Agent attribution
 

@@ -5,7 +5,7 @@
 
 **Traceability:** WP02; TK17 (#123); CUS02/CUS03; FEAT02/FEAT03; SR03/SR28; STK017 (#189)/STK018 (#190); TC24/TC26. Parent TK03 (#270). TK17's acceptance criterion is to cite a source or explicitly record an unknown/owner question for rights, retention, backup/recovery and privacy affecting retained and prepared user data, without inventing legal duties or durations. This report changes neither requirements registry nor task status.
 
-**Attribution:** Compiled by Primary Coordinator Yi Tang as a supporting evidence report for the existing TK17 assignment. The Project still identifies System Architect — Feng Guo as the planned assigned role, Quality Manager — Wang Xiaofeng as quality owner, and the founder as final CUS confirmer. Neither role authored this report. Their subsequent exact-head confirmations are recorded below and in [Discussion #436](https://github.com/fengguode/DATARA/discussions/436).
+**Attribution:** Compiled by Primary Coordinator Yi Tang as a supporting evidence report for the existing TK17 assignment. The Project still identifies System Architect — Feng Guo as the planned assigned role, Quality Manager — Wang Xiaofeng as quality owner, and the founder as final CUS confirmer. Neither role authored this report. Subsequent exact-head confirmations by Reviewer — Dennis Windmaier and Quality Manager — Wang Xiaofeng are recorded below and in [Discussion #436](https://github.com/fengguode/DATARA/discussions/436).
 
 ## Executive result
 

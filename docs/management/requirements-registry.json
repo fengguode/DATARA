@@ -2795,14 +2795,19 @@
       "id": "TC80",
       "title": "Baseline skill shortlist completeness review",
       "method": "Inspection",
-      "procedure": "Inspect the proposed shortlist against the WP03 candidate scope. For each included and excluded skill, check intended user outcome, in-scope/out-of-scope behavior, source/origin, input needs, available evidence, exclusion reason, and unresolved D02 questions. Mark each item present, missing, or open; do not infer approval or substantive evaluation.",
-      "expected": "Every shortlist entry has the required scope, origin, input, evidence, and exclusion information or is explicitly marked missing/open; D02 choices remain open and no skill is represented as evaluated or approved.",
-      "status": "Not run",
-      "evidence": [],
+      "procedure": "Inspect the proposed shortlist against the WP03 candidate scope. For each included and excluded skill, check intended user outcome, in-scope/out-of-scope behavior, source/origin, input needs, available evidence, exclusion rationale, and D02 status. Distinguish decisions already selected from details still open using the current D02 baseline and founder option A in Discussion #366. Confirm each required field is present, missing, or open; no evaluated/released claim or product verification is implied.",
+      "expected": "Every shortlist entry records required scope, origin, input, evidence, and exclusion information or is explicitly marked missing/open. The shortlist identifies the three P0 target skills, deterministic metric/eligibility direction, initial 8/10/no-zero criterion, and founder-approved consistency option A as selected; remaining schemas, source rights/provenance, fixtures, rubric-anchor review, and per-connection substantive evidence are open. No skill is presented as evaluated or released.",
+      "status": "Passed",
+      "evidence": [
+        "docs/team/reviews/tc80-shortlist-inspection-2026-10-10.md"
+      ],
       "source": [
         "docs/management/wp01-requirements-package.md",
         "docs/management/product-requirements.md",
-        "docs/management/decision-register.md"
+        "docs/management/decision-register.md",
+        "docs/management/p0-decision-baseline-2026-10-01.md",
+        "docs/management/skill-declaration-requirements.md",
+        "docs/management/skill-shortlist-proposal.md"
       ]
     }
   ],

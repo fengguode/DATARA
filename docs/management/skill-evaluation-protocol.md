@@ -2,7 +2,7 @@
 
 **Status:** Requirements proposal for independent review. This document defines evidence boundaries and a proposed procedure; it does not approve a schema, fixture set, rubric anchors, provider capability, release threshold beyond the selections already recorded in D02, or any skill as evaluated or released.
 
-**Traceability:** WP03 W0 contract preparation; TK32 / STK104; CUS04; FEAT04; SR08, SR09, SR29, SR50, SR51; D02; TC41. The GitHub Project is authoritative for live task status. At the 2026-10-10 readback, Project 3 showed TK32 #131 as P0 / In progress / Requirements; the issue body still contains older Backlog wording. WP03 product implementation remains gated by WP01 and WP02.
+**Traceability:** WP03 W0 contract preparation; TK32 / STK104; CUS04; FEAT04 and FEAT30; SR08, SR09, SR29, SR50, SR51; D02; TC41. The GitHub Project is authoritative for live task status. At the 2026-10-10 readback, Project 3 showed TK32 #131 as P0 / In progress / Requirements; the issue body still contains older Backlog wording. WP03 product implementation remains gated by WP01 and WP02.
 
 ## Purpose and rule
 

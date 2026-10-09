@@ -19,6 +19,22 @@ This protocol applies separately to each immutable skill version and, for substa
 | 3. Mocked adapter interaction | Does application routing form and handle the expected adapter exchange using a controlled mock? | Mock definition/version; selected-connection routing assertion; request/response mapping; timeout, refusal, truncation, invalid-response, and safe-error cases as applicable; explicit evidence that no external provider was called. | Provider API compatibility, model capability, or substantive model quality. Mock results must never be counted as substantive attempts. |
 | 4. Substantive assessment | On the exact approved fixtures and supported live connection, does the selected model return an acceptable evidence-bound descriptive assessment? | Frozen fixture set, expected deterministic facts, approved schema and rubric anchors; exact candidate/skill/provider/model/adapter versions; independent attempts; per-attempt deterministic, evidence, limitation, schema/version, prohibited-claim, and substantive-rubric results; reviewer disposition and unresolved issues. | Quality for another skill version, provider, model, fixture set, or untested capability. Results do not imply broad statistical guarantees. |
 
+## Per-layer outcome rules
+
+Record exactly one layer-level outcome for every planned layer at the candidate, skill-version, and fixture scope: `Pass`, `Fail`, `Blocked`, or `Not run`. Record case- or attempt-level outcomes as well; the layer summary must not hide a failed case.
+
+- **Pass:** the layer ran and every required assertion for that layer passed.
+- **Fail:** the layer ran and at least one required assertion failed. Preserve the mismatching case, expected and actual results, and evidence.
+- **Blocked:** a required prerequisite prevents execution or prevents a defensible result. Name the missing prerequisite and cause; do not report a pass.
+- **Not run:** no attempt was made and no specific execution blocker has been established. Do not use `Not run` to conceal a known blocker.
+
+Apply those rules to each layer as follows:
+
+1. **Deterministic inputs and metrics:** Pass only when all declared eligibility, reason-code, metric, scope/boundary, repeatability, snapshot-binding, and evidence-reference assertions match their frozen expectations. Any observed mismatch is Fail. Missing candidate, snapshot, oracle, or required source evidence that prevents the check is Blocked.
+2. **Contract and schema conformance:** Pass only when valid and invalid fixtures are accepted or rejected as expected by the approved contract and validator. Any mismatch is Fail. An unapproved or unavailable schema, validator, or required fixture set is Blocked.
+3. **Mocked adapter interaction:** Pass only when routing, request/response mapping, required failure handling, and the assertion that no external provider was called all pass. An assertion mismatch or unexpected provider call is Fail. An unavailable mock harness or undeclared expected exchange is Blocked.
+4. **Substantive assessment:** Pass only after the planned D02-required run is complete and every required objective check and per-attempt disposition is recorded against the approved rubric. A failed mandatory D02 check is Fail and remains visible at case/attempt level. Missing approved anchors, capability evidence, fixtures, selected connection, or separately authorized run is Blocked. Do not introduce an aggregate pass-rate threshold beyond D02.
+
 An absent layer is `Not run` or `Blocked` with its cause recorded; it is never inferred from another layer. Preserve failures and rejected outputs as evidence. Do not change fixtures, expected values, or rubric anchors to make a failed output pass; make a reviewed versioned change and rerun against the recorded candidate.
 
 ## D02 criteria carried forward
@@ -27,7 +43,7 @@ The following are selected in the dated D02 baseline and are carried forward wit
 
 - The P0 skill candidates are `activity-summary`, `training-volume-trend`, and `training-consistency`.
 - Numerical metrics and eligibility are computed by conventional software. The model produces constrained descriptive findings and limitations tied to prepared evidence; P0 recommendations and medical, injury-risk, physiological-significance, or prescription claims are prohibited.
-- The initial suite contains at least ten distinct cases per skill, including positive, insufficient-input, missing-optional-input, conflict-exclusion, UTC-boundary, and arithmetic/zero-baseline cases where applicable.
+- The initial suite contains at least ten distinct cases for each skill, including positive, insufficient-input, missing-optional-input, conflict-exclusion, UTC-boundary, and arithmetic/zero-baseline cases.
 - For every provider/model pair selected for release, evaluate each applicable skill on its frozen suite with at least three independent attempts per case.
 - Each accepted output must pass numerical-accuracy, resolvable-evidence, limitation-disclosure, schema/version-binding, and prohibited-claim checks. Five substantive dimensions are selected: faithful interpretation, clarity, relevance, limitation explanation, and useful organization. Each is scored 0–2; every accepted case must score at least 8/10 with no zero dimension.
 

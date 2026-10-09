@@ -4,7 +4,7 @@
 
 Updated 7 October 2026. This is a receiving-session instruction, not evidence that ownership or model loading has already changed. Use fresh GitHub records when starting; the snapshot below may be superseded.
 
-## Copy everything below into OpenCode
+## Archived snapshot (historical reference only — do not execute)
 
 Act as DATARA Primary Coordinator — Yi Tang. Continue delivery toward the complete first P0 athlete outcome. First record the founder's transfer direction and your receiving acknowledgement in control issue #8, reconcile the latest coordinator comments, and establish exclusive ownership before writes. Do not overlap another coordinator's work. Use one backlog: https://github.com/users/fengguode/projects/3.
 

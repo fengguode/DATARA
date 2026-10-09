@@ -16,7 +16,7 @@ Respect one backlog, dependencies, named WP/CUS/SR/task IDs, exclusive paths, is
 **Milestone-first goal pursuit:** When actively pursuing the goal, focus effort on the remaining work that concretely advances the first complete P0 athlete milestone. Do not spend time reconstructing, auditing, or debating what OpenCode previously did; use current verified repository, issue, PR, Project, and decision state only as needed to choose safe next work and avoid overlapping edits. Keep prior history as evidence, but let milestone outcomes—not handover administration—drive the work. Surface only material owner decisions and blockers that affect the next delivery step.
 
 ## Agents, skills and owner communication
-Configure agents other than Feng Guo to gpt-6-luna with medium reasoning (“6 Luna Mid”); Feng Guo stays gpt-6.1-sol, low. Confirm provider/model identifiers and effective loading. Preserve role permissions and independent review. Keep actual runtime states explicit.
+Configure the Primary Coordinator and every agent role, including Feng Guo, as gpt-6-luna with high reasoning (“6 Luna High”), superseding the 7 October Luna Medium selection. Confirm the receiving runtime supports this model and actually loaded it; repository defaults do not change existing sessions or prove OpenCode loading. Preserve role permissions and independent review. Keep actual runtime states explicit.
 
 Treat `find-skills` as an essential skill: consult the installed skill catalog and read the matching skill before a concrete skill-discovery/install task. Verify OpenCode availability independently; Codex skill availability does not prove OpenCode availability.
 

@@ -18,7 +18,7 @@ The **Primary Coordinator — Yi Tang** coordinates and integrates work and owns
 
 The founder named the Primary Coordinator persona **Yi Tang** on 30 September 2026. Historical reports and commits may retain its former label, Codex; the runtime/client remains Codex and the authenticated GitHub publisher remains unchanged.
 
-The source team's names and specified sandbox modes are retained. The founder's superseding instruction of 7 October 2026 sets Primary Coordinator Yi Tang and all roles except System Architect Feng Guo to `gpt-6-luna` with `medium` reasoning ("6 Luna Mid"). Feng Guo retains `gpt-6.1-sol` with `low` reasoning. The prior all-role Sol 6.1 / low selection is historical.
+The source team's names and specified sandbox modes are retained. The founder's superseding instruction of 10 October 2026 sets Primary Coordinator Yi Tang and every role, including System Architect Feng Guo, to `gpt-6-luna` with `high` reasoning ("6 Luna High"). This supersedes the 7 October Luna Medium selection. Existing sessions must still confirm application; saved defaults do not prove the effective runtime model.
 
 New assignments request these settings explicitly. Existing sessions require observed application or replacement; requested configuration is not effective backend or native role-loading proof. OpenCode must verify its supported model identifiers and acknowledge actual loading rather than copying Codex configuration labels. Role names identify configuration personas, not evidence that the named people participated. Report actual model/harness identity or unconfirmed; attribution examples are configured defaults, not runtime assertions.
 

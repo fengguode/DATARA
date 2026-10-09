@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Saved recorded metric · DATARA</title>
+</head>
+<body>
+  <main>
+    <h1>Saved recorded metric.</h1>
+    {% if error %}
+      <section role="alert">
+        <p>{{ error.code }}: {{ error.message }}</p>
+      </section>
+    {% elif page_unsupported %}
+      <p role="status">{{ state_message }}</p>
+      <p>Display unavailable</p>
+    {% elif state_message %}
+      <p role="status">{{ state_message }}</p>
+      <p>Saved state: {{ state }}</p>
+    {% elif page %}
+      <p>Deterministic recorded observation</p>
+      <dl>
+        <dt>Metric ID</dt><dd>{{ page.metric_id }}</dd>
+        <dt>Snapshot ID</dt><dd>{{ page.snapshot_id }}</dd>
+        <dt>Metric</dt><dd>{{ page.metric_code }}</dd>
+        <dt>Eligibility</dt>
+        <dd>
+          {% if page.eligibility.eligible %}Eligible{% else %}Ineligible diagnostic{% endif %}
+          {% if page.eligibility.unmet_reasons %}
+            <ul>{% for reason in page.eligibility.unmet_reasons %}<li>{{ reason }}</li>{% endfor %}</ul>
+          {% endif %}
+        </dd>
+        <dt>Saved limitations</dt>
+        <dd>
+          {% if page.limitations %}<ul>{% for limitation in page.limitations %}<li>{{ limitation }}</li>{% endfor %}</ul>
+          {% else %}None recorded{% endif %}
+        </dd>
+      </dl>
+
+      <section aria-labelledby="scope-heading">
+        <h2 id="scope-heading">Selected and effective UTC scope</h2>
+        <pre>{{ page.scope_text }}</pre>
+      </section>
+      <section aria-labelledby="method-heading">
+        <h2 id="method-heading">Saved method and version</h2>
+        <pre>{{ page.method_text }}</pre>
+      </section>
+      <section aria-labelledby="values-heading">
+        <h2 id="values-heading">Saved values</h2>
+        {% if page.metric_code == "activity-summary" %}
+          <table>
+            <caption>Recorded summary by sport</caption>
+            <thead><tr><th scope="col">Sport</th><th scope="col">Activity count</th><th scope="col">Elapsed milliseconds</th></tr></thead>
+            <tbody>
+              {% for group in page.values %}
+                <tr>
+                  <th scope="row">{{ group.sport }}</th>
+                  <td>{% if group.activity_count.status == "available" %}{{ group.activity_count.value }}{% else %}Unavailable: {{ group.activity_count.reason_code }}{% endif %}</td>
+                  <td>{% if group.elapsed_ms.status == "available" %}{{ group.elapsed_ms.value }} ms{% else %}Unavailable: {{ group.elapsed_ms.reason_code }}{% endif %}</td>
+                </tr>
+              {% empty %}<tr><td colspan="3">No saved sport values.</td></tr>{% endfor %}
+            </tbody>
+          </table>
+        {% else %}
+          <pre>{{ page.values_text }}</pre>
+          {% if page.classification %}<p>Recorded sign classification: {{ page.classification }}</p>{% endif %}
+          <table>
+            <caption>Saved complete UTC weeks</caption>
+            <thead><tr><th scope="col">Week start</th><th scope="col">Week end</th><th scope="col">Members</th><th scope="col">Recorded count</th><th scope="col">Elapsed milliseconds</th><th scope="col">Limitations</th></tr></thead>
+            <tbody>
+              {% for week in page.manifest.buckets %}
+                <tr>
+                  <th scope="row">{{ week.start_utc }}</th><td>{{ week.end_utc }}</td>
+                  <td>{{ week.members|join:", " }}</td><td>{{ week.count }}</td>
+                  <td>{% if week.elapsed_ms.status == "available" %}{{ week.elapsed_ms.value }} ms{% else %}Unavailable: {{ week.elapsed_ms.reason_code }}{% endif %}</td>
+                  <td>{{ week.limitations|join:", " }}</td>
+                </tr>
+              {% empty %}<tr><td colspan="6">Effective scope is unavailable; no weeks are inferred.</td></tr>{% endfor %}
+            </tbody>
+          </table>
+        {% endif %}
+      </section>
+
+      <section aria-labelledby="operands-heading">
+        <h2 id="operands-heading">Saved source operands</h2>
+        <p>Source record values are inputs, not computed results.</p>
+        <pre>{{ page.operands_text }}</pre>
+      </section>
+
+      <section aria-labelledby="evidence-heading">
+        <h2 id="evidence-heading">Computed evidence</h2>
+        <ul>
+          {% for item in page.evidence %}
+            <li>
+              <a href="{{ item.href }}">{{ item.path }}</a>
+              <pre>{{ item.entry_text }}</pre>
+            </li>
+          {% empty %}<li>No computed evidence entries.</li>{% endfor %}
+        </ul>
+      </section>
+    {% endif %}
+    <p><a href="{% url 'home' %}">Local session</a></p>
+  </main>
+</body>
+</html>

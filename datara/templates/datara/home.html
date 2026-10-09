@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DATARA local session</title>
+</head>
+<body>
+  <main>
+    <h1>DATARA local session</h1>
+    <p>Signed in as <strong>{{ username }}</strong>.</p>
+    <p>This page is only a session landing page; it does not represent a completed dashboard.</p>
+    <form method="post" action="{% url 'logout' %}">
+      {% csrf_token %}
+      <button type="submit">Sign out</button>
+    </form>
+  </main>
+</body>
+</html>

@@ -18,6 +18,7 @@ import os
 from pathlib import Path
 
 from datara import PINNED_DJANGO_SERIES, PINNED_POSTGRESQL_MAJOR
+from datara.read_rate_limit import owner_operation_read_limited
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
@@ -50,27 +51,59 @@ SECRET_KEY = _secret_key()
 DEBUG = False
 
 INSTALLED_APPS = [
-    # contenttypes/auth back the owner foreign key used for owner scoping
-    # (CUS10, SR20-SR21). No sessions/messages/admin/static surface is installed:
-    # this unit persists and reads data and serves no page.
+    # contenttypes/auth back owner identity; sessions is the approved minimal
+    # same-origin app-session store (CUS10, SR20-SR21).
     "django.contrib.contenttypes",
     "django.contrib.auth",
+    "django.contrib.sessions",
     "datara",
 ]
 
-# Present so Django's own security checks pass. This unit serves no page and no
-# endpoint; the middleware stack is here because the pinned command runs Django's
-# system checks, and a check failure must not be silently tolerated.
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.middleware.common.CommonMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = None
-TEMPLATES = []
-WSGI_APPLICATION = None
+ROOT_URLCONF = "datara.urls"
+TEMPLATES = [{
+    "BACKEND": "django.template.backends.django.DjangoTemplates",
+    "DIRS": [],
+    "APP_DIRS": True,
+    "OPTIONS": {"context_processors": [
+        "django.template.context_processors.request",
+        "django.template.context_processors.csrf",
+        "django.contrib.auth.context_processors.auth",
+    ]},
+}]
+WSGI_APPLICATION = "datara.wsgi.application"
+LOGIN_URL = "/login/"
+LOGIN_REDIRECT_URL = "/"
+DATARA_RECORDED_METRIC_READ_ENABLED = True
+DATARA_READ_RATE_LIMITED = owner_operation_read_limited
+
+# The initial 60 requests per owner/operation in 60 seconds is an engineering
+# default for this local pilot, not a product-wide service guarantee. The
+# approved contract requires an owner/operation policy and 429 when limited;
+# it leaves the numeric threshold to implementation. This process-local cache
+# is supported only by the loopback-only local profile. Non-local deployment
+# remains unsupported until a shared atomic cache policy is implemented.
+if DATARA_ENV != "milestone-a-local":
+    raise RuntimeError(
+        "Non-local DATARA deployment is unsupported until the read limiter "
+        "uses a configured shared atomic cache."
+    )
+
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+        "LOCATION": "datara-local-recorded-metric-read-rate-limit",
+        "OPTIONS": {"MAX_ENTRIES": 10000},
+    },
+}
 
 # Deterministic time handling. D02/D05: UTC instants; date scopes are half-open
 # [start, end). `USE_TZ` is not optional: a naive datetime reaching a persisted

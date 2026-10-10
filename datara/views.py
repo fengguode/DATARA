@@ -57,7 +57,8 @@ def _api_error(code: str, status: int):
 
 def _render_page_error(request, code: str, status: int):
     response = render(request, "datara/read_error.html",
-                      {"code": code, "message": ERRORS[code]}, status=status)
+                      {"code": code, "message": ERRORS[code],
+                       "retry_url": request.path}, status=status)
     return _decorate(response, is_api=False)
 
 

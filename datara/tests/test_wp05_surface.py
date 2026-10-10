@@ -34,6 +34,7 @@ class WP05RequestBoundaryTests(SimpleTestCase):
     def setUp(self):
         self.factory = RequestFactory()
         self.url = reverse("recorded_metric_api", kwargs={"metric_id": METRIC_ID})
+        self.page_url = reverse("recorded_metric_page", kwargs={"metric_id": METRIC_ID})
 
     def request(self, method="get", **kwargs):
         request = getattr(self.factory, method)(self.url, **kwargs)
@@ -126,6 +127,29 @@ class WP05RequestBoundaryTests(SimpleTestCase):
         self.assertEqual(response.content, b"")
         self.assertEqual(response["Cache-Control"], "private, no-store")
 
+    def test_retrieval_error_page_retries_clean_authorized_get_with_live_status(self):
+        request = self.factory.get(self.page_url)
+        request.user = OWNER
+        with patch.object(views, "operation_allowed", return_value=True), \\
+                patch.object(views, "rate_limited", return_value=False), \\
+                patch.object(views, "metric_document",
+                             side_effect=SavedReadUnavailable("retrieval_unavailable")):
+            response = views.recorded_metric_page(request, METRIC_ID)
+
+        self.assertEqual(response.status_code, 503)
+        self.assertIn(('<form method="get" action="{}"'.format(self.page_url)).encode(), response.content)
+        self.assertIn(b">Retry read</button>", response.content)
+        self.assertIn(b'role="status" aria-live="polite"', response.content)
+        self.assertIn("Retrying saved detail…".encode(), response.content)
+        self.assertNotIn(b"?", response.content)
+
+    def test_non_retrieval_error_page_has_no_retry_action(self):
+        request = self.factory.get(self.page_url)
+        request.user = OWNER
+        response = views._render_page_error(request, "invalid_request", 422)
+
+        self.assertEqual(response.status_code, 422)
+        self.assertNotIn(b">Retry read</button>", response.content)
     def page_document(self, result):
         projection = project_recorded_result(result)
         content = projection.canonical_content

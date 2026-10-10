@@ -10,6 +10,17 @@
     <h1>Saved recorded metric</h1>
     <p>{{ code }}</p>
     <p>{{ message }}</p>
+    {% if code == "retrieval_unavailable" %}
+      <form method="get" action="{{ retry_url }}" id="retry-read-form">
+        <button type="submit">Retry read</button>
+        <p id="retry-read-status" role="status" aria-live="polite"></p>
+      </form>
+      <script>
+        document.getElementById("retry-read-form").addEventListener("submit", function () {
+          document.getElementById("retry-read-status").textContent = "Retrying saved detail…";
+        });
+      </script>
+    {% endif %}
   </main>
 </body>
 </html>

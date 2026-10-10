@@ -51,25 +51,102 @@ DEBUG = False
 
 INSTALLED_APPS = [
     # contenttypes/auth back the owner foreign key used for owner scoping
-    # (CUS10, SR20-SR21). No sessions/messages/admin/static surface is installed:
-    # this unit persists and reads data and serves no page.
+    # (CUS10, SR20-SR21). No messages/admin/static surface is installed.
+    #
+    # django.contrib.sessions was here and was removed on the founder-approved
+    # split of #394. It created a persisted table with no producer: nothing in
+    # this package can log anyone in, so every real request resolved to
+    # AnonymousUser and was denied anyway, while an unowned personal-data table
+    # sat in the schema. Shipping a persisted personal-data table as a side
+    # effect of making a page runnable is a data-contract decision reserved to
+    # the founder, so it is held back rather than carried here.
+    #
+    # django.contrib.auth is deliberately KEPT even though
+    # AuthenticationMiddleware is not installed: the owner foreign key needs
+    # the app, and contenttypes is its dependency. Removing the middleware is
+    # not the same decision as removing the app.
     "django.contrib.contenttypes",
     "django.contrib.auth",
+    # django.contrib.sessions is deliberately NOT installed here. It was, and it
+    # created a persisted table with no producer: nothing in this package can log
+    # anyone in, so every real request resolved to AnonymousUser and was denied,
+    # while the table sat in the schema as an unowned decision. Shipping a
+    # persisted personal-data table as a side effect of making a page runnable is
+    # a data-contract decision reserved to the founder, so it is held back rather
+    # than carried here.
+    #
+    # Without SessionMiddleware and AuthenticationMiddleware a request has no
+    # request.user at all. datara/session_identity.py reads it inside a
+    # try/except AttributeError and refuses, so the surface denies rather than
+    # fails -- which is the whole observable behaviour of this increment.
     "datara",
 ]
 
-# Present so Django's own security checks pass. This unit serves no page and no
-# endpoint; the middleware stack is here because the pinned command runs Django's
-# system checks, and a check failure must not be silently tolerated.
+# Present so Django's own security checks pass, and to enforce X_FRAME_OPTIONS,
+# which is set to DENY below and is otherwise inert (added on review of #394).
+#
+# SessionMiddleware and AuthenticationMiddleware were here and were removed on
+# the founder-approved split of #394, together with the sessions app. The
+# ordering rule that used to be documented here no longer applies, because
+# neither entry remains: the live list is Security, Common, Csrf,
+# XFrameOptions, and none of those four has a required relative order.
+#
+# The footgun that rule guarded against still exists one level down, and is
+# asserted as an absence in datara/tests/test_app_surface.py: installing
+# AuthenticationMiddleware WITHOUT SessionMiddleware raises
+# ImproperlyConfigured at request time, returns 500 on every route, and leaves
+# `django check` green. Reintroducing one without the other is the failure that
+# test now prevents.
+#
+# With neither present a request has no request.user at all.
+# datara/session_identity.py reads it inside a try/except AttributeError and
+# refuses, so the surface denies rather than raises. That path is covered by
+# test_missing_user_attribute_is_refused (test_session_identity.py) and, at the
+# view level, by test_request_without_user_attribute_is_denied
+# (test_app_surface.py) -- the unit test alone left the view unguarded, because
+# the view's test helper always assigned a .user attribute.
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
-    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    # X_FRAME_OPTIONS below is DENY, and this list was hand-written without the
+    # middleware that enforces it, so the setting had no effect and this first
+    # HTML page went out unframable. Added on review of #394.
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    # SessionMiddleware and AuthenticationMiddleware were here and are held back
+    # with the sessions app, for the reason given in INSTALLED_APPS. Nothing is
+    # lost observably: with neither present, request.user does not exist, the
+    # identity module refuses on AttributeError, and every request is denied --
+    # which is what happened anyway, because no producer could create a session.
 ]
 
-ROOT_URLCONF = None
-TEMPLATES = []
+# The #378 surface is the first runnable page in this project. ROOT_URLCONF was
+# None because there was no URLconf to point at.
+ROOT_URLCONF = "datara.urls"
+
+# APP_DIRS makes datara/templates/ discoverable, so the surface's generic denial
+# template is found without coupling this file to that path. The context
+# processors exist to supply csrf_token; the denial template renders with an
+# explicitly empty context dict, so no request-derived value reaches that
+# response and the processors cannot become an existence oracle (SR21).
+# django.template.context_processors.csrf was added on review of #394: without it
+# a future {% csrf_token %} would render "" silently and ship a form with no token.
+TEMPLATES = [
+    {
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.csrf",
+            ],
+        },
+    },
+]
+
+# Still None: WSGI_APPLICATION names datara.wsgi.application, and no such module
+# exists. `runserver` falls back to get_internal_wsgi_application(), so leaving
+# this unset is honest rather than pointing at a module that is not there.
 WSGI_APPLICATION = None
 
 # Deterministic time handling. D02/D05: UTC instants; date scopes are half-open

@@ -130,8 +130,8 @@ class WP05RequestBoundaryTests(SimpleTestCase):
     def test_retrieval_error_page_retries_clean_authorized_get_with_live_status(self):
         request = self.factory.get(self.page_url)
         request.user = OWNER
-        with patch.object(views, "operation_allowed", return_value=True), \\
-                patch.object(views, "rate_limited", return_value=False), \\
+        with patch.object(views, "operation_allowed", return_value=True), \
+                patch.object(views, "rate_limited", return_value=False), \
                 patch.object(views, "metric_document",
                              side_effect=SavedReadUnavailable("retrieval_unavailable")):
             response = views.recorded_metric_page(request, METRIC_ID)
@@ -150,6 +150,7 @@ class WP05RequestBoundaryTests(SimpleTestCase):
 
         self.assertEqual(response.status_code, 422)
         self.assertNotIn(b">Retry read</button>", response.content)
+
     def page_document(self, result):
         projection = project_recorded_result(result)
         content = projection.canonical_content

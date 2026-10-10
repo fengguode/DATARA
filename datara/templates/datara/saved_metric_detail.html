@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Saved recorded metric · Datara</title>
+</head>
+<body>
+  <main>
+    <h1>Saved recorded metric</h1>
+    {% if not page.supported %}
+      <p role="status">{{ page.display_message }}</p>
+      <p>Display unavailable</p>
+    {% else %}
+      <p>Deterministic recorded observation</p>
+      <p>Metric: {{ document.metric_id }}</p>
+      <p>Snapshot: {{ document.snapshot_id }}</p>
+      <p>Method: {{ page.method_id }} version {{ page.method_version }}</p>
+      <p>Adapter: {{ page.adapter_id }} version {{ page.adapter_version }}</p>
+      <p>Reader version: {{ document.reader_version }}</p>
+      <p>Eligibility: {% if page.eligible %}eligible{% else %}ineligible diagnostic{% endif %}</p>
+      {% if page.unmet_reasons %}<p>Eligibility details: {{ page.unmet_reasons|join:", " }}</p>{% endif %}
+      {% if page.limitations %}<p>Limitations: {{ page.limitations|join:", " }}</p>{% endif %}
+      <section aria-labelledby="scope-heading">
+        <h2 id="scope-heading">Saved scope (UTC)</h2>
+        <pre>{{ page.selected_scope_json }}</pre>
+        <h3>Effective scope</h3>
+        <pre>{{ page.effective_scope_json }}</pre>
+      </section>
+      <section aria-labelledby="values-heading">
+        <h2 id="values-heading">Saved values</h2>
+        <pre>{{ page.values_json }}</pre>
+        <p>Unavailable values retain their saved reason; they are not shown as zero.</p>
+      </section>
+      {% if page.code == "training-volume-trend" %}
+      <section aria-labelledby="weeks-heading">
+        <h2 id="weeks-heading">Saved complete UTC weeks</h2>
+        <pre>{{ page.buckets_json }}</pre>
+        <p>Classification: {{ page.classification|default:"not available" }}</p>
+        {% if page.outside_comparison_json != "[]" %}
+          <h3>Selected records outside this comparison</h3>
+          <pre>{{ page.outside_comparison_json }}</pre>
+        {% endif %}
+      </section>
+      {% endif %}
+      <section aria-labelledby="operands-heading">
+        <h2 id="operands-heading">Saved source operands</h2>
+        <p>Source records and their values are shown as saved inputs, separately from computed metrics.</p>
+        <pre>{{ page.source_operands_json }}</pre>
+      </section>
+      <section aria-labelledby="evidence-heading">
+        <h2 id="evidence-heading">Computed evidence</h2>
+        {% if page.evidence %}
+          <ul>
+          {% for item in page.evidence %}
+            <li><a href="{{ item.href }}">{{ item.value_path }}</a></li>
+          {% endfor %}
+          </ul>
+        {% else %}<p>No computed evidence entries are present.</p>{% endif %}
+      </section>
+      <details>
+        <summary>Saved canonical record</summary>
+        <h2>Method identity</h2><pre>{{ page.method_json }}</pre>
+        <h2>Saved content</h2><pre>{{ page.content_json }}</pre>
+        <h2>Saved evidence registry</h2><pre>{{ page.registry_json }}</pre>
+      </details>
+    {% endif %}
+    <form method="post" action="{{ logout_url }}">
+      {% csrf_token %}
+      <button type="submit">Sign out</button>
+    </form>
+  </main>
+</body>
+</html>

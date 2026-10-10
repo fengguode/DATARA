@@ -83,6 +83,6 @@ Routine implementation details may proceed within these boundaries. A change to 
 
 ## References
 
-- [CUS05](../../issues/63) · [SR10](../../issues/78) · [SR11](../../issues/79) · [SR53](../../issues/101)
-- [TK34](../../issues/133) · [STK108](../../issues/205) · [TK31](../../issues/130) · [TK35](../../issues/134)
+- [CUS05](https://github.com/fengguode/DATARA/issues/63) · [SR10](https://github.com/fengguode/DATARA/issues/78) · [SR11](https://github.com/fengguode/DATARA/issues/79) · [SR53](https://github.com/fengguode/DATARA/issues/101)
+- [TK34](https://github.com/fengguode/DATARA/issues/133) · [STK108](https://github.com/fengguode/DATARA/issues/205) · [TK31](https://github.com/fengguode/DATARA/issues/130) · [TK35](https://github.com/fengguode/DATARA/issues/134)
 - [D02 selected baseline](p0-decision-baseline-2026-10-01.md#d02--elemental-skills-and-evaluation)

@@ -6,6 +6,10 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
+
+from datara.classification import classify_bytes
+from datara.intake import MAX_FILE_BYTES, MAX_FILE_MESSAGES, MAX_FILE_SAMPLE_RECORDS
 
 from datara.saved_metric_read import (
     API_VERSION,
@@ -22,7 +26,99 @@ from datara.saved_metric_read import (
 def home(request):
     if not request.user.is_authenticated:
         return redirect("login")
-    return render(request, "datara/home.html", {"logout_url": reverse("logout")})
+    response = render(request, "datara/home.html", {
+        "logout_url": reverse("logout"), "preview": None, "preview_error": None,
+    })
+    response["Cache-Control"] = "private, no-store"
+    response["Vary"] = "Cookie"
+    return response
+
+
+@require_POST
+def fit_preview(request):
+    """Inspect one locally selected FIT file without persisting its bytes."""
+    if not request.user.is_authenticated:
+        return redirect(f"{reverse('login')}?next={reverse('home')}")
+
+    upload_error = getattr(request, "_datara_upload_error", None)
+    if upload_error:
+        _close_preview_uploads(request)
+        return _render_home_preview_error(request, upload_error)
+
+    uploads = request.FILES.getlist("fit_file")
+    if len(uploads) != 1:
+        _close_preview_uploads(request)
+        return _render_home_preview_error(request, "select_exactly_one_file")
+
+    uploaded = uploads[0]
+    if uploaded.size > MAX_FILE_BYTES:
+        uploaded.close()
+        return _render_home_preview_error(request, "file_too_large")
+
+    source_bytes = None
+    try:
+        source_bytes = uploaded.read(MAX_FILE_BYTES + 1)
+        if len(source_bytes) > MAX_FILE_BYTES:
+            return _render_home_preview_error(request, "file_too_large")
+        result = classify_bytes(
+            source_bytes,
+            max_messages=MAX_FILE_MESSAGES,
+            max_samples=MAX_FILE_SAMPLE_RECORDS,
+        )
+        preview = {
+            "accepted": result.accepted,
+            "disposition": result.disposition,
+            "reason_code": result.reason_code,
+            "rule_version": result.rule_version,
+            "decoder": result.decoder,
+            "decoder_verified": result.decoder_verified,
+            "protocol_version": result.protocol_version,
+            "sport": result.sport_name,
+            "start_time_utc": result.start_time_utc,
+            "elapsed_duration_seconds": result.elapsed_duration_seconds,
+            "timer_duration_seconds": result.timer_duration_seconds,
+            "total_distance_metres": result.total_distance_metres,
+            "message_count": result.message_count,
+            "record_sample_count": result.record_sample_count,
+            "warnings": result.warnings,
+        }
+    except Exception:
+        # Never return decoder exceptions or uploaded bytes to the page/log.
+        return _render_home_preview_error(request, "inspection_unavailable")
+    finally:
+        uploaded.close()
+        if source_bytes is not None:
+            del source_bytes
+
+    response = render(request, "datara/home.html", {
+        "logout_url": reverse("logout"), "preview": preview, "preview_error": None,
+    })
+    response["Cache-Control"] = "private, no-store"
+    response["Vary"] = "Cookie"
+    return response
+
+
+def _close_preview_uploads(request):
+    for item in request.FILES.values():
+        item.close()
+
+
+def _render_home_preview_error(request, code: str):
+    messages = {
+        "request_too_large": "The upload request exceeded the local preview limit.",
+        "file_too_large": "Choose a FIT file no larger than 16 MiB.",
+        "too_many_files": "Choose exactly one FIT file for this preview.",
+        "select_exactly_one_file": "Choose exactly one FIT file for this preview.",
+        "inspection_unavailable": "The file could not be inspected. No import or save was performed.",
+    }
+    response = render(request, "datara/home.html", {
+        "logout_url": reverse("logout"),
+        "preview": None,
+        "preview_error": messages.get(code, messages["inspection_unavailable"]),
+    }, status=413 if code in {"request_too_large", "file_too_large"} else 400)
+    response["Cache-Control"] = "private, no-store"
+    response["Vary"] = "Cookie"
+    return response
 
 
 class DataraLoginView(auth_views.LoginView):

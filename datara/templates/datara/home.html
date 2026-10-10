@@ -10,6 +10,39 @@
     <h1>Datara saved history</h1>
     <p>You are signed in. Saved metric detail pages and the versioned read API use your server-side session.</p>
     <p>This increment has no metric list yet. Open a known saved metric detail link to view its saved values.</p>
+    <section aria-labelledby="fit-preview-heading">
+      <h2 id="fit-preview-heading">Inspect a FIT file</h2>
+      <p>This private local preview checks one file with the pinned FIT classifier. It uses no model or external service. The file is held in memory for this request only. It is not imported, saved, or added to training history.</p>
+      <form method="post" action="{% url 'fit_preview' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="fit-file">FIT file (maximum 16 MiB)</label>
+        <input id="fit-file" name="fit_file" type="file" accept=".fit,application/octet-stream" required>
+        <button type="submit">Inspect file</button>
+      </form>
+      {% if preview_error %}<p role="alert">{{ preview_error }}</p>{% endif %}
+      {% if preview %}
+      <section aria-labelledby="preview-result-heading">
+        <h3 id="preview-result-heading">File inspection result</h3>
+        <p role="status">Source disposition: {{ preview.disposition }}. This is a preview only; no activity was imported or saved.</p>
+        {% if not preview.accepted %}<p>This file does not meet the current source rules. Reason code: <code>{{ preview.reason_code }}</code></p>{% endif %}
+        <p>Source rule: {{ preview.rule_version }}</p>
+        <p>Decoder: {{ preview.decoder }}; independent decoder check: {% if preview.decoder_verified %}passed{% else %}not confirmed{% endif %}.</p>
+        {% if preview.accepted %}
+        <dl>
+          <dt>Activity</dt><dd>{{ preview.sport|default:"not available" }}</dd>
+          <dt>FIT protocol version</dt><dd>{{ preview.protocol_version|default:"not available" }}</dd>
+          <dt>Start (UTC)</dt><dd>{{ preview.start_time_utc|default:"not available" }}</dd>
+          <dt>Elapsed duration (seconds)</dt><dd>{{ preview.elapsed_duration_seconds|default:"not available" }}</dd>
+          <dt>Timer duration (seconds)</dt><dd>{{ preview.timer_duration_seconds|default:"not available" }}</dd>
+          <dt>Distance (metres)</dt><dd>{{ preview.total_distance_metres|default:"not available" }}</dd>
+          <dt>Decoded messages</dt><dd>{{ preview.message_count }}</dd>
+          <dt>Record samples</dt><dd>{{ preview.record_sample_count }}</dd>
+        </dl>
+        {% endif %}
+        {% if preview.warnings %}<p>Source warnings: {{ preview.warnings|join:", " }}</p>{% endif %}
+      </section>
+      {% endif %}
+    </section>
     <form method="post" action="{{ logout_url }}">
       {% csrf_token %}
       <button type="submit">Sign out</button>

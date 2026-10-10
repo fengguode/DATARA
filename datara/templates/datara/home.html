@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Datara · Saved history</title>
+</head>
+<body>
+  <main>
+    <h1>Datara saved history</h1>
+    <p>You are signed in. Saved metric detail pages and the versioned read API use your server-side session.</p>
+    <p>This increment has no metric list yet. Open a known saved metric detail link to view its saved values.</p>
+    <form method="post" action="{{ logout_url }}">
+      {% csrf_token %}
+      <button type="submit">Sign out</button>
+    </form>
+  </main>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sign in · Datara</title>
+</head>
+<body>
+  <main>
+    <h1>Sign in to Datara</h1>
+    <p>Use your local Datara account to view your saved recorded metrics.</p>
+    {% if form.errors %}<p role="alert">Sign-in failed. Check your username and password.</p>{% endif %}
+    <form method="post" action="{% url 'login' %}">
+      {% csrf_token %}
+      <label for="id_username">Username</label>
+      <input id="id_username" name="username" autocomplete="username" required>
+      <label for="id_password">Password</label>
+      <input id="id_password" name="password" type="password" autocomplete="current-password" required>
+      <input type="hidden" name="next" value="{{ next }}">
+      <button type="submit">Sign in</button>
+    </form>
+  </main>
+</body>
+</html>

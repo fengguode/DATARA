@@ -50,27 +50,42 @@ SECRET_KEY = _secret_key()
 DEBUG = False
 
 INSTALLED_APPS = [
-    # contenttypes/auth back the owner foreign key used for owner scoping
-    # (CUS10, SR20-SR21). No sessions/messages/admin/static surface is installed:
-    # this unit persists and reads data and serves no page.
+    # contenttypes/auth back owner scoping; sessions supplies the approved
+    # same-origin server-side identity boundary (CUS10, SR20-SR21).
     "django.contrib.contenttypes",
     "django.contrib.auth",
+    "django.contrib.sessions",
     "datara",
 ]
 
-# Present so Django's own security checks pass. This unit serves no page and no
-# endpoint; the middleware stack is here because the pinned command runs Django's
-# system checks, and a check failure must not be silently tolerated.
+# Same-origin sessions are installed ahead of AuthenticationMiddleware. CSRF
+# stays enabled for login/logout and other mutation paths. Only the three
+# read-only saved-metric dispatchers use a narrow exemption to preserve their
+# approved authentication/policy/method error order; those dispatchers have no
+# write action and admit only GET/HEAD.
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
 ]
 
-ROOT_URLCONF = None
-TEMPLATES = []
-WSGI_APPLICATION = None
+ROOT_URLCONF = "datara.urls"
+TEMPLATES = [{
+    "BACKEND": "django.template.backends.django.DjangoTemplates",
+    "DIRS": [],
+    "APP_DIRS": True,
+    "OPTIONS": {"context_processors": [
+        "django.template.context_processors.request",
+        "django.contrib.auth.context_processors.auth",
+    ]},
+}]
+WSGI_APPLICATION = "datara.wsgi.application"
+LOGIN_URL = "/login/"
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/login/"
+SESSION_ENGINE = "django.contrib.sessions.backends.db"
 
 # Deterministic time handling. D02/D05: UTC instants; date scopes are half-open
 # [start, end). `USE_TZ` is not optional: a naive datetime reaching a persisted

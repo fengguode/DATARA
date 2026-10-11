@@ -51,6 +51,19 @@ The following remain open for the D02 contract/evidence work and require explici
 4. **Evaluation anchors and evidence:** independent review of rubric anchors and expected examples, then separate deterministic, output-contract, and substantive evaluation records. The selected D02 criteria are target criteria, not observed results. Real evaluation for each applicable released provider/model/skill combination remains distinct from mocked or schema-only checks.
 5. **Version-to-run evidence:** the contract-level retention behavior described by SR50 remains to be demonstrated with the planned version-history case TC51; no passing result is asserted.
 
+## Ownership and dependency route
+
+This route makes the open items actionable without resolving them by assumption. Owners named here prepare or decide their assigned work; they do not turn a proposal into an approved contract.
+
+| Open item | Responsible route | Dependency and evidence |
+| --- | --- | --- |
+| Final per-skill declarations and contract fixtures | System Architect — Feng Guo, through TK31 (#130), TK32 (#131) and TK33 (#132). The founder decides any material user-outcome or public-contract choice under the team workflow. | TK42 (#141) implementation depends on TK03 (#270) and TK31–TK33. TC40 inspects complete declarations and positive/negative fixtures after their contract is agreed. |
+| Method provenance and source-rights questions | System Architect — Feng Guo, through TK33 (#132) and STK106 (#204); the founder owns any material product decision. This records no legal conclusion or rights clearance. | A reviewable source/rationale inventory is needed for TC42. Any unresolved source terms remain explicit and must be resolved by the appropriate owner before a release claim. |
+| Evaluation anchors and evidence | System Architect — Feng Guo, through TK32 (#131) and STK104; the founder decides any material change to the selected D02 threshold or user outcome. | TC41 follows approved anchors, expected examples, candidate fixtures, and the applicable supported model/skill conditions. Mocked or schema-only checks do not replace substantive evidence. |
+| Version-to-run retention | System Architect — Feng Guo defines the contract obligation; persistence and skill implementation owners deliver the behavior under WP02/WP03. | TC51 requires two definition versions and a saved run bound to the earlier one. It can be demonstrated only against an implemented candidate; no result is claimed here. |
+
+The listed task links identify the existing work route; they do not assert that those tasks are complete or that TC40, TC41, TC42, or TC51 has passed. If a material choice exceeds the recorded D02 direction, it returns to the founder before dependent implementation.
+
 The repository lists TC40 and TC51 as planned and Not run; they are acceptance evidence to collect after a contract is agreed, not evidence supplied by this proposal ([validation plan](validation-plan.md)).
 
 ## Acceptance questions for this requirements proposal

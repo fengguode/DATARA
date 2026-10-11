@@ -172,7 +172,8 @@ REASON_INVALID_FILE_ID_TYPE = "invalid_file_id_type"
 
 # Semantics / cardinality
 REASON_MISSING_SESSION = "missing_session"
-REASON_MULTISPORT_LAYOUT = "multisport_or_chained_layout"
+REASON_MULTIPLE_SESSIONS_UNSUPPORTED = "multisession_unsupported"
+REASON_DECLARED_MULTISPORT_UNSUPPORTED = "declared_multisport_unsupported"
 REASON_SESSION_COUNT_MISMATCH = "session_count_mismatch"
 
 # Required semantics
@@ -215,7 +216,8 @@ REJECTION_REASONS = frozenset(
         REASON_MISSING_FILE_ID,
         REASON_INVALID_FILE_ID_TYPE,
         REASON_MISSING_SESSION,
-        REASON_MULTISPORT_LAYOUT,
+        REASON_MULTIPLE_SESSIONS_UNSUPPORTED,
+        REASON_DECLARED_MULTISPORT_UNSUPPORTED,
         REASON_SESSION_COUNT_MISMATCH,
         REASON_MISSING_SPORT,
         REASON_INVALID_SPORT,
@@ -237,6 +239,7 @@ REJECTION_REASONS = frozenset(
 #: Warning codes.  Warnings never turn a rejection into an acceptance and never
 #: downgrade a rejection; they record a deterministic data-quality observation.
 WARN_ACTIVITY_MESSAGE_ABSENT = "activity_message_absent"
+WARN_SESSION_COUNT_UNDECLARED = "session_count_undeclared"
 WARN_SUB_SPORT_ABSENT = "sub_sport_absent"
 WARN_SUB_SPORT_INVALID = "sub_sport_invalid"
 WARN_SUB_SPORT_NOT_IN_SCOPE = "sub_sport_outside_pinned_evidence"
@@ -556,6 +559,7 @@ class StructureScan:
     definition_count: int
     has_compressed_timestamp: bool
     session_messages: int
+    activity_messages: int
     raw_fields: Mapping[tuple[int, int], FieldValue]
     developer_field_definitions: int = 0
     structural_error: str | None = None
@@ -721,6 +725,7 @@ def _scan(data: bytes) -> StructureScan:
     record_count = 0
     definition_count = 0
     session_messages = 0
+    activity_messages = 0
     compressed = False
     developer_fields = 0
     error: str | None = None
@@ -736,6 +741,7 @@ def _scan(data: bytes) -> StructureScan:
             definition_count=0,
             has_compressed_timestamp=False,
             session_messages=0,
+            activity_messages=0,
             raw_fields={},
             structural_error=REASON_MALFORMED_HEADER,
             structural_detail=(
@@ -871,6 +877,8 @@ def _scan(data: bytes) -> StructureScan:
             record_count += 1
         if global_num == MESG_NUM_SESSION:
             session_messages += 1
+        if global_num == MESG_NUM_ACTIVITY:
+            activity_messages += 1
         pos = pos + 1 + message_size
 
     return StructureScan(
@@ -880,6 +888,7 @@ def _scan(data: bytes) -> StructureScan:
         definition_count=definition_count,
         has_compressed_timestamp=compressed,
         session_messages=session_messages,
+        activity_messages=activity_messages,
         raw_fields=raw_fields,
         developer_field_definitions=developer_fields,
         structural_error=error,
@@ -1164,7 +1173,7 @@ def classify_bytes(
         )
     if scan.session_messages > 1:
         return _reject(
-            REASON_MULTISPORT_LAYOUT,
+            REASON_MULTIPLE_SESSIONS_UNSUPPORTED,
             f"{scan.session_messages} session messages; D01 initial scope is "
             "single-session running and cycling",
             file_type_raw=file_id_type.raw,
@@ -1175,7 +1184,7 @@ def classify_bytes(
         )
     if activity_type.usable and activity_type.raw == 1:
         return _reject(
-            REASON_MULTISPORT_LAYOUT,
+            REASON_DECLARED_MULTISPORT_UNSUPPORTED,
             "activity.type is 'auto_multi_sport' (raw 1); a multisport layout is "
             "outside the D01 single-session scope",
             file_type_raw=file_id_type.raw,
@@ -1201,13 +1210,12 @@ def classify_bytes(
         )
 
     warnings: list[str] = []
-    if not activity_num.present and not activity_type.present:
-        # The matrix lists activity/session cardinality handling as an open gap.
-        # Exactly one decoded session message is taken as the single-session
-        # assertion, and the absent activity message is disclosed rather than
-        # silently assumed to be single-sport.  Routed to the architect as an
-        # open contract item; see the TK11 report.
+    if scan.activity_messages == 0:
         warnings.append(WARN_ACTIVITY_MESSAGE_ABSENT)
+    elif declared_sessions is None:
+        # The activity message exists but its num_sessions corroboration is
+        # absent or carries the base-type invalid sentinel.
+        warnings.append(WARN_SESSION_COUNT_UNDECLARED)
 
     # ---- required semantics -----------------------------------------------
     session_base = {

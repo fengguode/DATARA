@@ -4,6 +4,7 @@ from django.urls import path
 from datara.views import (
     DataraLoginView,
     DataraLogoutView,
+    fit_preview,
     home,
     recorded_metric_api,
     recorded_metric_evidence_api,
@@ -13,6 +14,7 @@ from datara.views import (
 
 urlpatterns = [
     path("", home, name="home"),
+    path("fit/preview/", fit_preview, name="fit_preview"),
     path("login/", DataraLoginView.as_view(), name="login"),
     path("logout/", DataraLogoutView.as_view(), name="logout"),
     # Text converters deliberately defer UUID validation until after session,

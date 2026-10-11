@@ -169,6 +169,7 @@ def _build_fit(
     total_distance: int | None | object = "omit",
     num_sessions: int | None | object = "omit",
     activity_type: int | None | object = "omit",
+    include_activity_message: bool = False,
     session_count: int = 1,
     record_count: int = 0,
     big_endian: bool = False,
@@ -241,7 +242,7 @@ def _build_fit(
             body += _data(local, s_fields, s_values, big_endian)
         local += 1
 
-    if num_sessions != "omit" or activity_type != "omit":
+    if include_activity_message or num_sessions != "omit" or activity_type != "omit":
         a_fields: list[tuple[int, int, int]] = []
         a_values: list[int] = []
         if num_sessions != "omit":
@@ -327,6 +328,19 @@ class AcceptCaseTest(unittest.TestCase):
         self.assertEqual(result.elapsed_duration_seconds, "1800")
         self.assertIsNone(result.timer_duration_seconds)
         self.assertIn(C.WARN_TIMER_TIME_ABSENT, result.warnings)
+        self.assertIn(C.WARN_ACTIVITY_MESSAGE_ABSENT, result.warnings)
+
+    def test_present_activity_without_usable_count_discloses_undeclared_count(self):
+        for data in (
+            _build_fit(activity_type=0),
+            _build_fit(num_sessions=INVALID_UINT16),
+            _build_fit(include_activity_message=True),
+        ):
+            with self.subTest(data=data[-8:]):
+                result = C.classify_bytes(data)
+                self.assertEqual(result.disposition, "accepted", result.reason_detail)
+                self.assertIn(C.WARN_SESSION_COUNT_UNDECLARED, result.warnings)
+                self.assertNotIn(C.WARN_ACTIVITY_MESSAGE_ABSENT, result.warnings)
 
     def test_valid_cycling_with_optional_values_is_accepted(self):
         # Mutation: set sport=1 -> running; the assertion on 'cycling' fails.
@@ -496,11 +510,13 @@ class UnsupportedDimensionTest(unittest.TestCase):
         # Below the pinned date_time minimum.
         self.assertEqual(self._reason(start_time=1), C.REASON_INVALID_START_TIME)
 
-    def test_multisport_layout_rejects(self):
-        # Mutation: two session messages -> 'multisport_or_chained_layout'.
-        self.assertEqual(self._reason(session_count=2), C.REASON_MULTISPORT_LAYOUT)
+    def test_multiple_sessions_and_declared_multisport_reject_distinctly(self):
+        # Matrix 12.7: structure count and declared multisport are distinct causes.
         self.assertEqual(
-            self._reason(activity_type=1), C.REASON_MULTISPORT_LAYOUT
+            self._reason(session_count=2), C.REASON_MULTIPLE_SESSIONS_UNSUPPORTED
+        )
+        self.assertEqual(
+            self._reason(activity_type=1), C.REASON_DECLARED_MULTISPORT_UNSUPPORTED
         )  # auto_multi_sport
         # Declared count disagreeing with the observed count is its own reason.
         self.assertEqual(
